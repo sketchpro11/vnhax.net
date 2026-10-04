@@ -13,18 +13,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/repo-:slug',
-        destination: '/repos/:slug',
-        permanent: true,
-      },
-      {
-        source: '/repo-:slug.html',
-        destination: '/repos/:slug',
-        permanent: true,
-      },
-      {
-        source: '/article-ai-tools-github-repos',
-        destination: '/blog/open-source-ai-tools-github-repos',
+        source: '/index.html',
+        destination: '/',
         permanent: true,
       },
       {
@@ -33,17 +23,32 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/article-ai-tools-github-repos',
+        destination: '/blog/open-source-ai-tools-github-repos',
+        permanent: true,
+      },
+      {
+        source: '/repo-:slug.html',
+        destination: '/repos/:slug',
+        permanent: true,
+      },
+      {
+        source: '/repo-:slug',
+        destination: '/repos/:slug',
+        permanent: true,
+      },
+      {
         source: '/articles/:slug',
         destination: '/blog/:slug',
         permanent: true,
       },
       {
-        source: '/privacy',
+        source: '/privacy.html',
         destination: '/privacy-policy',
         permanent: true,
       },
       {
-        source: '/privacy.html',
+        source: '/privacy',
         destination: '/privacy-policy',
         permanent: true,
       },
@@ -57,17 +62,10 @@ const nextConfig = {
         destination: '/blog',
         permanent: true,
       },
-    ];
-  },
-  async rewrites() {
-    return [
       {
-        source: '/index.html',
-        destination: '/',
-      },
-      {
-        source: '/:path*.html',
-        destination: '/:path*',
+        source: '/:path+.html',
+        destination: '/:path+',
+        permanent: true,
       },
     ];
   },
