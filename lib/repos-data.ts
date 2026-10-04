@@ -18,6 +18,35 @@ export interface RepoLanguage {
   color: string;
 }
 
+export interface RepoIssue {
+  id: number;
+  title: string;
+  author: string;
+  time: string;
+  comments: number;
+  labels: { name: string; color: string }[];
+  description: string;
+}
+
+export interface RepoPR {
+  id: number;
+  title: string;
+  author: string;
+  time: string;
+  branch: string;
+  labels: { name: string; color: string }[];
+}
+
+export interface RepoActionRun {
+  id: string;
+  name: string;
+  status: 'success' | 'queued' | 'in_progress';
+  branch: string;
+  commitHash: string;
+  time: string;
+  duration: string;
+}
+
 export interface RepoDetails {
   slug: string;
   name: string;
@@ -46,6 +75,9 @@ export interface RepoDetails {
   };
   files: RepoFile[];
   languages: RepoLanguage[];
+  issues: RepoIssue[];
+  pullRequests: RepoPR[];
+  actions: RepoActionRun[];
   keyTakeaways: string[];
   faqs: {
     question: string;
@@ -61,7 +93,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     githubUrl: 'https://github.com/DietrichGebert/ponytail',
     language: 'JavaScript',
     license: 'MIT',
-    stars: '1.2k+ today',
+    stars: '1,281',
     forks: '128',
     watching: '45',
     releases: 'v1.4.2 (Latest)',
@@ -101,6 +133,67 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       { name: 'Shell', percent: 11.5, color: '#89e051' },
       { name: 'Other', percent: 4.3, color: '#d0d7de' },
     ],
+    issues: [
+      {
+        id: 14,
+        title: 'Add native Web Crypto support check to prevent agent from importing crypto-js',
+        author: 'steven-w',
+        time: '4 hours ago',
+        comments: 3,
+        labels: [{ name: 'enhancement', color: '#a2eeef' }, { name: 'agent-rules', color: '#1d76db' }],
+        description: 'Currently coding models frequently add crypto-js when Web Crypto is globally available in Node 18+ and edge runtimes. Ponytail should flag this as a YAGNI violation.',
+      },
+      {
+        id: 12,
+        title: 'YAGNI heuristic false-positive on custom recursive tree traversal algorithms',
+        author: 'elena-chen',
+        time: 'yesterday',
+        comments: 7,
+        labels: [{ name: 'bug', color: '#d73a4a' }, { name: 'heuristics', color: '#cfd3d7' }],
+        description: 'When implementing non-trivial AST transformations, Ponytail flagged recursive visitor helpers as speculative abstractions.',
+      },
+      {
+        id: 9,
+        title: 'Support Gemini CLI --yagni-strict flag in wrap command',
+        author: 'm-kumar',
+        time: '3 days ago',
+        comments: 2,
+        labels: [{ name: 'cli', color: '#0e8a16' }],
+        description: 'Provide first-class flag passthrough when running ponytail wrap "gemini cli".',
+      },
+      {
+        id: 7,
+        title: 'Benchmark test suite runner fails on Windows PowerShell path delimiters',
+        author: 'umar-h',
+        time: '5 days ago',
+        comments: 4,
+        labels: [{ name: 'windows', color: '#fbca04' }],
+        description: 'Path normalization required in benchmark matrix scripts for cross-platform execution.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 15,
+        title: 'feat: AST parser optimization for React 19 Server Components',
+        author: 'alex-dev',
+        time: '2 hours ago',
+        branch: 'main <- feature/react-19-ast',
+        labels: [{ name: 'core', color: '#0052cc' }],
+      },
+      {
+        id: 13,
+        title: 'fix: handle monorepo package resolution in AST reuse detector',
+        author: 's-tanaka',
+        time: 'yesterday',
+        branch: 'main <- fix/monorepo-resolver',
+        labels: [{ name: 'bugfix', color: '#d73a4a' }],
+      },
+    ],
+    actions: [
+      { id: 'run-101', name: 'CI Multi-Agent Benchmarks (Claude, Gemini, Codex)', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '1m 42s' },
+      { id: 'run-102', name: 'Static AST Analysis & ESLint', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '32s' },
+      { id: 'run-103', name: 'NPM Publish Dry Run', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '45s' },
+    ],
     keyTakeaways: [
       'Eliminates AI agent over-engineering by enforcing strict YAGNI (You Aren\'t Gonna Need It) boundaries.',
       'Achieves ~54% fewer lines of code (LOC) and ~22% fewer consumed LLM tokens across verified benchmarks.',
@@ -139,7 +232,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     githubUrl: 'https://github.com/pbakaus/impeccable',
     language: 'JavaScript',
     license: 'Apache-2.0',
-    stars: '699+ today',
+    stars: '699',
     forks: '86',
     watching: '38',
     releases: 'v2.1.0 (Latest)',
@@ -178,6 +271,58 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       { name: 'TypeScript', percent: 18.4, color: '#3178c6' },
       { name: 'CSS', percent: 4.8, color: '#563d7c' },
     ],
+    issues: [
+      {
+        id: 28,
+        title: 'Contrast detector should calculate APCA perceptual contrast in addition to WCAG 2.1',
+        author: 'dan-abramov-fan',
+        time: '6 hours ago',
+        comments: 5,
+        labels: [{ name: 'accessibility', color: '#1d76db' }, { name: 'color', color: '#a2eeef' }],
+        description: 'WCAG 2.1 contrast formulas have known flaws on dark backgrounds with saturated colors. Supporting APCA will prevent false positives.',
+      },
+      {
+        id: 24,
+        title: 'Headless chrome viewport zoom emulation on 4K high-density displays',
+        author: 'j-doe',
+        time: '2 days ago',
+        comments: 1,
+        labels: [{ name: 'browser', color: '#fbca04' }],
+        description: 'When running on displays with devicePixelRatio > 2, bounding box calculations need proper DPR scaling.',
+      },
+      {
+        id: 19,
+        title: 'Add automated fix recommendation for 44x44px touch targets on mobile drawer items',
+        author: 'lisa-k',
+        time: '4 days ago',
+        comments: 3,
+        labels: [{ name: 'enhancement', color: '#0e8a16' }],
+        description: 'Detectors identify elements under 44px, but could automatically propose CSS min-height: 44px diffs.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 29,
+        title: 'feat: add 61st detector for CSS clamp() fluid typography scaling',
+        author: 'pbakaus',
+        time: '5 hours ago',
+        branch: 'main <- feature/clamp-detector',
+        labels: [{ name: 'detector', color: '#0052cc' }],
+      },
+      {
+        id: 26,
+        title: 'fix: eliminate false positive horizontal overflow on sticky headers',
+        author: 'sarah-c',
+        time: 'yesterday',
+        branch: 'main <- fix/sticky-overflow',
+        labels: [{ name: 'bugfix', color: '#d73a4a' }],
+      },
+    ],
+    actions: [
+      { id: 'run-201', name: 'Headless Chrome E2E Suite', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '2m 14s' },
+      { id: 'run-202', name: 'Quality Detectors Unit Tests', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '48s' },
+      { id: 'run-203', name: 'Design Command CLI Tests', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '54s' },
+    ],
     keyTakeaways: [
       '61 deterministic frontend quality detectors covering typography, contrast, spacing, and touch targets.',
       '24 interactive design commands allowing developers and agents to audit, polish, and critique live UI.',
@@ -211,7 +356,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     githubUrl: 'https://github.com/affaan-m/ECC',
     language: 'JavaScript',
     license: 'MIT',
-    stars: '897+ today',
+    stars: '897',
     forks: '194',
     watching: '62',
     releases: 'v3.0.1 (Latest)',
@@ -250,6 +395,58 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       { name: 'Shell', percent: 14.2, color: '#89e051' },
       { name: 'Markdown', percent: 6.7, color: '#083fa1' },
     ],
+    issues: [
+      {
+        id: 42,
+        title: 'Allow dynamic memory pruning when SQLite database exceeds 50MB',
+        author: 'charlie-dev',
+        time: '8 hours ago',
+        comments: 6,
+        labels: [{ name: 'memory', color: '#1d76db' }, { name: 'performance', color: '#a2eeef' }],
+        description: 'In very long running monorepo workflows, the vector memory database should prune older transient tool outputs.',
+      },
+      {
+        id: 38,
+        title: 'Security hook false alarm on benign regex in Markdown sanitizer script',
+        author: 'kenji-s',
+        time: 'yesterday',
+        comments: 2,
+        labels: [{ name: 'security', color: '#d73a4a' }],
+        description: 'ReDoS regex detector triggered on safe table row delimiter matching in documentation generator.',
+      },
+      {
+        id: 31,
+        title: 'Add specialized Kubernetes & Helm persona agent to DevOps skill cluster',
+        author: 'patricia-m',
+        time: '3 days ago',
+        comments: 8,
+        labels: [{ name: 'enhancement', color: '#0e8a16' }],
+        description: 'Request for specialized persona containing kubectl, helm template, and ingress manifest validation skills.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 44,
+        title: 'feat: 68th persona for Cloud Security & SOC2 Compliance',
+        author: 'affaan-m',
+        time: '2 hours ago',
+        branch: 'main <- feature/soc2-auditor',
+        labels: [{ name: 'persona', color: '#0052cc' }],
+      },
+      {
+        id: 39,
+        title: 'perf: cache compiled regex in security AST scanner',
+        author: 'dev-team',
+        time: 'yesterday',
+        branch: 'main <- perf/regex-cache',
+        labels: [{ name: 'performance', color: '#a2eeef' }],
+      },
+    ],
+    actions: [
+      { id: 'run-301', name: 'Security Scanner & CVE Database Sync', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '1m 10s' },
+      { id: 'run-302', name: 'Skill Harness Index Validation', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '40s' },
+      { id: 'run-303', name: 'Agent Persona TDD Test Runner', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '3m 05s' },
+    ],
     keyTakeaways: [
       '68 specialized agent personas tailored for Frontend, Security, DevOps, Architecture, and TDD.',
       '293 on-demand skills with zero context bloat through dynamic reference loading.',
@@ -283,7 +480,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     githubUrl: 'https://github.com/Effect-TS/effect',
     language: 'TypeScript',
     license: 'MIT',
-    stars: '11k+ total',
+    stars: '11.4k',
     forks: '740',
     watching: '280',
     releases: 'v4.0.0-LTS (Latest)',
@@ -321,6 +518,58 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       { name: 'TypeScript', percent: 98.4, color: '#3178c6' },
       { name: 'Other', percent: 1.6, color: '#d0d7de' },
     ],
+    issues: [
+      {
+        id: 3892,
+        title: 'Effect 4.x LTS: fiber scheduling performance regression on Node 22 worker threads',
+        author: 'm-rosen',
+        time: '12 hours ago',
+        comments: 14,
+        labels: [{ name: 'performance', color: '#a2eeef' }, { name: 'core', color: '#1d76db' }],
+        description: 'Under extreme thread pools (64+ workers), fiber queue synchronization shows 8% latency increase.',
+      },
+      {
+        id: 3880,
+        title: 'Schema.parseJson should support BigInt deserialization without custom encoders',
+        author: 'v-gupta',
+        time: 'yesterday',
+        comments: 4,
+        labels: [{ name: 'schema', color: '#0e8a16' }],
+        description: 'Native JSON.parse lacks BigInt support; Schema should provide built-in lossless reviver.',
+      },
+      {
+        id: 3864,
+        title: 'Enhance OpenTelemetry trace propagation across HTTP client boundaries in @effect/platform',
+        author: 'tracer-bullet',
+        time: '3 days ago',
+        comments: 9,
+        labels: [{ name: 'platform', color: '#fbca04' }, { name: 'opentelemetry', color: '#0052cc' }],
+        description: 'Trace context headers should automatically inject into outgoing platform HTTP client requests.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 3895,
+        title: 'core: optimize fiber runtime state transitions in Effect 4.0 LTS',
+        author: 'Effect-Core',
+        time: '1 day ago',
+        branch: 'main <- perf/fiber-states',
+        labels: [{ name: 'core', color: '#0052cc' }],
+      },
+      {
+        id: 3888,
+        title: 'schema: zero-allocation fast path for ASCII string validations',
+        author: 'ts-wizard',
+        time: '2 days ago',
+        branch: 'main <- perf/schema-ascii',
+        labels: [{ name: 'schema', color: '#0e8a16' }],
+      },
+    ],
+    actions: [
+      { id: 'run-401', name: 'Cross-Runtime Matrix (Node.js, Bun, Deno, Cloudflare Workers)', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '4m 30s' },
+      { id: 'run-402', name: 'Typecheck & Monorepo DTS Emit', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '1m 55s' },
+      { id: 'run-403', name: 'Benchmarks Regression Suite', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '6m 12s' },
+    ],
     keyTakeaways: [
       'Declarative Effect<Success, Error, Requirements> type model eliminating untyped throws.',
       'Lightweight green-thread fibers with automatic cancellation and structured concurrency.',
@@ -354,7 +603,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     githubUrl: 'https://github.com/JuliusBrussee/caveman',
     language: 'Go',
     license: 'MIT',
-    stars: '500+ today',
+    stars: '507',
     forks: '67',
     watching: '29',
     releases: 'v1.1.4 (Latest)',
@@ -390,6 +639,57 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     languages: [
       { name: 'Go', percent: 96.2, color: '#00add8' },
       { name: 'Shell', percent: 3.8, color: '#89e051' },
+    ],
+    issues: [
+      {
+        id: 18,
+        title: 'Stream lexer edge-case: preserve nested triple backticks inside markdown tables',
+        author: 'b-van-dijk',
+        time: '5 hours ago',
+        comments: 3,
+        labels: [{ name: 'lexer', color: '#1d76db' }, { name: 'bug', color: '#d73a4a' }],
+        description: 'Nested backticks inside markdown table columns caused premature closing of code fence blocks.',
+      },
+      {
+        id: 14,
+        title: 'Add support for Ollama local streaming chunk formats in reverse proxy',
+        author: 'alex-k',
+        time: '2 days ago',
+        comments: 7,
+        labels: [{ name: 'enhancement', color: '#0e8a16' }],
+        description: 'Ollama streaming API emits JSON objects per chunk rather than Server-Sent Events (SSE). Proxy needs format detection.',
+      },
+      {
+        id: 11,
+        title: 'A/B test harness output formatting: export JSON summary report',
+        author: 'j-brussee',
+        time: '4 days ago',
+        comments: 2,
+        labels: [{ name: 'cli', color: '#fbca04' }],
+        description: 'Allow CI pipelines to export benchmark deltas as machine-readable JSON artifacts.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 19,
+        title: 'perf: zero-copy byte buffer pooling in markdown stream lexer',
+        author: 'JuliusBrussee',
+        time: '4 hours ago',
+        branch: 'main <- perf/buffer-pool',
+        labels: [{ name: 'performance', color: '#a2eeef' }],
+      },
+      {
+        id: 16,
+        title: 'cli: add --ab-benchmark flag with automatic p99 latency logging',
+        author: 'dev-contributor',
+        time: 'yesterday',
+        branch: 'main <- feature/ab-logging',
+        labels: [{ name: 'cli', color: '#0052cc' }],
+      },
+    ],
+    actions: [
+      { id: 'run-501', name: 'Go Cross-Platform Build (Linux, macOS, Windows ARM64/AMD64)', status: 'success', branch: 'main', commitHash: '5b11c09', time: '4 hours ago', duration: '1m 15s' },
+      { id: 'run-502', name: 'Stream Lexer Fuzzing & Memory Leak Tests', status: 'success', branch: 'main', commitHash: '5b11c09', time: '4 hours ago', duration: '2m 40s' },
     ],
     keyTakeaways: [
       'Written in Go with sub-millisecond proxy forwarding latency.',
