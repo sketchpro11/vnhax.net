@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { BRAND_CONFIG } from '@/lib/seo';
 import { getAllRepos } from '@/lib/repos-data';
 import { getAllBlogs } from '@/lib/blog';
+import { getAllUIComponents } from '@/lib/components-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = BRAND_CONFIG.siteUrl;
@@ -114,5 +115,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...routes, ...blogRoutes, ...repoRoutes];
+  // Dynamic UI Components
+  const uiComponents = getAllUIComponents();
+  const componentRoutes: MetadataRoute.Sitemap = uiComponents.map((comp) => ({
+    url: `${baseUrl}/ui-components/${comp.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  return [...routes, ...blogRoutes, ...repoRoutes, ...componentRoutes];
 }

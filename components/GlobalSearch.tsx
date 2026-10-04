@@ -7,7 +7,7 @@ import Link from 'next/link';
 export interface SearchItem {
   id: string;
   title: string;
-  category: 'Hub' | 'Repository' | 'Article' | 'Legal';
+  category: 'Hub' | 'Repository' | 'Article' | 'Legal' | 'UI Component';
   description: string;
   url: string;
   tags?: string[];
@@ -62,6 +62,79 @@ export const SEARCH_INDEX: SearchItem[] = [
     description: 'Clean starter blueprint and template for designing accessible UI components.',
     url: '/ui-components/component-page-starter',
     tags: ['template', 'blueprint', 'starter', 'ui'],
+  },
+  // UI Components
+  {
+    id: 'comp-tweet-card',
+    title: 'Tweet Card Component',
+    category: 'UI Component',
+    description: 'Verified social testimonial card with live engagement metrics, like counters, and media embed.',
+    url: '/ui-components/tweet-card',
+    tags: ['tweet', 'card', 'social', 'testimonial', 'magicui', 'twitter'],
+  },
+  {
+    id: 'comp-bento-grid',
+    title: 'Bento Grid Component',
+    category: 'UI Component',
+    description: 'Asymmetric feature showcase grid with ambient radial cursor spotlight and responsive tile spans.',
+    url: '/ui-components/bento-grid',
+    tags: ['bento', 'grid', 'spotlight', 'layout', 'magicui', 'apple'],
+  },
+  {
+    id: 'comp-animated-list',
+    title: 'Animated List Component',
+    category: 'UI Component',
+    description: 'Dynamic real-time activity stream and notification feed with staggered spring transitions.',
+    url: '/ui-components/animated-list',
+    tags: ['animated', 'list', 'notification', 'stream', 'feed', 'magicui'],
+  },
+  {
+    id: 'comp-dock',
+    title: 'Interactive Dock Component',
+    category: 'UI Component',
+    description: 'macOS-inspired floating navigation dock with cursor proximity icon magnification and glassmorphism.',
+    url: '/ui-components/dock',
+    tags: ['dock', 'macos', 'magnification', 'navigation', 'glassmorphism', 'magicui'],
+  },
+  {
+    id: 'comp-sparkles-title',
+    title: 'Sparkles Title Component',
+    category: 'UI Component',
+    description: 'Hero headline with shimmering canvas sparkle particles floating across gradient typography.',
+    url: '/ui-components/sparkles-title',
+    tags: ['sparkles', 'title', 'headline', 'gradient', 'canvas', 'typography'],
+  },
+  {
+    id: 'comp-sparkles',
+    title: 'Sparkles Effect Component',
+    category: 'UI Component',
+    description: 'Interactive HTML5 Canvas particle background with twinkling stars and mouse repulsion.',
+    url: '/ui-components/sparkles',
+    tags: ['sparkles', 'effect', 'canvas', 'background', 'particles'],
+  },
+  {
+    id: 'comp-image-accordions',
+    title: 'Image Accordions Component',
+    category: 'UI Component',
+    description: 'Interactive multi-panel image gallery with smooth flex expansion and metadata overlays.',
+    url: '/ui-components/image-accordions',
+    tags: ['accordion', 'image', 'gallery', 'flex', 'cards', 'ui-layouts'],
+  },
+  {
+    id: 'comp-pricing-table',
+    title: 'Modern Pricing Table Component',
+    category: 'UI Component',
+    description: 'Conversion-optimized SaaS pricing matrix with annual discount toggle and featured tier highlight.',
+    url: '/ui-components/pricing-table',
+    tags: ['pricing', 'table', 'tier', 'subscription', 'annual', 'monthly', 'matrix'],
+  },
+  {
+    id: 'comp-hero-section',
+    title: 'Futuristic Hero Section Component',
+    category: 'UI Component',
+    description: 'Turnkey landing page hero block with announcement pill, gradient headline, and dual CTAs.',
+    url: '/ui-components/hero-section',
+    tags: ['hero', 'section', 'landing', 'header', 'marketing', 'cta'],
   },
   {
     id: 'hub-tech',
@@ -306,7 +379,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     onMouseEnter={() => setSelectedIndex(index)}
                   >
                     <div className="result-category-badge">
-                      <span className={`badge-pill badge-pill--${item.category.toLowerCase()}`}>
+                      <span className={`badge-pill badge-pill--${item.category.toLowerCase().replace(/\s+/g, '-')}`}>
                         {item.category}
                       </span>
                     </div>
