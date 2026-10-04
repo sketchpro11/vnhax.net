@@ -1,0 +1,5 @@
+# Google AdSense Authorized Digital Sellers (ads.txt)
+# Domain: vnhax.net
+# Instructions: Replace 'pub-0000000000000000' with your actual Google AdSense Publisher ID (e.g., pub-1234567890123456)
+# Standard Google AdSense format:
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

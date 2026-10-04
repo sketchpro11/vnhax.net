@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vnhax.net/sitemap.xml

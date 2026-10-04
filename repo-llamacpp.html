@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>llama.cpp Repository Architecture &amp; Developer Breakdown — vnhax</title>
+  <meta name="description" content="In-depth developer analysis and interactive architecture flowchart for llama.cpp: inference engine, hardware backends, serving layer, and quantization kernels.">
+  <link rel="canonical" href="https://vnhax.net/repo-llamacpp.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="llama.cpp Repository Architecture &amp; Developer Breakdown — vnhax">
+  <meta property="og:description" content="Explore llama.cpp's internal subsystems: GGML graph execution, CPU/CUDA/Hexagon backends, HTTP serving, and GGUF lifecycle.">
+  <meta property="og:url" content="https://vnhax.net/repo-llamacpp.html">
+  <meta property="og:site_name" content="vnhax">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0a'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' fill='%23fff' text-anchor='middle'%3Ev%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "llama.cpp",
+    "description": "Port of Facebook's LLaMA model in C/C++ for efficient LLM inference across everyday hardware.",
+    "codeRepository": "https://github.com/ggml-org/llama.cpp",
+    "programmingLanguage": ["C", "C++", "Python"],
+    "license": "https://github.com/ggml-org/llama.cpp/blob/master/LICENSE",
+    "author": { "@type": "Organization", "name": "ggml.ai" },
+    "publisher": { "@type": "Organization", "name": "vnhax", "url": "https://vnhax.net/" }
+  }
+  </script>
+
+  <!-- Mermaid.js for Interactive Diagram Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis'
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-logo" href="index.html" aria-label="vnhax home">vnhax</a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="ai/">Innovation &amp; AI</a>
+        <a href="developer-resources/" aria-current="page">Developer Resources</a>
+        <a href="ui-components/">UI Components</a>
+        <a href="technology/">Tech Platforms</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" aria-label="Search">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="6.1" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M12.4 12.4 16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="newsletter-button" href="contact.html">Newsletter</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="post-layout">
+      <div class="post-main">
+        
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html"><span itemprop="name">Home</span></a>
+              <meta itemprop="position" content="1" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="developer-resources/"><span itemprop="name">Developer Resources</span></a>
+              <meta itemprop="position" content="2" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="developer-resources/github-repos/"><span itemprop="name">GitHub Repos</span></a>
+              <meta itemprop="position" content="3" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span itemprop="name">llama.cpp</span>
+              <meta itemprop="position" content="4" />
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Repo Hero Header -->
+        <header class="article-header">
+          <div class="repo-badge-bar">
+            <span class="silo-badge silo-badge--dev">Open-Source Repository</span>
+            <span class="silo-badge silo-badge--ai">C/C++ Inference Core</span>
+          </div>
+
+          <div class="repo-header-title">
+            <span>ggml-org / llama.cpp</span>
+            <a class="github-direct-btn" href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+              <span>GitHub Repo</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <p class="repo-lede">
+            High-performance LLM inference in pure C/C++ with minimal dependencies. Powers local AI runtimes (including Ollama), featuring GGUF quantization, multi-backend acceleration (CUDA, Metal, CPU, Hexagon), and OpenAI-compatible server APIs.
+          </p>
+
+          <!-- Verified Repository Stats Strip -->
+          <div class="repo-stats-strip">
+            <span class="stat-pill">
+              ⭐ <strong>76k+</strong> stars
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              🍴 <strong>10.5k+</strong> forks
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              📜 <strong>MIT</strong> License
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              💻 <strong>C++</strong> 75% • <strong>C</strong> 20%
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              📦 <strong>GGUF / GGML</strong> Standard
+            </span>
+          </div>
+
+          <!-- Quick One-Line Install -->
+          <div class="quick-install-box">
+            <div class="quick-install-text">
+              <span class="prompt-char">$</span>
+              <code id="installCommand">git clone https://github.com/ggml-org/llama.cpp &amp;&amp; cmake -B build &amp;&amp; cmake --build build --config Release</code>
+            </div>
+            <button class="quick-install-copy-btn" id="copyInstallBtn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copyInstallText">Copy</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Google AdSense Responsive Leaderboard Unit -->
+        <div class="adsense-wrapper" aria-label="Advertisement Container">
+          <span class="adsense-label">Advertisement</span>
+          <div class="adsense-unit adsense-unit--leaderboard">
+            <div class="adsense-placeholder-inner">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+              <span>RESPONSIVE IN-ARTICLE AD UNIT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             INTERACTIVE ARCHITECTURE FLOWCHART (MERMAID.JS)
+             =================================================================== -->
+        <section class="diagram-card" aria-labelledby="diagram-heading">
+          <div class="diagram-card-head">
+            <div class="diagram-card-title">
+              <h2 id="diagram-heading">llama.cpp Architecture &amp; Runtime Flow</h2>
+              <p>Visual map of User Interfaces, Serving Layer, Model Lifecycle, GGML Graph Engine, and Hardware Acceleration.</p>
+            </div>
+            
+            <div class="diagram-toolbar">
+              <button class="diagram-tool-btn" id="zoomInBtn" type="button" title="Zoom in diagram">Zoom In (+)</button>
+              <button class="diagram-tool-btn" id="zoomOutBtn" type="button" title="Zoom out diagram">Zoom Out (-)</button>
+              <button class="diagram-tool-btn" id="zoomResetBtn" type="button" title="Reset diagram zoom">Reset</button>
+            </div>
+          </div>
+
+          <div class="diagram-canvas-wrapper" id="diagramWrapper">
+            <div class="diagram-canvas-inner" id="diagramCanvas">
+              <!-- Exact Mermaid code provided by user -->
+              <pre class="mermaid">
+flowchart TD
+
+subgraph group_interfaces["User Interfaces"]
+  node_cli["CLI Client<br/>[cli-client.cpp]"]
+  node_webui_chat["Web Chat<br/>[chat.service.ts]"]
+  node_server_store["Server State<br/>[server.svelte.ts]"]
+  node_browser_storage[("Browser Storage")]
+end
+
+subgraph group_serving["Serving Layer"]
+  node_http_server["HTTP Server<br/>[server.cpp]"]
+  node_model_routes["Model Routes"]
+  node_stream_routes["Stream Routes"]
+  node_server_tools["Tools and MCP<br/>[server.cpp]"]
+end
+
+subgraph group_models["Model Lifecycle"]
+  node_model_cache[("Model Cache<br/>[hf-cache.cpp]")]
+  node_model_download["Model Download<br/>[download.cpp]"]
+  node_model_conversion["Model Conversion<br/>[base.py]"]
+  node_gguf_model["GGUF Model<br/>[gguf.h]"]
+end
+
+subgraph group_inference["Inference Engine"]
+  node_prompt_grammar["Prompt Grammar<br/>[chat.cpp]"]
+  node_inference_runtime["Inference Runtime<br/>[common.cpp]"]
+  node_ggml_graph["GGML Graph<br/>[ggml-backend.cpp]"]
+end
+
+subgraph group_acceleration["Hardware Acceleration"]
+  node_backend_registry["Backend Registry"]
+  node_cpu_backend["CPU Backend<br/>[ggml-cpu.cpp]"]
+  node_cuda_backend["CUDA Backend"]
+  node_hexagon_backend["Hexagon Backend<br/>[main.c]"]
+  node_quantization["Quantization Kernels<br/>[ggml-quants.c]"]
+end
+
+node_user(("User"))
+node_huggingface["Hugging Face"]
+
+node_user -->|"invokes"| node_cli
+node_user -->|"uses"| node_webui_chat
+node_cli -->|"sends HTTP"| node_http_server
+node_webui_chat -->|"sends requests"| node_http_server
+node_server_store -->|"fetches props"| node_http_server
+node_webui_chat -->|"persists state"| node_browser_storage
+node_http_server -->|"dispatches models"| node_model_routes
+node_http_server -->|"dispatches streams"| node_stream_routes
+node_http_server -->|"dispatches tools"| node_server_tools
+node_model_routes -->|"loads models"| node_model_download
+node_model_routes -->|"reads cache"| node_model_cache
+node_model_download -->|"writes cache"| node_model_cache
+node_model_download -.->|"downloads from"| node_huggingface
+node_model_conversion -->|"writes GGUF"| node_gguf_model
+node_model_routes -->|"loads model"| node_gguf_model
+node_http_server -->|"runs inference"| node_inference_runtime
+node_inference_runtime -->|"formats prompts"| node_prompt_grammar
+node_inference_runtime -->|"builds graph"| node_ggml_graph
+node_ggml_graph -->|"selects backend"| node_backend_registry
+node_backend_registry -->|"dispatches compute"| node_cpu_backend
+node_backend_registry -.->|"dispatches compute"| node_cuda_backend
+node_backend_registry -.->|"dispatches compute"| node_hexagon_backend
+node_ggml_graph -->|"uses quantization"| node_quantization
+node_stream_routes -->|"streams output"| node_webui_chat
+node_stream_routes -->|"streams output"| node_cli
+node_webui_chat -->|"shows response"| node_user
+node_cli -->|"shows response"| node_user
+
+click node_cli "https://github.com/ggml-org/llama.cpp/blob/master/tools/cli/cli-client.cpp"
+click node_webui_chat "https://github.com/ggml-org/llama.cpp/blob/master/tools/ui/src/lib/services/chat.service.ts"
+click node_server_store "https://github.com/ggml-org/llama.cpp/blob/master/tools/ui/src/lib/stores/server.svelte.ts"
+click node_browser_storage "https://github.com/ggml-org/llama.cpp/blob/master/tools/ui/src/lib/constants/storage.constants.ts"
+click node_http_server "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/server.cpp"
+click node_model_routes "https://github.com/ggml-org/llama.cpp/tree/master/tools/server"
+click node_stream_routes "https://github.com/ggml-org/llama.cpp/tree/master/tools/server"
+click node_server_tools "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/server.cpp"
+click node_model_cache "https://github.com/ggml-org/llama.cpp/blob/master/common/hf-cache.cpp"
+click node_model_download "https://github.com/ggml-org/llama.cpp/blob/master/common/download.cpp"
+click node_model_conversion "https://github.com/ggml-org/llama.cpp/blob/master/conversion/base.py"
+click node_gguf_model "https://github.com/ggml-org/llama.cpp/blob/master/ggml/include/gguf.h"
+click node_prompt_grammar "https://github.com/ggml-org/llama.cpp/blob/master/common/chat.cpp"
+click node_inference_runtime "https://github.com/ggml-org/llama.cpp/blob/master/common/common.cpp"
+click node_ggml_graph "https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-backend.cpp"
+click node_backend_registry "https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-backend-reg.cpp"
+click node_cpu_backend "https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-cpu/ggml-cpu.cpp"
+click node_cuda_backend "https://github.com/ggml-org/llama.cpp/tree/master/ggml/src/ggml-cuda"
+click node_hexagon_backend "https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-hexagon/htp/main.c"
+click node_quantization "https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-quants.c"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_cli,node_webui_chat,node_server_store,node_browser_storage,node_user toneBlue
+class node_http_server,node_model_routes,node_stream_routes,node_server_tools toneAmber
+class node_model_cache,node_model_download,node_model_conversion,node_gguf_model toneMint
+class node_prompt_grammar,node_inference_runtime,node_ggml_graph toneRose
+class node_backend_registry,node_cpu_backend,node_cuda_backend,node_hexagon_backend,node_quantization,node_huggingface toneIndigo
+              </pre>
+            </div>
+          </div>
+
+          <div class="diagram-card-footer">
+            <div class="diagram-legend-strip">
+              <span class="legend-item"><span class="legend-dot legend-dot--blue"></span> User Interfaces</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--amber"></span> Serving Layer</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--mint"></span> Model Lifecycle</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--rose"></span> Inference Engine</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#e0e7ff; border-color:#4f46e5;"></span> Acceleration</span>
+            </div>
+            <span>Tip: Click any node to view its source file on GitHub</span>
+          </div>
+        </section>
+
+        <!-- Subsystems Deep Dive Grid -->
+        <div class="prose">
+          <h2>Core Subsystems Breakdown</h2>
+          <p>
+            llama.cpp structures its operations into modular layers allowing execution on everything from Raspberry Pi CPUs to massive multi-GPU clusters:
+          </p>
+
+          <div class="subsystems-grid">
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--ai">01 • Compute</span>
+                <h3>Inference &amp; GGML Graph</h3>
+              </div>
+              <p>Constructs dynamic computation graphs via GGML, enforces strict grammar sampling constraints, and orchestrates tensor evaluation.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/common/common.cpp" target="_blank" rel="noopener noreferrer">common.cpp <span class="file-role">Inference Runtime</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-backend.cpp" target="_blank" rel="noopener noreferrer">ggml-backend.cpp <span class="file-role">GGML Graph</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/common/chat.cpp" target="_blank" rel="noopener noreferrer">chat.cpp <span class="file-role">Prompt Grammar</span></a></li>
+              </ul>
+            </div>
+
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--tech">02 • Hardware</span>
+                <h3>Hardware Acceleration</h3>
+              </div>
+              <p>A unified backend registry dynamically selects optimized compute kernels: AVX2/AVX-512 CPU routines, CUDA kernels, or Qualcomm Hexagon DSPs.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-backend-reg.cpp" target="_blank" rel="noopener noreferrer">ggml-backend-reg.cpp <span class="file-role">Registry</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-cpu/ggml-cpu.cpp" target="_blank" rel="noopener noreferrer">ggml-cpu.cpp <span class="file-role">CPU Backend</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/ggml/src/ggml-quants.c" target="_blank" rel="noopener noreferrer">ggml-quants.c <span class="file-role">Quantization</span></a></li>
+              </ul>
+            </div>
+
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--dev">03 • Serving</span>
+                <h3>Serving &amp; MCP Layer</h3>
+              </div>
+              <p>Production HTTP web server supporting continuous batching, streaming SSE responses, OpenAI API parity, and Model Context Protocol (MCP) tools.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/server.cpp" target="_blank" rel="noopener noreferrer">server.cpp <span class="file-role">HTTP Server</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/cli/cli-client.cpp" target="_blank" rel="noopener noreferrer">cli-client.cpp <span class="file-role">CLI Client</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/ui/src/lib/services/chat.service.ts" target="_blank" rel="noopener noreferrer">chat.service.ts <span class="file-role">Web Chat</span></a></li>
+              </ul>
+            </div>
+
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--ui">04 • Models</span>
+                <h3>Model Lifecycle &amp; GGUF</h3>
+              </div>
+              <p>Standardized GGUF binary format specifications, Hugging Face Hub caching, and conversion scripts transforming raw PyTorch weights into quantized formats.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/ggml/include/gguf.h" target="_blank" rel="noopener noreferrer">gguf.h <span class="file-role">GGUF Format</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/common/hf-cache.cpp" target="_blank" rel="noopener noreferrer">hf-cache.cpp <span class="file-role">Cache Store</span></a></li>
+                <li><a href="https://github.com/ggml-org/llama.cpp/blob/master/conversion/base.py" target="_blank" rel="noopener noreferrer">base.py <span class="file-role">Converter</span></a></li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Quick Start &amp; Usage</h2>
+          <div class="code-block">
+            <div class="code-head">
+              <span>RUN INFERENCE</span>
+              <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText('./llama-cli -m models/llama-3.3-8b.gguf -p \'You are a helpful assistant\' -cnv')">Copy</button>
+            </div>
+            <pre><code># Interactive conversational mode
+./llama-cli -m models/llama-3.3-8b.gguf -p "You are a helpful assistant" -cnv
+
+# Start OpenAI-compatible HTTP server
+./llama-server -m models/llama-3.3-8b.gguf --port 8080</code></pre>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Sidebar -->
+      <aside class="post-sidebar">
+        <div class="sidebar-sticky">
+
+          <div class="adsense-wrapper" style="margin: 0;" aria-label="Advertisement Container">
+            <span class="adsense-label">Advertisement</span>
+            <div class="adsense-unit adsense-unit--sidebar">
+              <div class="adsense-placeholder-inner">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="3" width="20" height="18" rx="2"/>
+                  <line x1="2" y1="9" x2="22" y2="9"/>
+                  <line x1="2" y1="15" x2="22" y2="15"/>
+                </svg>
+                <span>STICKY SIDEBAR AD</span>
+                <span style="font-size: 11px; opacity: 0.7;">300 × 250 / 300 × 600</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-header">
+              <span class="sidebar-kicker">Metadata</span>
+              <h3>Repository Facts</h3>
+            </div>
+            <ul class="sidebar-silo-nav">
+              <li><strong>Author:</strong> Georgi Gerganov &amp; ggml.ai</li>
+              <li><strong>Initial Release:</strong> 2023</li>
+              <li><strong>Primary Language:</strong> C / C++</li>
+              <li><strong>Binary Format:</strong> GGUF Specification</li>
+              <li><strong>GitHub Repository:</strong> <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">ggml-org/llama.cpp ↗</a></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-header">
+              <span class="sidebar-kicker">Related Repos</span>
+              <h3>Explore in AI Silo</h3>
+            </div>
+            <ol class="trending-list">
+              <li><a href="repo-ollama.html">Ollama — Developer runtime built on llama.cpp</a></li>
+              <li><a href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener">vLLM — Server-scale inference engine</a></li>
+              <li><a href="article-ai-tools-github-repos.html">The AI tools and GitHub repos worth your time</a></li>
+              <li><a href="developer-resources/github-repos/">All Curated Developer Repositories</a></li>
+            </ol>
+          </div>
+
+        </div>
+      </aside>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-logo">vnhax</span>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Disclaimer</a>
+    </nav>
+    <span class="footer-note">© 2026 vnhax. All rights reserved.</span>
+  </footer>
+
+  <script>
+    (function() {
+      var copyBtn = document.getElementById('copyInstallBtn');
+      var copyText = document.getElementById('copyInstallText');
+      var installCmd = document.getElementById('installCommand');
+      if (copyBtn && copyText && installCmd) {
+        copyBtn.addEventListener('click', function() {
+          navigator.clipboard.writeText(installCmd.textContent).then(function() {
+            copyText.textContent = 'Copied!';
+            setTimeout(function() { copyText.textContent = 'Copy'; }, 2000);
+          });
+        });
+      }
+
+      var canvas = document.getElementById('diagramCanvas');
+      var zoomIn = document.getElementById('zoomInBtn');
+      var zoomOut = document.getElementById('zoomOutBtn');
+      var zoomReset = document.getElementById('zoomResetBtn');
+      var currentScale = 1;
+
+      if (canvas && zoomIn && zoomOut && zoomReset) {
+        zoomIn.addEventListener('click', function() {
+          if (currentScale < 1.8) {
+            currentScale += 0.15;
+            canvas.style.transform = 'scale(' + currentScale + ')';
+          }
+        });
+        zoomOut.addEventListener('click', function() {
+          if (currentScale > 0.6) {
+            currentScale -= 0.15;
+            canvas.style.transform = 'scale(' + currentScale + ')';
+          }
+        });
+        zoomReset.addEventListener('click', function() {
+          currentScale = 1;
+          canvas.style.transform = 'scale(1)';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+Act as a Senior Technical Writer for VNHAX (Virtual Next-Gen Hub for AI & eXploration). Using ONLY the verified technical facts provided below, write a comprehensive, developer-focused tutorial (1200+ words) in clean English.
+
+Include YAML frontmatter at the top:
+---
+title: "How to Increase num\_ctx in Modelfile"
+description: "[150-character SEO description]"
+date: "2026-09-27"
+author: "VNHAX Editorial"
+category: "AI & Models"
+tags: ["AI", "Open Source", "Guides"]
+readTime: "8 min read"
+image: "/og-image.png"
+---
+
+Structure:
+1. 'Key Takeaways' box (3-4 high-signal bullet points).
+2. Direct question-framed H2 headings (e.g., 'What is...', 'How to configure...').
+3. Terminal commands and syntax-highlighted code blocks.
+4. Clean Markdown comparison table.
+5. 4-question technical FAQ section and final conclusion.
+
+Factual Notes:
+### CLI Setup &amp; Installation Commands
+
+* **macOS / Linux**: `curl -fsSL https://ollama.com/install.sh | sh`[1]
+* **Windows**: `irm https://ollama.com/install.ps1 | iex`[1]
+* **Docker**: Official image is available on Docker Hub as `ollama/ollama`[1].
+* **Package Managers**: Can also be installed via **Homebrew**, **Pacman**, **Nix**, **Gentoo**, **Flox**, **Guix**, or **Helm Chart**[2].
+
+### Getting Started CLI Commands
+
+* **Initialize**: Run `ollama` to start and connect to existing agents or applications[1].
+* **Run Models**: Run `ollama run
+
+The uploaded source provides a link to the [Modelfile reference documentation](https://www.google.com/url?sa=E&amp;q=https%3A%2F%2Fdocs.ollama.com%2Fmodelfile)[1], but it does not contain the specific instructions or syntax for configuring `num_ctx`.
+
+### What is Missing from the Sources
+
+* **Parameter Syntax**: How to define `PARAMETER num_ctx
+
+
+Here's what I found on increasing num_ctx in an Ollama Modelfile and its VRAM impact:
+To increase the context window in Ollama, you add PARAMETER num_ctx <tokens> inside a Modelfile, then create a new model variant using ollama create.
+1. Step-by-Step Guide & Modelfile Syntax
+Export the current Modelfile configuration (optional):
+ollama show llama3.2 --modelfile > Modelfile
+Edit the Modelfile: Define the base model using FROM and set your context window size with PARAMETER num_ctx:
+FROM llama3.2
+PARAMETER num_ctx 8192
+(Common values: 8192 for 8k, 16384 for 16k, 32768 for 32k tokens).
+Build the new model:
+ollama create llama3.2-8k -f Modelfile
+Run the customized model:
+ollama run llama3.2-8k
+(Note: Context size can also be set temporarily during CLI sessions via /set parameter num_ctx 8192 or when starting the service via OLLAMA_CONTEXT_LENGTH=64000 ollama serve).
+2. Modelfile Reference Overview
+According to Ollama Documentation, valid instructions in a Modelfile include:
+FROM (Required): Defines the base model or path.
+PARAMETER: Configures model execution parameters (num_ctx, temperature, top_p, top_k, stop, etc.).
+SYSTEM: Specifies a custom system prompt.
+TEMPLATE: Configures the prompt template structure sent to the LLM.
+MESSAGE: Pre-populates conversation turn history.
+ADAPTER: Specifies LoRA adapters to apply.
+LICENSE: Sets legal licensing parameters.
+3. Impact on VRAM & Hardware Requirements
+KV Cache Allocation: Expanding num_ctx increases the memory required for the model's Key-Value (KV) cache. Ollama pre-allocates VRAM for this full context window when loading the model.
+VRAM Overhead Examples:
+2,048 tokens: ~16.1 GB total VRAM
+8,192 tokens: ~16.5 GB total VRAM
+32,768 tokens: ~17.9 GB total VRAM
+131,072 tokens: ~23.5 GB total VRAM
+CPU Offloading & Latency: If available GPU VRAM is insufficient to hold the model weights plus the expanded KV cache, Ollama offloads layers to system RAM. This prevents out-of-memory crashes, but significantly reduces inference speed.
+
+Key themes across web documentation:
+Modelfile compilation: Updating default parameters permanently requires saving a Modelfile and compiling it with ollama create.
+Dynamic VRAM consumption: The KV cache footprint scales linearly with context length.
+Hardware-based defaults: Ollama automatically sets default context sizes based on GPU VRAM (<24 GB VRAM defaults to 4k, 24–48 GB defaults to 32k, >=48 GB defaults to 256k).
+
+
+| Context Length (Tokens)   | Condition or Use Case                                                                  | Memory Impact (VRAM/RAM)                                                                                     | Recommended Application                                                               | Configuration Method                                                                       | Persistence Level                                    | Source                                   |
+| ------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------------------- | ---------------------------------------- |
+| 2048                      | Default setting for standard models and short-form tasks; hardware with &lt; 24 GiB VRAM. | Standard baseline usage; fits in most consumer GPUs. 16.1GB VRAM for 4-bit Yi-34B.                           | General purpose, short conversations, simple Q&amp;A, and role-playing (e.g., Pig Bajie). | Built-in default (Implicit) or PARAMETER num\_ctx in Modelfile.                            | Permanent (Default / Base)                           | [1], [2], [3], [4], [5], [6] |
+| 4096                      | Default for some models (e.g., Qwen3:8b) or extended context for better coherence.     | 6.5 GB (100% GPU) for Qwen3:8b; increased memory consumption compared to default.                            | Enhanced assistant personas (e.g., Mario), code review, and technical discussion.     | PARAMETER num\_ctx in Modelfile or Ollama Default.                                         | Permanent (via ollama create)                        | [1], [4], [7]                      |
+| 8000 – 8192               | Hardware with 16GB RAM; default for gpt-oss; Aider software override.                  | Doubled memory compared to 2048; 7.5 GB total (93% GPU / 7% CPU) for Qwen3:8b; 16.5GB VRAM for 4-bit Yi-34B. | Document summary, professional Python code review, and general BrainSoup agents.      | Modelfile (PARAMETER num\_ctx), Aider override, or Ollama Default.                         | Permanent (via ollama create) or Session-based       | [1], [2], [7], [8], [6]        |
+| 16384                     | Hardware with 32GB+ RAM; longer conversations and document analysis.                   | Significant memory pressure; pushes usage over 8GB for base models; risks system freezing/swap on lower RAM. | Advanced long-context retrieval and coding assistance.                                | PARAMETER num\_ctx in Modelfile.                                                           | Permanent (via ollama create)                        | [1], [8]                             |
+| 32768 (32k)               | Hardware with 24-48 GiB VRAM; Llama 3.2 increased context; heavy research.             | 17.9GB VRAM for 4-bit Yi-34B; high memory usage; may cause Ollama to fail to load or slow down.              | Long document analysis, large codebases, and multi-step tasks.                        | CLI (/set parameter num\_ctx 32768) or Modelfile.                                          | Permanent (via /save or ollama create)               | [2], [8], [5]                      |
+| 40960                     | Maximum architectural limit for specific models (e.g., Qwen3:8b).                      | Significant VRAM/RAM requirement; may cause slower processing due to CPU offloading.                         | Long-document analysis and RAG.                                                       | Modelfile or Environment Variable.                                                         | Not in source                                        | [7]                                    |
+| 64000 – 80000             | Tasks requiring large context or detailed codebase descriptions.                       | Maxed out 64GB RAM (Unified Memory); increased VRAM; risk of CPU offloading.                                 | Web search, agents, and full codebase summarization.                                  | CLI (OLLAMA\_CONTEXT\_LENGTH=64000) or CLI flag (-o num\_ctx 80000).                       | Session-based (Temporary)                            | [2], [5]                             |
+| 131072 (128k)             | High-capacity inference (e.g., Yi-34B).                                                | 23.5GB VRAM (4-bit) to 94.1GB VRAM (16-bit).                                                                 | Large scale data processing and multi-file coding assistants (e.g., Cline, Continue). | Modelfile, API, or CLI parameter.                                                          | Variable                                             | [2], [3]                             |
+| 200000                    | Model maximum context (e.g., Yi-34B).                                                  | 27.5GB VRAM (4-bit) to 109.8GB VRAM (16-bit).                                                                | Maximum supported sequence length.                                                    | Modelfile (PARAMETER num\_ctx).                                                            | Variable                                             | [2]                                    |
+| 1000000 (1M)              | Extreme long context models.                                                           | High KV cache memory; reduced 4x via OLLAMA\_KV\_CACHE\_TYPE=q4\_0.                                          | Extensive document libraries.                                                         | Environment Variable (OLLAMA\_KV\_CACHE\_TYPE).                                            | Session-based (Server-wide)                          | [2]                                    |
+| Adjustable / Custom Value | User-defined context window for specific sessions or global overrides.                 | Higher context increases KV cache requirements; may trigger CPU offloading if VRAM is exceeded.              | Ad-hoc queries, developer integration, and system-wide default overrides.             | CLI (/set parameter), API ("options": {"num\_ctx"}), or Env Var (OLLAMA\_CONTEXT\_LENGTH). | Temporary (Session-based) or Permanent (System-wide) | [1], [4], [7], [5], [6]        |
+| Maximum                   | Cloud-based deployments.                                                               | Maximum memory allocation.                                                                                   | Cloud models.                                                                         | Default (set by provider).                                                                 | Permanent                                            | [5]                                    |
+| Not in source             | RAG and long document processing.                                                      | Increases VRAM usage; leads to CPU offloading if VRAM is exceeded.                                           | Long document analysis.                                                               | Modelfile, API, or CLI.                                                                    | Permanent via Modelfile or Session-based via API/CLI | [3]                                    |
+
+[1] Ollama Modelfile Guide: Parameters, Templates, Custom Models | Easton
+
+[2] Ollama has a num\_ctx parameter that controls the context window length - it defa... | Hacker News
+
+[3] README.md
+
+[4] Modelfile Reference - Ollama
+
+[5] Context length - Ollama
+
+[6] Research report: Increasing Ollama num\_ctx and Modelfile Guide
+
+[7] How to increase context length of local LLMs in Ollama | LocalLLM.in
+
+[8] Ollama num\_ctx and Context Length for BrainSoup - Nurgo Software Knowledge Base
+
+
+
+
+
+Introduction
+Did you know that when your local Ollama session exceeds its token limit, it silently discards your earliest messages? This creates a sneaky "silent amnesia" where the model completely forgets its system prompt or earlier instructions without ever warning you.
+In this lesson, you will master context window configuration to unlock your local models' full potential. By the end of this lesson, you will be able to:
+Understand how Ollama manages context length and why default configurations can restrict model memory.
+Inspect maximum and current active context lengths using Ollama commands.
+Create customized, persistent models with optimized settings using Modelfiles.
+Optimize hardware resources by balancing context size with VRAM, utilizing KV cache quantization to prevent system freezes.
+The Context Window and Silent Amnesia
+Context length is the maximum number of tokens a model can keep in memory while generating a response. It determines how much previous conversation, source code, or document content the model can evaluate.
+By default, Ollama often restricts context windows to 2048 or 4096 tokens to protect system resources. If your VRAM is under 24 GiB, Ollama defaults to a 4k context window; if you have 24-48 GiB, it scales up to 32k.
+For advanced tasks like agent execution, coding tools, and deep web searches, you typically need a context window of at least 64,000 tokens. When a model's default limit is too low, it quietly pushes out the oldest data in the chat. This means your model might forget its original role-playing guidelines or critical code files you pasted just minutes prior.
+Checking Model Limits and Hardware Allocations
+Before altering any parameters, you need to know what your system is running. Ollama splits context information into two distinct categories:
+Model's Maximum Context Length: The physical ceiling determined by the model's architecture. To see this, use: ollama show <model_name> Inside the output, look for the context length row (for example, 40960 tokens).
+Current Session Context Length: The actual memory actively allocated to a running session. You can inspect this by running: ollama ps Note that this command only returns active statistics when a model is currently loaded in memory.
+Under the PROCESSOR column of ollama ps, you will see a percentage breakdown (such as 100% GPU or a split like 48%/52% CPU/GPU). For the best speed and lowest latency, you want to keep your model completely on your GPU's fast VRAM. Offloading any layers to system RAM and the CPU slows processing down significantly.
+Creating Custom Models with Modelfiles
+If you try to dynamically adjust parameters during an interactive CLI session using commands like /set parameter num_ctx 8192, your changes will disappear as soon as the model is unloaded from memory. To make these changes permanent, you can design a Modelfile—which acts as a configuration blueprint to compile a custom model.
+Creating a custom model is straightforward:
+Create a blueprint file (e.g., Modelfile.custom):
+# Specify the base model
+FROM llama3.2
+
+# Set the new persistent context window size
+PARAMETER num_ctx 8192
+
+# Assign a behavior or role
+SYSTEM "You are a precise JSON formatting assistant."
+Compile the model in your terminal using ollama create: ollama create llama3.2-8k -f Modelfile.custom
+Ollama compiles this instantly. It doesn't redownload gigabytes of model weights; it simply applies your settings as a lightweight layer on top of your existing base model.
+Generating Slide Deck...
+Modelfile Structure and Custom Compiles
+
+Balancing Context Size with Hardware Memory
+Increasing your model's context window requires more system memory. This is because Ollama stores conversational token data in a structure called the KV Cache. As your context gets longer, the KV cache grows non-linearly due to attention mechanisms, which can easily trigger memory freezes.
+Use this rough memory safety guide based on your computer's RAM:
+8 GB RAM: Maximum context of 4096 tokens.
+16 GB RAM: Comfortably handles up to 8192 tokens.
+32 GB+ RAM: Can safely attempt 16384 tokens or higher.
+If you want to run massive context windows without buying new hardware, you can turn on KV Cache Quantization. Running your server with this environment variable: OLLAMA_KV_CACHE_TYPE=q4_0 ollama serve
+This compresses the KV cache to 4-bit precision, cutting its VRAM footprint down to roughly 1/4 of its normal size, allowing you to run much wider context windows with minimal speed losses.
+Dynamic Context Overrides
+While Modelfiles are the gold standard for creating persistent models, you can also alter context sizes temporarily or programmatically without making a new model.
+Through the CLI (Interactive Session): Launch your model, type /set parameter num_ctx 8192 to alter the context size, and optionally run /save <new_model_name> to permanently save your changes to a new model profile.
+Through Environment Variables: Launch your Ollama server with a global override: OLLAMA_CONTEXT_LENGTH=8192 ollama serve
+Through the REST API: Pass the num_ctx value inside the options block of your JSON payload:
+{
+  "model": "llama3.2",
+  "prompt": "Analyze this code...",
+  "options": {
+    "num_ctx": 8192
+  }
+} 
+Set permanent Ollama context with Modelfiles
+
+00:00 / 01:35
+1.0x
+Summary
+Here is a quick recap of what we covered in this lesson:
+The Silent Amnesia Foot-gun: Ollama silently drops leading conversation details when your session runs past its default limit (often 2048 or 4096 tokens).
+Inspection Toolkit: Use ollama show to read a model's architectural maximum context, and use ollama ps to verify active token usage and VRAM/RAM loading splits.
+Modelfiles: You can easily build persistent context setups using custom Modelfiles with FROM <model> and PARAMETER num_ctx <tokens>, compiling them using ollama create.
+Hardware Allocations: Larger context windows expand the KV Cache. To prevent system crashes, keep context sizes aligned to your RAM capacity, or use OLLAMA_KV_CACHE_TYPE=q4_0 to compress cache memory usage to 1/4.

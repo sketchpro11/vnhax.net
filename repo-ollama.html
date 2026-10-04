@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ollama Repository Architecture &amp; Developer Breakdown — vnhax</title>
+  <meta name="description" content="In-depth developer analysis and interactive architecture flowchart for Ollama: inference service, model management, client ecosystem, and agent integration.">
+  <link rel="canonical" href="https://vnhax.net/repo-ollama.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Ollama Repository Architecture &amp; Developer Breakdown — vnhax">
+  <meta property="og:description" content="Explore Ollama's internal subsystems: llama.cpp runner, model storage, CLI/Desktop clients, and agent proxies with interactive Mermaid architecture diagram.">
+  <meta property="og:url" content="https://vnhax.net/repo-ollama.html">
+  <meta property="og:site_name" content="vnhax">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0a'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' fill='%23fff' text-anchor='middle'%3Ev%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Ollama",
+    "description": "Get up and running with large language models locally — Llama 3.3, DeepSeek-R1, Mistral, and more.",
+    "codeRepository": "https://github.com/ollama/ollama",
+    "programmingLanguage": ["Go", "C++", "Python"],
+    "license": "https://github.com/ollama/ollama/blob/main/LICENSE",
+    "author": { "@type": "Organization", "name": "Ollama" },
+    "publisher": { "@type": "Organization", "name": "vnhax", "url": "https://vnhax.net/" }
+  }
+  </script>
+
+  <!-- Mermaid.js for Interactive Diagram Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis'
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-logo" href="index.html" aria-label="vnhax home">vnhax</a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="ai/">Innovation &amp; AI</a>
+        <a href="developer-resources/" aria-current="page">Developer Resources</a>
+        <a href="ui-components/">UI Components</a>
+        <a href="technology/">Tech Platforms</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" aria-label="Search">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+            <circle cx="7.5" cy="7.5" r="6.1" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M12.4 12.4 16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="newsletter-button" href="contact.html">Newsletter</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <article class="post-layout">
+      <div class="post-main">
+        
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="index.html"><span itemprop="name">Home</span></a>
+              <meta itemprop="position" content="1" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="developer-resources/"><span itemprop="name">Developer Resources</span></a>
+              <meta itemprop="position" content="2" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="developer-resources/github-repos/"><span itemprop="name">GitHub Repos</span></a>
+              <meta itemprop="position" content="3" />
+            </li>
+            <span class="breadcrumb-sep">/</span>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span itemprop="name">Ollama</span>
+              <meta itemprop="position" content="4" />
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Repo Hero Header -->
+        <header class="article-header">
+          <div class="repo-badge-bar">
+            <span class="silo-badge silo-badge--dev">Open-Source Repository</span>
+            <span class="silo-badge silo-badge--ai">Local AI Engine</span>
+          </div>
+
+          <div class="repo-header-title">
+            <span>ollama / ollama</span>
+            <a class="github-direct-btn" href="https://github.com/ollama/ollama" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+              <span>GitHub Repo</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <p class="repo-lede">
+            Get up and running with large language models locally. Ollama bundles model management, hardware detection, llama.cpp execution, and an OpenAI-compatible REST API into a lightweight, cross-platform runtime.
+          </p>
+
+          <!-- Verified Repository Stats Strip -->
+          <div class="repo-stats-strip">
+            <span class="stat-pill">
+              ⭐ <strong>135k+</strong> stars
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              🍴 <strong>12.8k+</strong> forks
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              📜 <strong>MIT</strong> License
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              💻 <strong>Go</strong> 65% • <strong>C++</strong> 35%
+            </span>
+            <span class="stat-divider"></span>
+            <span class="stat-pill">
+              📦 <strong>v0.6.2</strong> Active
+            </span>
+          </div>
+
+          <!-- Quick One-Line Install -->
+          <div class="quick-install-box">
+            <div class="quick-install-text">
+              <span class="prompt-char">$</span>
+              <code id="installCommand">curl -fsSL https://ollama.com/install.sh | sh</code>
+            </div>
+            <button class="quick-install-copy-btn" id="copyInstallBtn" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copyInstallText">Copy</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Google AdSense Responsive Leaderboard Unit 1 -->
+        <div class="adsense-wrapper" aria-label="Advertisement Container">
+          <span class="adsense-label">Advertisement</span>
+          <div class="adsense-unit adsense-unit--leaderboard">
+            <div class="adsense-placeholder-inner">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+              <span>RESPONSIVE IN-ARTICLE AD UNIT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             INTERACTIVE ARCHITECTURE FLOWCHART (MERMAID.JS)
+             =================================================================== -->
+        <section class="diagram-card" aria-labelledby="diagram-heading">
+          <div class="diagram-card-head">
+            <div class="diagram-card-title">
+              <h2 id="diagram-heading">Ollama Architecture &amp; System Flow</h2>
+              <p>Visual map of internal Go routines, llama.cpp runners, manifest stores, and client layers.</p>
+            </div>
+            
+            <div class="diagram-toolbar">
+              <button class="diagram-tool-btn" id="zoomInBtn" type="button" title="Zoom in diagram">Zoom In (+)</button>
+              <button class="diagram-tool-btn" id="zoomOutBtn" type="button" title="Zoom out diagram">Zoom Out (-)</button>
+              <button class="diagram-tool-btn" id="zoomResetBtn" type="button" title="Reset diagram zoom">Reset</button>
+            </div>
+          </div>
+
+          <div class="diagram-canvas-wrapper" id="diagramWrapper">
+            <div class="diagram-canvas-inner" id="diagramCanvas">
+              <!-- Exact Mermaid code provided by user -->
+              <pre class="mermaid">
+flowchart TD
+
+subgraph group_inference["Inference service"]
+  node_http_routes["HTTP API routes<br/>[routes.go]"]
+  node_scheduler["Runner scheduler<br/>[sched.go]"]
+  node_llm_iface["Runner interface<br/>[server.go]"]
+  node_llama_runner["llama.cpp runner<br/>[llama_server.go]"]
+  node_mlx_runner["MLX runner<br/>[runner.go]"]
+end
+
+subgraph group_models["Model management"]
+  node_resolver["Model resolver<br/>[model_resolver.go]"]
+  node_model_store["Model manifests<br/>[manifest.go]"]
+  node_blob_store[("Model blobs<br/>[model.go]")]
+  node_hardware["Hardware discovery<br/>[runner.go]"]
+  node_pull_push["Model transfer<br/>[download.go]"]
+  node_import_api["Import commands<br/>[create.go]"]
+  node_safetensors["Safetensors pipeline<br/>[pipeline.go]"]
+end
+
+subgraph group_clients["User clients"]
+  node_cli["Ollama CLI<br/>[cmd.go]"]
+  node_desktop_app["Desktop app<br/>[app.go]"]
+  node_desktop_server["Desktop UI server<br/>[server.go]"]
+  node_web_ui["Chat interface<br/>[main.tsx]"]
+  node_chat_store[("Chat database<br/>[database.go]")]
+end
+
+subgraph group_integrations["Agent integrations"]
+  node_launch["Agent launch<br/>[launch.go]"]
+  node_agent_proxy["Agent proxies<br/>[claude_desktop.go]"]
+  node_compat_api["API compatibility<br/>[anthropic.go]"]
+end
+
+node_api_clients(("REST clients"))
+node_cli_user(("CLI user"))
+node_desktop_user(("Desktop user"))
+node_agent_user(("Agent user"))
+
+node_api_clients -->|"send requests"| node_http_routes
+node_http_routes -->|"schedule inference"| node_scheduler
+node_scheduler -->|"resolve model"| node_resolver
+node_resolver -->|"read manifest"| node_model_store
+node_resolver -->|"read model data"| node_blob_store
+node_scheduler -->|"run model"| node_llm_iface
+node_llm_iface -->|"GGUF backend"| node_llama_runner
+node_llm_iface -.->|"MLX backend"| node_mlx_runner
+node_scheduler -->|"inspect devices"| node_hardware
+node_http_routes -->|"stream results"| node_api_clients
+node_cli_user -->|"run commands"| node_cli
+node_cli -->|"call local API"| node_http_routes
+node_http_routes -->|"manage transfers"| node_pull_push
+node_pull_push -->|"write model blobs"| node_blob_store
+node_http_routes -->|"request import"| node_import_api
+node_import_api -->|"import safetensors"| node_safetensors
+node_safetensors -->|"write layers"| node_blob_store
+node_desktop_user -->|"use desktop app"| node_desktop_app
+node_desktop_app -->|"start UI service"| node_desktop_server
+node_desktop_server -->|"serve interface"| node_web_ui
+node_web_ui -->|"request inference"| node_http_routes
+node_web_ui -->|"persist chats"| node_chat_store
+node_agent_user -->|"launch integration"| node_launch
+node_launch -->|"configure agent"| node_agent_proxy
+node_agent_proxy -->|"proxy requests"| node_http_routes
+node_http_routes -.->|"adapt API"| node_compat_api
+
+click node_cli "https://github.com/ollama/ollama/blob/main/cmd/cmd.go"
+click node_http_routes "https://github.com/ollama/ollama/blob/main/server/routes.go"
+click node_scheduler "https://github.com/ollama/ollama/blob/main/server/sched.go"
+click node_resolver "https://github.com/ollama/ollama/blob/main/server/model_resolver.go"
+click node_model_store "https://github.com/ollama/ollama/blob/main/manifest/manifest.go"
+click node_blob_store "https://github.com/ollama/ollama/blob/main/server/model.go"
+click node_llm_iface "https://github.com/ollama/ollama/blob/main/llm/server.go"
+click node_llama_runner "https://github.com/ollama/ollama/blob/main/llm/llama_server.go"
+click node_mlx_runner "https://github.com/ollama/ollama/blob/main/mlxrunner/runner.go"
+click node_hardware "https://github.com/ollama/ollama/blob/main/discover/runner.go"
+click node_pull_push "https://github.com/ollama/ollama/blob/main/server/download.go"
+click node_import_api "https://github.com/ollama/ollama/blob/main/server/create.go"
+click node_safetensors "https://github.com/ollama/ollama/blob/main/create/pipeline.go"
+click node_desktop_app "https://github.com/ollama/ollama/blob/main/app/cmd/app/app.go"
+click node_desktop_server "https://github.com/ollama/ollama/blob/main/app/server/server.go"
+click node_web_ui "https://github.com/ollama/ollama/blob/main/app/ui/app/src/main.tsx"
+click node_chat_store "https://github.com/ollama/ollama/blob/main/app/store/database.go"
+click node_launch "https://github.com/ollama/ollama/blob/main/cmd/launch/launch.go"
+click node_agent_proxy "https://github.com/ollama/ollama/blob/main/internal/proxy/claude_desktop.go"
+click node_compat_api "https://github.com/ollama/ollama/blob/main/middleware/anthropic.go"
+
+classDef toneNeutral fill:#f8fafc,stroke:#334155,stroke-width:1.5px,color:#0f172a
+classDef toneBlue fill:#dbeafe,stroke:#2563eb,stroke-width:1.5px,color:#172554
+classDef toneAmber fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+classDef toneMint fill:#dcfce7,stroke:#16a34a,stroke-width:1.5px,color:#14532d
+classDef toneRose fill:#ffe4e6,stroke:#e11d48,stroke-width:1.5px,color:#881337
+classDef toneIndigo fill:#e0e7ff,stroke:#4f46e5,stroke-width:1.5px,color:#312e81
+classDef toneTeal fill:#ccfbf1,stroke:#0f766e,stroke-width:1.5px,color:#134e4a
+class node_http_routes,node_scheduler,node_llm_iface,node_llama_runner,node_mlx_runner,node_api_clients,node_cli_user,node_desktop_user,node_agent_user toneBlue
+class node_resolver,node_model_store,node_blob_store,node_hardware,node_pull_push,node_import_api,node_safetensors toneAmber
+class node_cli,node_desktop_app,node_desktop_server,node_web_ui,node_chat_store toneMint
+class node_launch,node_agent_proxy,node_compat_api toneRose
+              </pre>
+            </div>
+          </div>
+
+          <div class="diagram-card-footer">
+            <div class="diagram-legend-strip">
+              <span class="legend-item"><span class="legend-dot legend-dot--blue"></span> Inference Service</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--amber"></span> Model Management</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--mint"></span> User Clients</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--rose"></span> Agent Integrations</span>
+            </div>
+            <span>Tip: Click any node to view its source file on GitHub</span>
+          </div>
+        </section>
+
+        <!-- Subsystems Deep Dive Grid -->
+        <div class="prose">
+          <h2>Core Subsystems Breakdown</h2>
+          <p>
+            Ollama's codebase is designed with strict boundaries separating client entrypoints, runner scheduling, and device discovery. Here is how each subsystem operates in production:
+          </p>
+
+          <div class="subsystems-grid">
+            <!-- 1. Inference Service -->
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--ai">01 • Engine</span>
+                <h3>Inference Service</h3>
+              </div>
+              <p>Receives incoming REST requests, schedules prompt execution, inspects GPU/CPU device availability, and executes models through llama.cpp or Apple Silicon MLX.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ollama/ollama/blob/main/server/routes.go" target="_blank" rel="noopener noreferrer">routes.go <span class="file-role">HTTP API</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/server/sched.go" target="_blank" rel="noopener noreferrer">sched.go <span class="file-role">Scheduler</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/llm/llama_server.go" target="_blank" rel="noopener noreferrer">llama_server.go <span class="file-role">llama.cpp Runner</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/mlxrunner/runner.go" target="_blank" rel="noopener noreferrer">runner.go <span class="file-role">Apple MLX</span></a></li>
+              </ul>
+            </div>
+
+            <!-- 2. Model Management -->
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--tech">02 • Storage</span>
+                <h3>Model Management</h3>
+              </div>
+              <p>Handles cryptographic layer verification, model manifests, chunked GGUF blob storage, and the safetensors-to-GGUF conversion pipeline.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ollama/ollama/blob/main/server/model_resolver.go" target="_blank" rel="noopener noreferrer">model_resolver.go <span class="file-role">Resolver</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/manifest/manifest.go" target="_blank" rel="noopener noreferrer">manifest.go <span class="file-role">Manifest Store</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/server/download.go" target="_blank" rel="noopener noreferrer">download.go <span class="file-role">Pull / Push</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/create/pipeline.go" target="_blank" rel="noopener noreferrer">pipeline.go <span class="file-role">Safetensors</span></a></li>
+              </ul>
+            </div>
+
+            <!-- 3. User Clients -->
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--dev">03 • Clients</span>
+                <h3>User Clients</h3>
+              </div>
+              <p>Cross-platform interactive entrypoints including the primary CLI terminal wrapper, packaged desktop tray app, React web chat, and local SQLite/JSON chat persistence.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ollama/ollama/blob/main/cmd/cmd.go" target="_blank" rel="noopener noreferrer">cmd.go <span class="file-role">Ollama CLI</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/app/cmd/app/app.go" target="_blank" rel="noopener noreferrer">app.go <span class="file-role">Desktop App</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/app/ui/app/src/main.tsx" target="_blank" rel="noopener noreferrer">main.tsx <span class="file-role">Web Chat UI</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/app/store/database.go" target="_blank" rel="noopener noreferrer">database.go <span class="file-role">Chat Store</span></a></li>
+              </ul>
+            </div>
+
+            <!-- 4. Agent Integrations -->
+            <div class="subsystem-card">
+              <div class="subsystem-card-head">
+                <span class="subsystem-badge silo-badge--ui">04 • Agents</span>
+                <h3>Agent Integrations</h3>
+              </div>
+              <p>Middleware proxies that adapt standard OpenAI and Anthropic API protocols so local Ollama instances can act as drop-in backends for Claude Desktop and agent frameworks.</p>
+              <ul class="subsystem-file-list">
+                <li><a href="https://github.com/ollama/ollama/blob/main/cmd/launch/launch.go" target="_blank" rel="noopener noreferrer">launch.go <span class="file-role">Agent Launch</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/internal/proxy/claude_desktop.go" target="_blank" rel="noopener noreferrer">claude_desktop.go <span class="file-role">Desktop Proxy</span></a></li>
+                <li><a href="https://github.com/ollama/ollama/blob/main/middleware/anthropic.go" target="_blank" rel="noopener noreferrer">anthropic.go <span class="file-role">Anthropic Adapter</span></a></li>
+              </ul>
+            </div>
+          </div>
+
+          <h2>Quick Start &amp; Usage Examples</h2>
+          <p>
+            Once Ollama is running on port <code>11434</code>, you can interact with local weights using the CLI or standard HTTP requests:
+          </p>
+
+          <div class="code-block">
+            <div class="code-head">
+              <span>TERMINAL CLI</span>
+              <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText('ollama run llama3.3')">Copy</button>
+            </div>
+            <pre><code># Download and run Llama 3.3 locally
+ollama run llama3.3
+
+# Run reasoning models
+ollama run deepseek-r1:8b</code></pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-head">
+              <span>REST API (CURL)</span>
+              <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText('curl http://localhost:11434/api/generate -d \'{\n  &quot;model&quot;: &quot;llama3.3&quot;,\n  &quot;prompt&quot;: &quot;Why is the sky blue?&quot;\n}\'')">Copy</button>
+            </div>
+            <pre><code>curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.3",
+  "prompt": "Why is the sky blue?",
+  "stream": false
+}'</code></pre>
+          </div>
+
+          <!-- Author Bio -->
+          <div class="author-bio-box">
+            <div class="author-avatar" aria-hidden="true">VH</div>
+            <div class="author-bio-text">
+              <h4>vnhax Developer Repository Analysis</h4>
+              <p>Technical architecture review curated for software engineers and systems architects. Evaluated against open-source license standards, hardware portability, and maintainer release cadences.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Sidebar -->
+      <aside class="post-sidebar">
+        <div class="sidebar-sticky">
+
+          <!-- Sticky Sidebar AdSense Unit -->
+          <div class="adsense-wrapper" style="margin: 0;" aria-label="Advertisement Container">
+            <span class="adsense-label">Advertisement</span>
+            <div class="adsense-unit adsense-unit--sidebar">
+              <div class="adsense-placeholder-inner">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="3" width="20" height="18" rx="2"/>
+                  <line x1="2" y1="9" x2="22" y2="9"/>
+                  <line x1="2" y1="15" x2="22" y2="15"/>
+                </svg>
+                <span>STICKY SIDEBAR AD</span>
+                <span style="font-size: 11px; opacity: 0.7;">300 × 250 / 300 × 600</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Repo Quick Facts Widget -->
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-header">
+              <span class="sidebar-kicker">Metadata</span>
+              <h3>Repository Facts</h3>
+            </div>
+            <ul class="sidebar-silo-nav">
+              <li><strong>Author:</strong> Ollama Foundation</li>
+              <li><strong>Initial Release:</strong> 2023</li>
+              <li><strong>Primary Language:</strong> Go &amp; C++</li>
+              <li><strong>Inference Engine:</strong> llama.cpp &amp; MLX</li>
+              <li><strong>Official Website:</strong> <a href="https://ollama.com" target="_blank" rel="noopener">ollama.com ↗</a></li>
+              <li><strong>Documentation:</strong> <a href="https://github.com/ollama/ollama/tree/main/docs" target="_blank" rel="noopener">Official Docs ↗</a></li>
+            </ul>
+          </div>
+
+          <!-- Related Repositories in Silo -->
+          <div class="sidebar-widget">
+            <div class="sidebar-widget-header">
+              <span class="sidebar-kicker">Related Tools</span>
+              <h3>Explore in AI Silo</h3>
+            </div>
+            <ol class="trending-list">
+              <li><a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">llama.cpp — C++ engine behind Ollama</a></li>
+              <li><a href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener">vLLM — High-throughput serving engine</a></li>
+              <li><a href="https://github.com/open-webui/open-webui" target="_blank" rel="noopener">Open WebUI — Self-hosted chat frontend</a></li>
+              <li><a href="article-ai-tools-github-repos.html">The AI tools and GitHub repos worth your time</a></li>
+              <li><a href="developer-resources/github-repos/">All Curated Developer Repositories</a></li>
+            </ol>
+          </div>
+
+        </div>
+      </aside>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-logo">vnhax</span>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Disclaimer</a>
+    </nav>
+    <span class="footer-note">© 2026 vnhax. All rights reserved.</span>
+  </footer>
+
+  <!-- Interactive Controls Script -->
+  <script>
+    (function() {
+      // 1. Copy Install Command
+      var copyBtn = document.getElementById('copyInstallBtn');
+      var copyText = document.getElementById('copyInstallText');
+      var installCmd = document.getElementById('installCommand');
+      if (copyBtn && copyText && installCmd) {
+        copyBtn.addEventListener('click', function() {
+          navigator.clipboard.writeText(installCmd.textContent).then(function() {
+            copyText.textContent = 'Copied!';
+            setTimeout(function() { copyText.textContent = 'Copy'; }, 2000);
+          });
+        });
+      }
+
+      // 2. Diagram Zoom Controls
+      var canvas = document.getElementById('diagramCanvas');
+      var zoomIn = document.getElementById('zoomInBtn');
+      var zoomOut = document.getElementById('zoomOutBtn');
+      var zoomReset = document.getElementById('zoomResetBtn');
+      var currentScale = 1;
+
+      if (canvas && zoomIn && zoomOut && zoomReset) {
+        zoomIn.addEventListener('click', function() {
+          if (currentScale < 1.8) {
+            currentScale += 0.15;
+            canvas.style.transform = 'scale(' + currentScale + ')';
+          }
+        });
+
+        zoomOut.addEventListener('click', function() {
+          if (currentScale > 0.6) {
+            currentScale -= 0.15;
+            canvas.style.transform = 'scale(' + currentScale + ')';
+          }
+        });
+
+        zoomReset.addEventListener('click', function() {
+          currentScale = 1;
+          canvas.style.transform = 'scale(1)';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

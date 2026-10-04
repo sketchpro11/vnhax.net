@@ -1,0 +1,114 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
+  experimental: {
+    optimizePackageImports: ['gray-matter', 'marked'],
+    staleTimes: {
+      dynamic: 30,
+      static: 300,
+    },
+  },
+  async redirects() {
+    return [
+      {
+        source: '/repo-:slug',
+        destination: '/repos/:slug',
+        permanent: true,
+      },
+      {
+        source: '/repo-:slug.html',
+        destination: '/repos/:slug',
+        permanent: true,
+      },
+      {
+        source: '/article-ai-tools-github-repos',
+        destination: '/blog/open-source-ai-tools-github-repos',
+        permanent: true,
+      },
+      {
+        source: '/article-ai-tools-github-repos.html',
+        destination: '/blog/open-source-ai-tools-github-repos',
+        permanent: true,
+      },
+      {
+        source: '/articles/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/privacy',
+        destination: '/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/privacy.html',
+        destination: '/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/component-template',
+        destination: '/ui-components/component-page-starter',
+        permanent: true,
+      },
+      {
+        source: '/post-template',
+        destination: '/blog',
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/index.html',
+        destination: '/',
+      },
+      {
+        source: '/:path*.html',
+        destination: '/:path*',
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|png|webp|ico|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
