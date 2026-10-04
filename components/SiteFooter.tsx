@@ -95,27 +95,27 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 3: Featured Deep Dives */}
+          {/* Column 3: Resources & Catalogs */}
           <div className="footer-col">
-            <h3 className="footer-col-title">Featured Deep Dives</h3>
+            <h3 className="footer-col-title">Resources &amp; Catalogs</h3>
             <ul className="footer-links-list">
               <li>
-                <Link href="/repos/ollama">Ollama Architecture Review</Link>
+                <Link href="/repos">Repositories Catalog</Link>
               </li>
               <li>
-                <Link href="/repos/llamacpp">llama.cpp Pure C++ Engine</Link>
+                <Link href="/blog">Articles &amp; Research</Link>
               </li>
               <li>
-                <Link href="/repos/comfyui">ComfyUI Node Graph</Link>
+                <Link href="/ai/ai-tools">AI Tools Directory</Link>
               </li>
               <li>
-                <Link href="/repos/langchain">LangChain &amp; LangGraph RAG</Link>
+                <Link href="/developer-resources/github-repos">GitHub Repositories Hub</Link>
               </li>
               <li>
-                <Link href="/repos/cline">Cline Autonomous Agent</Link>
+                <Link href="/ui-components">UI Components Library</Link>
               </li>
               <li>
-                <Link href="/repos/aider">Aider CLI Pair Programmer</Link>
+                <Link href="/technology/platforms">Platform Evaluation Matrix</Link>
               </li>
             </ul>
           </div>

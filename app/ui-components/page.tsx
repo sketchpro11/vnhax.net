@@ -153,95 +153,48 @@ export default function UIComponentsPage() {
               </Link>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '22px' }}>
-              {/* Pattern 1: Liquid Mesh Card Preview */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
-                <span className="card-eyebrow" style={{ marginBottom: '8px' }}>Pattern 01</span>
-                <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '17px', fontWeight: 600, color: '#0f172a', margin: '0 0 6px' }}>
-                  Liquid Glass Mesh Card
-                </h3>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px' }}>
-                  Fluid backdrop gradients with dark macOS terminal preview and hover lift.
-                </p>
-                <div style={{ marginTop: 'auto', background: '#090a0f', borderRadius: '12px', padding: '16px', position: 'relative', overflow: 'hidden' }}>
-                  <div className="liquid-mesh liquid-mesh--ollama" style={{ position: 'absolute', inset: 0, opacity: 0.85 }} />
-                  <div style={{ position: 'relative', zIndex: 2 }}>
-                    <div style={{ display: 'flex', gap: '5px', marginBottom: '10px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f56' }} />
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffbd2e' }} />
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#27c93f' }} />
-                    </div>
-                    <code style={{ fontSize: '12px', color: '#f8fafc', fontFamily: 'monospace' }}>$ ollama run llama3:8b</code>
-                    <div style={{ marginTop: '8px', fontSize: '11px', color: '#38bdf8' }}>API :11434 • Online</div>
-                  </div>
-                </div>
+            <div
+              style={{
+                padding: '48px 24px',
+                textAlign: 'center',
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '16px',
+                margin: '20px 0',
+              }}
+            >
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  background: '#eff6ff',
+                  color: '#2563eb',
+                  display: 'grid',
+                  placeItems: 'center',
+                  margin: '0 auto 16px',
+                  fontSize: '20px',
+                }}
+              >
+                🎨
               </div>
-
-              {/* Pattern 2: macOS Monospace Code Card */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
-                <span className="card-eyebrow" style={{ marginBottom: '8px' }}>Pattern 02</span>
-                <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '17px', fontWeight: 600, color: '#0f172a', margin: '0 0 6px' }}>
-                  macOS Monospace Terminal Window
-                </h3>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px' }}>
-                  Accessible dark container with header buttons and syntax styling.
-                </p>
-                <div style={{ marginTop: 'auto', background: '#0f172a', borderRadius: '12px', padding: '16px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px', marginBottom: '10px' }}>
-                    <div style={{ display: 'flex', gap: '5px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f56' }} />
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffbd2e' }} />
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#27c93f' }} />
-                    </div>
-                    <span style={{ fontSize: '11px', color: '#94a3b8', fontFamily: 'monospace' }}>deploy.sh</span>
-                  </div>
-                  <pre style={{ margin: 0, fontSize: '12px', color: '#38bdf8', fontFamily: 'monospace', lineHeight: 1.5 }}>
-{`docker run -d \\
-  --gpus all \\
-  -p 11434:11434 \\
-  ollama/ollama`}
-                  </pre>
-                </div>
-              </div>
-
-              {/* Pattern 3: Minimalist Command Search Bar */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
-                <span className="card-eyebrow" style={{ marginBottom: '8px' }}>Pattern 03</span>
-                <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '17px', fontWeight: 600, color: '#0f172a', margin: '0 0 6px' }}>
-                  Command Palette &amp; Search Input
-                </h3>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px' }}>
-                  Pill search bar with keyboard shortcut badge and focus ring.
-                </p>
-                <div style={{ marginTop: 'auto', background: '#f8fafc', borderRadius: '12px', padding: '16px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', background: '#ffffff', border: '1.5px solid #0a0a0a', borderRadius: '999px', padding: '8px 16px', gap: '10px' }}>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <span style={{ fontSize: '13px', color: '#64748b', flexGrow: 1 }}>Search documentation...</span>
-                    <kbd style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '4px', padding: '2px 6px', fontSize: '10.5px', fontFamily: 'monospace', color: '#475569' }}>⌘K</kbd>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pattern 4: Accessible Details Disclosure */}
-              <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
-                <span className="card-eyebrow" style={{ marginBottom: '8px' }}>Pattern 04</span>
-                <h3 style={{ fontFamily: 'var(--font-ui)', fontSize: '17px', fontWeight: 600, color: '#0f172a', margin: '0 0 6px' }}>
-                  Semantic Details Accordion
-                </h3>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 16px' }}>
-                  Zero-JS collapsible disclosure using native HTML5 details and summary.
-                </p>
-                <div style={{ marginTop: 'auto', background: '#f8fafc', borderRadius: '12px', padding: '16px', border: '1px solid #e2e8f0' }}>
-                  <details style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '10px 14px' }}>
-                    <summary style={{ fontSize: '13px', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}>
-                      How are CSS tokens structured?
-                    </summary>
-                    <p style={{ fontSize: '12px', color: '#475569', margin: '8px 0 0', lineHeight: 1.5 }}>
-                      Variables are defined in :root and consume HSL color values and clamp() fluid typography.
-                    </p>
-                  </details>
-                </div>
-              </div>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  marginBottom: '8px',
+                }}
+              >
+                UI Component Library Ready
+              </h3>
+              <p style={{ fontSize: '14.5px', color: '#64748b', maxWidth: '540px', margin: '0 auto 20px', lineHeight: 1.6 }}>
+                The component library has been cleared to a clean starting slate. Ready to add your custom, accessible UI components and design system tokens.
+              </p>
+              <Link href="/" className="btn btn--dark" style={{ height: '38px', padding: '0 18px', fontSize: '13px', textDecoration: 'none' }}>
+                Back to Homepage
+              </Link>
             </div>
           </section>
 

@@ -18,28 +18,28 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/article-ai-tools-github-repos.html',
-        destination: '/blog/open-source-ai-tools-github-repos',
+        source: '/article-:slug.html',
+        destination: '/blog',
         permanent: true,
       },
       {
-        source: '/article-ai-tools-github-repos',
-        destination: '/blog/open-source-ai-tools-github-repos',
+        source: '/article-:slug',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/articles/:slug*',
+        destination: '/blog',
         permanent: true,
       },
       {
         source: '/repo-:slug.html',
-        destination: '/repos/:slug',
+        destination: '/repos',
         permanent: true,
       },
       {
         source: '/repo-:slug',
-        destination: '/repos/:slug',
-        permanent: true,
-      },
-      {
-        source: '/articles/:slug',
-        destination: '/blog/:slug',
+        destination: '/repos',
         permanent: true,
       },
       {

@@ -5,15 +5,15 @@ async function test() {
     '/contact',
     '/privacy-policy',
     '/terms',
-    '/repos/ollama',
-    '/repos/aider',
     '/blog',
-    '/blog/open-source-ai-tools-github-repos',
-    '/blog/local-llm-guide-ollama-llama-cpp',
+    '/repos',
     '/ui-components',
     '/ui-components/component-page-starter',
+    '/ai',
     '/ai/ai-tools',
+    '/developer-resources',
     '/developer-resources/github-repos',
+    '/technology',
     '/technology/platforms'
   ];
 
