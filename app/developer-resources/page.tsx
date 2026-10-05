@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -165,25 +166,25 @@ export default function DeveloperResourcesPage() {
                 </span>
               </Link>
 
-              <Link className="topic-card" href="/repos/aider">
+              <Link className="topic-card" href="/repos/ecc">
                 <span className="card-eyebrow">Pair Programming</span>
-                <h3>Terminal-Native AI Agents</h3>
+                <h3>Enterprise Agent Harness</h3>
                 <p>
-                  In-editor and CLI coding assistants powered by AST repository maps, automated git commits, and Tree-Sitter syntax graphs.
+                  Specialized multi-persona coding harness with 68 subagents, custom skills, and verification loops.
                 </p>
                 <span className="card-link">
-                  Inspect Aider <span aria-hidden="true">→</span>
+                  Inspect Everything Claude Code <span aria-hidden="true">→</span>
                 </span>
               </Link>
 
-              <Link className="topic-card" href="/repos/cline">
+              <Link className="topic-card" href="/repos/agent-reach">
                 <span className="card-eyebrow">Agentic Tools</span>
-                <h3>Autonomous Workspace Coding</h3>
+                <h3>Autonomous Web &amp; Social Retrieval</h3>
                 <p>
-                  VS Code extension workflows with terminal execution, browser testing, and Model Context Protocol (MCP) server integration.
+                  Zero-API-fee internet access across 13+ platforms for AI coding assistants and automation workflows.
                 </p>
                 <span className="card-link">
-                  Inspect Cline <span aria-hidden="true">→</span>
+                  Inspect Agent Reach <span aria-hidden="true">→</span>
                 </span>
               </Link>
             </div>
@@ -227,19 +228,31 @@ export default function DeveloperResourcesPage() {
                         <span className="liquid-badge">{meta.category}</span>
                         <span className="liquid-badge liquid-badge--star">⭐ {repo.stars}</span>
                       </div>
-                      <div className="liquid-card-preview">
-                        <div className="preview-mockup-header">
-                          <span className="mockup-dot mockup-dot--red" />
-                          <span className="mockup-dot mockup-dot--yellow" />
-                          <span className="mockup-dot mockup-dot--green" />
-                          <span className="mockup-title">{meta.mockupTitle}</span>
+                      {repo.image ? (
+                        <div className="liquid-card-media">
+                          <img
+                            src={repo.image}
+                            alt={`${repo.name} architecture`}
+                            loading="lazy"
+                            className="liquid-card-img"
+                          />
+                          <div className="liquid-card-overlay" />
                         </div>
-                        <div className="preview-mockup-body">
-                          <span className="mockup-code-line">{meta.cmd}</span>
-                          <span className="mockup-code-line text-muted">{meta.cmdSub}</span>
-                          <span className={`mockup-status-tag ${meta.statusClass || ''}`}>{meta.status}</span>
+                      ) : (
+                        <div className="liquid-card-preview">
+                          <div className="preview-mockup-header">
+                            <span className="mockup-dot mockup-dot--red" />
+                            <span className="mockup-dot mockup-dot--yellow" />
+                            <span className="mockup-dot mockup-dot--green" />
+                            <span className="mockup-title">{meta.mockupTitle}</span>
+                          </div>
+                          <div className="preview-mockup-body">
+                            <span className="mockup-code-line">{meta.cmd}</span>
+                            <span className="mockup-code-line text-muted">{meta.cmdSub}</span>
+                            <span className={`mockup-status-tag ${meta.statusClass || ''}`}>{meta.status}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       <div className="liquid-card-content">
                         <h3 className="liquid-card-title">{repo.name}</h3>
                         <p className="liquid-card-desc">{repo.summary}</p>
@@ -261,7 +274,12 @@ export default function DeveloperResourcesPage() {
               <span className="card-eyebrow">Engineering Decision Rubric</span>
               <h3 id="audit-framework">Auditing Open-Source Dependencies Before Production Adoption</h3>
               <p>
-                GitHub stars and social media buzz are weak proxies for engineering safety. Before pulling an external package into production codebases, our engineering team audits the codebase across four foundational quality gates:
+                GitHub stars and social media buzz are weak proxies for engineering safety. Before pulling an external package into production codebases, the{' '}
+                <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', verticalAlign: 'middle', color: '#0f172a' }}>
+                  <Image src="/icon.png" alt="VNHAX" width={18} height={18} style={{ borderRadius: '50%', border: '1px solid #2563eb' }} />
+                  VNHAX Engineering Team
+                </strong>{' '}
+                audits the codebase across four foundational quality gates:
               </p>
               <div className="editorial-feature-columns">
                 <div className="editorial-column-item">
@@ -299,7 +317,7 @@ export default function DeveloperResourcesPage() {
                 <details key={i} className="hub-faq-item">
                   <summary className="hub-faq-trigger">
                     <span>{faq.question}</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                   </summary>
                   <div className="hub-faq-content">
                     {faq.answer}

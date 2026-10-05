@@ -30,6 +30,10 @@ export async function generateMetadata({ params }: RepoPageProps): Promise<Metad
   const description = repo.metaDescription;
   const url = `${BRAND_CONFIG.siteUrl}/repos/${slug}`;
 
+  const ogImageUrl = repo.image
+    ? `${BRAND_CONFIG.siteUrl}${encodeURI(repo.image)}`
+    : `${BRAND_CONFIG.siteUrl}/apple-icon.png`;
+
   return {
     title,
     description,
@@ -42,11 +46,20 @@ export async function generateMetadata({ params }: RepoPageProps): Promise<Metad
       url,
       siteName: BRAND_CONFIG.name,
       type: 'article',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 675,
+          alt: `${repo.name} architecture overview`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${repo.repoFullName} on GitHub`,
       description,
+      images: [ogImageUrl],
     },
   };
 }
@@ -66,6 +79,7 @@ export default async function RepoDetailPage({ params }: RepoPageProps) {
     '@type': 'SoftwareSourceCode',
     name: repo.name,
     description: repo.metaDescription,
+    image: repo.image ? `${BRAND_CONFIG.siteUrl}${encodeURI(repo.image)}` : undefined,
     codeRepository: repo.githubUrl,
     programmingLanguage: repo.language,
     license: repo.license,

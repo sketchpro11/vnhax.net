@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -147,11 +148,26 @@ export default async function BlogIndexPage() {
                   </Link>
                 </h2>
 
-                <p style={{ fontSize: '14.5px', color: '#64748b', lineHeight: 1.6, flexGrow: 1, marginBottom: '20px' }}>
+                <p style={{ fontSize: '14.5px', color: '#64748b', lineHeight: 1.6, flexGrow: 1, marginBottom: '16px' }}>
                   {post.frontmatter.description}
                 </p>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px', borderTop: '1px solid #f1f5f9', fontSize: '13px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1px solid #2563eb', background: '#0f172a' }}>
+                    <Image
+                      src="/icon.png"
+                      alt="VNHAX"
+                      width={22}
+                      height={22}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <span style={{ fontSize: '12.5px', fontWeight: 600, color: '#334155' }}>
+                    {post.frontmatter.author || 'VNHAX Engineering Team'}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f1f5f9', fontSize: '13px' }}>
                   <span style={{ color: '#64748b' }}>
                     {new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </span>

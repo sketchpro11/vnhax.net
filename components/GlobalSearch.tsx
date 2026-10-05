@@ -178,6 +178,14 @@ export const SEARCH_INDEX: SearchItem[] = [
     tags: ['caveman', 'tokens', 'proxy', 'compressor', 'go', 'llm'],
   },
   {
+    id: 'repo-agent-reach',
+    title: 'Agent-Reach — Multi-Platform Agent Access',
+    category: 'Repository',
+    description: 'Direct zero-API-fee internet access across 13+ social & web platforms for AI agents with smart failover.',
+    url: '/repos/agent-reach',
+    tags: ['agent-reach', 'social', 'twitter', 'reddit', 'youtube', 'bilibili', 'xiaohongshu', 'mcp', 'scraping'],
+  },
+  {
     id: 'hub-tech',
     title: 'Tech Platforms & Infrastructure',
     category: 'Hub',

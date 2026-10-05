@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -105,8 +106,8 @@ export default function ReposIndexPage() {
           >
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Trending Today</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>Top 5 Repos</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>October 4, 2026 Leaderboard</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>Top {repos.length} Repos</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Verified Leaderboard</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Focus Areas</div>
@@ -182,6 +183,33 @@ export default function ReposIndexPage() {
                         ⭐ {repo.stars}
                       </span>
                     </div>
+
+                    {repo.image && (
+                      <Link
+                        href={`/repos/${repo.slug}`}
+                        style={{
+                          display: 'block',
+                          marginBottom: '14px',
+                          borderRadius: '10px',
+                          overflow: 'hidden',
+                          border: '1px solid #e2e8f0',
+                          background: '#090d16',
+                          aspectRatio: '16/10',
+                        }}
+                      >
+                        <img
+                          src={repo.image}
+                          alt={`${repo.name} architecture overview`}
+                          loading="lazy"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            display: 'block',
+                          }}
+                        />
+                      </Link>
+                    )}
 
                     <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', margin: '0 0 6px' }}>
                       <Link href={`/repos/${repo.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>
@@ -275,15 +303,26 @@ export default function ReposIndexPage() {
                     Conversational agent fluff consumes up to 45% of context windows. Proxies that strip prose while preserving code ensure engineers stay within token budgets and rate limits.
                   </p>
                 </div>
+                <div className="editorial-column-item">
+                  <h4>🌐 13+ Platform Reach (Agent-Reach)</h4>
+                  <p>
+                    Live web and social data is walled behind pay-per-use APIs and IP blocks. Unified multi-backend routing gives agents zero-cost real-time retrieval across Twitter, Reddit, and video networks.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
 
           {/* Bottom Authority Box */}
           <section className="hub-note">
-            <h2>Independent Open-Source Verification</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1.5px solid #2563eb', background: '#0f172a' }}>
+                <Image src="/icon.png" alt="VNHAX" width={32} height={32} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h2 style={{ margin: 0, fontSize: '20px' }}>Independent Open-Source Verification</h2>
+            </div>
             <p>
-              Every repository indexed on VNHAX undergoes technical auditing by our engineering team. We assess commit activity, license permissiveness, security vulnerability disclosures, and performance benchmarks to ensure developers make informed architectural decisions.
+              Every repository indexed on VNHAX undergoes rigorous technical auditing by the <strong>VNHAX Engineering Team</strong>. We assess commit activity, license permissiveness, security vulnerability disclosures, and performance benchmarks to ensure developers make informed architectural decisions.
             </p>
           </section>
         </div>

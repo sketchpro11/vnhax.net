@@ -127,6 +127,30 @@ export default function GitHubReposPage() {
                         ⭐ {repo.stars}
                       </span>
                     </div>
+                    {repo.image && (
+                      <div
+                        style={{
+                          marginBottom: '12px',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          border: '1px solid #e2e8f0',
+                          background: '#0a0d16',
+                          aspectRatio: '16/10',
+                        }}
+                      >
+                        <img
+                          src={repo.image}
+                          alt={`${repo.name} overview`}
+                          loading="lazy"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            display: 'block',
+                          }}
+                        />
+                      </div>
+                    )}
                     <h3>{repo.name}</h3>
                     <p>{repo.summary}</p>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>

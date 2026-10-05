@@ -2567,6 +2567,44 @@ input:focus-visible {
   background: #090a0f;
 }
 
+/* Curated Repository Artwork Media */
+.liquid-card-media {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #050608;
+  overflow: hidden;
+}
+
+.liquid-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  opacity: 0.92;
+}
+
+.liquid-card:hover .liquid-card-img {
+  transform: scale(1.05);
+  filter: brightness(1.06);
+  opacity: 1;
+}
+
+.liquid-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 10, 15, 0.55) 0%,
+    rgba(9, 10, 15, 0.08) 28%,
+    rgba(9, 10, 15, 0.65) 65%,
+    rgba(9, 10, 15, 0.98) 100%
+  );
+  pointer-events: none;
+}
+
 /* Animated / rich fluid meshes for each repo */
 .liquid-mesh {
   position: absolute;

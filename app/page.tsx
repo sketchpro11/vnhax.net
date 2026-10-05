@@ -378,7 +378,19 @@ export default function HomePage() {
               {repos.map((repo) => (
                 <Link key={repo.slug} className="liquid-card" href={`/repos/${repo.slug}`}>
                   <div className="liquid-card-inner">
-                    <div className="liquid-mesh"></div>
+                    {repo.image ? (
+                      <div className="liquid-card-media">
+                        <img
+                          src={repo.image}
+                          alt={`${repo.name} architecture overview`}
+                          loading="lazy"
+                          className="liquid-card-img"
+                        />
+                        <div className="liquid-card-overlay" />
+                      </div>
+                    ) : (
+                      <div className="liquid-mesh" />
+                    )}
                     <div className="liquid-card-badges">
                       <span className="liquid-badge">{repo.category}</span>
                       {repo.stars && <span className="liquid-badge liquid-badge--star">⭐ {repo.stars}</span>}

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface SectionItem {
   id: string;
@@ -136,7 +137,12 @@ export default function AboutTableOfContents() {
         <div className="sidebar-widget policy-contact-widget">
           <div className="sidebar-widget-header">
             <span className="sidebar-kicker">Editorial Desk</span>
-            <h3>Reach Our Engineering Team</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+              <div style={{ width: '22px', height: '22px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1px solid #2563eb', background: '#0f172a' }}>
+                <Image src="/icon.png" alt="VNHAX" width={22} height={22} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h3 style={{ margin: 0 }}>Reach Our Engineering Team</h3>
+            </div>
           </div>
           <p className="policy-contact-desc">
             Technical corrections, benchmark feedback, or open-source repo submissions:

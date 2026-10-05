@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getAllBlogs } from '@/lib/blog';
+import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -25,6 +26,10 @@ export const metadata: Metadata = {
 
 export default async function AIPage() {
   const posts = await getAllBlogs();
+  const allRepos = getAllRepos();
+  const aiRepos = allRepos.filter((r) =>
+    ['agent-reach', 'caveman', 'ecc'].includes(r.slug)
+  );
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
@@ -110,108 +115,44 @@ export default async function AIPage() {
           {/* Featured Repositories (Liquid Cards) */}
           <section className="topic-section" aria-labelledby="featured-repos">
             <h2 id="featured-repos" className="topic-section-title">
-              Open-source model runtimes
+              Open-source AI &amp; agent frameworks
             </h2>
             <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 20px' }}>
-              Curated local LLM engines and diffusion backends with verified architecture teardowns.
+              Curated local LLM agents, token optimization proxies, and retrieval backends with verified architecture teardowns.
             </p>
 
             <div className="repo-liquid-grid" style={{ margin: 0 }}>
-              {/* Ollama Liquid Card */}
-              <Link className="liquid-card" href="/repos/ollama">
-                <div className="liquid-card-inner">
-                  <div className="liquid-mesh liquid-mesh--ollama" />
-                  <div className="liquid-card-badges">
-                    <span className="liquid-badge">Local AI</span>
-                    <span className="liquid-badge liquid-badge--star">⭐ 105k</span>
-                  </div>
-                  <div className="liquid-card-preview">
-                    <div className="preview-mockup-header">
-                      <span className="mockup-dot mockup-dot--red" />
-                      <span className="mockup-dot mockup-dot--yellow" />
-                      <span className="mockup-dot mockup-dot--green" />
-                      <span className="mockup-title">ollama-cli</span>
+              {aiRepos.map((repo) => (
+                <Link key={repo.slug} className="liquid-card" href={`/repos/${repo.slug}`}>
+                  <div className="liquid-card-inner">
+                    {repo.image ? (
+                      <div className="liquid-card-media">
+                        <img
+                          src={repo.image}
+                          alt={`${repo.name} architecture overview`}
+                          loading="lazy"
+                          className="liquid-card-img"
+                        />
+                        <div className="liquid-card-overlay" />
+                      </div>
+                    ) : (
+                      <div className="liquid-mesh" />
+                    )}
+                    <div className="liquid-card-badges">
+                      <span className="liquid-badge">{repo.category}</span>
+                      {repo.stars && <span className="liquid-badge liquid-badge--star">⭐ {repo.stars}</span>}
                     </div>
-                    <div className="preview-mockup-body">
-                      <span className="mockup-code-line">$ ollama run deepseek-r1:14b</span>
-                      <span className="mockup-code-line text-muted">Thinking Process: active...</span>
-                      <span className="mockup-status-tag">API: :11434 • Online</span>
-                    </div>
-                  </div>
-                  <div className="liquid-card-content">
-                    <h3 className="liquid-card-title">Ollama</h3>
-                    <p className="liquid-card-desc">Run open-weight language models locally with a simple developer-friendly API and model library.</p>
-                    <div className="liquid-card-btn">
-                      <span>Explore Architecture</span>
-                      <span aria-hidden="true">→</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* llama.cpp Liquid Card */}
-              <Link className="liquid-card" href="/repos/llamacpp">
-                <div className="liquid-card-inner">
-                  <div className="liquid-mesh liquid-mesh--llamacpp" />
-                  <div className="liquid-card-badges">
-                    <span className="liquid-badge">Inference Core</span>
-                    <span className="liquid-badge liquid-badge--star">⭐ 75k</span>
-                  </div>
-                  <div className="liquid-card-preview">
-                    <div className="preview-mockup-header">
-                      <span className="mockup-dot mockup-dot--red" />
-                      <span className="mockup-dot mockup-dot--yellow" />
-                      <span className="mockup-dot mockup-dot--green" />
-                      <span className="mockup-title">llama-server</span>
-                    </div>
-                    <div className="preview-mockup-body">
-                      <span className="mockup-code-line">$ ./llama-cli -m model.gguf</span>
-                      <span className="mockup-code-line text-muted">Backend: AVX2 / CUDA</span>
-                      <span className="mockup-status-tag mockup-status-tag--amber">Speed: 76.4 t/s</span>
+                    <div className="liquid-card-content">
+                      <h3 className="liquid-card-title">{repo.name}</h3>
+                      <p className="liquid-card-desc">{repo.summary}</p>
+                      <div className="liquid-card-btn">
+                        <span>Explore Architecture</span>
+                        <span aria-hidden="true">→</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="liquid-card-content">
-                    <h3 className="liquid-card-title">llama.cpp</h3>
-                    <p className="liquid-card-desc">A high-performance C/C++ inference engine for running LLMs across everyday consumer hardware.</p>
-                    <div className="liquid-card-btn">
-                      <span>Explore Architecture</span>
-                      <span aria-hidden="true">→</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* ComfyUI Liquid Card */}
-              <Link className="liquid-card" href="/repos/comfyui">
-                <div className="liquid-card-inner">
-                  <div className="liquid-mesh liquid-mesh--comfyui" />
-                  <div className="liquid-card-badges">
-                    <span className="liquid-badge">Diffusion Graph</span>
-                    <span className="liquid-badge liquid-badge--star">⭐ 62k</span>
-                  </div>
-                  <div className="liquid-card-preview">
-                    <div className="preview-mockup-header">
-                      <span className="mockup-dot mockup-dot--red" />
-                      <span className="mockup-dot mockup-dot--yellow" />
-                      <span className="mockup-dot mockup-dot--green" />
-                      <span className="mockup-title">comfy-api</span>
-                    </div>
-                    <div className="preview-mockup-body">
-                      <span className="mockup-code-line">$ python main.py --listen</span>
-                      <span className="mockup-code-line text-muted">Flux.1 Schnell • NF4 VAE</span>
-                      <span className="mockup-status-tag">Headless Mode</span>
-                    </div>
-                  </div>
-                  <div className="liquid-card-content">
-                    <h3 className="liquid-card-title">ComfyUI</h3>
-                    <p className="liquid-card-desc">The most powerful and modular visual diffusion model GUI and backend for controlled generation.</p>
-                    <div className="liquid-card-btn">
-                      <span>Explore Architecture</span>
-                      <span aria-hidden="true">→</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              ))}
             </div>
           </section>
 
@@ -285,7 +226,7 @@ export default async function AIPage() {
               <details className="hub-faq-item">
                 <summary className="hub-faq-trigger">
                   <span>How much VRAM is required to run DeepSeek-R1 or Llama 3 locally?</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </summary>
                 <div className="hub-faq-content">
                   A 14B model quantized to Q4_K_M requires approximately 9GB of VRAM, running smoothly on an RTX 3060/4060 or a 16GB Mac. A 32B model needs roughly 20GB of VRAM (RTX 3090/4090 or 36GB Mac). Flagship 70B parameter models require at least 40GB–48GB of unified memory or dual-GPU setups.
@@ -294,7 +235,7 @@ export default async function AIPage() {
               <details className="hub-faq-item">
                 <summary className="hub-faq-trigger">
                   <span>What is the difference between Ollama and llama.cpp?</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </summary>
                 <div className="hub-faq-content">
                   llama.cpp is the core low-level C/C++ inference engine that implements hardware acceleration kernels (AVX2, CUDA, Metal) and the GGUF file format. Ollama packages llama.cpp into a developer-friendly service with automatic model downloading, background daemon management, Modelfile customization, and an OpenAI-compatible REST API.
@@ -303,7 +244,7 @@ export default async function AIPage() {
               <details className="hub-faq-item">
                 <summary className="hub-faq-trigger">
                   <span>Are local models permitted for commercial software development?</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </summary>
                 <div className="hub-faq-content">
                   Yes, provided you review the individual model weight licenses. DeepSeek-R1 and Qwen 2.5 are released under permissive MIT or Apache 2.0 licenses allowing commercial usage. Meta&apos;s Llama 3.3 is licensed under the Llama 3.3 Community License, which allows free commercial usage up to 700 million monthly active users.

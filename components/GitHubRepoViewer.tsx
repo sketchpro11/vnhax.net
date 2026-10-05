@@ -2,6 +2,12 @@
 
 import React, { useState } from 'react';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import PonytailExtendedDoc from '@/components/PonytailExtendedDoc';
+import ImpeccableExtendedDoc from '@/components/ImpeccableExtendedDoc';
+import ECCExtendedDoc from '@/components/ECCExtendedDoc';
+import EffectExtendedDoc from '@/components/EffectExtendedDoc';
+import CavemanExtendedDoc from '@/components/CavemanExtendedDoc';
+import AgentReachExtendedDoc from '@/components/AgentReachExtendedDoc';
 import type { RepoDetails, RepoIssue, RepoPR, RepoActionRun } from '@/lib/repos-data';
 
 interface GitHubRepoViewerProps {
@@ -11,7 +17,16 @@ interface GitHubRepoViewerProps {
 export default function GitHubRepoViewer({ repo }: GitHubRepoViewerProps) {
   const [activeTab, setActiveTab] = useState<'code' | 'issues' | 'pulls' | 'actions' | 'insights'>('code');
   const [isStarred, setIsStarred] = useState(false);
-  const [starCount, setStarCount] = useState(parseInt(repo.stars.replace(/[^0-9]/g, '')) || 1281);
+  const [starCount, setStarCount] = useState(() => {
+    const raw = repo.stars.toLowerCase().trim();
+    if (raw.endsWith('k')) {
+      return Math.round(parseFloat(raw.replace('k', '')) * 1000);
+    }
+    if (raw.endsWith('m')) {
+      return Math.round(parseFloat(raw.replace('m', '')) * 1000000);
+    }
+    return parseInt(raw.replace(/[^0-9]/g, ''), 10) || 1281;
+  });
   const [isWatching, setIsWatching] = useState(false);
   const [showCodeDropdown, setShowCodeDropdown] = useState(false);
   const [copiedClone, setCopiedClone] = useState(false);
@@ -575,8 +590,22 @@ export default function GitHubRepoViewer({ repo }: GitHubRepoViewerProps) {
                   </div>
 
                   <div style={{ padding: '32px', color: '#1f2328', lineHeight: 1.65 }}>
-                    {/* Badges Bar */}
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
+                    {repo.slug === 'ponytail' ? (
+                      <PonytailExtendedDoc />
+                    ) : repo.slug === 'impeccable' ? (
+                      <ImpeccableExtendedDoc />
+                    ) : repo.slug === 'ecc' ? (
+                      <ECCExtendedDoc />
+                    ) : repo.slug === 'effect' ? (
+                      <EffectExtendedDoc />
+                    ) : repo.slug === 'caveman' ? (
+                      <CavemanExtendedDoc />
+                    ) : repo.slug === 'agent-reach' ? (
+                      <AgentReachExtendedDoc />
+                    ) : (
+                      <>
+                        {/* Badges Bar */}
+                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
                       <span style={{ background: '#2563eb', color: '#ffffff', fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: '4px' }}>
                         License: {repo.license}
                       </span>
@@ -594,6 +623,32 @@ export default function GitHubRepoViewer({ repo }: GitHubRepoViewerProps) {
                     <h1 style={{ fontSize: '28px', fontWeight: 700, borderBottom: '1px solid #d0d7de', paddingBottom: '10px', marginBottom: '16px' }}>
                       {repo.name}
                     </h1>
+
+                    {repo.image && (
+                      <div
+                        style={{
+                          margin: '20px 0 24px',
+                          borderRadius: '10px',
+                          overflow: 'hidden',
+                          border: '1px solid #d0d7de',
+                          background: '#090d16',
+                          textAlign: 'center',
+                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
+                        }}
+                      >
+                        <img
+                          src={repo.image}
+                          alt={`${repo.name} — Architecture Diagram & System Workflow`}
+                          style={{
+                            width: '100%',
+                            maxHeight: '480px',
+                            objectFit: 'contain',
+                            display: 'block',
+                            margin: '0 auto',
+                          }}
+                        />
+                      </div>
+                    )}
 
                     <p style={{ fontSize: '16px', color: '#334155', marginBottom: '24px' }}>
                       {repo.summary}
@@ -686,8 +741,10 @@ export default function GitHubRepoViewer({ repo }: GitHubRepoViewerProps) {
                         </div>
                       </div>
                     )}
-                  </div>
-                </article>
+                  </>
+                )}
+              </div>
+            </article>
               </>
             )}
 

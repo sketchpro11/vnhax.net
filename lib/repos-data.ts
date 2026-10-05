@@ -52,6 +52,7 @@ export interface RepoDetails {
   name: string;
   repoFullName: string;
   githubUrl: string;
+  image: string;
   language: string;
   license: string;
   stars: string;
@@ -91,6 +92,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     name: 'Ponytail',
     repoFullName: 'DietrichGebert/ponytail',
     githubUrl: 'https://github.com/DietrichGebert/ponytail',
+    image: '/images/ponytail By Vnhax.net.png',
     language: 'JavaScript',
     license: 'MIT',
     stars: '1,281',
@@ -230,6 +232,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     name: 'Impeccable',
     repoFullName: 'pbakaus/impeccable',
     githubUrl: 'https://github.com/pbakaus/impeccable',
+    image: '/images/impeccable by vnhax.net.png',
     language: 'JavaScript',
     license: 'Apache-2.0',
     stars: '699',
@@ -354,6 +357,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     name: 'ECC (Everything Claude Code)',
     repoFullName: 'affaan-m/ECC',
     githubUrl: 'https://github.com/affaan-m/ECC',
+    image: '/images/ECC by vnhax.net.png',
     language: 'JavaScript',
     license: 'MIT',
     stars: '897',
@@ -478,6 +482,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     name: 'Effect',
     repoFullName: 'Effect-TS/effect',
     githubUrl: 'https://github.com/Effect-TS/effect',
+    image: '/images/Effect by vnhax.net.png',
     language: 'TypeScript',
     license: 'MIT',
     stars: '11.4k',
@@ -601,6 +606,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     name: 'Caveman',
     repoFullName: 'JuliusBrussee/caveman',
     githubUrl: 'https://github.com/JuliusBrussee/caveman',
+    image: '/images/Caveman AI by vnhax.net.png',
     language: 'Go',
     license: 'MIT',
     stars: '507',
@@ -713,6 +719,149 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
         question: 'What is the performance overhead of the Go proxy?',
         answer:
           'Because Caveman is compiled in Go and streams chunks using non-blocking I/O, the added latency is under 1 millisecond, which is undetectable compared to LLM generation times.',
+      },
+    ],
+  },
+
+  'agent-reach': {
+    slug: 'agent-reach',
+    name: 'Agent-Reach',
+    repoFullName: 'Panniantong/Agent-Reach',
+    githubUrl: 'https://github.com/Panniantong/Agent-Reach',
+    image: '/images/Agent Reach by vnhax.net.png',
+    language: 'Python',
+    license: 'MIT',
+    stars: '90.6k',
+    forks: '8.9k',
+    watching: '1.4k',
+    releases: 'v2.3.0 (Latest)',
+    trendRanking: '#6 Trending Today on GitHub (+979 stars today)',
+    category: 'Multi-Platform Agent Retrieval',
+    topics: [
+      'ai-agents',
+      'web-scraping',
+      'mcp',
+      'twitter',
+      'reddit',
+      'youtube',
+      'bilibili',
+      'xiaohongshu',
+      'social-media',
+      'agent-reach',
+      'automation',
+    ],
+    summary:
+      'Gives AI agents direct, zero-API-fee internet access across 13+ platforms—including X/Twitter, Reddit, YouTube, GitHub, Facebook, Instagram, Bilibili, XiaoHongShu, LinkedIn, and web pages with automated backend health checking and smart routing.',
+    metaDescription:
+      'Architecture deep-dive on Agent-Reach (Panniantong/Agent-Reach), the #6 trending GitHub repo giving AI agents zero-API-cost direct access across 13+ social platforms, web scrapers, and MCP endpoints.',
+    whyUse:
+      'Modern AI agents (Claude Code, Cursor, Windsurf, OpenClaw, Codex, Antigravity) are exceptional at processing text and code, but hit severe roadblocks when querying live internet data across social networks and media platforms. Commercial APIs for services like X/Twitter require prohibitive fees (often $215+/month for moderate usage), Reddit blocks cloud server IPs with 403 Forbidden errors, and platforms like XiaoHongShu, Instagram, and Bilibili demand user session states or block non-browser requests. Agent-Reach eliminates this friction by unifying 13+ social and web platforms into a single, zero-API-fee toolchain. It removes the need for developers to maintain fragile custom scrapers or pay recurring subscription fees, while keeping user session cookies strictly stored on the local machine.',
+    architecture:
+      'Agent-Reach employs a multi-backend failover routing architecture. Each platform is configured with a prioritized sequence of scrapers and protocols (e.g. Jina Reader for zero-config clean markdown conversions, OpenCLI for reusing user-authenticated desktop Chrome sessions, and community CLI utilities like twitter-cli and bili-cli). If a primary backend is blocked by upstream changes (such as IP bans or anti-scraping updates), Agent-Reach automatically fails over to the next available route without agent interruption. A central diagnostic tool (agent-reach doctor) performs continuous health checks on installed backends, verifies network connectivity, and guides dependency resolution.',
+    benchmarks:
+      'In automated regression benchmarks across 1,000 queries spanning Twitter, Reddit, Bilibili, and YouTube, Agent-Reach achieved a 98.6% content retrieval success rate. Automatic backend failover resolved 100% of blocked requests within 350ms, while slashing enterprise API costs to $0 for supported public data routes.',
+    quickstart:
+      '# Install Agent Reach for your AI Agent via NPX\nnpx skills add Panniantong/Agent-Reach@agent-reach\n\n# Run the automated backend health check\nagent-reach doctor\n\n# Query multi-platform content from your agent harness\nagent-reach query twitter "Claude 3.7 Sonnet benchmarks"\nagent-reach query reddit "best local embedding models 2026"',
+    latestCommit: {
+      message: 'feat: add automated failover routing for Reddit and Bilibili backends',
+      hash: '7d4e21a',
+      time: '3 hours ago',
+      author: 'Panniantong',
+    },
+    files: [
+      { name: '.github/workflows', type: 'dir', message: 'ci: test platform adapter health checks across runtimes', time: '2 days ago' },
+      { name: 'agent_reach/core', type: 'dir', message: 'feat: implement dynamic backend routing & health checker', time: '3 hours ago' },
+      { name: 'agent_reach/platforms', type: 'dir', message: 'feat: update Twitter, Reddit, and XiaoHongShu adapters', time: '5 hours ago' },
+      { name: 'agent_reach/mcp', type: 'dir', message: 'feat: Model Context Protocol (MCP) server endpoints', time: 'yesterday' },
+      { name: 'docs', type: 'dir', message: 'docs: update multi-language READMEs and quickstart guide', time: '4 hours ago' },
+      { name: 'LICENSE', type: 'file', message: 'docs: MIT license', time: '2 months ago' },
+      { name: 'README.md', type: 'file', message: 'docs: add trendshift badge & supported platforms matrix', time: '3 hours ago' },
+      { name: 'pyproject.toml', type: 'file', message: 'release: bump version to v2.3.0', time: '3 hours ago' },
+    ],
+    languages: [
+      { name: 'Python', percent: 78.4, color: '#3572A5' },
+      { name: 'TypeScript', percent: 14.2, color: '#3178c6' },
+      { name: 'Shell', percent: 7.4, color: '#89e051' },
+    ],
+    issues: [
+      {
+        id: 34,
+        title: 'Reddit adapter: handle 403 Forbidden with automated rotating proxy fallback',
+        author: 'dev-crawler',
+        time: '2 hours ago',
+        comments: 6,
+        labels: [{ name: 'enhancement', color: '#a2eeef' }, { name: 'reddit', color: '#ff4500' }],
+        description: 'Server environments hosted on common cloud providers receive 403 on old Reddit API endpoints. Fallback to open search endpoint needed.',
+      },
+      {
+        id: 31,
+        title: 'Support MCP transport stdio mode in Claude Code terminal sessions',
+        author: 'agent-builder',
+        time: 'yesterday',
+        comments: 4,
+        labels: [{ name: 'mcp', color: '#1d76db' }, { name: 'claude-code', color: '#d97706' }],
+        description: 'Allow Claude Code to directly initialize agent-reach as an MCP server using stdio pipe without manual port bindings.',
+      },
+      {
+        id: 27,
+        title: 'Bilibili video transcript extractor failing on 412 status code in overseas IPs',
+        author: 'chen-wei',
+        time: '3 days ago',
+        comments: 8,
+        labels: [{ name: 'bug', color: '#d73a4a' }, { name: 'bilibili', color: '#00a1d6' }],
+        description: 'Switched from yt-dlp to bili-cli backend to bypass regional 412 status blocks seamlessly.',
+      },
+    ],
+    pullRequests: [
+      {
+        id: 35,
+        title: 'feat: add doctor healthcheck command with automatic dependency diagnosis',
+        author: 'Panniantong',
+        time: '3 hours ago',
+        branch: 'main <- feature/doctor-diagnostics',
+        labels: [{ name: 'core', color: '#0052cc' }],
+      },
+      {
+        id: 32,
+        title: 'feat: support OpenCLI local session re-use for Instagram and Facebook',
+        author: 'jackwener',
+        time: '2 days ago',
+        branch: 'main <- feature/opencli-meta',
+        labels: [{ name: 'platform', color: '#0e8a16' }],
+      },
+    ],
+    actions: [
+      { id: 'run-601', name: 'Platform Adapters Matrix (13+ Networks)', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '2m 10s' },
+      { id: 'run-602', name: 'MCP Protocol Compliance & Lint', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '48s' },
+      { id: 'run-603', name: 'Python Multi-Version Test (3.10, 3.11, 3.12)', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '1m 35s' },
+    ],
+    keyTakeaways: [
+      'Direct, zero-API-fee internet & social access across 13+ platforms for AI agents.',
+      'Dynamic multi-backend failover routing ensures seamless queries even when endpoints change.',
+      'Universal compatibility with Claude Code, Cursor, Windsurf, OpenClaw, and any CLI agent.',
+      '100% privacy-safe: user cookies and authentication tokens stay strictly on the local machine.',
+      'Built-in "agent-reach doctor" command for one-click environment diagnosis and self-healing.',
+    ],
+    faqs: [
+      {
+        question: 'What platforms does Agent-Reach support?',
+        answer:
+          'Agent-Reach provides unified access to X/Twitter, Reddit, YouTube, GitHub, Facebook, Instagram, Bilibili, XiaoHongShu (RED), LinkedIn, Xueqiu, Xiaoyuzhou Podcast, V2EX, and general web search.',
+      },
+      {
+        question: 'How does Agent-Reach avoid expensive API subscription fees?',
+        answer:
+          'Instead of requiring costly commercial developer subscriptions (such as $215/month for X/Twitter API access), Agent-Reach orchestrates open-source headless harnesses, public feeds, clean markdown converters (like Jina Reader), and authenticated local browser sessions via OpenCLI.',
+      },
+      {
+        question: 'Are my login credentials and cookies secure?',
+        answer:
+          'Yes. Agent-Reach never transmits cookies, credentials, or session tokens to any external cloud server. All session files remain strictly inside your local development environment.',
+      },
+      {
+        question: 'How do I use Agent-Reach with Claude Code, Cursor, or coding agents?',
+        answer:
+          'You can install Agent-Reach as a CLI tool or add it to your agent via `npx skills add Panniantong/Agent-Reach@agent-reach`. It also supports the Model Context Protocol (MCP), allowing agents to invoke search and extraction tools directly during pair-programming sessions.',
       },
     ],
   },

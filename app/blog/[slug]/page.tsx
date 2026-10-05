@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -154,11 +155,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               
               <div className="post-meta-bar">
                 <div className="author-chip">
-                  <div className="author-avatar" aria-hidden="true">
-                    {(post.frontmatter.author || 'V')[0]}
+                  <div className="author-avatar" aria-hidden="true" style={{ overflow: 'hidden', padding: 0, background: '#0f172a', border: '1.5px solid #3b82f6' }}>
+                    <Image
+                      src="/icon.png"
+                      alt={post.frontmatter.author || 'VNHAX Engineering Team'}
+                      width={44}
+                      height={44}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </div>
                   <div className="author-info">
-                    <span className="author-name">{post.frontmatter.author || 'VNHAX Editorial'}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span className="author-name">{post.frontmatter.author || 'VNHAX Engineering Team'}</span>
+                      <span title="Verified Publisher" style={{ display: 'inline-flex', alignItems: 'center', color: '#2563eb' }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                      </span>
+                    </div>
                     <div className="author-meta">
                       <time dateTime={post.frontmatter.date}>{formattedDate}</time>
                       <span>•</span>
@@ -212,6 +226,70 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
             )}
+
+            {/* Editorial Authority / Author Bio Card */}
+            <div
+              className="author-bio-card"
+              style={{
+                marginTop: '40px',
+                padding: '24px',
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '16px',
+                display: 'flex',
+                gap: '20px',
+                alignItems: 'flex-start',
+              }}
+            >
+              <div
+                style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  flexShrink: 0,
+                  border: '2px solid #2563eb',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.15)',
+                  background: '#ffffff',
+                }}
+              >
+                <Image
+                  src="/icon.png"
+                  alt={post.frontmatter.author || 'VNHAX Engineering Team'}
+                  width={56}
+                  height={56}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                  <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 700, color: '#0f172a' }}>
+                    {post.frontmatter.author || 'VNHAX Engineering Team'}
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: '11.5px',
+                      background: '#eff6ff',
+                      color: '#2563eb',
+                      padding: '2px 8px',
+                      borderRadius: '12px',
+                      fontWeight: 600,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    Verified Author
+                  </span>
+                </div>
+                <p style={{ margin: 0, fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
+                  The <strong>{post.frontmatter.author || 'VNHAX Engineering Team'}</strong> conducts empirical testing, hardware benchmarking, and architectural auditing across local LLMs, AI coding harnesses, and modern cloud infrastructure. All technical guides adhere to rigorous Google AdSense E-E-A-T standards with reproducible configurations and verified upstream documentation.
+                </p>
+              </div>
+            </div>
           </div>
 
           <aside className="post-sidebar">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -105,7 +106,12 @@ export default function ContactPage() {
             <h1 className="contact-title">Contact VNHAX Editorial Desk</h1>
 
             <p className="contact-lead">
-              We welcome developers, machine learning researchers, software engineers, and industry partners to connect directly with our editorial and systems engineering team. Whether reporting a technical benchmark errata, suggesting an open-source repository, or submitting a formal DMCA notice, our communication channels are monitored daily.
+              We welcome developers, machine learning researchers, software engineers, and industry partners to connect directly with the{' '}
+              <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', verticalAlign: 'middle', color: '#0f172a' }}>
+                <Image src="/icon.png" alt="VNHAX" width={18} height={18} style={{ borderRadius: '50%', border: '1px solid #2563eb' }} />
+                VNHAX Engineering Team
+              </strong>
+              . Whether reporting a technical benchmark errata, suggesting an open-source repository, or submitting a formal DMCA notice, our communication channels are monitored daily.
             </p>
           </header>
 
