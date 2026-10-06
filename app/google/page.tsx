@@ -42,24 +42,24 @@ const GOOGLE_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Frontier Architecture',
-      title: 'Gemini 4 Argon: 10M Token Context & DeepMind Benchmarks',
-      description: 'Next-generation multimodal spatial video reasoning and self-refining verification loops.',
+      category: 'Hardware Accelerators',
+      title: 'TPU v6 Trillium Clusters: Mega-Scale Distributed Training on Cloud Pods',
+      description: 'Analyzing high-bandwidth optical circuit switches, matrix multiplication units, and energy efficiency.',
     },
     {
-      category: 'Model Comparison',
-      title: 'Gemini 4 Argon vs. Gemini 3.8 Flash: Reasoning vs. Latency',
-      description: 'Head-to-head analysis of heavy architectural refactoring versus 320+ tokens/sec streaming.',
+      category: 'Mathematical AI',
+      title: 'AlphaProof & AlphaGeometry 2: Olympiad-Tier Formal Reasoning',
+      description: 'Formal logic synthesis in Lean 4, automated geometric theorem proving, and verification loops.',
     },
     {
-      category: 'Cybersecurity AI',
-      title: 'What Is Gemini 3.8 Flash Cyber? Real-Time Mandiant Intelligence',
-      description: 'Sub-second SOC triage, automated binary disassembly, and zero-day threat detection.',
+      category: 'Spatial Perception',
+      title: 'Project Astra Real-Time Visual AI: Sub-100ms Video Perception',
+      description: 'Continuous multimodal video streams, spatial audio localization, and responsive conversational agents.',
     },
     {
-      category: 'Hardware & OS',
-      title: 'Googlebook AI Laptop: Tensor Silicon, Gemini NPU & Specs',
-      description: 'Google’s AI-first laptop featuring dedicated on-device NPU, 3.2K OLED, and local models.',
+      category: 'Open Source Models',
+      title: 'Gemma 3 Open Weights: On-Device Vision-Language Distillation',
+      description: 'Fine-tuning lightweight Gemma models for local edge inference on smartphones and single-board computers.',
     },
   ],
 };
