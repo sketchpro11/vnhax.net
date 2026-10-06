@@ -42,24 +42,24 @@ const ANTHROPIC_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Model Shootout',
-      title: 'Claude Opus 5.5 vs. Claude Fable 5.1: Reasoning vs. Synthesis',
-      description: 'Heavyweight software architecture versus nuanced creative prose and persona generation.',
+      category: 'Autonomous Tooling',
+      title: 'Claude Code CLI: Multi-Repository Workflows & Sandbox Isolation',
+      description: 'Architecting local terminal sandboxes, git workflow automations, and CI triage with Claude Code.',
     },
     {
-      category: 'Generational Upgrades',
-      title: 'Claude Sonnet 5.5 vs. Sonnet 5: Speed, Context & Coding Scores',
-      description: '2x faster TTFT latency, 500k context recall improvements, and 35% cost reduction.',
+      category: 'Protocol Standards',
+      title: 'Model Context Protocol (MCP 2.0): Dynamic Tool Discovery & Auth',
+      description: 'Implementing distributed MCP server meshes, enterprise OAuth2 scopes, and protocol bridges.',
     },
     {
-      category: 'Frontier Discovery',
-      title: 'What Is Claude Mythos 5.1? Autonomous Scientific Discovery',
-      description: 'Formal mathematical verification, automated kernel vulnerability discovery, and theorem proving.',
+      category: 'Safety Systems',
+      title: 'Constitutional Classifiers++: Zero-Latency Jailbreak Interception',
+      description: 'Real-time adversarial prompt evaluation with under 0.05% false refusal rates in production.',
     },
     {
-      category: 'Enterprise Governance',
-      title: 'Anthropic Enterprise Frontier Safeguards: RSP & ASL-4 Security',
-      description: 'Understanding Responsible Scaling Policy enclaves, prompt injection defense, and compliance.',
+      category: 'Edge & Micro-Agents',
+      title: 'Claude Haiku 5: Sub-100ms Inference & High-Concurrency Swarms',
+      description: 'Routing high-volume semantic triage through low-cost, ultra-low latency micro-models.',
     },
   ],
 };
