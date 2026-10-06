@@ -1,0 +1,229 @@
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
+import { BlogPost } from '@/lib/blog';
+
+export interface CompanyHubConfig {
+  key: string;
+  name: string;
+  kicker: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  focusTopics?: string[];
+  upcomingTopics?: {
+    title: string;
+    description: string;
+    category: string;
+  }[];
+}
+
+interface CompanyHubLayoutProps {
+  config: CompanyHubConfig;
+  articles: BlogPost[];
+}
+
+const ALL_COMPANIES = [
+  {
+    key: 'openai',
+    name: 'OpenAI',
+    href: '/openai',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'anthropic',
+    name: 'Anthropic',
+    href: '/anthropic',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'google',
+    name: 'Google',
+    href: '/google',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'github',
+    name: 'GitHub',
+    href: '/github',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+      </svg>
+    ),
+  },
+  {
+    key: 'xai',
+    name: 'xAI',
+    href: '/xai',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M2.6 2h5.1l4.3 5.9L16.3 2h5.1l-7 9.2 7.3 10.8h-5.1l-4.6-6.7-4.6 6.7H2.3l7.4-10.7L2.6 2z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'meta',
+    name: 'Meta',
+    href: '/meta',
+    icon: (
+      <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+      </svg>
+    ),
+  },
+];
+
+export default function CompanyHubLayout({ config, articles }: CompanyHubLayoutProps) {
+  return (
+    <>
+      <SiteHeader variant="standard" />
+
+      <main className="google-hub-page">
+        <div className="google-hub-container">
+          {/* Breadcrumbs */}
+          <nav className="google-breadcrumbs" aria-label="Breadcrumbs">
+            <Link href="/">Home</Link>
+            <span className="separator">›</span>
+            <span>Ecosystems</span>
+            <span className="separator">›</span>
+            <span className="current">{config.name}</span>
+          </nav>
+
+          {/* Clean Google Brand Header */}
+          <header className="google-brand-header">
+            <div className="google-brand-title-row">
+              <div className="google-brand-avatar" aria-hidden="true">
+                {config.icon}
+              </div>
+              <div>
+                <h1 className="google-brand-name">{config.name}</h1>
+                <p className="google-brand-desc">{config.description}</p>
+              </div>
+            </div>
+
+            {/* Google-style Ecosystem Switcher Tabs */}
+            <nav className="google-tabs-bar" aria-label="Ecosystem categories">
+              {ALL_COMPANIES.map((comp) => {
+                const isCurrent = comp.key === config.key;
+                return (
+                  <Link
+                    key={comp.key}
+                    href={comp.href}
+                    className={`google-tab ${isCurrent ? 'active' : ''}`}
+                  >
+                    <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                      {comp.icon}
+                    </span>
+                    <span>{comp.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </header>
+
+          {/* Articles Section */}
+          <section aria-label={`${config.name} articles`}>
+            <div className="google-section-header">
+              <span className="google-section-label">
+                {articles.length > 0
+                  ? `Published Articles (${articles.length})`
+                  : 'Articles'}
+              </span>
+            </div>
+
+            {articles.length > 0 ? (
+              <div className="google-articles-list">
+                {articles.map((post) => (
+                  <article key={post.slug} className="google-article-card">
+                    <div className="google-article-meta">
+                      <span className="google-category-pill">
+                        {post.frontmatter.category || config.name}
+                      </span>
+                      <span className="google-meta-dot">·</span>
+                      <span>
+                        {new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </span>
+                      <span className="google-meta-dot">·</span>
+                      <span>{post.frontmatter.readTime}</span>
+                    </div>
+
+                    <h2 className="google-article-heading">
+                      <Link href={`/blog/${post.slug}`}>
+                        {post.frontmatter.title}
+                      </Link>
+                    </h2>
+
+                    <p className="google-article-description">
+                      {post.frontmatter.description}
+                    </p>
+
+                    <div className="google-article-footer">
+                      <div className="google-article-author">
+                        <div className="google-author-avatar">
+                          <Image
+                            src="/icon.png"
+                            alt="VNHAX"
+                            width={22}
+                            height={22}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </div>
+                        <span>{post.frontmatter.author || 'VNHAX Editorial'}</span>
+                      </div>
+
+                      <Link href={`/blog/${post.slug}`} className="google-article-link">
+                        Read article <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              /* Google Clean Minimalist Empty State */
+              <div className="google-empty-state">
+                <div className="google-empty-icon" aria-hidden="true">
+                  <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                  </svg>
+                </div>
+                <h3>No articles published yet in {config.name}</h3>
+                <p>
+                  Technical guides, benchmarks, and architectural breakdowns for {config.name} are currently in progress. Articles will appear here as soon as they are published.
+                </p>
+                <div className="google-empty-actions">
+                  <Link href="/openai" className="google-btn-secondary">
+                    View OpenAI Articles
+                  </Link>
+                  <Link href="/" className="google-btn-secondary">
+                    Return to Homepage
+                  </Link>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+      </main>
+
+      <SiteFooter />
+    </>
+  );
+}

@@ -166,3 +166,161 @@ export async function getAllBlogs(): Promise<BlogPost[]> {
   // Sort by date descending
   return posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 }
+
+/**
+ * Returns all blog posts matching a specific company/ecosystem (e.g. 'openai', 'anthropic', 'google', etc.)
+ */
+export async function getBlogsByCompany(companyKey: string): Promise<BlogPost[]> {
+  const allBlogs = await getAllBlogs();
+  const key = companyKey.toLowerCase().trim();
+  return allBlogs.filter((post) => {
+    const cat = (post.frontmatter.category || '').toLowerCase();
+    const tags = (post.frontmatter.tags || []).map((t) => t.toLowerCase());
+    const slug = post.slug.toLowerCase();
+    const title = post.frontmatter.title.toLowerCase();
+
+    return (
+      cat.includes(key) ||
+      tags.some((t) => t.includes(key)) ||
+      slug.includes(key) ||
+      title.includes(key)
+    );
+  });
+}
+
+export interface BlogSummary {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  formattedDate: string;
+  author: string;
+  category: string;
+  tags: string[];
+  readTime: string;
+  image?: string;
+  silos: string[];
+  badgeClass: string;
+  href: string;
+}
+
+/**
+ * Returns lightweight summaries of all blog posts for homepage and silo grids
+ */
+export function getLatestBlogSummaries(): BlogSummary[] {
+  try {
+    ensureDirectory();
+    const fileNames = fs.readdirSync(blogsDirectory);
+    const validFiles = fileNames.filter((fileName) => fileName.endsWith('.md') || fileName.endsWith('.mdx'));
+
+    const summaries: BlogSummary[] = [];
+
+    for (const fileName of validFiles) {
+      const slug = fileName.replace(/\.mdx?$/, '');
+      const fullPath = path.join(blogsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+      const frontmatterIndex = fileContents.indexOf('---');
+      let data: Record<string, any> = {};
+      let content = fileContents;
+
+      if (frontmatterIndex !== -1) {
+        try {
+          const parsed = matter(fileContents.slice(frontmatterIndex));
+          data = parsed.data || {};
+          content = parsed.content || fileContents;
+        } catch {
+          const parsed = matter(fileContents);
+          data = parsed.data || {};
+          content = parsed.content || fileContents;
+        }
+      } else {
+        const parsed = matter(fileContents);
+        data = parsed.data || {};
+        content = parsed.content || fileContents;
+      }
+
+      const rawTitle = data.title || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+      const cleanTitle = typeof rawTitle === 'string' ? rawTitle.replace(/\\_/g, '_') : rawTitle;
+
+      let description = data.description || '';
+      if (!description || description === '[150-character SEO description]') {
+        description = 'Deep technical analysis, architecture breakdown, and implementation guide.';
+      }
+
+      const dateStr = data.date ? new Date(data.date).toISOString().split('T')[0] : '2026-10-05';
+      const category = data.category || 'AI & Models';
+      const tags: string[] = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : ['AI', 'Guides'];
+      const readTime = data.readTime || `${Math.max(1, Math.round(content.split(/\s+/).length / 200))} min read`;
+
+      // Determine Silos & Badge
+      const combined = `${category} ${tags.join(' ')} ${slug}`.toLowerCase();
+      const silos = new Set<string>();
+
+      if (/\b(ai|rag|llama|modelfile|model|models|slm|slms|agent|agents|ollama|quantization|inference|tokens?|embedding)\b/i.test(combined)) {
+        silos.add('ai');
+      }
+      if (/\b(dev|developer|tool|tools|repo|repos|coding|code|claude|antigravity|grok|mcp|token|tokens|prompt|prompts|workflow|workflows|proxy|proxies|git|github)\b/i.test(combined)) {
+        silos.add('developer');
+      }
+      if (/\b(ui|component|components|css|design|frontend|interface|template|templates)\b/i.test(combined)) {
+        silos.add('ui');
+      }
+      if (/\b(tech|platform|platforms|cloud|database|databases|vector|pinecone|qdrant|chroma|security|governance|audit|auditing|hardware|edge|infrastructure|network)\b/i.test(combined)) {
+        silos.add('technology');
+      }
+
+      if (silos.size === 0) {
+        silos.add('ai');
+      }
+
+      // Badge styling
+      let badgeClass = 'silo-badge--ai';
+      const catLower = category.toLowerCase();
+      if (catLower.includes('developer') || catLower.includes('token') || catLower.includes('tool') || catLower.includes('workflow')) {
+        badgeClass = 'silo-badge--dev';
+      } else if (
+        catLower.includes('cloud') ||
+        catLower.includes('security') ||
+        catLower.includes('governance') ||
+        catLower.includes('hardware') ||
+        (catLower.includes('architecture') && !catLower.includes('agent') && !catLower.includes('rag'))
+      ) {
+        badgeClass = 'silo-badge--tech';
+      } else if (catLower.includes('ui') || catLower.includes('design') || catLower.includes('component')) {
+        badgeClass = 'silo-badge--ui';
+      }
+
+      let formattedDate = dateStr;
+      try {
+        formattedDate = new Date(dateStr).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      } catch {}
+
+      summaries.push({
+        slug,
+        title: cleanTitle,
+        description,
+        date: dateStr,
+        formattedDate,
+        author: data.author || 'VNHAX Editorial',
+        category,
+        tags,
+        readTime,
+        image: data.image || '/og-image.png',
+        silos: Array.from(silos),
+        badgeClass,
+        href: `/blog/${slug}`,
+      });
+    }
+
+    // Sort by date descending
+    return summaries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  } catch (error) {
+    console.error('Error fetching blog summaries:', error);
+    return [];
+  }
+}

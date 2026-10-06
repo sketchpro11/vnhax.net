@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -10,9 +10,81 @@ interface SiteHeaderProps {
   variant?: 'home' | 'standard';
 }
 
+const NAV_ITEMS = [
+  {
+    key: 'ai',
+    label: 'Innovation & AI',
+    href: '/ai',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+    ),
+  },
+  {
+    key: 'developer',
+    label: 'Dev Repos',
+    href: '/developer-resources',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+  },
+  {
+    key: 'ui',
+    label: 'UI Components',
+    href: '/ui-components',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect width="18" height="18" x="3" y="3" rx="2"/>
+        <path d="M3 9h18"/>
+        <path d="M9 21V9"/>
+      </svg>
+    ),
+  },
+  {
+    key: 'technology',
+    label: 'Tech Platforms',
+    href: '/technology',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect width="16" height="16" x="4" y="4" rx="2"/>
+        <rect width="6" height="6" x="9" y="9" rx="1"/>
+        <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
+      </svg>
+    ),
+  },
+  {
+    key: 'blog',
+    label: 'Articles & Guides',
+    href: '/blog',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+        <path d="M6 6h10"/><path d="M6 10h10"/>
+      </svg>
+    ),
+  },
+];
+
 export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoverX, setHoverX] = useState<number | null>(null);
+
+  const dockRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  // Proximity dock mouse physics
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    setHoverX(e.clientX);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverX(null);
+  };
 
   // Global hotkey Ctrl+K / Cmd+K listener
   useEffect(() => {
@@ -29,7 +101,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Lock body scroll when mobile menu is open to prevent background bleed-through
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -43,90 +115,114 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
 
   return (
     <>
-      <header className={`site-header site-header--${variant}`}>
-        <div className="header-inner">
-          <Link className="site-logo" href="/" aria-label="VNHAX Home">
-            <Image
-              src="/logo.png"
-              alt="VNHAX"
-              width={112}
-              height={44}
-              className="site-logo-img"
-              priority
-            />
+      <header className="atd-modern-header-wrap">
+        <div className="atd-modern-bar">
+          {/* Left: Brand Inset */}
+          <Link className="atd-modern__brand" href="/" aria-label="VNHAX Home">
+            <div className="atd-modern__mark">
+              <Image
+                src="/icon.png"
+                alt="VNHAX"
+                width={20}
+                height={20}
+                style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+                priority
+              />
+            </div>
+            <span className="atd-modern__word">vnhax</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="main-nav" aria-label="Primary Navigation">
-            <Link
-              href="/ai"
-              className={`nav-link ${activeNav === 'ai' ? 'is-active' : ''}`}
-              aria-current={activeNav === 'ai' ? 'page' : undefined}
-            >
-              Innovation &amp; AI
-            </Link>
-            <Link
-              href="/developer-resources"
-              className={`nav-link ${activeNav === 'developer' ? 'is-active' : ''}`}
-              aria-current={activeNav === 'developer' ? 'page' : undefined}
-            >
-              Developer Resources
-            </Link>
-            <Link
-              href="/ui-components"
-              className={`nav-link ${activeNav === 'ui' ? 'is-active' : ''}`}
-              aria-current={activeNav === 'ui' ? 'page' : undefined}
-            >
-              UI Components
-            </Link>
-            <Link
-              href="/technology"
-              className={`nav-link ${activeNav === 'technology' ? 'is-active' : ''}`}
-              aria-current={activeNav === 'technology' ? 'page' : undefined}
-            >
-              Tech Platforms
-            </Link>
-            <Link
-              href="/blog"
-              className={`nav-link ${activeNav === 'blog' ? 'is-active' : ''}`}
-              aria-current={activeNav === 'blog' ? 'page' : undefined}
-            >
-              Articles &amp; Guides
-            </Link>
+          {/* Center: Proximity Animated Dock */}
+          <nav
+            ref={dockRef}
+            className="atd-modern__dock"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            aria-label="Primary Navigation"
+          >
+            {NAV_ITEMS.map((item, idx) => {
+              const isActive = activeNav === item.key;
+              let scale = 1;
+
+              if (hoverX !== null) {
+                const el = itemRefs.current[idx];
+                if (el) {
+                  const rect = el.getBoundingClientRect();
+                  const itemCenter = rect.left + rect.width / 2;
+                  const distance = Math.abs(hoverX - itemCenter);
+                  const radius = 120; // Proximity threshold in pixels
+                  if (distance < radius) {
+                    const factor = (1 + Math.cos((distance / radius) * Math.PI)) / 2;
+                    scale = 1 + factor * 0.12; // smoothly scales up to ~1.12x
+                  }
+                }
+              }
+
+              return (
+                <Link
+                  key={item.key}
+                  ref={(el) => {
+                    itemRefs.current[idx] = el;
+                  }}
+                  href={item.href}
+                  className={`atd-modern__item ${isActive ? 'is-active' : ''}`}
+                  aria-current={isActive ? 'page' : undefined}
+                  style={{
+                    transform: `scale(${scale})`,
+                    transition:
+                      hoverX === null
+                        ? 'transform 0.25s cubic-bezier(0.2, 0, 0, 1), background 0.15s ease, color 0.15s ease'
+                        : 'transform 0.08s ease-out, background 0.15s ease, color 0.15s ease',
+                  }}
+                >
+                  <span className="atd-modern__icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Action buttons */}
-          <div className="header-actions">
+          {/* Right: Actions */}
+          <div className="atd-modern__actions">
             {/* Quick Search Trigger */}
             <button
-              className="header-search-btn"
               type="button"
+              className="atd-modern__ghost"
               onClick={() => setIsSearchOpen(true)}
-              aria-label="Open Search (Ctrl+K)"
-              title="Search guides, repos, components (Ctrl+K)"
+              aria-label="Search guides & tools (Ctrl+K)"
+              title="Search (Ctrl+K)"
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
-              <span className="search-btn-label">Search</span>
-              <kbd className="search-btn-shortcut">⌘K</kbd>
+              <span className="atd-modern__kbd">⌘K</span>
             </button>
 
-            {/* Desktop Newsletter Button */}
-            <Link className="newsletter-button desktop-only-btn" href="/contact">
-              Newsletter
+            {/* CTA Action Button */}
+            <Link
+              href="/developer-resources/github-repos"
+              className="atd-modern__cta"
+              aria-label="Explore GitHub repositories"
+            >
+              <span>Explore Repos</span>
+              <div className="atd-modern__cta-arrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
             </Link>
 
-            {/* Mobile Hamburger Button */}
+            {/* Mobile Hamburger Toggle */}
             <button
-              className="mobile-nav-toggle"
+              className="atd-modern__mobile-toggle"
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <line x1="3" y1="12" x2="21" y2="12" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <line x1="3" y1="18" x2="21" y2="18" />
@@ -136,7 +232,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
         </div>
       </header>
 
-      {/* Google AdSense Compliant Mobile Navigation Drawer & Overlay */}
+      {/* Mobile Navigation Drawer & Overlay */}
       {mobileMenuOpen && (
         <div
           className="mobile-nav-overlay"
@@ -151,121 +247,86 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
           >
             {/* Drawer Top Bar */}
             <div className="mobile-drawer-header">
-              <Link className="site-logo" href="/" onClick={() => setMobileMenuOpen(false)} aria-label="VNHAX Home">
+              <Link className="mobile-drawer-brand" href="/" onClick={() => setMobileMenuOpen(false)} aria-label="VNHAX Home">
                 <Image
                   src="/logo.png"
                   alt="VNHAX"
-                  width={104}
-                  height={40}
-                  className="site-logo-img"
+                  width={96}
+                  height={34}
+                  style={{ height: '26px', width: 'auto' }}
+                  priority
                 />
               </Link>
               <button
-                type="button"
                 className="mobile-drawer-close"
+                type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close navigation menu"
+                aria-label="Close menu"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             </div>
 
-            {/* Drawer Search Trigger */}
-            <div
-              className="mobile-search-trigger"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setIsSearchOpen(true);
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label="Search site"
-            >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <span>Search articles, models, repos...</span>
-              <span className="mobile-search-badge">Search</span>
-            </div>
-
-            {/* Drawer Body with Clean Categorized Navigation */}
+            {/* Drawer Body */}
             <div className="mobile-drawer-body">
-              <span className="mobile-section-label">Architecture Hubs</span>
-              <nav className="mobile-links-list" aria-label="Mobile Main Navigation">
-                <Link
-                  href="/ai"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-link ${activeNav === 'ai' ? 'is-active' : ''}`}
-                >
-                  <span className="mobile-link-icon" aria-hidden="true">⚡</span>
-                  <span className="mobile-link-text">Innovation &amp; AI</span>
-                  <span className="mobile-link-arrow" aria-hidden="true">→</span>
-                </Link>
+              <button
+                type="button"
+                className="mobile-search-trigger"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsSearchOpen(true);
+                }}
+                aria-label="Quick Search"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <span>Search guides, repos, tools...</span>
+                <span className="mobile-search-badge">⌘K</span>
+              </button>
 
-                <Link
-                  href="/developer-resources"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-link ${activeNav === 'developer' ? 'is-active' : ''}`}
-                >
-                  <span className="mobile-link-icon" aria-hidden="true">💻</span>
-                  <span className="mobile-link-text">Developer Resources</span>
-                  <span className="mobile-link-arrow" aria-hidden="true">→</span>
-                </Link>
-
-                <Link
-                  href="/ui-components"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-link ${activeNav === 'ui' ? 'is-active' : ''}`}
-                >
-                  <span className="mobile-link-icon" aria-hidden="true">🎨</span>
-                  <span className="mobile-link-text">UI Components</span>
-                  <span className="mobile-link-arrow" aria-hidden="true">→</span>
-                </Link>
-
-                <Link
-                  href="/technology"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-link ${activeNav === 'technology' ? 'is-active' : ''}`}
-                >
-                  <span className="mobile-link-icon" aria-hidden="true">🌐</span>
-                  <span className="mobile-link-text">Tech Platforms</span>
-                  <span className="mobile-link-arrow" aria-hidden="true">→</span>
-                </Link>
-
-                <Link
-                  href="/blog"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-link ${activeNav === 'blog' ? 'is-active' : ''}`}
-                >
-                  <span className="mobile-link-icon" aria-hidden="true">📝</span>
-                  <span className="mobile-link-text">Articles &amp; Guides</span>
-                  <span className="mobile-link-arrow" aria-hidden="true">→</span>
-                </Link>
+              <nav className="mobile-links-list" aria-label="Mobile Primary Navigation">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = activeNav === item.key;
+                  return (
+                    <Link
+                      key={item.key}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`mobile-nav-link ${isActive ? 'is-active' : ''}`}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <div className="mobile-nav-link__content">
+                        <span className="mobile-nav-link__icon">{item.icon}</span>
+                        <span>{item.label}</span>
+                      </div>
+                      <svg className="mobile-nav-link__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6" />
+                      </svg>
+                    </Link>
+                  );
+                })}
               </nav>
 
               <div className="mobile-divider" />
 
-              <span className="mobile-section-label">Trust &amp; Legal Policies</span>
+              <span className="mobile-section-label">Company &amp; Legal</span>
               <nav className="mobile-links-list mobile-links-list--secondary" aria-label="Legal and Trust Navigation">
                 <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  <span>About Us &amp; Editorial Mission</span>
-                  <span className="mobile-sublink-arrow">›</span>
+                  About Editorial Mission
                 </Link>
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  <span>Contact Desk &amp; Inquiries</span>
-                  <span className="mobile-sublink-arrow">›</span>
+                  Contact Desk
                 </Link>
                 <Link href="/privacy-policy" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  <span>Privacy Policy &amp; Cookie Disclosure</span>
-                  <span className="mobile-sublink-arrow">›</span>
+                  Privacy Policy
                 </Link>
                 <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  <span>Terms of Service &amp; Disclaimer</span>
-                  <span className="mobile-sublink-arrow">›</span>
+                  Terms of Service
                 </Link>
               </nav>
             </div>
@@ -273,11 +334,15 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
             {/* Drawer Footer CTA */}
             <div className="mobile-drawer-footer">
               <Link
-                href="/contact"
+                href="/developer-resources/github-repos"
                 className="mobile-cta-btn"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Join Free Engineering Newsletter →
+                <span>Explore GitHub Repos</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </Link>
             </div>
           </div>
