@@ -10,9 +10,9 @@ export default function NotFound() {
       <main className="not-found-wrapper">
         <div className="not-found-card">
           <span className="not-found-code">404</span>
-          
+
           <h1 className="not-found-title">Page not found</h1>
-          
+
           <p className="not-found-desc">
             The page you are looking for doesn’t exist, has been removed, or the link might be broken.
           </p>
@@ -25,7 +25,7 @@ export default function NotFound() {
               </svg>
               <span>Back to home</span>
             </Link>
-            
+
             <Link href="/blog" className="not-found-btn not-found-btn--secondary">
               <span>Browse articles</span>
             </Link>
