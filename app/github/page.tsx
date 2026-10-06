@@ -42,24 +42,24 @@ const GITHUB_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'PR Automation',
-      title: 'How to Automate PR Code Reviews & Merge Approvals with Copilot',
-      description: 'Configuring automated pull-request inspections, inline vulnerability scans, and branch rules.',
+      category: 'Cloud Workspaces',
+      title: 'GitHub Copilot Workspace: Cloud Specifications & Autonomous Tasks',
+      description: 'Designing end-to-end task plans, automated branch generation, and cloud-hosted dev environments.',
     },
     {
-      category: 'Multi-Model Engine',
-      title: 'Inside Project HydraFusion: Speculative Multi-Model Code Synthesis',
-      description: 'How GitHub Copilot dynamically routes between Grok, Claude, and GPT for zero latency.',
+      category: 'Enterprise Fine-Tuning',
+      title: 'Private Model Customization: Fine-Tuning on Proprietary Repositories',
+      description: 'Training lightweight LoRA adapters on private internal APIs without training data leakage.',
     },
     {
-      category: 'Security & Sandboxing',
-      title: 'GitHub Copilot Local Sandboxing: Micro-Containers & Host Protection',
-      description: 'Running autonomous agent loops safely without host credential leaks or machine damage.',
+      category: 'Automated Security',
+      title: 'CodeQL AI Synthesizer: Semantic Static Analysis & Vulnerability Triage',
+      description: 'Automating security taint tracking, dataflow path analysis, and zero-day code detection.',
     },
     {
-      category: 'Enterprise Billing',
-      title: 'GitHub Copilot Upfront Prepaid Seats: Official Billing Policy',
-      description: 'Understanding the no-prorated-refund policy, pooled AI credits, and license audits.',
+      category: 'Extensibility',
+      title: 'Building Custom Copilot Extensions: Model Context Protocol Bridges',
+      description: 'Creating custom IDE agents with external API access, database queries, and internal issue tracking.',
     },
   ],
 };
