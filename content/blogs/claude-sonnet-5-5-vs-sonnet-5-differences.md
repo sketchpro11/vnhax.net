@@ -1,16 +1,13 @@
 ---
 title: "Claude Sonnet 5.5 vs. Sonnet 5: Speed, Context Recall & Coding Benchmarks"
-short_title: "Sonnet 5.5 vs Sonnet 5"
-slug: claude-sonnet-5-5-vs-sonnet-5-differences
+description: "Claude Sonnet 5.5 vs Sonnet 5 compared: speed, 1M context recall, coding benchmarks, pricing, tool-calling changes, and a safe step-by-step migration guide."
+date: "2026-10-06"
+updatedAt: "2026-10-06"
+author: "VNHAX Editorial"
 category: "Developer Tools & Models"
-reading_time: "7 min read"
-tags: [claude-sonnet-5-5, claude-sonnet-5, anthropic-updates, coding-agents, benchmarks]
-meta_description: "Detailed architectural comparison between Claude Sonnet 5.5 and Sonnet 5: TTFT latency, 1M context accuracy, MCP protocol improvements, and cost."
+tags: ["anthropic", "claude", "claude-sonnet-5-5", "claude-sonnet-5", "anthropic-updates", "coding-agents", "benchmarks"]
+readTime: "7 min read"
 ---
-
-# Claude Sonnet 5.5 vs. Sonnet 5: Speed, Context Recall & Coding Benchmarks
-
-**Category:** Developer Tools & Models | **Reading time:** 7 min read
 
 Picture this. It's late on a Friday, your agent pipeline has been running happily on Sonnet 5 for three months, and then a changelog lands in your feed: a new Sonnet, same price, faster, better at agentic coding. You swap one string in your config, deploy, and go to dinner.
 
@@ -157,7 +154,7 @@ Anthropic says anyone can chat with Sonnet 5.5 on the free Claude plan, though u
 
 Sonnet 5.5 is a genuine upgrade, and for most agent and coding workloads I'd move to it. The efficiency gains alone justify the effort, especially if you run long tool loops. Just don't believe the neatest-sounding claims without checking. The 1M window didn't grow, the price didn't drop, and "2x faster" depends on what you measure.
 
-Spend an hour on your own mini-benchmark, fix your forced tool calls, and roll it out in stages. If the numbers look good on *your* code, you'll know it's worth it. If you want more on building reliable agent workflows, see our guides on [choosing the right Claude model for coding agents](/choosing-the-right-claude-model-for-coding-agents), [prompt caching explained for API developers](/prompt-caching-explained-for-api-developers), and [how to benchmark LLMs on your own codebase](/how-to-benchmark-llms-on-your-own-codebase).
+Spend an hour on your own mini-benchmark, fix your forced tool calls, and roll it out in stages. If the numbers look good on *your* code, you'll know it's worth it. If you want more on building reliable agent workflows, read our guides on [how to cut AI coding agent API costs](/blog/how-to-cut-ai-coding-agent-api-costs-token-proxies), [keeping your MCP servers secure in production](/blog/enterprise-mcp-server-security-hardening-protocol-bridges), and [our 2026 AI coding agent shootout](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout). You can also browse all our [Anthropic and Claude articles](/anthropic) in one place.
 
 ## Sources and Further Reading
 
