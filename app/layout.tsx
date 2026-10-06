@@ -75,6 +75,9 @@ export const metadata: Metadata = {
     ],
     shortcut: '/icon.png',
   },
+  verification: {
+    google: 'x4r_3ceeZ0nwS6lBgCYzPrjJpU2ucVxSfQERIAaoHbY',
+  },
 };
 
 import CookieConsent from '@/components/CookieConsent';
@@ -91,6 +94,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
+        {/* Google Site Verification (Search Console) */}
+        <meta name="google-site-verification" content="x4r_3ceeZ0nwS6lBgCYzPrjJpU2ucVxSfQERIAaoHbY" />
+
         {/* DNS prefetch & Preconnect to speed up any external connections */}
         <link rel="dns-prefetch" href="https://vnhax.net" />
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
