@@ -42,24 +42,24 @@ const XAI_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Model Benchmarks',
-      title: 'Grok 4.7 vs. Grok 4.6: Colossus Scaling & Coding Accuracy',
-      description: 'How training on 200,000+ GPUs reduced hallucinations and accelerated code synthesis.',
+      category: 'Model Roadmaps',
+      title: 'xAI Roadmap: Grok 4.8 & 4.9 Real-Time Telemetry & Expanded Context',
+      description: 'Anticipated incremental updates, real-time X telemetry feeds, and low-latency API streaming.',
     },
     {
-      category: 'Developer Pricing',
-      title: 'Grok 4.7 API Pricing: Input, Output & Prompt Caching Discounts',
-      description: 'Detailed cost breakdown per 1M tokens, 75% cached context savings, and tier limits.',
+      category: 'Agent Frameworks',
+      title: 'Grok Bot Harness: Autonomous Multi-Agent Reasoning on Social Streams',
+      description: 'Architecting persistent social agents, structured tool calling, and live data verification.',
     },
     {
-      category: 'Next-Gen Roadmaps',
-      title: 'Grok 5 Release Date & Specs: The Multi-Modal Physics Giant',
-      description: 'Anticipated launch dates, Nvidia Blackwell B200 clusters, and Tesla FSD neural fusion.',
+      category: 'Autonomous Vehicles',
+      title: 'Tesla FSD Neural Net Convergence: Spatial Video Reasoning in Grok',
+      description: 'Fusing real-world automotive camera streams with generative multimodal reasoning transformers.',
     },
     {
-      category: 'Aerospace Convergence',
-      title: 'What Is SpaceXAI? Merging Grok with Starlink Orbital Compute',
-      description: 'Running neural nets in orbit, autonomous rocket telemetry, and off-grid Mars copilots.',
+      category: 'Datacenter Engineering',
+      title: 'Colossus 2 Mega-Cluster: Gigawatt Power Delivery & Liquid Cooling',
+      description: 'Engineering thermal dissipation, high-voltage substations, and optical InfiniBand fabrics in Memphis.',
     },
   ],
 };
