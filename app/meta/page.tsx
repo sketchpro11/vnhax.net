@@ -42,24 +42,24 @@ const META_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Agent Deployment',
-      title: 'Meta Muse AI Agent: How to Deploy Across WhatsApp & Instagram',
-      description: 'Step-by-step tutorial on building autonomous sales reps and social ad generators with Muse.',
+      category: 'Frontier Architecture',
+      title: 'Llama 4 Scout & Maverick: Mixture-of-Experts Scaling on 100K H100s',
+      description: 'Deep dive into sparse MoE routing, active parameter efficiency, and synthetic data pipelines.',
     },
     {
-      category: 'Creative Canvases',
-      title: 'Meta Muse vs. OpenAI Dots vs. Gemini Spark: Full Comparison',
-      description: 'Comparing social commerce canvases with developer logic graphs and Google Docs workflows.',
+      category: 'Wearable Intelligence',
+      title: 'Ray-Ban Meta Smart Glasses: Multimodal Neural Audio & Visual Telemetry',
+      description: 'Low-power on-device voice processing, real-time visual scene analysis, and edge battery life.',
     },
     {
-      category: 'Small Business AI',
-      title: 'Meta Muse for Small Business: Turn DMs into 24/7 Automated Checkouts',
-      description: 'Automating customer support queries and product catalogs without expensive agency retainers.',
+      category: 'Distributed Compute',
+      title: 'PyTorch 3.0 Distributed Training: FSDP v2 & Mega-Scale GPU Orchestration',
+      description: 'Optimizing tensor parallelism, zero-bubble pipeline scheduling, and memory fragmentation.',
     },
     {
-      category: 'Enterprise Cloud',
-      title: 'Meta Enterprise Platform: Private Llama Clusters & WhatsApp APIs',
-      description: 'Sovereign VPC deployments, high-throughput cloud messaging, and SOC2 compliance.',
+      category: 'Open Source Security',
+      title: 'Llama Guard 3 & Purple Llama: Automated Red-Teaming for Agent Workflows',
+      description: 'Building defensible safety classifiers against adversarial prompt injections and jailbreaks.',
     },
   ],
 };
