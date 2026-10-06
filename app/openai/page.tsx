@@ -40,19 +40,19 @@ const OPENAI_CONFIG: CompanyHubConfig = {
       description: 'How to build, link, and export node-based multi-agent pipelines with OpenAI Dots.',
     },
     {
-      category: 'Pricing & Compute',
-      title: 'ChatGPT Pro $500 Plan: Dedicated Compute & Unlimited Reasoning',
-      description: 'Full analysis of unlimited o1-pro access, zero rate limits, and enterprise SLA.',
+      category: 'Reasoning Engines',
+      title: 'o3-mini Architecture: Mathematical Proofs & Competitive Code Synthesis',
+      description: 'Benchmarking token economic efficiency, self-verification passes, and chain-of-thought depths.',
     },
     {
-      category: 'Model Benchmarks',
-      title: 'GPT-6 Astra vs. Sol vs. Luna Architecture Comparison',
-      description: 'Multimodal flagship vs. realtime speed vs. deep mathematical reasoning breakdown.',
+      category: 'Autonomous Agents',
+      title: 'Operator Agent Framework: Web Automation & Multi-Step Workflows',
+      description: 'Designing safe autonomous browser actions, cookie isolation, and credential shielding.',
     },
     {
-      category: 'API Infrastructure',
-      title: 'OpenAI Ultrafast Speed Tier: 300+ Tokens/sec Low-Latency Inference',
-      description: 'Understanding speculative decoding and dedicated silicon clusters for voice agents.',
+      category: 'Generative Media',
+      title: 'Sora 2 Realtime API: Temporal Consistency in Generative Video',
+      description: 'Low-latency frame generation, physics simulation fidelity, and multi-angle scene persistence.',
     },
   ],
 };
