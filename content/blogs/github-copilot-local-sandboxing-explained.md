@@ -1,16 +1,15 @@
 ---
 title: "GitHub Copilot Local Sandboxing: Containerized Workspaces & Host Security"
-short_title: "Copilot Local Sandboxing"
-slug: github-copilot-local-sandboxing-explained
-category: "AI Security & Developer Tools"
-reading_time: "7 min read"
-tags: [local-sandboxing, copilot-workspace, secure-agent-execution, docker-sandbox, dev-security]
-meta_description: "Learn how GitHub Copilot local sandboxing creates micro-containers to let AI agents run terminal commands, execute tests, and verify code without host risk."
+description: "Learn how GitHub Copilot local sandboxing restricts terminal commands, executes tests safely, and protects host credentials without system risk."
+date: "2026-10-07"
+updatedAt: "2026-10-07"
+author: "VNHAX Editorial"
+category: "GitHub & Developer Tools"
+tags: ["github", "github-copilot", "sandboxing", "security", "developer-tools"]
+readTime: "7 min read"
 ---
 
-# GitHub Copilot Local Sandboxing: Containerized Workspaces & Host Security
-
-> **Quick answer:** Copilot local sandboxing restricts what an AI agent's terminal commands can touch on your machine: which folders it can read or write, and which network domains it can reach. In VS Code you turn it on with the `chat.agent.sandbox.enabled` setting (macOS, Linux and WSL2 today, with Windows still experimental). It protects the host from a bad command, but it is not a magic undo button, so keep Git close.
+> **Quick answer:** Copilot local sandboxing restricts what an AI agent's terminal commands can touch on your machine: which folders it can read or write, and which network domains it can reach. In VS Code you turn it on with the `chat.agent.sandbox.enabled` setting (macOS, Linux and WSL2 today, with Windows experimental). It protects the host from dangerous commands, but it is not a magic undo button, so keep Git close.
 
 You ask the agent to "get the tests passing." A minute later it is happily running `npm install`, then a postinstall script, then something with `curl` you did not read. Everything is fine, probably. But your laptop has your SSH keys, your cloud credentials and three client projects on it, and "probably" is doing a lot of work in that sentence.
 
@@ -45,8 +44,6 @@ Let me clear up some naming confusion, because I see these mixed together a lot:
 | **Cloud sandbox / coding agent** | The agent runs in an isolated environment on GitHub's side, not on your laptop |
 | **Dev container** | A Docker-based development environment you set up yourself; a separate layer you can combine with sandboxing |
 
-This article is about the first one. If you want the broader picture of how the agent works day to day, see our [guide to Copilot agent mode](/copilot-agent-mode-guide/).
-
 Two details that matter:
 
 1. **Terminal commands are what get sandboxed.** VS Code documents that sandboxing applies to shell subprocesses. The agent's file read, edit and write tools use VS Code's permission system directly instead of going through the sandbox.
@@ -58,7 +55,7 @@ Platform support, per the [agent sandboxing docs](https://code.visualstudio.com/
 - **Linux and WSL2:** preview, you install `bubblewrap` and `socat`
 - **Windows:** experimental, needs the September 8, 2026 Windows security update and its own setting
 
-## Containerized Execution: How Wasm and Micro-VMs Protect Host Systems
+## Containerized Execution: How OS Sandboxes Protect Host Systems
 
 The idea of running untrusted code in a sealed box is old and comes in a few flavours:
 
@@ -119,7 +116,7 @@ sudo apt install bubblewrap socat
 }
 ```
 
-Swap in your real username and project path. I'm showing the shape of the setting; check the docs for the exact options on your platform.
+Swap in your real username and project path.
 
 **Step 5. Restrict the network.**
 
@@ -140,35 +137,24 @@ GitHub introduced local and cloud sandboxes for Copilot CLI in public preview in
 
 ### JetBrains IDEs (IntelliJ IDEA, PyCharm, WebStorm and others)
 
-This one differs, so read carefully. In September 2026 GitHub announced **enterprise-managed sandbox policies** for Copilot in JetBrains as a public preview. Administrators can centrally set whether the sandbox runs, plus file system, network, proxy and developer-tool access.
+In September 2026 GitHub announced **enterprise-managed sandbox policies** for Copilot in JetBrains as a public preview. Administrators can centrally set whether the sandbox runs, plus file system, network, proxy and developer-tool access.
 
-The settings appear under **GitHub Copilot > Sandbox**, but only if your organization enables the Editor Preview feature flag or sets a managed setting. If you don't see that section, that's why. Details are in the [GitHub changelog entry](https://github.blog/changelog/2026-09-08-enterprise-managed-sandbox-in-copilot-for-jetbrains) and in GitHub's page on configuring local sandbox settings.
-
-If you're on a personal JetBrains setup without that menu, a dev container (below) is the more dependable option today.
+The settings appear under **GitHub Copilot > Sandbox**, but only if your organization enables the Editor Preview feature flag or sets a managed setting. Details are in the [GitHub changelog entry](https://github.blog/changelog/2026-09-08-enterprise-managed-sandbox-in-copilot-for-jetbrains).
 
 ## Common Mistakes to Avoid
 
-**Treating it as a full undo.** Covered above. Sandbox is containment, Git is rollback.
-
-**Allowing too many domains.** "Just allow everything so it works" quietly removes half the protection.
-
-**Clicking through the "run outside the sandbox" prompt.** Ask yourself what the command needs and why.
-
-**Leaving secrets in the project folder.** A `.env` with real production keys is the first thing worth removing.
-
-**Expecting it everywhere.** Windows is still experimental and JetBrains controls depend on your organization. Check your own setup.
-
-**Skipping the test.** Spend two minutes proving a denied path is actually denied.
-
-## When a Dev Container Is the Better Choice
-
-If you want a disposable, Docker-based environment you can delete and rebuild, run your project in a dev container. VS Code's security docs list this as an option alongside sandboxing. The two can work together: the container handles the project environment, and the sandbox limits what agent commands do inside it. See our [dev container setup guide](/vs-code-dev-containers-setup/) for a walkthrough.
+1. **Treating it as a full undo.** Sandbox is containment, Git is rollback.
+2. **Allowing too many domains.** "Just allow everything so it works" quietly removes half the protection.
+3. **Clicking through the "run outside the sandbox" prompt.** Ask yourself what the command needs and why.
+4. **Leaving secrets in the project folder.** A `.env` with real production keys is the first thing worth removing.
+5. **Expecting it everywhere.** Windows is experimental and JetBrains controls depend on your organization. Check your setup.
+6. **Skipping the test.** Spend two minutes proving a denied path is actually denied.
 
 ## Final Thoughts
 
 You don't have to choose between a useful agent and a safe machine. A short allowlist, a few denied folders and the habit of committing before big tasks gets you most of the benefit, and it takes about ten minutes.
 
-Start with the network setting, since that's the biggest win. Then test one denied path. Once you've watched a block happen with your own eyes, you'll trust the setup far more than any blog post, including this one. For more on staying safe with agents, our [AI coding security checklist](/ai-coding-security-checklist/) covers the habits that sit around the settings.
+Start with the network setting, since that's the biggest win. Then test one denied path. Once you've watched a block happen with your own eyes, you'll trust the setup far more than any blog post, including this one. For more developer tooling guides, check out our [GitHub Developer Resources](/github), read our [2026 AI Agent Harness Shootout](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout), and explore open-source agent frameworks in the [vnhax Repositories Hub](/repos).
 
 ## FAQs
 
@@ -208,18 +194,3 @@ No single control is enough. Combine sandboxing with manual approvals for risky 
 - [VS Code: Agent security and trust](https://code.visualstudio.com/docs/agents/security)
 - [GitHub Changelog: Enterprise-managed sandbox in Copilot for JetBrains](https://github.blog/changelog/2026-09-08-enterprise-managed-sandbox-in-copilot-for-jetbrains)
 - [GitHub Changelog: VS Code v1.109 release notes](https://github.blog/changelog/2026-02-04-github-copilot-in-visual-studio-code-v1-109-january-release/)
-
-<!-- FAQPage structured data (paste into your page head if your CMS allows) -->
-<!--
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type": "Question", "name": "What is GitHub Copilot local sandboxing?", "acceptedAnswer": {"@type": "Answer", "text": "A set of restrictions on the terminal commands a Copilot agent runs on your own computer, limiting which files they can read or write and which network domains they can reach."}},
-    {"@type": "Question", "name": "Is Copilot local sandboxing a Docker container?", "acceptedAnswer": {"@type": "Answer", "text": "No. VS Code documents OS-level sandboxing (bubblewrap and socat on Linux and WSL2). Docker-based isolation is available separately through dev containers."}},
-    {"@type": "Question", "name": "How do I enable sandboxing for Copilot in VS Code?", "acceptedAnswer": {"@type": "Answer", "text": "Enable chat.agent.sandbox.enabled in Settings on macOS, Linux or WSL2 (install bubblewrap and socat on Linux first). Windows uses chat.agent.sandbox.enabledWindows."}}
-  ]
-}
-</script>
--->
