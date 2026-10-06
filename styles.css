@@ -7353,6 +7353,30 @@ input:focus-visible {
   color: #475569;
 }
 
+.footer-credits {
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin: 3px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-credit-link {
+  color: #0f172a;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #cbd5e1;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.footer-credit-link:hover {
+  color: #2563eb;
+  text-decoration-color: #2563eb;
+}
+
 .footer-legal-notice {
   font-size: 12px;
   color: #94a3b8;

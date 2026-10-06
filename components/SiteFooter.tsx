@@ -125,22 +125,22 @@ export default function SiteFooter() {
             <h3 className="footer-col-title">Company &amp; Legal</h3>
             <ul className="footer-links-list">
               <li>
-                <Link href="/about">About Us &amp; Editorial</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/contact">Contact &amp; Support</Link>
+                <Link href="/terms">Terms and Conditions</Link>
               </li>
               <li>
-                <Link href="/privacy-policy">Privacy Policy &amp; Cookies</Link>
+                <Link href="/about">About Us</Link>
               </li>
               <li>
-                <Link href="/terms">Terms of Service</Link>
+                <Link href="/contact">Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/disclaimer">Disclaimer</Link>
               </li>
               <li>
                 <Link href="/sitemap.xml" target="_blank">XML Sitemap</Link>
-              </li>
-              <li>
-                <Link href="/robots.txt" target="_blank">Robots.txt</Link>
               </li>
             </ul>
           </div>
@@ -152,6 +152,17 @@ export default function SiteFooter() {
             <span className="footer-copy">
               © {new Date().getFullYear()} {BRAND_CONFIG.legalName}. All rights reserved.
             </span>
+            <p className="footer-credits">
+              Developed by{' '}
+              <a
+                href="https://udesigner.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-credit-link"
+              >
+                U DESIGNER
+              </a>
+            </p>
             <p className="footer-legal-notice">
               Independent technical research, hardware benchmarks, and open-source documentation. All product names, logos, and brands belong to their respective owners.
             </p>

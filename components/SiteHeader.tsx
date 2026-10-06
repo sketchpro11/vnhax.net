@@ -316,17 +316,20 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
 
               <span className="mobile-section-label">Company &amp; Legal</span>
               <nav className="mobile-links-list mobile-links-list--secondary" aria-label="Legal and Trust Navigation">
-                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  About Editorial Mission
-                </Link>
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  Contact Desk
-                </Link>
                 <Link href="/privacy-policy" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
                   Privacy Policy
                 </Link>
                 <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
-                  Terms of Service
+                  Terms and Conditions
+                </Link>
+                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
+                  About Us
+                </Link>
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
+                  Contact Us
+                </Link>
+                <Link href="/disclaimer" onClick={() => setMobileMenuOpen(false)} className="mobile-sublink">
+                  Disclaimer
                 </Link>
               </nav>
             </div>
