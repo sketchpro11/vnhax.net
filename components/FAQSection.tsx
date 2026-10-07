@@ -31,7 +31,7 @@ export default function FAQSection({
             <h3 style={{ fontSize: '1.02rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px' }}>
               {faq.question}
             </h3>
-            <p style={{ margin: 0, color: 'var(--text-secondary, #94a3b8)', lineHeight: '1.6', fontSize: '0.92rem' }}>
+            <p style={{ margin: 0, color: 'var(--text-secondary, #475569)', lineHeight: '1.6', fontSize: '0.92rem' }}>
               {faq.answer}
             </p>
           </div>
