@@ -16,7 +16,7 @@ export default function robots(): MetadataRoute.Robots {
           '*',
         ],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/private/'],
+        disallow: ['/api/', '/private/'],
       },
     ],
     sitemap: `${BRAND_CONFIG.siteUrl}/sitemap.xml`,

@@ -31,41 +31,16 @@ export default function HomePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'vnhax',
-            url: 'https://vnhax.net/',
-            description:
-              'Tech news, AI trends, education guides, free UI components, developer designs, and top GitHub repos.',
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'vnhax',
-            url: 'https://vnhax.net/',
-            sameAs: [
-              'https://github.com/vnhax',
-              'https://x.com/vnhax',
-              'https://www.linkedin.com/company/vnhax',
-            ],
-          }),
-        }}
-      />
-
       <SiteHeader variant="home" />
 
       <main>
         <section className="hero">
-          <h1 className="wordmark">vnhax</h1>
+          <h1 className="wordmark">
+            vnhax
+            <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+              {' '}— Tech News, AI Trends, Education Guides &amp; Developer Tools
+            </span>
+          </h1>
 
           <p className="hero-description">
             Explore the latest tech news, AI trends, helpful education guides, free UI

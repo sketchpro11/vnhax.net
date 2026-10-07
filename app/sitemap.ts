@@ -101,6 +101,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    // Company Ecosystem Hubs
+    {
+      url: `${baseUrl}/openai`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/anthropic`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/google`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/github`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/xai`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/meta`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.85,
+    },
   ];
 
   // Dynamic Blog Posts from local content/blogs/ directory
