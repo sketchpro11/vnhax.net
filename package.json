@@ -20,5 +20,14 @@
   },
   "devDependencies": {
     "@types/node": "26.6.3"
-  }
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "Chrome >= 90",
+    "Safari >= 15.4",
+    "iOS >= 15.4",
+    "Firefox >= 90",
+    "Edge >= 90",
+    "not dead"
+  ]
 }

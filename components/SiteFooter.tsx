@@ -19,7 +19,7 @@ export default function SiteFooter() {
             <Link href="/" className="footer-logo" aria-label="VNHAX Home">
               <Image
                 src="/logo.png"
-                alt="VNHAX"
+                alt=""
                 width={105}
                 height={41}
                 className="footer-logo-img"

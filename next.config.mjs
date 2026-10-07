@@ -3,6 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000,
+  },
   experimental: {
     optimizePackageImports: ['gray-matter', 'marked'],
     staleTimes: {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -138,15 +139,13 @@ export default function GitHubReposPage() {
                           aspectRatio: '16/10',
                         }}
                       >
-                        <img
+                        <Image
                           src={repo.image}
                           alt={`${repo.name} overview`}
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           style={{
-                            width: '100%',
-                            height: '100%',
                             objectFit: 'contain',
-                            display: 'block',
                           }}
                         />
                       </div>

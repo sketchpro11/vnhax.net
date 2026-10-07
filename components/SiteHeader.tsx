@@ -122,7 +122,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
             <div className="atd-modern__mark">
               <Image
                 src="/icon.png"
-                alt="VNHAX"
+                alt=""
                 width={20}
                 height={20}
                 style={{ width: '20px', height: '20px', objectFit: 'contain' }}
@@ -250,7 +250,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
               <Link className="mobile-drawer-brand" href="/" onClick={() => setMobileMenuOpen(false)} aria-label="VNHAX Home">
                 <Image
                   src="/logo.png"
-                  alt="VNHAX"
+                  alt=""
                   width={96}
                   height={34}
                   style={{ height: '26px', width: 'auto' }}

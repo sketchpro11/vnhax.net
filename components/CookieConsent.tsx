@@ -44,9 +44,9 @@ export default function CookieConsent() {
   }
 
   return (
-    <aside
+    <section
       className="cookie-consent-banner"
-      role="dialog"
+      role="region"
       aria-label="Cookie Consent & Privacy Preferences"
       aria-describedby="cookie-consent-desc"
     >
@@ -84,6 +84,6 @@ export default function CookieConsent() {
           </button>
         </div>
       </div>
-    </aside>
+    </section>
   );
 }

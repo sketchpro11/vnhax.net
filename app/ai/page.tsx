@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -127,10 +128,11 @@ export default async function AIPage() {
                   <div className="liquid-card-inner">
                     {repo.image ? (
                       <div className="liquid-card-media">
-                        <img
+                        <Image
                           src={repo.image}
                           alt={`${repo.name} architecture overview`}
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="liquid-card-img"
                         />
                         <div className="liquid-card-overlay" />

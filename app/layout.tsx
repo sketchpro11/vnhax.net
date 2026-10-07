@@ -99,7 +99,6 @@ export default function RootLayout({
         <meta name="google-site-verification" content="x4r_3ceeZ0nwS6lBgCYzPrjJpU2ucVxSfQERIAaoHbY" />
 
         {/* DNS prefetch & Preconnect to speed up any external connections */}
-        <link rel="dns-prefetch" href="https://vnhax.net" />
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         
@@ -119,12 +118,12 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        {/* Google Analytics 4 (gtag.js) */}
+        {/* Google Analytics 4 (gtag.js) - Defer with lazyOnload for maximum LCP & FCP speed */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SW29Z5PQFR"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

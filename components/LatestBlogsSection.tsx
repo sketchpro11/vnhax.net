@@ -60,7 +60,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'all'}
             onClick={() => handleTabChange('all')}
           >
-            All Silos <span style={{ opacity: 0.7, fontSize: '11.5px', marginLeft: '3px' }}>({countAll})</span>
+            All Silos <span className="silo-tab-count">({countAll})</span>
           </button>
           <button
             className={`silo-tab ${activeFilter === 'ai' ? 'active' : ''}`}
@@ -70,7 +70,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'ai'}
             onClick={() => handleTabChange('ai')}
           >
-            AI &amp; Models <span style={{ opacity: 0.7, fontSize: '11.5px', marginLeft: '3px' }}>({countAi})</span>
+            AI &amp; Models <span className="silo-tab-count">({countAi})</span>
           </button>
           <button
             className={`silo-tab ${activeFilter === 'developer' ? 'active' : ''}`}
@@ -80,7 +80,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'developer'}
             onClick={() => handleTabChange('developer')}
           >
-            Dev &amp; Repos <span style={{ opacity: 0.7, fontSize: '11.5px', marginLeft: '3px' }}>({countDev})</span>
+            Dev &amp; Repos <span className="silo-tab-count">({countDev})</span>
           </button>
           <button
             className={`silo-tab ${activeFilter === 'ui' ? 'active' : ''}`}
@@ -90,7 +90,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'ui'}
             onClick={() => handleTabChange('ui')}
           >
-            UI Components <span style={{ opacity: 0.7, fontSize: '11.5px', marginLeft: '3px' }}>(1)</span>
+            UI Components <span className="silo-tab-count">(1)</span>
           </button>
           <button
             className={`silo-tab ${activeFilter === 'technology' ? 'active' : ''}`}
@@ -100,7 +100,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'technology'}
             onClick={() => handleTabChange('technology')}
           >
-            Tech &amp; News <span style={{ opacity: 0.7, fontSize: '11.5px', marginLeft: '3px' }}>({countTech})</span>
+            Tech &amp; News <span className="silo-tab-count">({countTech})</span>
           </button>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
                 width: '100%',
               }}
             >
-              <span style={{ fontSize: '12px', color: '#94a3b8' }}>Component Library</span>
+              <span style={{ fontSize: '12px', color: '#475569', fontWeight: 500 }}>Component Library</span>
               <span className="card-link" style={{ marginTop: 0, paddingTop: 0 }}>
                 Explore UI Hub <span aria-hidden="true">→</span>
               </span>
@@ -172,7 +172,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
                 width: '100%',
               }}
             >
-              <span style={{ fontSize: '12px', color: '#94a3b8' }}>{blog.formattedDate}</span>
+              <span style={{ fontSize: '12px', color: '#475569', fontWeight: 500 }}>{blog.formattedDate}</span>
               <span className="card-link" style={{ marginTop: 0, paddingTop: 0 }}>
                 Read Guide <span aria-hidden="true">→</span>
               </span>
