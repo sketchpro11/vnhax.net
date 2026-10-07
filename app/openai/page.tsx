@@ -35,9 +35,9 @@ const OPENAI_CONFIG: CompanyHubConfig = {
   focusTopics: ['GPT-4.5', 'o1 & o3 Reasoning', 'ChatGPT Pro $500', 'OpenAI Dots', 'Ultrafast Tier', 'Private Intelligence'],
   upcomingTopics: [
     {
-      category: 'Workflows & Canvas',
-      title: 'OpenAI Dots: Visual Multi-Agent Canvas Architecture',
-      description: 'How to build, link, and export node-based multi-agent pipelines with OpenAI Dots.',
+      category: 'Frontier Architecture',
+      title: 'GPT-4.5 Orion: Multimodal Scaling & Continuous Long-Horizon Reasoning',
+      description: 'Analyzing high-density synthetic pre-training datasets, vision tokenization, and extended planning horizons.',
     },
     {
       category: 'Reasoning Engines',

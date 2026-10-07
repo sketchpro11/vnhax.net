@@ -42,9 +42,9 @@ const ANTHROPIC_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Autonomous Tooling',
-      title: 'Claude Code CLI: Multi-Repository Workflows & Sandbox Isolation',
-      description: 'Architecting local terminal sandboxes, git workflow automations, and CI triage with Claude Code.',
+      category: 'Formal Verification',
+      title: 'Claude Mythos 5.2: Formal Software Synthesis & Zero-Defect Code Generation',
+      description: 'Formal logic synthesis in Lean 4 and mathematical proof validation for mission-critical software systems.',
     },
     {
       category: 'Protocol Standards',

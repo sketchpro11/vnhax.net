@@ -52,9 +52,9 @@ const GOOGLE_CONFIG: CompanyHubConfig = {
       description: 'Formal logic synthesis in Lean 4, automated geometric theorem proving, and verification loops.',
     },
     {
-      category: 'Spatial Perception',
-      title: 'Project Astra Real-Time Visual AI: Sub-100ms Video Perception',
-      description: 'Continuous multimodal video streams, spatial audio localization, and responsive conversational agents.',
+      category: 'Frontier Reasoning',
+      title: 'Gemini 4 Pro: Million-Token Needle Retrieval & Deep Mathematical Synthesis',
+      description: 'Extending long-context associative recall, hierarchical KV caching, and continuous code comprehension.',
     },
     {
       category: 'Open Source Models',

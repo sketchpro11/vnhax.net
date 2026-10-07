@@ -42,9 +42,9 @@ const XAI_CONFIG: CompanyHubConfig = {
   ],
   upcomingTopics: [
     {
-      category: 'Model Roadmaps',
-      title: 'xAI Roadmap: Grok 4.8 & 4.9 Real-Time Telemetry & Expanded Context',
-      description: 'Anticipated incremental updates, real-time X telemetry feeds, and low-latency API streaming.',
+      category: 'Audio Architecture',
+      title: 'Grok Voice Reflex: Sub-50ms Speech-to-Speech Direct Audio Transformers',
+      description: 'Continuous duplex streaming, low-latency audio tokenization, and emotional modulation.',
     },
     {
       category: 'Agent Frameworks',
@@ -58,8 +58,8 @@ const XAI_CONFIG: CompanyHubConfig = {
     },
     {
       category: 'Datacenter Engineering',
-      title: 'Colossus 2 Mega-Cluster: Gigawatt Power Delivery & Liquid Cooling',
-      description: 'Engineering thermal dissipation, high-voltage substations, and optical InfiniBand fabrics in Memphis.',
+      title: 'Colossus 3 Horizon: Multi-Gigawatt Substation Integration for Grok 6',
+      description: 'Long-term power purchase agreements, nuclear micro-reactors, and high-density liquid infrastructure.',
     },
   ],
 };
