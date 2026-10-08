@@ -77,6 +77,7 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'x4r_3ceeZ0nwS6lBgCYzPrjJpU2ucVxSfQERIAaoHbY',
+    yandex: '209938d79ecc1812',
   },
 };
 
@@ -97,6 +98,8 @@ export default function RootLayout({
       <head>
         {/* Google Site Verification (Search Console) */}
         <meta name="google-site-verification" content="x4r_3ceeZ0nwS6lBgCYzPrjJpU2ucVxSfQERIAaoHbY" />
+        {/* Yandex Webmaster Verification */}
+        <meta name="yandex-verification" content="209938d79ecc1812" />
 
         {/* DNS prefetch & Preconnect to speed up any external connections */}
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
