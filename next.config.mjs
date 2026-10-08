@@ -69,7 +69,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/:path+.html',
+        source: '/:path((?!yandex_)[^/]+)+.html',
         destination: '/:path+',
         permanent: true,
       },

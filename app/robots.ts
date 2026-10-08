@@ -5,11 +5,14 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        userAgent: 'PerplexityBot',
+        allow: '/',
+      },
+      {
         userAgent: [
           'Googlebot',
           'Bingbot',
           'GPTBot',
-          'PerplexityBot',
           'ClaudeBot',
           'Google-Extended',
           'Mediapartners-Google',
