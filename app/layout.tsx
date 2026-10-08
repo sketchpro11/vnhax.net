@@ -83,6 +83,8 @@ export const metadata: Metadata = {
 
 import CookieConsent from '@/components/CookieConsent';
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function RootLayout({
   children,
@@ -137,6 +139,8 @@ export default function RootLayout({
 
         {children}
         <CookieConsent />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
