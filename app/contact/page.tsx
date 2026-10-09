@@ -9,14 +9,14 @@ import ContactForm from '@/components/ContactForm';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Contact VNHAX — Editorial Desk, Technical Errata & DMCA',
+  title: 'Contact Editorial Desk & Support',
   description:
     'Contact the editorial engineering desk at VNHAX (Virtual Next-Gen Hub for AI & eXploration). Guaranteed 24–48 business hour SLA for technical corrections, repository reviews, and DMCA inquiries.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/contact`,
   },
   openGraph: {
-    title: `Contact VNHAX — Editorial Desk & Publisher Inquiries`,
+    title: `Contact Editorial Desk & Support | ${BRAND_CONFIG.shortName}`,
     description:
       'Direct communication channels and verified contact form for VNHAX (Virtual Next-Gen Hub for AI & eXploration). 24–48 hour response SLA.',
     url: `${BRAND_CONFIG.siteUrl}/contact`,

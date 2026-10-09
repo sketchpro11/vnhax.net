@@ -21,12 +21,16 @@ export async function generateMetadata({ params }: RepoPageProps): Promise<Metad
 
   if (!repo) {
     return {
-      title: `Repository Not Found — ${BRAND_CONFIG.name}`,
+      title: {
+        absolute: `Repository Not Found | ${BRAND_CONFIG.shortName}`,
+      },
       robots: { index: false, follow: false },
     };
   }
 
-  const title = `${repo.repoFullName}: ${repo.summary.slice(0, 50)}... — GitHub Architecture | VNHAX`;
+  const title = {
+    absolute: `${repo.repoFullName} — Architecture Guide | ${BRAND_CONFIG.shortName}`,
+  };
   const description = repo.metaDescription;
   const url = `${BRAND_CONFIG.siteUrl}/repos/${slug}`;
 
@@ -41,7 +45,7 @@ export async function generateMetadata({ params }: RepoPageProps): Promise<Metad
       canonical: url,
     },
     openGraph: {
-      title: `${repo.repoFullName} — GitHub Repository Architecture | VNHAX`,
+      title: `${repo.repoFullName} — Architecture Guide | ${BRAND_CONFIG.shortName}`,
       description,
       url,
       siteName: BRAND_CONFIG.name,

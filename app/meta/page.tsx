@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Meta Llama Models, Meta Muse & Open Source AI Hub — ${BRAND_CONFIG.name}`,
+  title: 'Meta Llama & Open Source AI Hub',
   description:
     'Comprehensive guides, agent tutorials, and architecture teardowns for Meta Llama models, Meta Muse social agents, and Meta Enterprise Platform.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/meta`,
   },
   openGraph: {
-    title: `Meta AI Hub — ${BRAND_CONFIG.name}`,
+    title: `Meta Llama & Open Source AI Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'Explore open-source Llama model fine-tuning, Meta Muse agent workflows, WhatsApp commerce automation, and enterprise B2B platforms.',
     url: `${BRAND_CONFIG.siteUrl}/meta`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

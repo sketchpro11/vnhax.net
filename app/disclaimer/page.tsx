@@ -7,14 +7,14 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer & Advertising Disclosure — VNHAX',
+  title: 'Disclaimer & Advertising Disclosure',
   description:
     'Official engineering disclaimer, Google AdSense advertising disclosure, AI software accuracy, and intellectual property notice for VNHAX (Virtual Next-Gen Hub for AI & eXploration).',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/disclaimer`,
   },
   openGraph: {
-    title: `Disclaimer & Advertising Disclosure | ${BRAND_CONFIG.name}`,
+    title: `Disclaimer & Advertising Disclosure | ${BRAND_CONFIG.shortName}`,
     description:
       'Official engineering disclaimer, Google AdSense advertising disclosure, and intellectual property notice for VNHAX.',
     url: `${BRAND_CONFIG.siteUrl}/disclaimer`,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Disclaimer & Advertising Disclosure | ${BRAND_CONFIG.name}`,
+    title: `Disclaimer & Advertising Disclosure | ${BRAND_CONFIG.shortName}`,
     description:
       'Official engineering disclaimer, Google AdSense advertising disclosure, and intellectual property notice for VNHAX.',
     images: [`${BRAND_CONFIG.siteUrl}/og-image.png`],

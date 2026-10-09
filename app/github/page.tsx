@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `GitHub Copilot, Developer Tools & Repos Hub — ${BRAND_CONFIG.name}`,
+  title: 'GitHub Copilot & Developer Tools Hub',
   description:
     'Guides, benchmarks, and tutorials for GitHub Copilot, Project HydraFusion, automated PR code reviews, and open-source developer workflows.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/github`,
   },
   openGraph: {
-    title: `GitHub Developer Hub — ${BRAND_CONFIG.name}`,
+    title: `GitHub Copilot & Developer Tools Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'Explore GitHub Copilot optimizations, automated PR review workflows, sandboxing security, and top open-source tooling.',
     url: `${BRAND_CONFIG.siteUrl}/github`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

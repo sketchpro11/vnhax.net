@@ -8,7 +8,7 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `GitHub Repositories for Developers — ${BRAND_CONFIG.name}`,
+  title: 'Top GitHub Repos for Developers',
   description:
     'A practical starting list of GitHub repositories for local AI, application development, image generation, and developer workflows.',
   alternates: {

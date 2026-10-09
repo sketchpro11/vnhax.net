@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Google Gemini Models, DeepMind & Research Hub — ${BRAND_CONFIG.name}`,
+  title: 'Google Gemini & DeepMind AI Hub',
   description:
     'Technical guides, architecture teardowns, and benchmarks on Google DeepMind’s Gemini models, TPU v6 infrastructure, and developer tools.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/google`,
   },
   openGraph: {
-    title: `Google AI Hub — ${BRAND_CONFIG.name}`,
+    title: `Google Gemini & DeepMind AI Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'In-depth technical coverage of Gemini 4 Argon, 3.8 Flash, TPU silicon, and DeepMind autonomous research.',
     url: `${BRAND_CONFIG.siteUrl}/google`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

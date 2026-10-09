@@ -8,14 +8,14 @@ import TermsTableOfContents from '@/components/TermsTableOfContents';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service & Engineering Disclaimer',
+  title: 'Terms of Service',
   description:
     'Terms of Service, educational software licenses, "As-Is" hardware execution disclaimers, and liability limitations for VNHAX (Virtual Next-Gen Hub for AI & eXploration).',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/terms`,
   },
   openGraph: {
-    title: `Terms of Service & Engineering Disclaimer | ${BRAND_CONFIG.name}`,
+    title: `Terms of Service | ${BRAND_CONFIG.shortName}`,
     description:
       'Legal terms, open-source code usage policies, hardware execution disclaimers, and DMCA safe harbor guidelines on VNHAX.',
     url: `${BRAND_CONFIG.siteUrl}/terms`,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Terms of Service | ${BRAND_CONFIG.name}`,
+    title: `Terms of Service | ${BRAND_CONFIG.shortName}`,
     description:
       'Educational software licenses, "As-Is" hardware execution disclaimers, and liability limitations for VNHAX.',
     images: [`${BRAND_CONFIG.siteUrl}/og-image.png`],

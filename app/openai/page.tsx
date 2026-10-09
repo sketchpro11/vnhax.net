@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `OpenAI Models, Research & Developer Guides — ${BRAND_CONFIG.name}`,
+  title: 'OpenAI Models & Developer Hub',
   description:
     'Comprehensive engineering teardowns, API guides, and benchmark analyses for OpenAI models: GPT-4.5, o1 reasoning, ChatGPT Pro, and developer infrastructure.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/openai`,
   },
   openGraph: {
-    title: `OpenAI Hub — ${BRAND_CONFIG.name}`,
+    title: `OpenAI Models & Developer Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'Explore guides, benchmarks, and architectural analyses of OpenAI models, reasoning architectures, and developer APIs.',
     url: `${BRAND_CONFIG.siteUrl}/openai`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

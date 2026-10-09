@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Component Page Starter Template — ${BRAND_CONFIG.name}`,
+  title: 'Component Page Starter Template',
   description:
     'Free UI component starter pattern: full-width live preview, copy-ready semantic code blocks, accessibility notes, and design-system integration.',
   alternates: {

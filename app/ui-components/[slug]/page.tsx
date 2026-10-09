@@ -32,7 +32,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = `${comp.title} — Accessible React & CSS UI Component`;
+  const title = {
+    absolute: `${comp.title} — React & CSS Component | ${BRAND_CONFIG.shortName}`,
+  };
   const description = `${comp.subtitle} Complete copy-paste TSX code, Tailwind styling, props reference, and WCAG AA accessibility guide.`;
 
   return {
@@ -42,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: `${BRAND_CONFIG.siteUrl}/ui-components/${slug}`,
     },
     openGraph: {
-      title: `${comp.title} | VNHAX UI Components`,
+      title: `${comp.title} — React & CSS Component | ${BRAND_CONFIG.shortName}`,
       description,
       url: `${BRAND_CONFIG.siteUrl}/ui-components/${slug}`,
       siteName: BRAND_CONFIG.shortName,

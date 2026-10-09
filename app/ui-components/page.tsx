@@ -7,14 +7,14 @@ import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 import { getAllUIComponents } from '@/lib/components-data';
 
 export const metadata: Metadata = {
-  title: 'UI Components & Design System Library — Free, Accessible & Production Ready',
+  title: 'Free React UI Components Library',
   description:
     'Free, accessible, production-ready UI components for modern web applications. Featuring Tweet Card, Bento Grid, Animated List, Dock, Sparkles Title, Image Accordions, Pricing Matrix, and Hero Sections. Zero npm bloat.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/ui-components`,
   },
   openGraph: {
-    title: 'UI Components & Design System Library | VNHAX',
+    title: `Free React UI Components Library | ${BRAND_CONFIG.shortName}`,
     description:
       'Explore accessible, high-performance UI components with live interactive previews, full React TSX source code, Tailwind utilities, and WCAG AA accessibility guides.',
     url: `${BRAND_CONFIG.siteUrl}/ui-components`,

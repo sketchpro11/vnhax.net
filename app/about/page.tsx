@@ -8,14 +8,14 @@ import AboutTableOfContents from '@/components/AboutTableOfContents';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'About VNHAX — Virtual Next-Gen Hub for AI & eXploration',
+  title: 'About Us & Editorial Mission',
   description:
     'About VNHAX (Virtual Next-Gen Hub for AI & eXploration). Discover our editorial mission, physical hardware testing lab, open-source AI benchmarks, and ethical engineering standards.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/about`,
   },
   openGraph: {
-    title: `About VNHAX — Virtual Next-Gen Hub for AI & eXploration`,
+    title: `About Us & Editorial Mission | ${BRAND_CONFIG.shortName}`,
     description:
       'Discover our editorial mission, physical hardware testing methodology, local LLM benchmarks, and ethical open-source standards on VNHAX.',
     url: `${BRAND_CONFIG.siteUrl}/about`,

@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Anthropic Claude Models, Research & Safety Hub — ${BRAND_CONFIG.name}`,
+  title: 'Anthropic Claude & Safety Hub',
   description:
     'Deep-dive articles, architectural comparisons, and hands-on guides for Anthropic Claude models: Opus, Sonnet, Haiku, MCP protocols, and Constitutional AI.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/anthropic`,
   },
   openGraph: {
-    title: `Anthropic Hub — ${BRAND_CONFIG.name}`,
+    title: `Anthropic Claude & Safety Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'In-depth architectural analysis and developer guides for Claude Opus, Sonnet 5.5, MCP integrations, and enterprise safety.',
     url: `${BRAND_CONFIG.siteUrl}/anthropic`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

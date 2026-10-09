@@ -8,18 +8,18 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'GitHub Repositories & Architecture Guides — Trending Developer Tools',
+  title: 'Trending GitHub Repos & Toolkits',
   description:
     'Curated open-source runtimes, libraries, and agent frameworks with interactive architecture breakdowns, benchmarks, and integration guides. Verified on October 4, 2026.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/repos`,
   },
   openGraph: {
-    title: 'Trending GitHub Repositories & Architecture Guides | VNHAX',
+    title: `Trending GitHub Repos & Toolkits | ${BRAND_CONFIG.shortName}`,
     description:
       'Curated open-source runtimes, libraries, and agent frameworks with interactive architecture breakdowns and benchmarks.',
     url: `${BRAND_CONFIG.siteUrl}/repos`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

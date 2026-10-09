@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     canonical: `${BRAND_CONFIG.siteUrl}/privacy-policy`,
   },
   openGraph: {
-    title: `Privacy Policy & Data Protection | ${BRAND_CONFIG.name}`,
+    title: `Privacy Policy & Data Protection | ${BRAND_CONFIG.shortName}`,
     description:
       'Comprehensive Privacy Policy for VNHAX (Virtual Next-Gen Hub for AI & eXploration). Disclosing Google AdSense cookies, DART cookie opt-outs, GDPR, and CCPA user rights.',
     url: `${BRAND_CONFIG.siteUrl}/privacy-policy`,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Privacy Policy | ${BRAND_CONFIG.name}`,
+    title: `Privacy Policy | ${BRAND_CONFIG.shortName}`,
     description:
       'Disclosing Google AdSense cookies, DART cookie opt-outs, log files, GDPR, and CCPA privacy protections on VNHAX.',
     images: [`${BRAND_CONFIG.siteUrl}/og-image.png`],

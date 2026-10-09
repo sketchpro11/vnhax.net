@@ -6,14 +6,14 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Tech Platforms Hub — Cloud Infrastructure, AI Runtimes & Systems',
+  title: 'Cloud Infrastructure & AI Runtimes Hub',
   description:
     'Architectural evaluation of cloud platforms, AI inference clusters, serverless edge runtimes, and database infrastructure. Evaluate latency, portability, and lock-in risk.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/technology`,
   },
   openGraph: {
-    title: `Tech Platforms Hub — ${BRAND_CONFIG.name}`,
+    title: `Cloud Infrastructure & AI Runtimes | ${BRAND_CONFIG.shortName}`,
     description:
       'Architectural evaluation of cloud platforms, AI inference clusters, serverless edge runtimes, and database infrastructure. Evaluate latency, portability, and lock-in risk.',
     url: `${BRAND_CONFIG.siteUrl}/technology`,

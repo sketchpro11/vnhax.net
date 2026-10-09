@@ -22,8 +22,8 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(BRAND_CONFIG.siteUrl),
   title: {
-    default: BRAND_CONFIG.name,
-    template: `%s | ${BRAND_CONFIG.name}`,
+    default: 'vnhax — Tech News, AI Tools & Developer Guides',
+    template: `%s | ${BRAND_CONFIG.shortName}`,
   },
   description: BRAND_CONFIG.description,
   alternates: {

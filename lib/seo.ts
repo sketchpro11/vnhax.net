@@ -189,3 +189,60 @@ export function getFAQSchema(items: FAQItem[]) {
     }))
   };
 }
+
+/**
+ * Format and constrain SEO titles to be strictly under 60-65 chars for Google & Bing
+ */
+export function shortenSeoTitle(title: string, maxLen = 56): string {
+  if (!title) return '';
+  const trimmed = title.trim();
+  if (trimmed.length <= maxLen) return trimmed;
+
+  if (trimmed.includes(':')) {
+    const parts = trimmed.split(':');
+    const main = parts[0].trim();
+    const sub = parts.slice(1).join(':').trim();
+
+    if (main.length >= 20 && main.length <= maxLen) {
+      const remaining = maxLen - main.length - 2;
+      if (remaining >= 12 && sub) {
+        const words = sub.split(' ');
+        let briefSub = '';
+        for (const w of words) {
+          if ((briefSub + ' ' + w).trim().length <= remaining) {
+            briefSub = (briefSub + ' ' + w).trim();
+          } else break;
+        }
+        briefSub = briefSub.replace(/[,&:\-\s]+$/, '');
+        if (briefSub) {
+          return `${main}: ${briefSub}`;
+        }
+      }
+      return main.replace(/[,&:\-\s]+$/, '');
+    }
+  }
+
+  if (trimmed.includes(' — ')) {
+    const main = trimmed.split(' — ')[0].trim();
+    if (main.length <= maxLen) return main.replace(/[,&:\-\s]+$/, '');
+  }
+  if (trimmed.includes(' - ')) {
+    const main = trimmed.split(' - ')[0].trim();
+    if (main.length <= maxLen) return main.replace(/[,&:\-\s]+$/, '');
+  }
+
+  if (trimmed.includes('?')) {
+    const main = trimmed.split('?')[0].trim() + '?';
+    if (main.length <= maxLen) return main;
+  }
+
+  const words = trimmed.split(' ');
+  let result = '';
+  for (const w of words) {
+    if ((result + ' ' + w).trim().length <= maxLen - 3) {
+      result = (result + ' ' + w).trim();
+    } else break;
+  }
+  return `${result.replace(/[,&:\-\s]+$/, '')}...`;
+}
+

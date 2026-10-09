@@ -4,18 +4,18 @@ import { getBlogsByCompany } from '@/lib/blog';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `xAI Grok Models, Colossus & Frontier AI Hub — ${BRAND_CONFIG.name}`,
+  title: 'xAI Grok & Frontier AI Hub',
   description:
     'Technical benchmarks, architecture breakdowns, and pricing guides for xAI Grok 4.7 & 5, Colossus supercluster, and SpaceXAI orbital integrations.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/xai`,
   },
   openGraph: {
-    title: `xAI Hub — ${BRAND_CONFIG.name}`,
+    title: `xAI Grok & Frontier AI Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'In-depth engineering analyses of xAI Grok models, Colossus 200k GPU infrastructure, real-time X telemetry, and developer APIs.',
     url: `${BRAND_CONFIG.siteUrl}/xai`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };

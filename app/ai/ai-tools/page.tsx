@@ -8,11 +8,19 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `AI Tools & Frameworks Directory — ${BRAND_CONFIG.name}`,
+  title: 'AI Tools & Frameworks Directory',
   description:
     'Curated directory and architectural breakdowns of top AI tools: local LLM runtimes, autonomous coding agents, diffusion interfaces, and orchestration frameworks.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/ai/ai-tools`,
+  },
+  openGraph: {
+    title: `AI Tools & Frameworks Directory | ${BRAND_CONFIG.shortName}`,
+    description:
+      'Curated directory and architectural breakdowns of top AI tools: local LLM runtimes, autonomous coding agents, diffusion interfaces, and orchestration frameworks.',
+    url: `${BRAND_CONFIG.siteUrl}/ai/ai-tools`,
+    siteName: BRAND_CONFIG.shortName,
+    type: 'website',
   },
 };
 

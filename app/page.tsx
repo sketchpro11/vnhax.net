@@ -10,7 +10,7 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'vnhax — Tech News, AI Trends, Education Guides, Free UI Components & Top Repos',
+  title: 'vnhax — Tech News, AI Trends & Developer Hub',
   description:
     'Explore the latest tech news, AI trends, helpful education guides, free UI components, developer designs, and top GitHub repos all in one place.',
   alternates: {

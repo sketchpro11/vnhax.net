@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Technology Platform Evaluation Framework — ${BRAND_CONFIG.name}`,
+  title: 'Tech Platform Evaluation Framework',
   description:
     'A practical framework for evaluating technology platforms: integration fit, data portability, security boundaries, operational cost, and team velocity.',
   alternates: {

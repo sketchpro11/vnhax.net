@@ -11,7 +11,7 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import SlideDeck from '@/components/SlideDeck';
 import StickyArticleBar from '@/components/StickyArticleBar';
 import { getBlogPost, getAllBlogSlugs, getAllBlogs } from '@/lib/blog';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, getBreadcrumbSchema, shortenSeoTitle } from '@/lib/seo';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -28,12 +28,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return {
-      title: `Article Not Found — ${BRAND_CONFIG.name}`,
+      title: {
+        absolute: `Article Not Found | ${BRAND_CONFIG.shortName}`,
+      },
       robots: { index: false, follow: false },
     };
   }
 
-  const title = post.frontmatter.title;
+  const rawTitle = post.frontmatter.title;
+  const seoTitle = shortenSeoTitle(rawTitle, 56);
+  const title = {
+    absolute: `${seoTitle} | ${BRAND_CONFIG.shortName}`,
+  };
   const description = post.frontmatter.description;
   const url = `${BRAND_CONFIG.siteUrl}/blog/${slug}`;
 
@@ -44,7 +50,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       canonical: url,
     },
     openGraph: {
-      title,
+      title: `${seoTitle} | ${BRAND_CONFIG.shortName}`,
       description,
       url,
       siteName: BRAND_CONFIG.name,

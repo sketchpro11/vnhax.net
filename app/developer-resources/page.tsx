@@ -8,14 +8,14 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Developer Resources Hub — Repositories, CLI Toolkits & Architecture',
+  title: 'Developer Toolkits & Architecture Hub',
   description:
     'Curated engineering knowledge base: verified GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/developer-resources`,
   },
   openGraph: {
-    title: 'Developer Resources Hub | VNHAX',
+    title: `Developer Toolkits & Architecture Hub | ${BRAND_CONFIG.shortName}`,
     description:
       'Curated engineering knowledge base: verified GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
     url: `${BRAND_CONFIG.siteUrl}/developer-resources`,

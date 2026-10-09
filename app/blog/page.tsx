@@ -8,18 +8,18 @@ import { getAllBlogs } from '@/lib/blog';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: `Articles, Guides & Research — ${BRAND_CONFIG.name}`,
+  title: 'AI Articles, Guides & Research',
   description:
     'Deep technical analysis, architectural comparisons, and hands-on guides for open-source AI models, developer tools, and engineering workflows.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/blog`,
   },
   openGraph: {
-    title: `Articles & Guides — ${BRAND_CONFIG.name}`,
+    title: `AI Articles, Guides & Research | ${BRAND_CONFIG.shortName}`,
     description:
       'Deep technical analysis, architectural comparisons, and hands-on guides for open-source AI models and developer tools.',
     url: `${BRAND_CONFIG.siteUrl}/blog`,
-    siteName: BRAND_CONFIG.name,
+    siteName: BRAND_CONFIG.shortName,
     type: 'website',
   },
 };
