@@ -4,8 +4,8 @@ description: "NVIDIA's PixelUMM generates images and video directly in pixel spa
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["nvidia", "pixelumm", "latent-free", "multimodal-ai", "video-generation", "computer-vision"]
+category: "Tech Platforms & Infrastructure"
+tags: ["technology", "platforms", "infrastructure", "nvidia", "pixel-space", "hardware-compute", "cloud-platforms"]
 readTime: "9 min read"
 ---
 

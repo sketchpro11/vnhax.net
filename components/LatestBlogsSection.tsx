@@ -30,7 +30,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
   const displayedBlogs = filteredBlogs.slice(0, visibleCount);
 
   // Check if there are more blogs to load
-  const hasMore = !showUiCard && visibleCount < filteredBlogs.length;
+  const hasMore = visibleCount < filteredBlogs.length;
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 4);
@@ -40,6 +40,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
   const countAll = blogs.length;
   const countAi = blogs.filter((b) => b.silos.includes('ai')).length;
   const countDev = blogs.filter((b) => b.silos.includes('developer')).length;
+  const countUi = blogs.filter((b) => b.silos.includes('ui')).length;
   const countTech = blogs.filter((b) => b.silos.includes('technology')).length;
 
   return (
@@ -90,7 +91,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
             aria-selected={activeFilter === 'ui'}
             onClick={() => handleTabChange('ui')}
           >
-            UI Components <span className="silo-tab-count">(1)</span>
+            UI Components <span className="silo-tab-count">({countUi})</span>
           </button>
           <button
             className={`silo-tab ${activeFilter === 'technology' ? 'active' : ''}`}

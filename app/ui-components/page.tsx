@@ -5,6 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 import { getAllUIComponents } from '@/lib/components-data';
+import { getBlogsBySilo } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: 'Free React UI Components Library',
@@ -51,8 +52,9 @@ const UI_FAQS = [
   },
 ];
 
-export default function UIComponentsPage() {
+export default async function UIComponentsPage() {
   const components = getAllUIComponents();
+  const uiArticles = await getBlogsBySilo('ui');
 
   const collectionSchema = {
     '@context': 'https://schema.org',
@@ -258,6 +260,45 @@ export default function UIComponentsPage() {
               ))}
             </div>
           </section>
+
+          {/* Featured UI Design & Canvas Architecture Guides */}
+          {uiArticles.length > 0 && (
+            <section className="topic-section" aria-labelledby="ui-articles-heading" style={{ marginBottom: '48px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h2 id="ui-articles-heading" className="topic-section-title" style={{ margin: 0 }}>
+                    UI Design &amp; Canvas Architecture Guides
+                  </h2>
+                  <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
+                    Hands-on teardowns on visual composition, canvas bounding boxes, layout manipulation, and generative UI controls.
+                  </p>
+                </div>
+                <Link href="/blog" style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}>
+                  View All Guides →
+                </Link>
+              </div>
+
+              <div className="card-grid hub-card-grid">
+                {uiArticles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    className="card card--content"
+                    href={`/blog/${article.slug}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span className="card-eyebrow">
+                      {article.frontmatter.category || 'UI Components'} · {article.frontmatter.readTime || '8 min read'}
+                    </span>
+                    <h3>{article.frontmatter.title}</h3>
+                    <p>{article.frontmatter.description}</p>
+                    <span className="card-link">
+                      Read Guide <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Editorial Analysis: Why Zero-Dependency CSS Wins */}
           <section className="topic-section" aria-labelledby="zero-css-article" style={{ marginBottom: '48px' }}>

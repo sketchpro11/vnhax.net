@@ -4,7 +4,7 @@ import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { getAllBlogs } from '@/lib/blog';
+import { getBlogsBySilo } from '@/lib/blog';
 import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AIPage() {
-  const posts = await getAllBlogs();
+  const posts = await getBlogsBySilo('ai');
   const allRepos = getAllRepos();
   const aiRepos = allRepos.filter((r) =>
     ['agent-reach', 'caveman', 'ecc'].includes(r.slug)

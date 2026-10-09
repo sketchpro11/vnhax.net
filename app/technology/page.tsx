@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
+import { getBlogsBySilo } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: 'Cloud Infrastructure & AI Runtimes Hub',
@@ -45,7 +46,8 @@ const PLATFORM_FAQS = [
   },
 ];
 
-export default function TechnologyPage() {
+export default async function TechnologyPage() {
+  const techArticles = await getBlogsBySilo('technology');
   const breadcrumbs = [
     { name: 'Home', url: '/' },
     { name: 'Tech Platforms', url: '/technology' },
@@ -210,6 +212,45 @@ export default function TechnologyPage() {
               </div>
             </div>
           </section>
+
+          {/* Featured Platform Architecture & Acceleration Guides */}
+          {techArticles.length > 0 && (
+            <section className="topic-section" aria-labelledby="tech-articles-heading">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h2 id="tech-articles-heading" className="topic-section-title" style={{ margin: 0 }}>
+                    Platform Architecture &amp; Acceleration Guides
+                  </h2>
+                  <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
+                    Hardware benchmarks, GPU compute scaling, and distributed model serving infrastructure.
+                  </p>
+                </div>
+                <Link href="/blog" style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}>
+                  View All Guides →
+                </Link>
+              </div>
+
+              <div className="card-grid hub-card-grid">
+                {techArticles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    className="card card--content"
+                    href={`/blog/${article.slug}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span className="card-eyebrow">
+                      {article.frontmatter.category || 'Tech Platforms'} · {article.frontmatter.readTime || '8 min read'}
+                    </span>
+                    <h3>{article.frontmatter.title}</h3>
+                    <p>{article.frontmatter.description}</p>
+                    <span className="card-link">
+                      Read Guide <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Frequently Asked Questions */}
           <section className="topic-section" aria-labelledby="plat-faq-heading">

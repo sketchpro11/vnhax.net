@@ -4,8 +4,8 @@ description: "GPT Dots is OpenAI's always-on AI agent with its own cloud compute
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "OpenAI & Models"
-tags: ["openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-agents", "productivity"]
+category: "AI & Autonomous Agents"
+tags: ["ai", "models", "openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-agents", "productivity"]
 readTime: "7 min read"
 ---
 

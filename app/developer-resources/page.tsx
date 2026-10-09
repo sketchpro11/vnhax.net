@@ -5,6 +5,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getAllRepos } from '@/lib/repos-data';
+import { getBlogsBySilo } from '@/lib/blog';
 import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -99,8 +100,9 @@ const REPOS_LIQUID_METAS: Record<string, { mesh: string; category: string; mocku
   },
 };
 
-export default function DeveloperResourcesPage() {
+export default async function DeveloperResourcesPage() {
   const repos = getAllRepos();
+  const devArticles = await getBlogsBySilo('developer');
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
@@ -268,6 +270,45 @@ export default function DeveloperResourcesPage() {
               })}
             </div>
           </section>
+
+          {/* Featured Developer Guides & Toolkits */}
+          {devArticles.length > 0 && (
+            <section className="topic-section" aria-labelledby="dev-articles-heading">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h2 id="dev-articles-heading" className="topic-section-title" style={{ margin: 0 }}>
+                    Developer Guides &amp; Architecture Toolkits
+                  </h2>
+                  <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
+                    Hands-on engineering teardowns, API integrations, diffusion distillation, and terminal toolchains.
+                  </p>
+                </div>
+                <Link href="/blog" style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}>
+                  View All Guides →
+                </Link>
+              </div>
+
+              <div className="card-grid hub-card-grid">
+                {devArticles.slice(0, 6).map((article) => (
+                  <Link
+                    key={article.slug}
+                    className="card card--content"
+                    href={`/blog/${article.slug}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <span className="card-eyebrow">
+                      {article.frontmatter.category || 'Developer Tools'} · {article.frontmatter.readTime || '8 min read'}
+                    </span>
+                    <h3>{article.frontmatter.title}</h3>
+                    <p>{article.frontmatter.description}</p>
+                    <span className="card-link">
+                      Read Guide <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* In-Depth Editorial Dependency Quality Gates */}
           <section className="topic-section" aria-labelledby="audit-framework">

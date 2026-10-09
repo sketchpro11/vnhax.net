@@ -4,8 +4,8 @@ description: "Gemini 4 Argon explained: 1-million output tokens, #1 on DeepSWE a
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "Google & Gemini Models"
-tags: ["google", "gemini-4-argon", "google-ai", "gpt-6-astra", "claude-opus-5-5", "ai-benchmarks"]
+category: "AI & Frontier Models"
+tags: ["ai", "models", "google", "gemini-4-argon", "google-ai", "gpt-6-astra", "claude-opus-5-5", "ai-benchmarks"]
 readTime: "9 min read"
 ---
 

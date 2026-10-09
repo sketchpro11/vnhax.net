@@ -257,16 +257,16 @@ export function getLatestBlogSummaries(): BlogSummary[] {
       const combined = `${category} ${tags.join(' ')} ${slug}`.toLowerCase();
       const silos = new Set<string>();
 
-      if (/\b(ai|rag|llama|modelfile|model|models|slm|slms|agent|agents|ollama|quantization|inference|tokens?|embedding)\b/i.test(combined)) {
+      if (/\b(ai|rag|llama|modelfile|model|models|slm|slms|agent|agents|ollama|quantization|inference|tokens?|embedding|gemini|gpt|deepseek)\b/i.test(combined)) {
         silos.add('ai');
       }
-      if (/\b(dev|developer|tool|tools|repo|repos|coding|code|claude|antigravity|grok|mcp|token|tokens|prompt|prompts|workflow|workflows|proxy|proxies|git|github)\b/i.test(combined)) {
+      if (/\b(dev|developer|tool|tools|repo|repos|coding|code|claude|antigravity|grok|mcp|token|tokens|prompt|prompts|workflow|workflows|proxy|proxies|git|github|distillation|api)\b/i.test(combined)) {
         silos.add('developer');
       }
-      if (/\b(ui|component|components|css|design|frontend|interface|template|templates)\b/i.test(combined)) {
+      if (/\b(ui|component|components|css|design|frontend|interface|template|templates|canvas)\b/i.test(combined)) {
         silos.add('ui');
       }
-      if (/\b(tech|platform|platforms|cloud|database|databases|vector|pinecone|qdrant|chroma|security|governance|audit|auditing|hardware|edge|infrastructure|network)\b/i.test(combined)) {
+      if (/\b(tech|platform|platforms|cloud|database|databases|vector|pinecone|qdrant|chroma|security|governance|audit|auditing|hardware|edge|infrastructure|network|gpu|compute|acceleration)\b/i.test(combined)) {
         silos.add('technology');
       }
 
@@ -277,18 +277,20 @@ export function getLatestBlogSummaries(): BlogSummary[] {
       // Badge styling
       let badgeClass = 'silo-badge--ai';
       const catLower = category.toLowerCase();
-      if (catLower.includes('developer') || catLower.includes('token') || catLower.includes('tool') || catLower.includes('workflow')) {
-        badgeClass = 'silo-badge--dev';
+      if (catLower.includes('ui') || catLower.includes('design') || catLower.includes('component')) {
+        badgeClass = 'silo-badge--ui';
       } else if (
         catLower.includes('cloud') ||
         catLower.includes('security') ||
         catLower.includes('governance') ||
         catLower.includes('hardware') ||
+        catLower.includes('platform') ||
+        catLower.includes('infrastructure') ||
         (catLower.includes('architecture') && !catLower.includes('agent') && !catLower.includes('rag'))
       ) {
         badgeClass = 'silo-badge--tech';
-      } else if (catLower.includes('ui') || catLower.includes('design') || catLower.includes('component')) {
-        badgeClass = 'silo-badge--ui';
+      } else if (catLower.includes('developer') || catLower.includes('token') || catLower.includes('tool') || catLower.includes('workflow') || catLower.includes('repo')) {
+        badgeClass = 'silo-badge--dev';
       }
 
       let formattedDate = dateStr;
@@ -323,4 +325,16 @@ export function getLatestBlogSummaries(): BlogSummary[] {
     console.error('Error fetching blog summaries:', error);
     return [];
   }
+}
+
+/**
+ * Returns blog posts belonging to a specific silo ('ai' | 'developer' | 'ui' | 'technology')
+ */
+export async function getBlogsBySilo(silo: 'ai' | 'developer' | 'ui' | 'technology'): Promise<BlogPost[]> {
+  const allBlogs = await getAllBlogs();
+  const summaries = getLatestBlogSummaries();
+  const matchingSlugs = new Set(
+    summaries.filter((s) => s.silos.includes(silo)).map((s) => s.slug)
+  );
+  return allBlogs.filter((post) => matchingSlugs.has(post.slug));
 }

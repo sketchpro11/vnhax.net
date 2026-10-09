@@ -4,8 +4,8 @@ description: "Ideogram 4.5 edits only the target areas of an image while preserv
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["ideogram", "ideogram-4-5", "image-editing", "generative-ai", "creative-tools", "diffusion-models"]
+category: "UI Components & Design"
+tags: ["ui", "ui-components", "visual-design", "ideogram-4-5", "canvas-editing", "interface-patterns", "design-tools"]
 readTime: "7 min read"
 ---
 

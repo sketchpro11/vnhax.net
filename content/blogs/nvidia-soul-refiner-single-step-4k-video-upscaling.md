@@ -4,8 +4,8 @@ description: "NVIDIA's Soul Refiner upscales low-resolution AI video to sharp 4K
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["nvidia", "soul-refiner", "video-upscaling", "4k-video", "generative-ai", "open-source"]
+category: "Tech Platforms & Infrastructure"
+tags: ["technology", "platforms", "hardware", "nvidia", "gpu-acceleration", "video-infrastructure", "compute-scaling"]
 readTime: "9 min read"
 ---
 

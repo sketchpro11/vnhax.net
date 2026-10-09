@@ -4,8 +4,8 @@ description: "Flux 3 Image from Black Forest Labs brings canvas bounding boxes, 
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["black-forest-labs", "flux-3", "image-generation", "ai-models", "generative-ai", "creative-tools"]
+category: "UI Components & Design"
+tags: ["ui", "ui-components", "canvas-design", "bounding-boxes", "flux-3", "layout-composition", "interface-design"]
 readTime: "9 min read"
 ---
 

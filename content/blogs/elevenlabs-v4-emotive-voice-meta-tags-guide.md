@@ -4,8 +4,8 @@ description: "ElevenLabs V4 is billed as the company's most emotive text-to-spee
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["elevenlabs", "elevenlabs-v4", "text-to-speech", "voice-ai", "audio-models", "generative-ai"]
+category: "Developer Tools & Repos"
+tags: ["developer", "tools", "voice-api", "elevenlabs-v4", "xml-tags", "code-integration", "developer-workflows"]
 readTime: "9 min read"
 ---
 

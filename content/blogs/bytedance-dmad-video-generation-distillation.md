@@ -4,8 +4,8 @@ description: "ByteDance's DMAD cuts video generation from 20-30 steps to just 4 
 date: "2026-10-08"
 updatedAt: "2026-10-08"
 author: "VNHAX Editorial"
-category: "AI & Models"
-tags: ["bytedance", "dmad", "video-generation", "diffusion-distillation", "ai-models", "open-source"]
+category: "Developer Tools & Repos"
+tags: ["developer", "tools", "code-distillation", "bytedance", "dmad", "open-source-repos", "developer-workflows"]
 readTime: "7 min read"
 ---
 
