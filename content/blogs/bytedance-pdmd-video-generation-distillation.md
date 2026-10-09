@@ -9,8 +9,6 @@ tags: ["bytedance", "pdmd", "video-generation", "diffusion-distillation", "ai-mo
 readTime: "8 min read"
 ---
 
-# ByteDance – PDMD
-
 **Quick answer:** PDMD (Projected Distribution Matching Distillation) is a new method from ByteDance and UC San Diego that lets a video model generate in 4 steps instead of the usual 50. It works by adding one line of math that removes the "critic's mistakes" from the training signal. On the team's own tests, the 4-step model scored higher than other 4-step methods, and even higher than the 50-step teacher on the overall video score.
 
 ---
@@ -187,9 +185,9 @@ If you do try it, test it on your own prompts, keep your seed fixed, and write d
 
 ## Related reading on this site
 
-- [INTERNAL LINK: your article on running AI video models on a low-VRAM GPU](/replace-with-your-url)
-- [INTERNAL LINK: your explainer on what quantization means](/replace-with-your-url)
-- [INTERNAL LINK: your guide to choosing a cloud GPU for AI video](/replace-with-your-url)
+- [ByteDance DMAD: 4-Step Video Generation Distillation](/blog/bytedance-dmad-video-generation-distillation)
+- [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling Guide](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling)
+- [Cloud Infrastructure & AI Runtimes Hub](/technology)
 
 ## Sources
 

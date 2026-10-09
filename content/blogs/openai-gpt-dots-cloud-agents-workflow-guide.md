@@ -9,8 +9,6 @@ tags: ["openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-agents", "produc
 readTime: "7 min read"
 ---
 
-# OpenAI – GPT Dots
-
 Every developer and small-business owner knows the feeling. You close your laptop at night with a pile of unfinished things: customer feedback nobody has read, a bug you meant to look at, a pull request that still needs tests. The work doesn't stop just because you did.
 
 That is the exact gap OpenAI is aiming at with **GPT Dots**, announced during its annual DevDay event. I watched the announcement coverage closely, and this is the one that made me stop and rewind.
@@ -114,11 +112,11 @@ Whether it lives up to the promise will depend on how reliable it is in real dai
 
 If you're on an eligible plan, open your ChatGPT sidebar and look for Dots. Start small and see what happens.
 
-*Related reading on this site (update these links to match your own posts):*
+*Related reading on this site:*
 
-- [Latest AI tools worth trying](/blog/ai-tools)
-- [How to use AI agents safely at work](/blog/ai-agents-safety)
-- [ChatGPT plans compared](/blog/chatgpt-plans)
+- [ChatGPT Pro $500 Plan: Pricing & Limit Breakdown](/blog/chatgpt-pro-500-plan-pricing-limits)
+- [OpenAI Models & Developer Hub](/openai)
+- [AI Tools & Frameworks Directory](/ai/ai-tools)
 
 ## Frequently Asked Questions (FAQs)
 

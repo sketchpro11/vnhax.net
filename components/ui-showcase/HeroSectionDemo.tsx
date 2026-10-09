@@ -46,7 +46,7 @@ export default function HeroSectionDemo() {
         </div>
 
         {/* Headline */}
-        <h1
+        <h2
           style={{
             fontFamily: 'var(--font-display, "Space Grotesk", sans-serif)',
             fontSize: 'clamp(28px, 5vw, 52px)',
@@ -67,7 +67,7 @@ export default function HeroSectionDemo() {
           >
             Modern AI Developers
           </span>
-        </h1>
+        </h2>
 
         {/* Subtitle */}
         <p

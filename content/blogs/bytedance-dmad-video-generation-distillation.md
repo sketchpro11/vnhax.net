@@ -9,8 +9,6 @@ tags: ["bytedance", "dmad", "video-generation", "diffusion-distillation", "ai-mo
 readTime: "7 min read"
 ---
 
-# ByteDance – DMAD
-
 If you have ever typed a prompt into a video model and then gone to make tea while the progress bar crawled along, you already know the real cost of AI video. It is not the idea. It is the waiting. Twenty steps, thirty steps, and by the time the clip appears you have half forgotten what you asked for.
 
 So when ByteDance announced DMAD, the first thing that caught my attention was one number: **4 steps**.
@@ -122,7 +120,7 @@ Where does a 4-step generator actually help?
 - **Learning.** Students and hobbyists can explore video AI without waiting forever on every attempt.
 - **Product experiments.** Small teams can prototype video features without huge compute bills.
 
-If you want more background on this kind of tooling, you might also like our guide to [getting started with AI video tools](/blog/ai-video-tools-for-beginners) and our explainer on [what LoRA files are and why they are small](/blog/what-is-lora-explained).
+If you want more background on this kind of tooling, you might also like our guide to [ByteDance PDMD 4-Step Video Distillation](/blog/bytedance-pdmd-video-generation-distillation) and our teardown on [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling).
 
 ## My take
 

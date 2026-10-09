@@ -69,6 +69,51 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/blog/ai-video-tools-for-beginners',
+        destination: '/ai/ai-tools',
+        permanent: true,
+      },
+      {
+        source: '/blog/what-is-lora-explained',
+        destination: '/blog/bytedance-dmad-video-generation-distillation',
+        permanent: true,
+      },
+      {
+        source: '/blog/best-ai-voice-generators',
+        destination: '/ai/ai-tools',
+        permanent: true,
+      },
+      {
+        source: '/blog/faceless-youtube-ai-workflow',
+        destination: '/blog/bytedance-dmad-video-generation-distillation',
+        permanent: true,
+      },
+      {
+        source: '/blog/text-to-speech-vs-voice-over',
+        destination: '/blog/elevenlabs-v4-emotive-voice-meta-tags-guide',
+        permanent: true,
+      },
+      {
+        source: '/blog/ai-audio-tools',
+        destination: '/ai/ai-tools',
+        permanent: true,
+      },
+      {
+        source: '/blog/ai-tools',
+        destination: '/ai/ai-tools',
+        permanent: true,
+      },
+      {
+        source: '/blog/ai-agents-safety',
+        destination: '/blog/anthropic-enterprise-frontier-safeguards-explained',
+        permanent: true,
+      },
+      {
+        source: '/blog/chatgpt-plans',
+        destination: '/blog/chatgpt-pro-500-plan-pricing-limits',
+        permanent: true,
+      },
+      {
         source: '/:path((?!yandex_)[^/]+)+.html',
         destination: '/:path+',
         permanent: true,

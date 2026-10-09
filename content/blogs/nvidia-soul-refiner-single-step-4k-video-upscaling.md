@@ -9,14 +9,6 @@ tags: ["nvidia", "soul-refiner", "video-upscaling", "4k-video", "generative-ai",
 readTime: "9 min read"
 ---
 
-# NVIDIA – Soul Refiner
-
-**Meta description:** NVIDIA's Soul Refiner upscales low-resolution AI video to sharp 4K in a single step and works with MiniMax H3, NVIDIA Cosmos, Alibaba and more. Here is what it does well, where it falls short, and how to try it safely.
-
-**Official reference:** [NVIDIA Soul Refiner project page](https://nvlabs.github.io/Sana/Sol-Refiner/)
-
----
-
 ## Quick Answer
 
 **What is NVIDIA Soul Refiner?** It is an open-source AI model from NVIDIA that takes low-resolution video and upscales it to sharper, higher-resolution output, up to 4K, in a single step. It is model-agnostic, so it works with video from MiniMax H3, NVIDIA Cosmos, Alibaba and other generators. Its main limitation is that it sometimes changes details from the original footage instead of preserving them exactly.
@@ -309,10 +301,10 @@ My advice is simple. Try it on a short clip, zoom in, compare, and let your own 
 
 ### Keep Reading
 
-- [Best AI Video Generators Compared](/best-ai-video-generators/)
-- [How to Run Open-Source AI Models Locally](/run-open-source-ai-models-locally/)
-- [AI Video Upscaling: What Works and What Doesn't](/ai-video-upscaling-guide/)
-- [Latest AI Tools and Updates](/ai-tools/)
+- [ByteDance DMAD: 4-Step Video Generation Distillation](/blog/bytedance-dmad-video-generation-distillation)
+- [ByteDance PDMD: 4-Step Video Generation via Projected Distillation](/blog/bytedance-pdmd-video-generation-distillation)
+- [Black Forest Labs Flux 3 Image: Canvas Bounding Boxes](/blog/black-forest-labs-flux-3-image-canvas-bounding-boxes)
+- [AI Tools & Frameworks Directory](/ai/ai-tools)
 
 ### Sources and References
 

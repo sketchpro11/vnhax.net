@@ -9,14 +9,6 @@ tags: ["nvidia", "pixelumm", "latent-free", "multimodal-ai", "video-generation",
 readTime: "9 min read"
 ---
 
-# NVIDIA – PixelUMM
-
-**Meta title:** NVIDIA PixelUMM Explained: Pixel-Space Image and Video AI Without a VAE
-**Meta description:** NVIDIA's PixelUMM (Pixel Unified Multimodal Model) generates images and video directly in pixel space, with no latent space or VAE decoder. Here is what it is, how it works, what it can't do yet, and how to try it.
-**Primary topic:** NVIDIA PixelUMM, latent-free image and video generation, unified multimodal model
-
----
-
 Every few weeks a new AI model lands, and the first thing I do is look at the demo clips. Pretty, polished, shareable. Then I close the tab and forget about it.
 
 PixelUMM was different, and it wasn't because of the demos. Honestly, the output isn't going to make anyone cancel their favorite image or video generator. What made me stop scrolling was a single sentence in the announcement: it generates directly in pixel space.
@@ -233,12 +225,10 @@ That's the real value of a release like this one. It's a data point about what's
 
 If you're exploring this area, these guides pair well with this article:
 
-- [How AI image generators work](/how-ai-image-generators-work/)
-- [Best open-source AI video generators](/best-open-source-ai-video-generators/)
-- [How to run AI models locally on your own GPU](/run-ai-models-locally/)
-- [Understanding multimodal AI models](/multimodal-ai-models-explained/)
-
-*(Internal links above are placeholders for your site's URL structure. Update them to match your real pages.)*
+- [Black Forest Labs Flux 3 Image: Canvas Bounding Boxes](/blog/black-forest-labs-flux-3-image-canvas-bounding-boxes)
+- [ByteDance PDMD: 4-Step Video Generation Distillation](/blog/bytedance-pdmd-video-generation-distillation)
+- [How to Increase num_ctx in Ollama Modelfiles](/blog/how-to-increase-num-ctx-in-modelfile)
+- [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling Guide](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling)
 
 ---
 
