@@ -1,76 +1,69 @@
 ---
-title: "GitHub Copilot Prepaid Seats & Upfront Billing for Business & Enterprise Explained"
-description: "Comprehensive guide to GitHub Copilot's upfront prepaid seat billing policy for Business ($19/mo) and Enterprise ($39/mo) tiers, pooled AI credits, and license audits."
+title: "GitHub Copilot Upfront Seat Billing for Business & Enterprise: What Changed on October 1"
+description: "Since 1 October 2026, Copilot Business and Enterprise customers who pay by card or PayPal are charged for seats upfront. What changed, what didn't, how proration and refunds work, and how admins should adjust."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
-tags: ["github", "github-copilot", "copilot-billing", "prepaid-seats", "enterprise-licensing", "developer-tools"]
+tags: ["github", "github-copilot", "copilot-billing", "copilot-business", "copilot-enterprise", "developer-tools"]
 ---
 
-> **Executive summary:** GitHub has updated its billing model for Copilot Business ($19/mo) and Copilot Enterprise ($39/mo) accounts paying via credit card or PayPal to an **upfront prepaid seat model**. Seats are charged at the beginning of each billing cycle with no mid-cycle prorated refunds, and organizations draw from **pooled monthly AI credits**.
+> **Quick answer (checked 12 October 2026):** If your organization pays for **Copilot Business or Copilot Enterprise by credit card or PayPal**, GitHub now charges for seats **upfront**. New seat assignments must be **paid for before the user gets access**, and from **1 October 2026** existing customers see an **upfront charge for all assigned seats at the start of each billing cycle**. **Removing a seat gives no prorated refund**, while **seats added mid-cycle are still prorated**. Prices didn't change. Customers billed by invoice or through Microsoft/Azure agreements aren't covered by this card/PayPal change.
 
-For engineering managers and DevOps leads responsible for software tooling budgets, licensing surprises are frustrating. Under GitHub's updated billing terms, removing an inactive developer seat mid-cycle will not generate a prorated refund, while onboarding new engineers requires cleared prepayment before seats become active.
+GitHub announced the change on 28 August 2026, alongside reopening Copilot Business and Enterprise sign-ups for card and PayPal customers. GitHub says the goal is stronger account vetting and more reliable service. Here is what it means in practice, based on GitHub's changelog and docs.
 
-Here is a practical breakdown of how upfront prepaid seats work, how pooled credits are calculated, and how to configure budget guardrails to avoid unexpected invoices.
+## What changed
 
-## What Changed: The Upfront Seat Billing Model
+- **Pay before access:** every new Copilot Business or Enterprise seat assignment requires payment for that seat **before** the user can use Copilot.
+- **Upfront cycle charge:** at the start of each billing cycle, **all assigned seats are charged upfront**. For existing card and PayPal customers this started **1 October 2026**.
+- **Overage may need payment:** if your organization goes beyond its included usage, additional payment may be required for users to keep using Copilot.
+- **Included usage may be prorated** across the month to match seat proration.
+- **Vetting on return:** fully cancelling Copilot and coming back later may trigger the updated account vetting and billing behaviour.
 
-Historically, developer tooling frequently billed in arrears based on peak usage. Under the upfront model:
+## What did not change
 
-1. **Prepaid Billing Cycles:** Seats are billed at the start of each billing cycle rather than at the close.
-2. **Payment Precedes Provisioning:** When an admin assigns a seat to a new developer, GitHub processes the payment first before granting editor access. If the corporate card hits limits or fails fraud verification, seat activation is paused.
-3. **No Prorated Refunds:** If a developer departs mid-cycle and their seat is unassigned, GitHub does not issue a refund for the remaining days. Instead, the user maintains access through the end of the billing period, and the seat is marked not to renew.
+- **Prices** for Copilot Business and Copilot Enterprise.
+- **No prorated refunds when you remove a seat.** The removal shows up in your next monthly cycle.
+- **Mid-cycle additions are prorated** from the assignment date to the end of the cycle (and with card/PayPal, you pay that prorated amount upfront).
+- **Spend controls, usage tracking and buying extra AI credits** are all still available.
 
-```mermaid
-graph LR
-    CycleStart[Cycle Begins: Upfront Payment] --> PooledCredits[Pooled AI Credit Bucket]
-    PooledCredits --> TeamDraw[Dev Team Draws on Common Pool]
-    TeamDraw --> PoolExhausted{Pool Exhausted?}
-    PoolExhausted -- No --> StandardUse[Normal Coding Continues]
-    PoolExhausted -- Yes --> BudgetCap{Spending Cap Set?}
-    BudgetCap -- Yes --> Alert[Alert Admin / Throttle Additional Run]
-    BudgetCap -- No --> Overages[Billed Additional Credits per Use]
-```
+Copilot Business is listed at **$19 per user per month** in GitHub's docs. Enterprise pricing is shown on GitHub's pricing page and depends on your agreement.
 
-## Business vs. Enterprise: Pricing and Pooled AI Credits
+## A worked example
 
-| Dimension | Copilot Business | Copilot Enterprise |
-|---|---|---|
-| **Price per Seat** | $19 / user / month | $39 / user / month |
-| **Pooled Credits per Seat** | 1,900 pooled credits / seat / mo | 3,900 pooled credits / seat / mo |
-| **Credit Pool Model** | Organization-wide pool | Enterprise-wide pool |
-| **Overage Billing** | Billed upon exhaustion | Billed upon exhaustion |
-| **Governance Features** | Standard user management | Custom fine-tuning, audit trails, policy enforcement |
+Say your team has 20 Business seats and a cycle starting on the 1st:
 
-### How Organization Credit Pooling Functions
-Credits are aggregated into a shared organization pool rather than siloed per user. For example, an engineering group with 20 Copilot Business seats possesses a collective monthly pool of 38,000 credits (20 × 1,900). 
+- **1st of the month:** you're charged upfront for 20 seats.
+- **10th:** you add 2 developers. You pay a prorated amount for those 2 seats (from the 10th to the end of the cycle) before they get access.
+- **20th:** a developer leaves and you remove their seat. **No refund** for the remaining days; the seat simply isn't billed next cycle.
 
-High-frequency developers can utilize more credits than their individual 1,900 allocation without incurring overage fees, provided the team's collective consumption remains within the aggregate total.
+## What admins should do now
 
-## Cost Controls: Preventing Unplanned Credit Spikes
+1. **Audit seats before renewal.** Since removals aren't refunded, the useful moment to remove inactive users is a few days **before** the next cycle starts, not after.
+2. **Check your payment method limits.** Upfront charges for the whole team land on one day; make sure the card won't be declined, or new assignments will stall.
+3. **Set spend controls** for usage beyond the included allowance, so overages don't block developers unexpectedly.
+4. **Consider invoiced billing** if you're a larger organization. These card/PayPal rules don't describe invoiced or Azure-billed accounts, so ask GitHub sales whether that suits you better.
 
-When an organization exhausts its pooled credits, GitHub bills additional credits based on consumption. To prevent budget creep:
+## Related change: Copilot code review now defaults to "Balanced"
 
-- **Configure Spending Limits:** Navigate to Organization Billing -> Spending Limits and establish a strict maximum dollar ceiling for additional Copilot credits.
-- **Set Up Real-Time Webhook Alerts:** Configure email and webhook notifications at 75%, 90%, and 100% of credit pool consumption.
-- **Implement Department Cost Centers:** If multiple product teams share an enterprise account, assign cost center metadata to group seats by department for transparent internal chargebacks.
+In the same announcement, GitHub said the default Copilot code review effort level changes from **Lite** to **Balanced** for existing and new repositories and organizations. If review costs matter, check the effort level at organization and repository level. See our [Copilot code review guide](/blog/github-copilot-code-review-pr-approval-guide).
 
-## Microsoft Enterprise Agreements (EA) & Azure Billing
+## Frequently asked questions
 
-Organizations operating under a **Microsoft Enterprise Agreement (EA)** or unified Azure commitment manage Copilot licensing differently. Rather than credit card prepaid billing, EA customers consume seats via Azure commercial volume licensing, consolidating Copilot costs directly against existing cloud drawdown commitments.
+### Do I get a refund if I remove a Copilot seat mid-month?
+No. Revoking a seat doesn't produce a prorated refund; the change takes effect in your next billing cycle.
 
-## Frequently Asked Questions
+### Are seats added mid-cycle prorated?
+Yes, from the date of assignment to the end of the cycle. Card and PayPal customers pay that amount upfront.
 
-### Does GitHub refund unused days if an employee leaves?
-No. GitHub does not provide prorated refunds for removed seats. The seat remains usable until the cycle expires and simply does not renew for the following month.
+### Did Copilot Business or Enterprise get more expensive?
+No. GitHub says prices are not changing. What changed is when and how card and PayPal customers pay.
 
-### When should admins conduct license audits?
-Engineering admins should establish a recurring calendar reminder 3 to 5 business days prior to cycle renewal to prune inactive or departing users before the next billing invoice executes.
+## Sources
 
-### What happens when pooled AI credits hit zero?
-If no spending limit is established, additional credits will be billed at standard rates. If a spending limit is set, supplementary agent features pause while core autocompletion remains active.
+- GitHub Changelog: [Upcoming changes to GitHub Copilot policies and billing (28 August 2026)](https://github.blog/changelog/2026-08-28-upcoming-changes-to-github-copilot-policies-and-billing/)
+- GitHub Changelog: [Reopening Copilot Business and Enterprise signups (3 September 2026)](https://github.blog/changelog/2026-09-03-reopening-copilot-business-and-enterprise-signups/)
+- GitHub Docs: [GitHub Copilot licenses](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-licenses)
+- GitHub Docs: [Copilot seats and billing cycles for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing-and-usage/organizations-and-enterprises/seats-and-billing-cycles)
 
-## Conclusion
-
-Understanding GitHub Copilot's prepaid upfront seat structure and pooled credit system enables engineering organizations to plan budgets predictably. By instituting pre-renewal seat audits and setting spending limits, teams can scale AI-assisted development across their engineering rosters without unexpected overages.
+Related on VNHAX: [GitHub Copilot HydraFusion vs Auto](/blog/github-copilot-project-hydrafusion-explained) · [GitHub Copilot local sandboxing explained](/blog/github-copilot-local-sandboxing-explained)

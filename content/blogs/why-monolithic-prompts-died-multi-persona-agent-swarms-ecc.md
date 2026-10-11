@@ -66,7 +66,7 @@ The security auditor's findings become **hard constraints in the coder's prompt*
 
 ## **Implementing subagents in Claude Code with ECC**
 
-In Claude Code, subagents are markdown files in `.claude/agents/`, each with its own system prompt, tool access, and model selection. Using open-source rule frameworks like [Everything Claude Code (ECC)](https://github.com/afforai/everything-claude-code) (see our interactive [Everything Claude Code Architecture Deep Dive](/repos/ecc)), you can instantiate production personas in minutes. To ensure third-party tools don't execute unauthorized commands, review our guide on [Hardening Enterprise MCP Server Bridges](/blog/enterprise-mcp-server-security-hardening-protocol-bridges).
+In Claude Code, subagents are markdown files in `.claude/agents/`, each with its own system prompt, tool access, and model selection. Using open-source rule frameworks like [Everything Claude Code (ECC)](https://github.com/affaan-m/ECC) (see our interactive [Everything Claude Code Architecture Deep Dive](/repos/ecc)), you can instantiate production personas in minutes. To ensure third-party tools don't execute unauthorized commands, review our guide on [Hardening Enterprise MCP Server Bridges](/blog/enterprise-mcp-server-security-hardening-protocol-bridges).
 
 ### `.claude/agents/security-auditor.md`
 

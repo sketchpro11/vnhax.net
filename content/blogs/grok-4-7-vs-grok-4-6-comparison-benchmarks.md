@@ -2,7 +2,7 @@
 title: "Grok 4.7 vs. Grok 4.6: Colossus Cluster Scaling, Coding & Real-Time Reasoning"
 description: "Technical benchmark comparison between Grok 4.7 and Grok 4.6: Colossus cluster training scale, real-time X telemetry, coding accuracy, and latency."
 date: "2026-10-07"
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "grok-4-7", "grok-4-6", "colossus-supercluster", "model-benchmarks", "coding-agents"]
@@ -93,6 +93,26 @@ On vision, charts, satellite imagery, and mechanical schematics are plausible th
 ### A safety note worth knowing
 
 xAI says Grok 4.7 uses an entirely new safeguard stack. It reports that the model lets through only 3.3% of risky dual-use prompts on its HackerBench v0.3 cyber benchmark, and scores 62.4% on LatchBio's biosafety benchmark. It also mentions invite-only access for select cybersecurity partners doing defensive research. For most teams this simply means fewer surprises on sensitive topics. It's also vendor-reported, so test it against your own content policies.
+
+## Grok 4.7 API Pricing and Token Costs
+
+According to xAI's [Grok 4.7 model page](https://docs.x.ai/developers/models/grok-4.7) (checked 12 October 2026), the model ID is `grok-4.7` and it costs:
+
+| Token type | Price per 1M tokens |
+|---|---|
+| Input | $2.00 |
+| Cached input | $0.50 |
+| Output | $6.00 |
+
+A few things that affect your bill:
+
+- **Context window:** 500,000 tokens.
+- **Requests above 200K tokens are billed at a higher rate.** xAI lists separate "higher context pricing" for requests that exceed the 200K context window, so keep prompts under 200K unless you really need the extra context.
+- **Cache your system prompt.** Cached input is a quarter of the normal input price, which adds up quickly in agent loops that resend the same instructions.
+- **Output costs 3x input.** Asking for concise or structured (JSON) answers is the easiest saving.
+- **No Batch API** for Grok 4.7 at the time of writing, so there is no batch discount.
+
+Quick example: a request with 100,000 input tokens and 20,000 output tokens costs about 0.1 × $2 + 0.02 × $6 = **$0.32** at standard rates, or about **$0.20** if 80,000 of those input tokens are cached (0.08 × $0.50 + 0.02 × $2 + 0.02 × $6).
 
 ## Migration Advice for Developers Using the xAI SDK
 

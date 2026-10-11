@@ -142,5 +142,5 @@ If the allocated model weights plus the 32k KV cache exceed your physical VRAM c
 ## Key Takeaways
 
 1. **Default is 2,048 tokens:** Never assume a model will use its full 128k native context out of the box in Ollama.
-2. **Use Modelfiles for Persistence:** Binding `PARAMETER num_ctx 32768` creates reproducible, team-wide model targets per the [official Ollama Modelfile documentation](https://github.com/ollama/ollama/blob/main/docs/modelfile.md).
+2. **Use Modelfiles for Persistence:** Binding `PARAMETER num_ctx 32768` creates reproducible, team-wide model targets per the [official Ollama Modelfile documentation](https://docs.ollama.com/modelfile).
 3. **Budget for the KV Cache:** Always allocate an extra 2GB–5GB of headroom on top of base model weights when expanding context beyond 16k tokens, especially on reasoning models like [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1). Check out our [Open-Source Repositories Hub](/repos) for more agent tooling.

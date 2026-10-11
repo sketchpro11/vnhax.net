@@ -2,7 +2,7 @@
 title: "Claude Opus 5.5 vs. Claude Fable 5.1: Reasoning Power vs. Creative Synthesis"
 description: "Technical comparison of Claude Opus 5.5 vs Claude Fable 5.1: 1M context windows, pricing, reasoning benchmarks, and agentic coding capabilities."
 date: "2026-10-07"
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude-opus-5-5", "claude-fable-5-1", "llm-comparison", "ai-reasoning", "coding-agents"]
@@ -20,8 +20,8 @@ These operational contrasts explain why developers frequently compare Anthropic'
 
 Anthropic positions both models at the peak of its enterprise catalog, but they occupy distinct tiers:
 
-- **Claude Opus 5.5:** Released in late September 2026, Opus 5.5 is engineered for long-running agentic coding, multi-repository refactoring, and structured knowledge synthesis. Anthropic's documentation recommends Opus 5.5 as the baseline frontier choice for most software teams.
-- **Claude Fable 5.1:** Released in early September 2026, Fable 5.1 belongs to Anthropic's Mythos-class frontier tier. It is designed for long-horizon agentic workflows—complex problem spaces requiring sustained reasoning across several hours of autonomous execution.
+- **Claude Opus 5.5:** Released in September 2026, Opus 5.5 is described by Anthropic as the model "for long-running agentic coding and knowledge work". Anthropic's models overview says: if you're unsure which model to use, **start with Claude Opus 5.5 for most workloads**, and use Fable 5.1 "when your evals on Claude Opus 5.5 at higher effort still fall short".
+- **Claude Fable 5.1:** Released on 1 September 2026, Fable 5.1 is the generally available version of the same model as Claude Mythos 5.1 (Mythos has different safeguards and restricted access). Anthropic describes it as the model "for demanding reasoning and long-horizon agentic work".
 
 The distinction is not "logic versus creativity"—it is **high-efficiency workhorse versus ultra-high-ceiling problem solver**. Both write production software, both generate nuanced long-form analysis, and both ingest multimodal inputs.
 
@@ -29,13 +29,13 @@ The distinction is not "logic versus creativity"—it is **high-efficiency workh
 
 | Specification | Claude Opus 5.5 | Claude Fable 5.1 |
 |---|---|---|
-| **Frontier Tier** | Opus Class | Mythos Class |
+| **Model line** | Opus | Fable (same model as Mythos 5.1) |
 | **Context Window** | 1,000,000 tokens | 1,000,000 tokens |
 | **Max Output Tokens** | 128,000 tokens | 128,000 tokens |
 | **Input Price (per 1M tokens)** | $4.00 | $10.00 |
 | **Output Price (per 1M tokens)** | $20.00 | $50.00 |
 | **Prompt Cache Read Price** | $0.20 / 1M tokens | $0.25 / 1M tokens |
-| **Inference Latency Profile** | Moderate / Interactive | Slower / Heavy Compute |
+| **Comparative latency (Anthropic)** | Moderate | Slower |
 | **Default Reasoning Effort** | Medium | High |
 | **Extended Thinking** | Adaptive, Always Active | Adaptive, Always Active |
 | **API Model Identifier** | `claude-opus-5-5` | `claude-fable-5-1` |
@@ -66,12 +66,11 @@ Fable 5.1 is the model you escalate to when tasks demand deep self-verification:
 
 - **Complex Ambiguity Resolution:** Where specifications are sparse or contradictory, Fable demonstrates higher restraint against hallucinating unverified assumptions.
 - **Multi-Hour Verification Loops:** In formal mathematics, scientific simulations, and security auditing, Fable maintains persistence across extensive validation sequences.
-- **Nuanced Executive Communication:** Produces natural, engaging technical writing without predictable AI phrasing patterns.
 
 ### Operational Trade-offs
 
 - **Elevated Latency:** Deep verification loops require additional thinking steps, resulting in slower time-to-first-token.
-- **Strict Domain Classifiers:** Fable incorporates rigorous safety classifiers in cybersecurity and biochemistry, occasionally producing cautious refusals on dual-use penetration testing queries.
+- **Safeguards in sensitive domains:** Fable 5.1 has safeguards in cybersecurity and biology. Anthropic says its newest cyber safeguards block 60% fewer false positives than before, and Fable 5.1 can now be used to find vulnerabilities (not to build exploits), but you may still see refusals on dual-use requests. Verified security teams can apply for Mythos 5.1 instead.
 
 ## Task-by-Task Selection Matrix
 
@@ -80,9 +79,19 @@ Fable 5.1 is the model you escalate to when tasks demand deep self-verification:
 | Routine Bug Fixes & Refactors | **Opus 5.5** | Escalate if unit tests fail across 3 consecutive iterations |
 | Full-Stack Feature Implementation | **Opus 5.5** | Escalate if complex state management causes architectural loops |
 | Automated PR Code Reviews | **Opus 5.5** | Retain on Opus 5.5 for optimal cost-per-review |
-| Executive Whitepapers & Research | **Opus 5.5** | Escalate to Fable 5.1 for distinctive narrative polish |
+| Long research and analysis tasks | **Opus 5.5** | Escalate to Fable 5.1 if results at high effort still fall short |
 | Dual-Use Security Analysis | **Opus 5.5** | Escalate only if deep vulnerability logic requires verification |
 
 ## Conclusion: Value vs. Ceiling
 
 Claude Opus 5.5 represents the ideal cost-to-performance equilibrium for daily engineering workflows. Claude Fable 5.1 provides an uncompromising reasoning ceiling when complex tasks warrant premium compute allocation. By setting Opus 5.5 as your baseline and configuring dynamic routing to Fable 5.1 for unresolvable problems, teams achieve both cost efficiency and frontier accuracy.
+
+All specifications in the table above come from Anthropic's [models overview](https://platform.claude.com/docs/en/about-claude/models/overview) and [pricing page](https://platform.claude.com/docs/en/about-claude/pricing), checked 12 October 2026. The task recommendations are my own suggestions for how to apply Anthropic's guidance, not Anthropic rules.
+
+## Sources
+
+- Anthropic: [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) (IDs, context windows, max output, default effort, latency)
+- Anthropic: [Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+- Anthropic: [Introducing Claude Fable 5.1 and Claude Mythos 5.1](https://www.anthropic.com/claude-fable-and-mythos-5-1)
+
+Related on VNHAX: [What is Claude Mythos 5.1?](/blog/what-is-claude-mythos-5-1-explained) · [Claude Sonnet 5.5 vs Sonnet 5](/blog/claude-sonnet-5-5-vs-sonnet-5-differences) · [Claude Sonnet 4.5 retirement and migration](/blog/claude-sonnet-4-5-retirement-end-of-life-schedule)

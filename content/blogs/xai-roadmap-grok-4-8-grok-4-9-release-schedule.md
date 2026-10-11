@@ -1,83 +1,77 @@
 ---
-title: "xAI Roadmap: Grok 4.8 and Grok 4.9 Release Dates, Features & Enhancements"
-description: "Inside xAI's iterative model roadmap: expected launch schedules, 1M context expansion, terminal shell sandboxing, and test-time compute algorithms in Grok 4.8 and 4.9."
+title: "Grok 4.8, Grok 4.9 and Grok 5: What xAI Has Actually Confirmed"
+description: "A no-hype tracker of xAI's next Grok models: what is confirmed about Grok 4.8, what has only been hinted about Grok 4.9, why Grok 5 keeps slipping, and how to prepare your code."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "xAI & Grok Models"
-tags: ["xai", "grok-4-8", "grok-4-9", "ai-roadmap", "frontier-models", "context-window"]
+tags: ["xai", "spacexai", "grok-4-8", "grok-4-9", "grok-5", "ai-roadmap"]
 ---
 
-> **Executive summary:** xAI continues its high-cadence development cycle following the release of Grok 4.7. The upcoming **Grok 4.8** and **Grok 4.9** updates serve as critical architectural bridges toward **Grok 5**, bringing **1-million-token context windows**, native **cloud shell execution**, and preview access to **test-time compute verification loops**.
+> **Status as of 12 October 2026:** **Grok 4.7** is the current model (released 21 September 2026). **Grok 4.8** has been named by Elon Musk and is widely expected in October 2026, but xAI has not announced a date, price or API details. **Grok 4.9** has only been mentioned in passing. **Grok 5** has no confirmed release date after missing earlier targets. Anything more specific you read elsewhere is a prediction, not a roadmap.
 
-In the frontier artificial intelligence race, xAI has distinguished itself through continuous, rapid-fire releases. Rather than holding model checkpoints for annual keynotes, Elon Musk’s engineering team ships major incremental iterations every 6 to 8 weeks.
+There is a lot of confident-sounding content about upcoming Grok models: exact release days, context windows, "leaked" benchmarks. Almost none of it comes from xAI. This page sticks to what has actually been said publicly, labels everything else clearly, and I'll update it as xAI announces things.
 
-Below is an engineering analysis of xAI’s forward-looking model roadmap: the planned capabilities of Grok 4.8, the architectural enhancements of Grok 4.9, and practical steps to prepare production systems.
+## Where things stand today: Grok 4.7
 
-## xAI's Shipping Cadence: The Path to Grok 5
+Grok 4.7 is xAI's current flagship for coding, agents and general use. From xAI's [Grok 4.7 model page](https://docs.x.ai/developers/models/grok-4.7):
 
-Over the past four quarters, xAI has maintained one of the fastest deployment tempos in the industry:
-- **Grok 4 (July 2025):** Baseline reasoning and real-time X ingestion.
-- **Grok 4.3 – 4.5 (Spring/Summer 2026):** Multimodal vision and mathematical synthesis.
-- **Grok 4.7 (21 September 2026):** Deep reasoning checkpoints and low-latency API endpoints.
+- Model ID `grok-4.7`, **500,000-token** context window
+- **$2** input / **$0.50** cached input / **$6** output per million tokens, with higher rates for requests over 200K tokens
+- Configurable reasoning effort (low to xhigh), function calling and structured outputs
 
-Rather than leaping directly from Grok 4.7 to Grok 5, xAI utilizes point releases (4.8 and 4.9) to validate high-concurrency scaling, massive context expansions, and test-time reasoning algorithms on live developer traffic.
+For a full breakdown of what changed from Grok 4.6, see [Grok 4.7 vs Grok 4.6](/blog/grok-4-7-vs-grok-4-6-comparison-benchmarks).
 
-```mermaid
-graph LR
-    Grok47[Grok 4.7: Live GA] --> Grok48[Grok 4.8: 1M Context & Shell Sandbox]
-    Grok48 --> Grok49[Grok 4.9: Test-Time Compute & Verification]
-    Grok49 --> Grok5[Grok 5: Next-Gen Flagship Megacluster]
-```
+## Grok 4.8: named, expected in October, details unconfirmed
 
-## Grok 4.8: 1 Million Context Tokens and Autonomous Shell Sandboxing
+**What is confirmed**
+- On 13 September 2026, Elon Musk posted on X that Grok 4.8 is a **2.5-trillion-parameter model** trained with xAI's **new C++ software stack**, and that it would finish training that week and then begin reinforcement learning (as reported by [CellCog](https://cellcog.ai/blog/grok-4-8-release-date/) and others).
+- After Grok 4.7, xAI (now SpaceXAI) moved to a roughly **monthly release cadence**, with Grok 4.8 slated for **October 2026**, according to [Wikipedia's Grok article](https://en.wikipedia.org/wiki/Grok_%28chatbot%29), which cites Heise.
 
-Grok 4.8 targets core developer productivity features:
+**What is not confirmed**
+- A release date, pricing, context window or API model ID. Reports say "grok-4.8" has appeared by name in the model picker of xAI's public Grok Build code, but a name in code is not a launch.
 
-### 1. Context Window Leap (256k to 1M Tokens)
-Expanding the active attention window from 256k tokens to 1 million tokens allows engineering teams to feed entire enterprise repositories, system architectural documentation, or comprehensive legal contracts into a single session without chunking or complex RAG pipeline loss.
+## Grok 4.9: one passing comment
 
-### 2. Autonomous Cloud Shell Sandboxing
-Grok 4.8 introduces secure cloud terminal sandboxes where the model can execute bash commands, install system dependencies, compile C++/Rust binaries, and run integration test suites in an isolated microVM environment.
+The only public hint is a comment from Musk, quoted in coverage of the Grok 4.8 news, that Grok 4.9 would "probably" be in the same class as the current top models from OpenAI and Anthropic. There is **no date, no feature list and no pricing**. Fan accounts on X have predicted "4.9 in November, Grok 5 in December", but that is their guess.
 
-### 3. Sub-80ms Audio & Voice Reflex Engine
-Targeting conversational latencies under 80ms, the new voice reflex engine enables duplex spoken interaction without the noticeable turn-taking pauses common in first-generation voice models.
+## Grok 5: repeatedly delayed
 
-## Grok 4.9: Test-Time Compute Preview & Self-Verification
+Grok 5 was originally promised for **Q1 2026** and later pointed at Q2 2026; neither happened. As of today there is no announced release date and no official specifications. Treat any Grok 5 parameter counts, benchmark scores or "release dates" you see as speculation until xAI publishes them.
 
-As the direct predecessor to Grok 5, Grok 4.9 introduces advanced reasoning dynamics:
+## Confirmed vs rumoured at a glance
 
-- **Test-Time Compute Scaling:** Instead of generating answers immediately via standard autoregressive passes, Grok 4.9 allocates dynamic compute budgets based on query difficulty, running internal search trees and self-consistency evaluations.
-- **Self-Refining Verification Loops:** When generating software code, the model autonomously drafts and runs synthetic unit tests internally, correcting syntax errors and failed assertions before returning final output to the user.
-- **Enterprise Zero Data Retention (ZDR):** A dedicated compliance tier ensuring financial and healthcare queries are processed ephemerally in RAM without telemetry storage.
+| Model | Status | What is actually known |
+|---|---|---|
+| Grok 4.7 | **Released** 21 Sep 2026 | 500K context, $2 / $6 per 1M tokens (official docs) |
+| Grok 4.8 | **Announced by Musk**, expected Oct 2026 | 2.5T parameters, new C++ training stack. No date, price or API details |
+| Grok 4.9 | **Mentioned only** | One comment about expected capability. Nothing else |
+| Grok 5 | **No date** | Missed Q1 and Q2 2026 targets. No official specs |
 
-## Roadmap Comparison Matrix
+## How to prepare your code for new Grok releases
 
-| Release Milestone | Key Architectural Upgrades | Target Developer Focus | Status |
-|---|---|---|---|
-| **Grok 4.7** | Enhanced CursorBench coding, Fast API tier | Daily software engineering & API apps | **Live / GA** |
-| **Grok 4.8** | 1M token context, shell sandbox, 80ms voice | Full-repo refactoring, voice agents | In Development |
-| **Grok 4.9** | Test-time compute preview, self-testing code | Complex algorithmic synthesis, ZDR compliance | Planned Bridge |
-| **Grok 5** | Megacluster-trained flagship architecture | Frontier autonomous multimodal intelligence | Horizon Roadmap |
+xAI is shipping fast, so the useful work is making upgrades boring:
 
-## Preparing Production Architectures for Iterative Releases
+1. **Keep the model ID in configuration**, not hard-coded, so you can switch from `grok-4.7` to the next model with one change.
+2. **Keep a small evaluation set** of 20–50 real prompts from your app, and run it before switching production traffic.
+3. **Watch the price page on launch day.** Grok 4.7 kept 4.6's price but used more tokens on the same tasks, according to reporting cited on Wikipedia, so check cost per task, not just price per token.
+4. **Follow the source:** xAI's [models page](https://docs.x.ai/developers/models) is where new IDs and prices appear first.
 
-To benefit from xAI's rapid release cadence without introducing technical debt:
-1. **Abstract Model Identifiers:** Never hardcode `grok-4-7` directly into microservice callers; configure dynamic environment variables (`MODEL_GROK_DEFAULT`).
-2. **Curate Golden Evaluation Benchmarks:** Maintain a suite of 30 to 50 domain-specific regression tests to validate latency and output parsing before switching production traffic to new releases.
-3. **Budget for Test-Time Compute:** Plan token usage budgets according to reasoning effort; extended test-time thinking trades increased inference tokens for mathematical precision.
+## Frequently asked questions
 
-## Frequently Asked Questions
+### When is Grok 4.8 coming out?
+xAI hasn't announced a date. It has been reported as slated for October 2026, in line with xAI's monthly release cadence since Grok 4.7.
 
-### What is the primary upgrade expected in Grok 4.8?
-The headline features of Grok 4.8 are a 1-million-token context window (up from 256k) and autonomous cloud shell sandboxing for direct command execution.
+### Is Grok 5 out?
+No. As of 12 October 2026, Grok 5 has not been released and has no confirmed date.
 
-### Will Grok 4.8 replace Grok 4.7 immediately?
-No. xAI maintains backwards compatibility for previous API versions, allowing engineering teams to evaluate new versions in staging before cutting over production workloads.
+### How big is Grok 4.8?
+Musk said it is a 2.5-trillion-parameter model trained with a new C++ software stack. xAI has not published a model card yet.
 
-### How does test-time compute differ from standard generation?
-Standard generation generates the next token immediately based on greedy sampling. Test-time compute allows the model to explore multiple reasoning paths and self-correct before outputting the final response.
+## Sources
 
-## Conclusion
+- xAI Docs: [Grok 4.7 model page](https://docs.x.ai/developers/models/grok-4.7) and [models overview](https://docs.x.ai/developers/models)
+- Wikipedia: [Grok (chatbot)](https://en.wikipedia.org/wiki/Grok_%28chatbot%29) (release history and cadence, with citations)
+- CellCog: [Grok 4.8 release date coverage of Musk's 13 September post](https://cellcog.ai/blog/grok-4-8-release-date/)
 
-The sequential rollout of Grok 4.8 and Grok 4.9 highlights xAI’s commitment to rapid iteration and empirical scaling. By preparing for 1M-token contexts and containerized shell execution, development teams can leverage xAI’s frontier updates effectively as the ecosystem marches toward Grok 5.
+Related on VNHAX: [Grok 4.7 vs Grok 4.6](/blog/grok-4-7-vs-grok-4-6-comparison-benchmarks) · [What is SpaceXAI?](/blog/what-is-spacexai-xai-rebrand-orbital-intelligence) · [How GitHub Copilot routes between models](/blog/github-copilot-project-hydrafusion-explained)

@@ -1,9 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import { BlogPost } from '@/lib/blog';
+import AuthorAvatar from '@/components/AuthorAvatar';
+import { AUTHOR, AUTHOR_PAGE_PATH } from '@/lib/author';
 
 export interface CompanyHubConfig {
   key: string;
@@ -13,11 +14,8 @@ export interface CompanyHubConfig {
   description: string;
   icon: React.ReactNode;
   focusTopics?: string[];
-  upcomingTopics?: {
-    title: string;
-    description: string;
-    category: string;
-  }[];
+  /** Original editorial introduction shown above the article list (plain paragraphs). */
+  intro?: { heading: string; paragraphs: string[] };
 }
 
 interface CompanyHubLayoutProps {
@@ -136,6 +134,22 @@ export default function CompanyHubLayout({ config, articles }: CompanyHubLayoutP
             </nav>
           </header>
 
+          {config.intro && (
+            <section className="google-hub-intro" aria-labelledby="hub-intro-heading" style={{ margin: '8px 0 36px', maxWidth: '760px' }}>
+              <h2 id="hub-intro-heading" style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 12px', color: '#0f172a' }}>
+                {config.intro.heading}
+              </h2>
+              {config.intro.paragraphs.map((paragraph) => (
+                <p key={paragraph} style={{ fontSize: '15px', lineHeight: 1.7, color: '#334155', margin: '0 0 14px' }}>
+                  {paragraph}
+                </p>
+              ))}
+              <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>
+                Written by <Link href={AUTHOR_PAGE_PATH}>{AUTHOR.name}</Link> · Every article links to its official sources.
+              </p>
+            </section>
+          )}
+
           {/* Articles Section */}
           <section aria-label={`${config.name} articles`}>
             <div className="google-section-header">
@@ -178,16 +192,8 @@ export default function CompanyHubLayout({ config, articles }: CompanyHubLayoutP
 
                     <div className="google-article-footer">
                       <div className="google-article-author">
-                        <div className="google-author-avatar">
-                          <Image
-                            src="/icon.png"
-                            alt="VNHAX"
-                            width={22}
-                            height={22}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        </div>
-                        <span>{post.frontmatter.author || 'VNHAX Editorial'}</span>
+                        <AuthorAvatar size={22} />
+                        <span>{post.frontmatter.author || AUTHOR.name}</span>
                       </div>
 
                       <Link href={`/blog/${post.slug}`} className="google-article-link">

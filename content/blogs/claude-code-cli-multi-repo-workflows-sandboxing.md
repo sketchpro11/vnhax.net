@@ -112,3 +112,5 @@ Claude Code possesses direct execution feedback: it does not assume code works; 
 ## Conclusion
 
 The Claude Code CLI transforms software development by bringing Anthropic's Claude Sonnet and Opus models directly into the terminal. By pairing multi-repository workspace conventions with containerized sandbox isolation, engineering teams can safely accelerate development, automate bug reproduction, and streamline code reviews.
+
+Related on VNHAX: [Claude Code vs Antigravity vs Grok Build](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout) · [Multi-persona agent swarms with Everything Claude Code](/blog/why-monolithic-prompts-died-multi-persona-agent-swarms-ecc) · [Hardening enterprise MCP servers](/blog/enterprise-mcp-server-security-hardening-protocol-bridges)

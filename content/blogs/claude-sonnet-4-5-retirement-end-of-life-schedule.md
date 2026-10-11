@@ -2,7 +2,7 @@
 title: "Claude Sonnet 4.5 End-of-Life Schedule: Retirement Dates & Migration Alternatives"
 description: "Migration guide for engineering teams on Claude Sonnet 4.5: official retirement date (Nov 30, 2026), breaking changes, and alternatives (Sonnet 5.5, Sonnet 5, Haiku 4.5)."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude", "claude-sonnet-4-5", "end-of-life", "api-migration", "claude-sonnet-5-5"]
@@ -46,16 +46,18 @@ While list rates are approximately 33% cheaper, Claude Sonnet 5.5 employs an enh
 
 Additionally, **thinking tokens** generated during reasoning passes are billed at standard output rates, and high-resolution image inputs incur higher token costs.
 
-## Replacement Options: Sonnet 5.5 vs. Sonnet 5 vs. Haiku 4.5
+## Replacement Options: Sonnet 5.5 vs. Sonnet 5 vs. Haiku 5.5
 
-| Metric / Dimension | Claude Sonnet 5.5 | Claude Sonnet 5 | Claude Haiku 4.5 |
+| | Claude Sonnet 5.5 | Claude Sonnet 5 | Claude Haiku 5.5 |
 |---|---|---|---|
-| **Model ID** | `claude-sonnet-5-5` | `claude-sonnet-5` | `claude-haiku-4-5-20251001` |
-| **Role** | Current Flagship Balanced | Legacy Transition Tier | Low-Latency High-Volume |
-| **Cost (In / Out)** | $2.00 / $10.00 | $2.00 / $10.00 | Low Cost Tier |
-| **Best For** | Coding agents, reasoning, multi-repo | Temporary migration bridge | Classification, simple extraction |
+| **Model ID** | `claude-sonnet-5-5` | `claude-sonnet-5` | see the [models overview](https://platform.claude.com/docs/en/about-claude/models/overview) |
+| **Role** | Anthropic's recommended replacement | Previous Sonnet generation | High-volume, latency-sensitive tasks |
+| **Price (in / out per MTok)** | $2 / $10 | $2 / $10 | $0.10 / $0.50 (prompts up to 100K tokens) |
+| **Best for** | Coding agents, reasoning, tool use | Short-term bridge if you are already on it | Classification, extraction, routing |
 
-**Recommendation:** Migrate mission-critical coding agents and complex reasoning pipelines to **Sonnet 5.5**. High-volume, low-complexity classification tasks can be routed to **Haiku 4.5** for maximum margin efficiency.
+Prices from Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing), checked 12 October 2026. Sonnet 5.5 has the same token prices as Sonnet 5 but cheaper prompt cache reads ($0.10 vs $0.20 per MTok).
+
+**Recommendation:** move coding agents and reasoning pipelines to **Sonnet 5.5**, which is what Anthropic recommends. High-volume classification or extraction that used Sonnet 4.5 only because it was "good enough" may be far cheaper on **Haiku 5.5**. Test it on a sample of real requests first.
 
 ## Step-by-Step API Migration Code Example
 
@@ -80,11 +82,20 @@ for block in response.content:
         print(block.text)
 ```
 
-### Breaking API Changes to Address:
-- **Remove Sampling Parameters:** Non-default `temperature`, `top_p`, or `top_k` values will throw a 400 Bad Request error on Sonnet 5.5.
-- **Adopt Effort Setting:** Replace `thinking: {"budget_tokens": ...}` with `output_config: {"effort": "high"}` or `"medium"`.
-- **Eliminate Assistant Prefill:** Prefilling partial assistant answers in the message history is rejected on 5.5 endpoints.
-- **Tool Choice Formatting:** Use `tool_choice: {"type": "auto"}` with strict parameter schemas.
+### Breaking API Changes to Address
+
+According to Anthropic's [Sonnet 5.5 migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide), five settings that worked on Sonnet 4.5 now return a **400 error** on Sonnet 5.5:
+
+- **Thinking budgets:** replace `thinking: {"type": "enabled", "budget_tokens": ...}` with an effort level, e.g. `output_config: {"effort": "medium"}`.
+- **Sampling parameters:** remove non-default `temperature`, `top_p` and `top_k`.
+- **Assistant prefill:** you can no longer pre-fill the start of Claude's answer.
+- **Forced tool choice:** forcing a specific tool returns an error; let the model choose.
+- **`thinking: {"type": "disabled"}`:** to run without up-front thinking, send `thinking: {"type": "between_tools"}` instead.
+
+Two behaviour changes also matter:
+
+- **Thinking is on by default.** A request with no `thinking` field runs with adaptive thinking on Sonnet 5.5, while on Sonnet 4.5 it ran without thinking. Responses can start with thinking blocks, so don't read `content[0].text` blindly; loop over blocks by type, as in the example above.
+- **Revisit `max_tokens`.** It now covers thinking plus text, and thinking tokens are billed as output tokens.
 
 ## Frequently Asked Questions
 
@@ -100,3 +111,11 @@ Yes. Developers using the Claude Code terminal harness can run `/claude-api migr
 ## Conclusion
 
 Migrating away from Claude Sonnet 4.5 before November 30, 2026 ensures continuous uptime and unlocks the superior reasoning and coding performance of Sonnet 5.5. Engineering teams should audit their codebases now, conduct regression benchmarks, and deploy updated client SDKs well ahead of the deadline.
+
+## Sources
+
+- Anthropic: [Model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) (Sonnet 4.5 retirement notice, 30 September 2026)
+- Anthropic: [Claude Sonnet 5.5 migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide)
+- Anthropic: [Pricing](https://platform.claude.com/docs/en/about-claude/pricing) (prices and the newer tokenizer note)
+
+Related on VNHAX: [Claude Sonnet 5.5 vs Sonnet 5: what changed](/blog/claude-sonnet-5-5-vs-sonnet-5-differences) · [Claude Opus 5.5 vs Claude Fable 5.1](/blog/claude-opus-5-5-vs-claude-fable-5-1-comparison) · [How to cut AI coding agent API costs](/blog/how-to-cut-ai-coding-agent-api-costs-token-proxies)

@@ -113,7 +113,7 @@ If you're on an eligible plan, open your ChatGPT sidebar and look for Dots. Star
 
 *Related reading on this site:*
 
-- [ChatGPT Pro $500 Plan: Pricing & Limit Breakdown](/blog/chatgpt-pro-500-plan-pricing-limits)
+- [ChatGPT Pro $500 Plan: Pricing & Limit Breakdown](/blog/chatgpt-pro-plans-100-200-500-ultrafast)
 - [OpenAI Models & Developer Hub](/openai)
 - [AI Tools & Frameworks Directory](/ai/ai-tools)
 

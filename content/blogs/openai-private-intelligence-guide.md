@@ -1,68 +1,80 @@
 ---
-title: "OpenAI Private Intelligence: Sovereign AI, Air-Gapped Enclaves & Zero Retention"
-description: "Comprehensive breakdown of OpenAI Private Intelligence: Zero Data Retention (ZDR) with Private Safety Processing, confidential computing, and compliance."
+title: "OpenAI Private Intelligence Explained: ZDR With Private Safety Processing"
+description: "OpenAI's Private Intelligence lets API customers keep Zero Data Retention while OpenAI still detects misuse across interactions. How Private Safety Processing works, what customers must set up, Private Inference, and how it compares with Anthropic EFS."
 date: "2026-10-07"
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "OpenAI & Models"
-tags: ["openai", "private-intelligence", "confidential-computing", "zero-data-retention", "enterprise-security", "cloud-compliance"]
+tags: ["openai", "private-intelligence", "zero-data-retention", "private-safety-processing", "enterprise-security", "compliance"]
 ---
 
-> **Quick summary:** Announced at OpenAI DevDay in late September 2026, **Private Intelligence** provides enterprise mechanisms for isolating sensitive customer data: **Zero Data Retention (ZDR) with Private Safety Processing** (available immediately) and preview architectures for **Confidential Computing Private Inference**. It targets regulated sectors needing frontier intelligence without data residency compromises.
+> **Quick answer (checked 12 October 2026):** **Private Intelligence** is OpenAI's umbrella name for privacy options aimed at businesses. Its main live piece is **Zero Data Retention (ZDR) with Private Safety Processing (PSP)**, which OpenAI began rolling out to API customers on **22 September 2026**. OpenAI keeps no copy of your prompts or responses; instead, selected interactions are **encrypted and stored in your own cloud storage for 30 days**, where an automated, hardware-attested review system with **no human access** checks them for misuse across interactions. A second piece, **Private Inference**, which applies confidential computing to inference itself, is in **preview**.
 
-In enterprise software rollouts, legal compliance officers frequently pose a decisive question: *"Who inside the vendor organization can inspect our prompt tokens, embeddings, and fine-tuning datasets?"*
+Both OpenAI and Anthropic hit the same wall this year: their newest models are capable enough that some misuse only shows up across many interactions, but big customers refuse to let the AI provider keep their data. Both came up with a similar answer: keep the data in the customer's cloud and let automated systems do the review. This article covers OpenAI's version, based on its own announcement and developer guide.
 
-Historically, even under contractual Zero Data Retention terms, cloud AI providers retained transient request logs for safety screening and automated abuse monitoring. For financial trading desks, clinical healthcare networks, and defense contractors, that operational ambiguity frequently stalled deployments.
+## Why OpenAI built it
 
-OpenAI introduced **Private Intelligence** to address these data sovereignty objections. Below is an engineering review of how the architecture works and what it means for enterprise security teams.
+Classic ZDR means OpenAI doesn't retain prompts or responses after a request. That works when safety checks look at each request on its own. OpenAI says that as models take on longer tasks, serious risks can appear only **across multiple interactions**: someone repeatedly probing safeguards, coordinating across accounts, or an agent continuing to act after being told to stop. PSP is designed to catch those patterns **without** OpenAI staff seeing the content, so OpenAI can keep offering ZDR for frontier models.
 
-## The Enterprise Privacy Trade-Off: Cloud vs. Sovereignty
+## How ZDR with Private Safety Processing works
 
-Regulated technology teams have traditionally faced difficult compromises:
+From OpenAI's developer guide:
 
-1. **Deploying Open-Source Local Models:** Sacrificing frontier reasoning capabilities to maintain strict physical air-gaps on private GPU hardware.
-2. **Accepting Public Multi-Tenant Risk:** Routing sensitive internal documents through shared commercial APIs with external data residency exposure.
-3. **Abandoning GenAI Initiatives:** Stalling automation pipelines entirely due to regulatory roadblocks.
+1. **Selection:** an interaction (prompt plus response) is selected by a safety classifier referral or an approved sampling policy. OpenAI notes that a referral does **not** mean a policy violation.
+2. **Encrypt and store in your cloud:** the record is encrypted and written to **your regional cloud storage** with a **30-day expiry**. OpenAI keeps only an index with metadata and a storage reference, not the content. This happens asynchronously, so it doesn't slow inference.
+3. **Double encryption:** an inner layer (OpenAI-managed HPKE) means only the approved safety runtime can decrypt; an optional outer layer uses **your own key management (EKM)**. With EKM on, OpenAI's key alone can't decrypt a record, and revoking your key authorization blocks decryption.
+4. **Automated review with no human access:** a **hardware-attested Safety Review Runtime**, which disables human access, decrypts and reviews records using an approved prompt and output format. Only bounded safety signals and operational metadata leave the runtime in plain text.
+5. **What OpenAI sees:** a narrowly defined signal about the type of activity involved, not the content, even when something is flagged. You can choose to share details if you want to appeal or help an investigation.
 
-Private Intelligence aims to decouple frontier capability from data vulnerability through architectural isolation.
+## What customers must do
 
-## Architectural Pillars of Private Intelligence
+PSP is not a switch you flip. According to OpenAI, customers must:
 
-The framework consists of two core engineering components:
+- **Register and validate storage buckets** through OpenAI's admin API for each PSP-enabled project and data-residency region.
+- **Keep encrypted records for at least 30 days**: storage lifecycle rules must not delete them early.
+- **Maintain storage permissions and key access**, and fix configuration problems when OpenAI notifies you.
+- **Respond to safety notices** and work with OpenAI to investigate.
 
-### 1. Zero Data Retention (ZDR) with Private Safety Processing (PSP)
+OpenAI's help center has a getting-started article, and access is expanding in phases.
 
-Under standard API configurations, abuse-detection classifiers inspect token traffic to ensure acceptable use policy adherence. Under Private Safety Processing:
+## Private Inference (preview)
 
-- **Isolated Automated Screening:** Input screening occurs inside stateless memory enclaves without persistent caching to persistent disk storage.
-- **Immediate Token Purging:** The moment token inference completes and response streams are returned to the client, the execution memory context is zeroized.
-- **Zero Human Review:** Enterprise contract clauses legally prohibit human auditors or vendor engineers from inspecting customer prompt streams.
+The second part of Private Intelligence, **Private Inference**, combines confidential computing with "strict, verifiable controls" for the inference itself. OpenAI has only described it at a high level so far and is taking registrations of interest. OpenAI also says it is developing an option where content is stored on OpenAI infrastructure but encrypted with keys controlled by the customer.
 
-### 2. Confidential Computing & Private Inference Enclaves
+## OpenAI PSP vs Anthropic EFS
 
-The preview phase of Private Intelligence leverages hardware-enforced **Confidential Computing** (such as AMD SEV-SNP or Intel TDX technology):
-
-- **Encrypted Memory Spaces:** Model weights and customer context reside within cryptographically sealed memory enclaves that even the underlying hypervisor host cannot access.
-- **Remote Attestation:** Enterprise clients can cryptographically verify that the server running their inference workload runs unmodified, authorized software binaries prior to dispatching sensitive tokens.
-
-## Compliance and Security Evaluation Matrix
-
-| Capability | Standard Commercial API | Private Intelligence Enclave |
+| | OpenAI ZDR with PSP | Anthropic Enterprise Frontier Safeguards |
 |---|---|---|
-| **Prompt Log Retention** | Up to 30 days for abuse monitoring | Zero retention (ephemeral memory only) |
-| **Human Audit Access** | Authorized safety personnel | Strictly barred by policy and enclave controls |
-| **Memory Isolation** | Multi-tenant shared OS boundaries | Hardware-isolated confidential VM enclaves |
-| **Model Training Exemption** | Excluded for enterprise API tiers | Excluded with contractual non-ingestion guarantees |
-| **Remote Attestation Verification** | Not supported | Supported via cryptographic platform certificates |
+| **Announced** | Previewed 19 Aug 2026; rollout from 22 Sep 2026 | 1 Sep 2026; phased rollout from late 2026 |
+| **Where monitoring data lives** | Customer-controlled cloud storage (30-day TTL) | Customer's own cloud account |
+| **Who reviews flags** | Automated runtime; OpenAI gets bounded signals | Automated systems; alerts go to the customer's own reviewers |
+| **Human review by the vendor** | No access to content | Not required |
 
-## Practical Enterprise Deployment Recommendations
+The designs are strikingly similar. The practical differences will be in setup effort, which models and endpoints are covered, and contract terms, so compare the actual paperwork for your use case. See [Anthropic EFS explained](/blog/anthropic-enterprise-frontier-safeguards-explained).
 
-When preparing infrastructure reviews with corporate governance boards:
+## Practical advice for compliance teams
 
-- **Demand Signed DPAs:** Ensure that Zero Data Retention is codified within a signed enterprise Data Processing Addendum rather than relying on informal dashboard toggle switches.
-- **Implement Local Redaction:** Deploy client-side token filters (such as Microsoft Presidio or custom regex proxies) to strip credit card numbers and personal identifiers before transmission.
-- **Audit Network Perimeter Controls:** Route API calls through outbound forward proxies that enforce mTLS and restrict egress traffic exclusively to authorized endpoints.
+- **Get ZDR in your contract,** not just as a dashboard setting.
+- **Budget engineering time** for bucket setup, key management and lifecycle rules. Treat it like any other security integration.
+- **Keep doing client-side redaction** of obviously sensitive fields (card numbers, national IDs) where you can. Defense in depth still applies.
+- **Check endpoint coverage:** OpenAI notes that endpoint and feature limitations in its data controls documentation still apply.
 
-## Conclusion
+## Frequently asked questions
 
-OpenAI Private Intelligence bridges the historical divide between sovereign data security and frontier model access. By combining zero-data-retention processing with hardware-level confidential compute enclaves, organizations can deploy cutting-edge generative workflows while maintaining rigorous institutional compliance.
+### Does ZDR with PSP mean nothing is stored?
+OpenAI doesn't keep your prompts or responses. Selected interactions are stored encrypted in **your** cloud storage for 30 days so automated safety review can run.
+
+### Can OpenAI employees read my flagged prompts?
+OpenAI says no: decryption happens only inside a hardware-attested runtime that disables human access, and OpenAI receives only a limited safety signal.
+
+### Is Private Inference available?
+It is in preview. OpenAI is collecting registrations of interest.
+
+## Sources
+
+- OpenAI: [Offering Zero Data Retention for frontier models](https://openai.com/index/offering-zero-data-retention-for-frontier-models/) (19 August 2026, updated 22 September 2026)
+- OpenAI Developers: [ZDR with Private Safety Processing](https://developers.openai.com/api/docs/guides/private-safety-processing)
+- OpenAI Help Center: [Getting started with ZDR with Private Safety Processing](https://help.openai.com/en/articles/20001595-getting-started-with-zdr-with-private-safety-processing)
+- OpenAI: [Register interest in OpenAI Private Intelligence](https://openai.com/form/private-intelligence-interest/)
+
+Related on VNHAX: [ChatGPT Pro plans and Ultrafast](/blog/chatgpt-pro-plans-100-200-500-ultrafast) · [Shadow AI governance](/blog/shadow-ai-governance-auditing-securing-code-assistants)
