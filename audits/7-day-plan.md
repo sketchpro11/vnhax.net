@@ -61,7 +61,7 @@ Posts: #49 Llama 4 locally, #34 num_ctx, #33 Gemini Windows install, #8 Claude C
 
 ## Day 6 — Experience Part 2 + baqi thin posts
 Posts: #3 Flux 3, #35 Ideogram, #16 ElevenLabs, #15 SLMs edge, #32 API costs
-- 👤 Jo tools free/available hain unke apne outputs (images/audio/screenshots) — jo nahi ho sakte woh batao, hum honestly explainer rakhenge
+- 🤖 (User decision 2026-10-12: no local tests) — verify from official sources; no hands-on claims
 - 🤖 Baqi IMPROVE wali news posts: sources + "Meri raaye: kya aapko switch karna chahiye?" section, kam se kam ~900 words (padding nahi)
 - 🤖 Fake-experience lines hatao (Soul Refiner "over chai" waghera) jahan test nahi hua
 
@@ -81,6 +81,6 @@ Posts: #3 Flux 3, #35 Ideogram, #16 ElevenLabs, #15 SLMs edge, #32 API costs
 - [x] Day 2 (2026-10-11) — code done: Web3Forms form (mailto fallback), Consent Mode v2 + Cookie Settings, new Privacy Policy. 👤 pending: Prompt 4 (Web3Forms key), Prompt 3 (Search Console), form test
 - [x] Day 3 (2026-10-12) — code done: /author/umar-hashmi (Person + ProfilePage schema, articles list), /editorial-policy, bylines link to author page, About links, footer + sitemap. photo (public/images/umar-hashmi.webp) + hardware (Alienware x15 R2, i7-12700H, RTX 3070 Ti 8GB, 16GB, Win11 Pro) added
 - [x] Day 4 (2026-10-12) — 56 → 42 posts. Merged: ChatGPT Pro x3 → chatgpt-pro-plans-100-200-500-ultrafast; Copilot routing → HydraFusion; Argon vs Flash → Argon pillar; Dots x2; Grok pricing → Grok 4.7 vs 4.6. Removed (301): grok-5 (speculation), colossus-2, creative-canvas, muse-small-business, copilot-grok-vs-opus, llama-4-enterprise, meta-enterprise-platform (product not found = fabricated), project-astra (invented specs). Rewritten from official sources with Sources sections: xAI roadmap, SpaceXAI(+SpaceXSI), Googlebook, Mythos 5.1, Gemini 3.8 Flash Cyber, Sonnet 4.5 retirement, Opus vs Fable, Anthropic EFS (was wrong concept), OpenAI Private Intelligence, Copilot prepaid seats, Copilot code review, Meta One, Meta Muse. Hub pages: fake "upcoming topics" removed, real intros added. 0 broken internal links; 3 broken external links fixed. Left for Day 5/6: claude-code-cli-multi-repo + gemini-windows (no sources yet), monolithic-prompts + real-time-web-data (1 source each)
-- [ ] Day 5
+- [x] Day 5 (2026-10-12) — user chose NO local downloads/tests: verify from official sources only. Rewrote as honest explainers with Sources: Llama 4 locally (removed fake 'my RTX 4090/5090/Mac Studio' story; Ollama sizes 67/245 GB; FA3 is H100-only), num_ctx (default now 4K<24GB, not 2048; KV table was 2x too low — recomputed from configs; removed wrong num_predict tip), Gemini Windows (official 10 Sep launch facts), Claude Code multi-repo (removed invented .clauderules/--sandbox-mode/--batch/docker image; real --add-dir, CLAUDE.md, /sandbox, -p), shootout (removed fabricated benchmark table; doc-based comparison + test method)
 - [ ] Day 6
 - [ ] Day 7

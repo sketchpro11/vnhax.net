@@ -1,116 +1,128 @@
 ---
-title: "Claude Code CLI: Multi-Repository Workflows & Sandbox Isolation Guide"
-description: "Master the Claude Code CLI: architect multi-repository dependencies, enforce sandbox isolation, configure terminal tools, and automate git triage."
+title: "Claude Code Across Multiple Repositories: --add-dir, CLAUDE.md and Sandboxing"
+description: "How to use Claude Code on a feature that spans several repositories: --add-dir and /add-dir, how CLAUDE.md files load, the built-in sandbox for Bash, permission modes, and running it headless in CI. Based on Claude Code's official docs."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
-tags: ["anthropic", "claude-code", "cli-agents", "developer-tools", "sandboxing", "terminal-automation"]
+tags: ["anthropic", "claude-code", "cli-agents", "developer-tools", "sandboxing", "monorepo"]
 ---
 
-> **Executive summary:** **Claude Code CLI** represents Anthropic's agentic command-line interface, giving Claude direct terminal execution rights to navigate repositories, edit code, run test runners, and draft pull requests. Operating Claude Code safely across complex distributed microservices requires configuring strict **multi-repository context indexing** and **ephemeral sandbox isolation**.
+> **Quick answer (checked 12 October 2026):** Start Claude Code in your main repository and give it access to sibling repos with **`claude --add-dir ../other-repo`** (or **`/add-dir`** during a session). Put project rules in **`CLAUDE.md`**. Note that CLAUDE.md files in added directories are **not loaded by default**; set `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` if you want them. For safety, turn on Claude Code's **built-in sandbox** (`/sandbox`), which limits where Bash commands can write and which domains they can reach. For CI, run it headless with **`claude -p "..."`**.
 
-As software engineering shifts from inline snippet generation to autonomous agent pair-programming, developers are adopting terminal-native harnesses like Claude Code. Unlike web-based chatbots, an interactive CLI agent executes shell commands, inspects local git diffs, and iterates on compilation errors in real time.
+Real features rarely live in one repository: an API change touches the backend service, the web client and a shared types package. Claude Code can work across all of them in one session, but only if you set it up properly. This guide sticks to features that exist in Claude Code's [official documentation](https://code.claude.com/docs/en/cli-reference) and its CLI help. Many guides online invent config files and flags, so I've checked each one.
 
-However, giving an LLM autonomous access to local shell execution introduces serious security, file isolation, and cross-project context challenges. Here is a production guide for configuring Claude Code CLI across multi-repo environments with airtight sandboxing.
+## Step 1: Give Claude access to more than one repository
 
-## Architecture: How Claude Code Interacts with the Terminal
-
-Claude Code operates as an iterative agent loop:
-
-1. **Context Ingestion:** The CLI scans project roots, parsing `.gitignore`, `package.json`, `Cargo.toml`, or `go.mod` files to construct an internal dependency graph.
-2. **Bash Execution Loop:** Instead of merely suggesting code changes, Claude issues structured bash commands to execute test suites, grep directories, and verify syntax.
-3. **Diff Verification:** Changes are reviewed via unified diffs before being committed, allowing developers to inspect every modification prior to git commits.
-
-```mermaid
-graph TD
-    User([Developer Terminal]) -->|Prompt & Task| ClaudeCode[Claude Code Agent]
-    ClaudeCode -->|Search / Grep| LocalFiles[(Repository Codebase)]
-    ClaudeCode -->|Run Commands| Sandbox[Isolated Container Sandbox]
-    Sandbox -->|Return Test Output| ClaudeCode
-    ClaudeCode -->|Generate Patch| Review[Interactive Git Diff Review]
-```
-
-## Multi-Repository Workflows: Bridging Distributed Microservices
-
-Modern enterprise backends are rarely contained in a single repository. A feature often spans a core API service, a frontend web client, and shared protocol definition libraries.
-
-To enable Claude Code to reason across sibling repositories without polluting project context:
-
-### 1. Workspace Configuration via Symbolic Linking
-Configure a workspace root with symbolic links to constituent microservices, and define an overarching `.claude-workspace` configuration:
+By default Claude Code works inside the directory you start it in. To add sibling repositories:
 
 ```bash
-mkdir enterprise-workspace && cd enterprise-workspace
-ln -s ../service-auth ./services/auth
-ln -s ../service-billing ./services/billing
-ln -s ../web-frontend ./clients/web
+# Start in the service you are changing, and allow two related repos
+cd ~/code/billing-service
+claude --add-dir ../web-frontend ../shared-types
 ```
 
-### 2. Context Boundary Files (`.clauderules`)
-Place explicit `.clauderules` files in each repository root to define architectural boundaries and forbidden modifications:
+Or, in an existing session, type:
+
+```text
+/add-dir ../web-frontend
+```
+
+For directories you always want available, there is also a `permissions.additionalDirectories` setting in your Claude Code settings file.
+
+There is no special "workspace" file or folder of symbolic links required. `--add-dir` is the supported way to do this.
+
+## Step 2: Put the rules in CLAUDE.md
+
+`CLAUDE.md` is Claude Code's project memory: instructions it reads at the start of every session. According to the [memory docs](https://code.claude.com/docs/en/memory):
+
+- Claude Code loads `CLAUDE.md` (and `CLAUDE.local.md`) from the **current directory and every directory above it** when it starts. Files in subdirectories load when Claude works in them.
+- Common locations: `./CLAUDE.md` or `./.claude/CLAUDE.md` for the project (commit it so the team shares it), `~/.claude/CLAUDE.md` for your personal rules, and `./CLAUDE.local.md` for personal project notes you don't commit.
+- Run `/context` to see which memory files are loaded.
+
+**The multi-repo catch:** CLAUDE.md files inside directories you add with `--add-dir` are **not loaded by default**. If each repo has important rules, enable them explicitly:
+
+```bash
+CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1 claude --add-dir ../web-frontend ../shared-types
+```
+
+Directories added through the `additionalDirectories` setting never load their CLAUDE.md, even with this variable.
+
+A short example `CLAUDE.md` for a billing service:
 
 ```markdown
-# .clauderules in service-billing
-- DO NOT alter database schema migrations without explicit confirmation.
-- Any change to JWT parsing must preserve backwards compatibility with service-auth v2.4.
-- Always run `npm test -- --bail` before marking refactors complete.
+# Billing service
+
+- Never edit files in migrations/ without asking first.
+- Changes to the invoice API must stay backward compatible with web-frontend.
+- Run `npm test` before saying a task is done.
+- Shared request/response types live in ../shared-types; update them there, not locally.
 ```
 
-## Enforcing Ephemeral Sandbox Isolation
+## Step 3: Turn on the sandbox
 
-Allowing autonomous AI agents to execute arbitrary shell scripts directly on host development machines poses significant security risks. If an agent hallucinates a destructive `rm` command or runs untrusted package dependencies, local environments can be corrupted.
+Letting an agent run shell commands on your machine is powerful and risky. Claude Code's built-in **sandboxed Bash tool** adds two layers of isolation ([sandboxing docs](https://code.claude.com/docs/en/sandboxing)):
 
-### Docker and Podman Sandbox Wrapper
-Deploy Claude Code within an isolated container sandbox that mounts the codebase as a restricted volume while protecting host root credentials:
+- **Filesystem isolation:** sandboxed commands can write only to the working directory, a per-user temp directory and any directories you added (with `--add-dir`, `/add-dir` or `additionalDirectories`). They can still **read** the rest of the filesystem, including credential files, so the docs recommend adding `denyRead` rules for sensitive locations like your home-directory credentials.
+- **Network isolation:** network access goes through a proxy with an allowlist that **starts empty**, so you decide which domains (your package registry, for example) commands can reach.
+
+Enable it with the `/sandbox` command. A few details from the docs:
+
+- It covers **Bash, PowerShell and Monitor** commands and their child processes. Claude's built-in file tools, MCP servers and hooks still run on the host unless you isolate the whole process.
+- On **Linux and WSL2**, it needs `bubblewrap` and `socat` installed.
+- For stronger isolation, run the **entire** Claude Code process inside isolation, for example with Anthropic's sandbox runtime (`npx @anthropic-ai/sandbox-runtime claude`) or a dev container.
+- If you ever use `--dangerously-skip-permissions`, the docs say to run it only inside a container, VM or the sandbox runtime.
+
+## Step 4: Pick a permission mode
+
+Claude Code asks before editing files or running commands unless you tell it otherwise. The `--permission-mode` flag accepts modes including `manual`, `acceptEdits`, `auto` and `bypassPermissions`, and you can pre-approve specific tools with `--allowedTools`. A sensible setup for multi-repo work:
+
+- **`acceptEdits`** inside the sandbox, so Claude can edit files across the added repos without asking each time, while risky commands still need your approval.
+- Keep **`manual`** for repositories with production configuration or infrastructure code.
+
+See the [permissions docs](https://code.claude.com/docs/en/permissions) for allow and deny rules.
+
+## Step 5: Run it headless in CI
+
+For automation, use print mode, which answers and exits ([headless docs](https://code.claude.com/docs/en/headless)):
 
 ```bash
-docker run -it --rm \
-  --name claude-sandbox \
-  --network bridge \
-  --volume "$(pwd)":/workspace:rw \
-  --workdir /workspace \
-  --env ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY" \
-  anthropic/claude-code:latest \
-  claude --sandbox-mode
+claude -p "Run the test suite, find the cause of the failing invoice test, and propose a minimal fix" \
+  --output-format json
 ```
 
-### Security Guardrails in Sandboxed Mode:
-- **Network Egress Filtering:** Restrict outgoing HTTP traffic to verified internal staging clusters and authorized package registries (e.g., npm, crates.io, PyPI).
-- **Read-Only Root Filesystem:** Container system files remain immutable; only the `/workspace` directory retains write privileges.
-- **Process Memory Limits:** Prevent runaway memory consumption during recursive tests by applying strict cgroup limits (`--memory=4g`).
+For GitHub workflows, Anthropic maintains the [Claude Code GitHub Action](https://github.com/anthropics/claude-code-action), which can respond to comments on issues and pull requests.
 
-## Automating Git Triage and Pull Request Reviews
+## A practical multi-repo checklist
 
-One of the highest-leverage applications of Claude Code CLI is automated pull request validation and bug reproduction.
+1. Start in the repo you are changing; `--add-dir` the others.
+2. Commit a `CLAUDE.md` in each repo with its rules, and set `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` if you need them all.
+3. Turn on `/sandbox` and add `denyRead` rules for credentials.
+4. Allow only the network domains you need.
+5. Review every diff before committing. Claude Code doesn't replace code review.
 
-### Example Automated Bug Triage Script:
-```bash
-# Instruct Claude Code to reproduce an issue from GitHub
-claude "Checkout issue #1042, inspect the failed CI test logs in ./test-results, \
-reproduce the failure using vitest, apply a minimal fix, and verify tests pass."
-```
+## Frequently asked questions
 
-During this workflow, Claude Code:
-1. Identifies the failing test assertion in `./test-results/ci-failure.log`.
-2. Runs the isolated test suite: `vitest run tests/auth.spec.ts`.
-3. Edits the underlying token decoding logic in `src/auth.ts`.
-4. Re-runs the test runner to verify green exit code `0`.
-5. Summarizes the root cause and creates a staged git commit with descriptive release notes.
+### How do I use Claude Code with multiple repositories?
+Start it in one repository and add the others with `claude --add-dir ../repo-a ../repo-b`, or `/add-dir` during a session.
 
-## Frequently Asked Questions
+### Does Claude Code read CLAUDE.md from added directories?
+Not by default. Set `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` when launching to load them.
 
-### Can Claude Code CLI run directly in CI/CD pipelines?
-Yes. Claude Code can be executed non-interactively in headless mode using the `--batch` flag, allowing GitHub Actions or GitLab CI jobs to invoke automated code linting, documentation updates, and test repairs.
+### Can Claude Code run in CI?
+Yes. Use `claude -p "your task"` for non-interactive runs, optionally with `--output-format json`, or the official GitHub Action.
 
-### How does Claude Code handle sensitive environment variables?
-By default, Claude Code ignores `.env`, `.env.local`, and common secret files defined in your project's `.gitignore` and security rule sets, preventing credentials from being submitted to model inference streams.
+### Does the sandbox stop Claude from reading my secrets?
+Not on its own. By default sandboxed commands can still read most of the filesystem; add `denyRead` rules for credential locations.
 
-### What is the advantage of Claude Code over web chat interfaces?
-Claude Code possesses direct execution feedback: it does not assume code works; it executes the compiler or test runner, inspects stderr output, and autonomously fixes its own bugs until execution succeeds.
+## Sources
 
-## Conclusion
-
-The Claude Code CLI transforms software development by bringing Anthropic's Claude Sonnet and Opus models directly into the terminal. By pairing multi-repository workspace conventions with containerized sandbox isolation, engineering teams can safely accelerate development, automate bug reproduction, and streamline code reviews.
+- Claude Code Docs: [CLI reference](https://code.claude.com/docs/en/cli-reference)
+- Claude Code Docs: [How Claude remembers your project (CLAUDE.md)](https://code.claude.com/docs/en/memory)
+- Claude Code Docs: [Configure the sandboxed Bash tool](https://code.claude.com/docs/en/sandboxing)
+- Claude Code Docs: [Configure permissions](https://code.claude.com/docs/en/permissions)
+- Claude Code Docs: [Run Claude Code programmatically](https://code.claude.com/docs/en/headless)
+- Claude Code Docs: [Set up Claude Code in a monorepo or large codebase](https://code.claude.com/docs/en/large-codebases)
+- GitHub: [anthropics/claude-code-action](https://github.com/anthropics/claude-code-action)
 
 Related on VNHAX: [Claude Code vs Antigravity vs Grok Build](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout) · [Multi-persona agent swarms with Everything Claude Code](/blog/why-monolithic-prompts-died-multi-persona-agent-swarms-ecc) · [Hardening enterprise MCP servers](/blog/enterprise-mcp-server-security-hardening-protocol-bridges)

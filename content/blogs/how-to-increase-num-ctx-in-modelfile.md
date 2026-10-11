@@ -1,146 +1,157 @@
 ---
-title: "How to Increase num_ctx in Ollama Modelfiles for 32k+ Context Windows"
-description: "A comprehensive developer guide to configuring num_ctx in Ollama Modelfiles, calculating KV cache VRAM overhead, and avoiding out-of-memory errors on local inference setups."
+title: "How to Increase num_ctx in Ollama (Modelfile, API and Env Var) Without Running Out of VRAM"
+description: "Three ways to raise Ollama's context window: Modelfile, API options and OLLAMA_CONTEXT_LENGTH. Ollama's current defaults, how to calculate KV cache memory correctly, and how to confirm the model still fits on your GPU."
 date: "2026-10-04"
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "AI Tools & Runtimes"
-tags: ["ollama", "local-llm", "context-window", "vram", "deepseek-r1", "llama-3"]
+tags: ["ollama", "local-llm", "context-window", "num-ctx", "kv-cache", "vram"]
 ---
 
-## Understanding the Default Context Window in Ollama
+> **Quick answer (checked 12 October 2026):** Ollama's default context depends on your VRAM: **4K tokens under 24 GB**, **32K for 24–48 GB**, **256K at 48 GB+**. To raise it, set `PARAMETER num_ctx 32768` in a **Modelfile**, pass `"num_ctx"` in the API `options`, or start the server with **`OLLAMA_CONTEXT_LENGTH=32768`**. A bigger context needs more memory for the KV cache. For Llama 3.1 8B that is about **4 GiB at 32K tokens** (f16), on top of the 4.9 GB model. Check the result with **`ollama ps`**: you want `100% GPU`.
 
-By default, **Ollama** runs most open-weight models (including Llama 3, DeepSeek-R1, and Mistral) with a conservative context window of **2,048 tokens (`num_ctx 2048`)**. 
+If your local model "forgets" the start of a long document or loses instructions in a long agent session, the context window is usually the reason. Ollama doesn't use a model's full native context by default, because a large window costs a lot of memory. This guide shows how to raise it safely, based on Ollama's documentation and the models' published configurations (sources at the end).
 
-While this default ensures models load reliably on entry-level GPUs with only 6GB–8GB of VRAM, it introduces severe limitations when working with:
-- Long repository indexing and codebase audits
-- Multi-turn conversational history in AI agent loops
-- Dense retrieval-augmented generation (RAG) pipelines
-- Document summarization of PDFs and technical whitepapers
+## Ollama's default context window
 
-When your prompts exceed the configured context window, Ollama silently truncates early context or drops previous conversational turns, leading to hallucination and lost instructions.
+According to the Ollama docs, the default context length now depends on available VRAM:
 
-Fortunately, modern model architectures natively support between 32,768 and 131,072 tokens. You can unlock this capability locally using custom **Modelfiles** or runtime API parameters. For hardware sizing and GPU calculations, see our companion benchmarks on [Running Llama 4 Locally on Consumer GPUs](/blog/running-llama-4-locally-vram-requirements-quantization) and [Deploying Small Language Models (SLMs) on Edge Devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization), or explore our [Local AI Tools Hub](/ai/ai-tools).
+| Your VRAM | Default context |
+|---|---|
+| Less than 24 GiB | 4K tokens |
+| 24–48 GiB | 32K tokens |
+| 48 GiB or more | 256K tokens |
 
----
+Older guides (and older versions of Ollama) mention a 2,048-token default. That is outdated. Ollama also notes that agents, coding tools and web search should use **at least 64,000 tokens**, if your hardware allows it.
 
-## Method 1: Tuning `num_ctx` via a Custom Modelfile (Recommended)
+When your prompt plus conversation history exceeds the window, older content is cut off, which is why long sessions start "forgetting" instructions.
 
-Creating a customized model artifact via a `Modelfile` is the cleanest approach because it permanently binds your desired context configuration to a reusable model alias.
+## Method 1: Modelfile (best for a reusable setup)
 
-### Step 1: Create a Modelfile
+A Modelfile bakes your context setting into a named model you can reuse.
 
-Create a new file named `Modelfile` in your project directory:
+**1. Create a file called `Modelfile`:**
 
 ```dockerfile
-# Start from your preferred base model
 FROM deepseek-r1:14b
 
-# Set the context window to 32,768 tokens (32k)
+# 32K-token context window
 PARAMETER num_ctx 32768
 
-# Set temperature and top_p for deterministic reasoning
+# DeepSeek recommends a temperature around 0.6 for R1 models
 PARAMETER temperature 0.6
 PARAMETER top_p 0.95
-
-# Custom system instructions
-SYSTEM """
-You are an expert software engineer running inside a high-context developer harness.
-Provide concise, production-ready code with complete type safety.
-"""
 ```
 
-### Step 2: Build the Custom Model Alias
-
-Compile your customized model into the local Ollama engine:
+**2. Build it:**
 
 ```bash
 ollama create deepseek-r1-32k -f ./Modelfile
 ```
 
-Ollama copies the base weights and writes the new parameter manifest in seconds without re-downloading model layers.
+This reuses the weights you already downloaded; it only writes a new model definition.
 
-### Step 3: Verify and Run
-
-Run your customized model with the expanded context window:
+**3. Run it and check how it loaded:**
 
 ```bash
-ollama run deepseek-r1-32k
+ollama run deepseek-r1-32k "Hello"
+ollama ps
 ```
 
-You can verify that the expanded context buffer is active by checking the Ollama verbose logs or sending a test request with an extended token payload.
+`ollama ps` shows the **CONTEXT** in use and a **PROCESSOR** column: `100% GPU` is what you want. A split such as `30%/70% CPU/GPU` means part of the model or cache spilled into system RAM and generation will be slower.
 
----
+## Method 2: Per request through the API
 
-## Method 2: Adjusting `num_ctx` Dynamically via REST API
+If you call Ollama from code, pass `num_ctx` in `options`:
 
-If you are invoking Ollama programmatically from Python, TypeScript, or an autonomous agent framework (like LangChain, LlamaIndex, or AutoGen), you can specify `num_ctx` dynamically inside the request `options` payload without modifying the model artifact:
-
-```json
-{
-  "model": "deepseek-r1:14b",
-  "prompt": "Analyze this entire 20,000-token codebase module...",
-  "options": {
-    "num_ctx": 32768,
-    "temperature": 0.5
-  },
-  "stream": false
-}
+```bash
+curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.1:8b",
+  "prompt": "Summarize this document...",
+  "options": { "num_ctx": 16384 }
+}'
 ```
 
-In Python with the official `ollama` SDK:
+With the official Python package:
 
 ```python
 import ollama
 
 response = ollama.generate(
-    model='deepseek-r1:14b',
-    prompt='Review this architecture document...',
-    options={
-        'num_ctx': 32768,
-        'temperature': 0.7
-    }
+    model="llama3.1:8b",
+    prompt="Summarize this document...",
+    options={"num_ctx": 16384},
 )
-print(response['response'])
+print(response["response"])
 ```
 
----
+In an interactive `ollama run` session you can also type `/set parameter num_ctx 16384`.
 
-## Calculating VRAM Overhead for Large Context Windows
+## Method 3: Change the default for everything
 
-Expanding your context buffer increases memory consumption because the attention mechanism must store **Key-Value (KV) cache** vectors for every active token.
+To change the default for all models, set the environment variable when starting the server:
 
-The memory footprint of the KV cache can be calculated with the formula:
+```bash
+OLLAMA_CONTEXT_LENGTH=32768 ollama serve
+```
 
-$$\text{KV Cache Size (Bytes)} = 2 \times \text{layers} \times \text{heads} \times \text{head\_dim} \times \text{tokens} \times \text{bytes\_per\_element}$$
+On Windows, set `OLLAMA_CONTEXT_LENGTH` as a user environment variable and restart Ollama. The Ollama desktop app also has a context-length slider in its settings.
 
-### Practical Memory Benchmarks (16-bit float KV Cache)
+## How much memory a bigger context needs
 
-| Model Architecture | Context Size | Weight VRAM (Q4_K_M) | KV Cache VRAM | Total Recommended VRAM |
-| :--- | :--- | :--- | :--- | :--- |
-| **8B (Llama 3.1)** | 8,192 tokens | ~4.8 GB | ~0.5 GB | **8 GB VRAM** |
-| **8B (Llama 3.1)** | 32,768 tokens | ~4.8 GB | ~2.0 GB | **12 GB VRAM** |
-| **14B (DeepSeek-R1)**| 16,384 tokens | ~8.9 GB | ~2.2 GB | **16 GB VRAM** |
-| **14B (DeepSeek-R1)**| 32,768 tokens | ~8.9 GB | ~4.4 GB | **16 GB–20 GB VRAM** |
-| **32B (Qwen 2.5)** | 32,768 tokens | ~19.5 GB | ~7.2 GB | **32 GB–36 GB VRAM** |
+The KV cache stores keys and values for every token in the window. For models with grouped-query attention, the size per token is:
 
-> **Pro Tip: Quantized KV Cache in llama.cpp / Ollama**  
-> If you are constrained by GPU memory, enable 8-bit or 4-bit KV cache quantization. In Ollama configurations, setting `PARAMETER num_predict` and running `OLLAMA_FLASH_ATTENTION=1` reduces memory bandwidth pressure and lowers KV cache VRAM consumption by up to 50%.
+```text
+KV bytes per token = 2 (K and V) × layers × KV heads × head_dim × bytes per value
+```
 
----
+Use the number of **KV heads** (`num_key_value_heads` in the model's `config.json`), not the total attention heads. That mistake is common and inflates or deflates estimates a lot. With an f16 cache (2 bytes per value), the published configurations give:
 
-## Troubleshooting Common Errors
+| Model (Ollama Q4 size) | Layers / KV heads / head_dim | KV per token | 8K ctx | 16K ctx | 32K ctx |
+|---|---|---|---|---|---|
+| Llama 3.1 8B (4.9 GB) | 32 / 8 / 128 | 128 KiB | 1 GiB | 2 GiB | 4 GiB |
+| DeepSeek-R1 14B (9.0 GB) | 48 / 8 / 128 | 192 KiB | 1.5 GiB | 3 GiB | 6 GiB |
+| Qwen2.5 32B (20 GB) | 64 / 8 / 128 | 256 KiB | 2 GiB | 4 GiB | 8 GiB |
 
-### Error: `CUDA out of memory` / `model offloaded to CPU`
-If the allocated model weights plus the 32k KV cache exceed your physical VRAM capacity:
-1. Decrease `num_ctx` in increments (e.g. try `16384` or `8192`).
-2. Use a smaller quantization level (e.g., `Q4_K_S` instead of `Q8_0`).
-3. Set `OLLAMA_NUM_PARALLEL=1` to ensure multiple concurrent requests do not duplicate the context cache.
+Add a bit of overhead for the runtime on top of *model size + KV cache*. So, roughly:
 
----
+- **Llama 3.1 8B at 32K** needs about 4.9 + 4 ≈ 9 GB, which is too much for an 8 GB GPU but fine on 12 GB+. At **8K** (about 6 GB) it fits an 8 GB card.
+- **DeepSeek-R1 14B at 32K** needs about 9 + 6 ≈ 15 GB, so a 16 GB card is tight and 24 GB is comfortable.
+- **Qwen2.5 32B at 32K** needs about 20 + 8 ≈ 28 GB, more than a single 24 GB card.
 
-## Key Takeaways
+These are calculations, not measurements. Always confirm with `ollama ps`.
 
-1. **Default is 2,048 tokens:** Never assume a model will use its full 128k native context out of the box in Ollama.
-2. **Use Modelfiles for Persistence:** Binding `PARAMETER num_ctx 32768` creates reproducible, team-wide model targets per the [official Ollama Modelfile documentation](https://docs.ollama.com/modelfile).
-3. **Budget for the KV Cache:** Always allocate an extra 2GB–5GB of headroom on top of base model weights when expanding context beyond 16k tokens, especially on reasoning models like [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1). Check out our [Open-Source Repositories Hub](/repos) for more agent tooling.
+## Halve the KV cache with quantization
+
+Ollama can store the KV cache in 8-bit instead of 16-bit. Set this before starting the server:
+
+```bash
+OLLAMA_KV_CACHE_TYPE=q8_0 ollama serve
+```
+
+Ollama says `q8_0` uses about **half the memory of f16** with a very small loss in precision, and `q4_0` saves more with a noticeable quality cost. It's a global setting for all models, and it works when Flash Attention is enabled. Ollama enables Flash Attention automatically where supported; force it with `OLLAMA_FLASH_ATTENTION=1`. With `q8_0`, the 32K column in the table above roughly halves (Llama 3.1 8B: about 2 GiB instead of 4).
+
+## Troubleshooting
+
+**The model got slow after raising num_ctx.** Run `ollama ps`. If PROCESSOR shows a CPU share, the cache pushed part of the model off the GPU. Lower `num_ctx`, enable `OLLAMA_KV_CACHE_TYPE=q8_0`, or use a smaller model.
+
+**Out-of-memory errors.** Step `num_ctx` down (32768 → 16384 → 8192) until the model loads at `100% GPU`.
+
+**Memory use doubled with several apps connected.** Parallel requests can each need their own context. Set `OLLAMA_NUM_PARALLEL=1` if you only need one request at a time.
+
+## Key takeaways
+
+1. Ollama's default is **4K tokens on GPUs under 24 GB**, not the model's full native context.
+2. Use a **Modelfile** for a permanent setting, **API options** per request, or **`OLLAMA_CONTEXT_LENGTH`** to change the default.
+3. Budget memory as **model size + KV cache**, calculated with **KV heads**, and confirm with **`ollama ps`**.
+4. **`OLLAMA_KV_CACHE_TYPE=q8_0`** is the easiest way to fit a longer context into the same GPU.
+
+## Sources
+
+- Ollama Docs: [Context length](https://docs.ollama.com/context-length) (defaults by VRAM, OLLAMA_CONTEXT_LENGTH, ollama ps)
+- Ollama Docs: [FAQ](https://docs.ollama.com/faq) (num_ctx via API and /set, KV cache quantization, Flash Attention)
+- Ollama Docs: [Modelfile reference](https://docs.ollama.com/modelfile)
+- Model configurations on Hugging Face: [Llama 3.1 8B](https://huggingface.co/unsloth/Meta-Llama-3.1-8B-Instruct/blob/main/config.json), [Qwen2.5 14B](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct/blob/main/config.json) (the base of DeepSeek-R1 14B), [Qwen2.5 32B](https://huggingface.co/Qwen/Qwen2.5-32B-Instruct/blob/main/config.json)
+- Ollama model pages: [llama3.1](https://ollama.com/library/llama3.1/tags), [deepseek-r1](https://ollama.com/library/deepseek-r1/tags), [qwen2.5](https://ollama.com/library/qwen2.5/tags)
+
+Related on VNHAX: [Running Llama 4 locally: VRAM requirements](/blog/running-llama-4-locally-vram-requirements-quantization) · [Small language models on edge devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization)

@@ -1,116 +1,121 @@
 ---
-title: "Running Llama 4 Locally: VRAM Requirements, Flash-Attention 3, and GGUF Quantization on Consumer GPUs"
-description: "Complete hardware analysis and VRAM benchmark matrix for running Meta's Llama 4 locally across RTX 4090, RTX 5090, and Apple Silicon M-series hardware."
+title: "Running Llama 4 Locally: Real VRAM Requirements, Quantization and What Fits on Your GPU"
+description: "How much memory Llama 4 Scout and Maverick really need, using Meta's specs and Ollama's published model sizes. Why 17B active doesn't mean 17B of VRAM, how KV cache quantization helps, and what to run on an 8 GB laptop instead."
 date: "2026-10-05"
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Local AI & Runtimes"
-tags: ["llama-4", "vram-requirements", "quantization", "flash-attention-3", "rtx-4090", "rtx-5090", "local-llm", "llama-cpp"]
+tags: ["llama-4", "vram-requirements", "quantization", "ollama", "llama-cpp", "local-llm"]
 ---
 
-The first time I tried to run Llama 4 Scout on my RTX 4090, it looked like it should work. 24GB card, roughly 65GB of Q4_K_M weights, a lot of optimism. It didn't work.
+> **Quick answer (checked 12 October 2026):** Llama 4 is a mixture-of-experts family. **Scout** has **109B total parameters** (17B active, 16 experts) and **Maverick** has **400B total** (17B active, 128 experts). Because *all* experts must sit in memory, Ollama's 4-bit downloads are **67 GB for Scout** and **245 GB for Maverick**. No single consumer GPU holds either one fully. A 24 GB card can only run Scout by offloading most of it to system RAM, and an 8 GB laptop GPU like mine shouldn't try.
 
-What I got instead was a system that took eleven minutes to load, then fell over the moment the context window passed a few thousand tokens. The offloading layer kicked in and started shuffling weights between VRAM and system RAM over PCIe, which is fine for a model you're chatting with once a day and completely useless for anything you actually want to write code with.
+"17B active parameters" is the most misleading number in local AI right now. It makes Llama 4 sound like it should run anywhere a 17B model does. It doesn't, and this guide explains why using Meta's own specs and the actual file sizes Ollama publishes (sources at the end). I haven't run Scout myself: my laptop has an 8 GB RTX 3070 Ti, which is exactly the kind of machine this model doesn't fit on. The last section covers what to run instead.
 
-That failure is what made me go and actually understand the numbers instead of trusting forum posts. Here's what I learned running Llama 4 locally on an RTX 4090, an RTX 5090, and a Mac Studio. If you are targeting lower-VRAM consumer laptops or mobile hardware, check our companion benchmark on [Deploying Small Language Models (SLMs) on Edge (Phi-4, Ministral)](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization).
+## Why "17B active" doesn't mean 17B of memory
 
-## **The part everyone misunderstands about Llama 4**
+Meta describes the two released models like this:
 
-Llama 4 is a mixture-of-experts (MoE) architecture. Scout has about 109 billion total parameters but only activates roughly 17 billion for any given token. Maverick is around 400 billion total, also activating about 17 billion.
+| Model | Active params | Experts | Total params | Context window |
+|---|---|---|---|---|
+| **Llama 4 Scout** | 17B | 16 | 109B | Up to 10M tokens |
+| **Llama 4 Maverick** | 17B | 128 | 400B | Up to 1M tokens |
 
-This sounds like it should make everything easy. It doesn't, and this is where most guides go wrong.
+In a mixture-of-experts model, each token only goes through a few experts, so **compute** per token is like a 17B model. But the runtime doesn't know in advance which experts the next token needs, so **every expert has to be loaded**. Memory follows the **total** parameter count, not the active one.
 
-**You still need to store all 109 billion parameters in memory.** Every expert lives in VRAM, even though only a subset are queried per token. MoE makes *computation* cheap. It does nothing for *memory capacity*. People read "17B active" and assume Scout fits in a 24GB card like a dense 17B model would.
+Meta itself says Scout fits on a **single NVIDIA H100** (an 80 GB data-center GPU) **with Int4 quantization**, and Maverick fits on a **single H100 host** (a multi-GPU server). That tells you the scale.
 
-It doesn't. It needs the full weight footprint, plus KV cache for your context window, plus overhead for activations and the CUDA allocator.
+## Actual download sizes (Ollama)
 
-## **The VRAM Matrix**
+These are the model sizes listed on Ollama's [llama4 tags page](https://ollama.com/library/llama4/tags):
 
-Here is the empirical storage footprint for quantizations across Llama 4 variants:
+| Ollama tag | Quantization | Size |
+|---|---|---|
+| `llama4:scout` (default) | Q4_K_M | **67 GB** |
+| `llama4:17b-scout-16e-instruct-q8_0` | Q8_0 | 117 GB |
+| `llama4:17b-scout-16e-instruct-fp16` | FP16 | 217 GB |
+| `llama4:maverick` | Q4_K_M | **245 GB** |
+| `llama4:17b-maverick-128e-instruct-q8_0` | Q8_0 | 428 GB |
+| `llama4:17b-maverick-128e-instruct-fp16` | FP16 | 803 GB |
 
-| Quantization | Approx. bits/weight | Scout (~109B Total) | Maverick (~400B Total) |
-| :--- | :--- | :--- | :--- |
-| **Q4_K_M** | ~4.8 bits | ~65 GB | ~240 GB |
-| **Q5_K_M** | ~5.7 bits | ~78 GB | ~288 GB |
-| **Q6_K** | ~6.6 bits | ~90 GB | ~334 GB |
-| **Q8_0** | ~8.5 bits | ~116 GB | ~428 GB |
-| **FP8** | ~8.0 bits | ~109 GB | ~400 GB |
+On top of the weights you need room for the **KV cache** (it grows with the context length you use) and some runtime overhead. So "fits" really means *weights + KV cache + a few GB of headroom*.
 
-### **The KV Cache Surprise**
+## What that means for common hardware
 
-KV cache scales with context length and attention heads. In testing, Scout at a 16k context added roughly 3–4GB of KV cache in fp16. Push that to 128k and you're looking at **25GB+ just for the KV cache**. At that point the cache is nearly as large as the quantized weights.
+This is arithmetic from the sizes above, not a benchmark:
 
-### **Hardware Compatibility Breakdown**
+- **8–16 GB GPUs (most laptops, RTX 3060/4060/3070 class):** Scout's 67 GB won't fit. With enough system RAM it might technically run almost entirely on the CPU, but it will be far too slow to be practical. Use a smaller model (see the last section).
+- **24 GB GPUs (RTX 3090/4090):** about a third of Scout's Q4 weights fit in VRAM; the rest is offloaded to system RAM. Expect it to work but slowly, and you'll need 64 GB+ of system RAM.
+- **32 GB GPUs (RTX 5090):** still less than half of Scout Q4. Better than 24 GB, still heavily offloaded.
+- **Two or more large GPUs, or a Mac with lots of unified memory (96–128 GB+):** this is where Scout Q4 becomes comfortable. Apple Silicon's unified memory lets the GPU use most of system RAM.
+- **Maverick:** realistically a multi-GPU server or a very high-memory workstation.
 
-- **RTX 4090 (24GB):** Q4_K_M Scout will load with layer offloading to system RAM. You'll get roughly 8k–12k usable context before PCIe bottlenecks degrade generation speed.
-- **RTX 5090 (32GB):** Q4_K_M Scout fits with substantial headroom, enabling a stable 16k context buffer with GDDR7 memory speeds.
-- **Apple Silicon M4 Max (64GB / 128GB Unified):** Unified memory changes the equation entirely. You can load Q4_K_M Scout comfortably on a 64GB machine with zero PCIe transfer penalties.
-- **Apple Silicon M4 Ultra (128GB / 192GB Unified):** Holds Maverick at Q4_K_M entirely in memory on a single desktop workstation.
+You can check how a model actually loaded with `ollama ps`. The **PROCESSOR** column shows `100% GPU`, `100% CPU`, or a split such as `48%/52% CPU/GPU`. Any CPU share means slower generation.
 
-## **Q4_K_M vs FP8: The Production Tradeoff**
+## KV cache: the hidden memory cost
 
-FP8 preserves noticeably more fine-grained reasoning than Q4_K_M, but consumes approximately 68% more memory.
+The KV cache stores attention data for every token in your context, so it grows as the context grows. Two things help:
 
-- **Q4_K_M:** Syntax, boilerplate, refactors, and formatting are essentially flawless. Occasional edge-case slips on complex recursive AST transformations.
-- **FP8:** Tighter mathematical precision and fewer reasoning hallucinations, but requires dual-GPU or high-spec unified memory setups.
+- **Use only the context you need.** Ollama sets the default context by VRAM: **4K tokens under 24 GB**, **32K for 24–48 GB**, **256K at 48 GB+** ([Ollama docs](https://docs.ollama.com/context-length)). Bigger windows cost more memory.
+- **Quantize the KV cache.** In Ollama, set `OLLAMA_KV_CACHE_TYPE=q8_0`, which Ollama says uses about **half the memory of f16** with a very small precision loss; `q4_0` saves more at a bigger quality cost. This works when Flash Attention is enabled, which Ollama turns on automatically where supported (force it with `OLLAMA_FLASH_ATTENTION=1`).
 
-Q4_K_M is a mixed quantization scheme that protects high-importance attention tensors at higher precision and aggressively quantizes feed-forward layers. It is significantly superior to uniform 4-bit schemes.
+In **llama.cpp**, the equivalent flags are `--cache-type-k q8_0 --cache-type-v q8_0` (short forms `-ctk` / `-ctv`), with Flash Attention on (`-fa on`).
 
-## **Flash-Attention 3: What It Does and Doesn't**
+## A note on "FlashAttention-3"
 
-[FlashAttention 3](https://github.com/Dao-AILab/flash-attention) does not reduce your KV cache size. FlashAttention optimizes memory *bandwidth* during attention matrix multiplications by keeping intermediate values in fast SRAM rather than HBM.
+You'll see FlashAttention-3 mentioned in many local-LLM guides. The [FlashAttention repository](https://github.com/Dao-AILab/flash-attention) says FlashAttention-3 is a beta **optimized for Hopper GPUs (e.g. H100)** and requires an **H100/H800 with CUDA 12.3+**. It isn't what makes Llama 4 run on an RTX card. On consumer GPUs, the flash-attention support in llama.cpp and Ollama is what matters, and it reduces memory traffic; it doesn't shrink the model weights.
 
-To shrink stored cache memory, you must use **KV Cache Quantization** in [llama.cpp](https://github.com/ggml-org/llama.cpp) (`--cache-type-k q8_0 --cache-type-v q8_0`). This cuts KV cache VRAM by 50% with zero perceptible quality degradation on coding benchmarks. Learn more in our [Local AI Tools & Hardware Hub](/ai/ai-tools).
+## Running it (if you have the hardware)
 
-## **Step 1: Quick Deployment with Ollama**
-
-For turnkey CLI serving, [Ollama](https://ollama.com/) provides instant model management. To expand your context beyond the default 2,048 tokens without out-of-memory errors, follow our step-by-step tutorial on [Increasing num_ctx in Ollama Modelfiles for 32k+ Context Windows](/blog/how-to-increase-num-ctx-in-modelfile):
+**Ollama:**
 
 ```bash
-# Pull Llama 4 Scout
+# Pull the default Scout build (Q4_K_M, about 67 GB)
 ollama pull llama4:scout
 
-# Verify VRAM allocation
-ollama run llama4:scout "Write a typed TypeScript interface for an agent event bus"
-
-# Inspect local models
-ollama list
+# Run it, then check how it was split between GPU and CPU
+ollama run llama4:scout "Summarize the trade-offs of mixture-of-experts models in 3 bullets"
+ollama ps
 ```
 
-## **Step 2: Full Control & KV Quantization with llama.cpp**
+To raise the context window, set `OLLAMA_CONTEXT_LENGTH` when starting the server, or use a Modelfile. See [how to increase num_ctx in Ollama](/blog/how-to-increase-num-ctx-in-modelfile).
 
-Compile with Blackwell or Ada CUDA kernels:
-
-```bash
-git clone https://github.com/ggml-org/llama.cpp
-cd llama.cpp
-# Use 120 for RTX 50-series (Blackwell) or 89 for RTX 40-series (Ada Lovelace)
-cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=120
-cmake --build build --config Release -j
-```
-
-Serve with 8-bit quantized KV cache:
+**llama.cpp server** with a quantized KV cache:
 
 ```bash
 ./build/bin/llama-server \
   -m ./llama4-scout-Q4_K_M.gguf \
   -ngl 99 \
+  -fa on \
   --cache-type-k q8_0 \
   --cache-type-v q8_0 \
   -c 16384 \
-  --host 127.0.0.1 \
-  --port 8080
+  --host 127.0.0.1 --port 8080
 ```
 
-`-ngl 99` offloads all layers to GPU, while `--cache-type-k q8_0 --cache-type-v q8_0` halves context memory footprint.
+`-ngl 99` asks llama.cpp to put as many layers as possible on the GPU; on a card smaller than the model, the rest stays on the CPU.
 
-## **Frequently Asked Questions**
+## What I'd run on an 8 GB laptop instead
 
-**How much VRAM do I need to run Llama 4 Scout locally?**
-At Q4_K_M quantization, Scout requires roughly 65GB of memory. On a dedicated GPU setup, dual 32GB/24GB cards or a 64GB+ Apple Silicon workstation provide comfortable execution with room for a 16k context window.
+On an 8 GB GPU, pick a model whose 4-bit file is roughly **5–6 GB or smaller**, so the whole model plus a 4K–8K context stays on the GPU. Dense models in the 7B–9B range at Q4 fit that budget, and small language models fit easily. Our guide to [small language models on edge devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization) covers good options. Check the size on each model's Ollama page before downloading, then confirm `100% GPU` with `ollama ps`.
 
-**Can I run Llama 4 on a single RTX 4090?**
-Yes, but with CPU layer offloading. The model weights will split between 24GB of VRAM and system RAM over PCIe. Token generation will be slower (approx 8–15 tokens/sec) compared to fully resident VRAM.
+## Frequently asked questions
 
-**Does FlashAttention 3 reduce KV cache VRAM?**
-No. FlashAttention 3 speeds up computation and reduces bandwidth bottlenecks; it does not shrink the stored KV tensor footprint. To shrink KV cache memory, use 8-bit or 4-bit KV cache quantization.
+### How much VRAM does Llama 4 Scout need?
+Ollama's default 4-bit Scout download is 67 GB, plus memory for the KV cache. Meta says it fits on a single 80 GB H100 with Int4 quantization.
+
+### Can I run Llama 4 on a single RTX 4090?
+Only with most of the model offloaded to system RAM, which makes it slow. The 4090's 24 GB holds roughly a third of Scout's 4-bit weights.
+
+### Does FlashAttention-3 help on RTX GPUs?
+FlashAttention-3 targets Hopper GPUs such as the H100. On RTX cards, use the flash-attention support built into llama.cpp and Ollama, plus KV cache quantization, to save memory.
+
+## Sources
+
+- Meta AI: [The Llama 4 herd](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) (parameters, experts, context windows, H100 fit)
+- Ollama: [llama4 model tags and sizes](https://ollama.com/library/llama4/tags)
+- Ollama Docs: [Context length](https://docs.ollama.com/context-length) and [FAQ: KV cache quantization, Flash Attention, ollama ps](https://docs.ollama.com/faq)
+- llama.cpp: [server options](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
+- Dao-AILab: [FlashAttention repository](https://github.com/Dao-AILab/flash-attention)
+
+Related on VNHAX: [How to increase num_ctx in Ollama](/blog/how-to-increase-num-ctx-in-modelfile) · [Small language models on edge devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization) · [Open-source AI tools we reviewed](/ai/ai-tools)
