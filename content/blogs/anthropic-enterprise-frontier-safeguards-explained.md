@@ -3,10 +3,9 @@ title: "Anthropic Enterprise Frontier Safeguards: RSP, ASL-4 & Constitutional AI
 description: "Deep dive into Anthropic Enterprise Frontier Safeguards: Responsible Scaling Policy (RSP), ASL-3 security barriers, prompt injection mitigation, and SOC2/HIPAA compliance."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude", "responsible-scaling-policy", "constitutional-ai", "enterprise-compliance", "ai-safety"]
-readTime: "9 min read"
 ---
 
 > **Executive overview:** "Enterprise Frontier Safeguards" refers to the layered security architecture protecting Claude in enterprise deployments: the Responsible Scaling Policy (RSP) with its AI Safety Level (ASL) protocols, Constitutional AI training frameworks, dedicated Constitutional Classifiers, and enterprise compliance certifications (SOC 2 Type II, ISO 27001, and HIPAA readiness). Current Claude models are deployed under verified ASL-3 protections.

@@ -3,10 +3,9 @@ title: "Advanced Production RAG in 2026: Hybrid Search, Cross-Encoder Reranking,
 description: "How to build enterprise RAG pipelines that solve hallucination and retrieval misses using BM25 + dense hybrid search, reciprocal rank fusion, cross-encoders, and Ragas CI gates."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "RAG Architecture"
 tags: ["rag", "hybrid-search", "cross-encoders", "reranking", "bm25", "ragas", "evaluation-pipelines"]
-readTime: "12 min read"
 ---
 
 The customer support escalation that broke our confidence in naive RAG wasn't an AI hallucination. It was the AI stating: *"I couldn't find any information regarding refund eligibility for this case."*

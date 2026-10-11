@@ -3,10 +3,9 @@ title: "Meta Enterprise Platform Explained: Private Llama Clusters, WhatsApp Clo
 description: "Comprehensive guide to Meta Enterprise Platform: on-premise private Llama 4 deployments, high-throughput WhatsApp Cloud API, SOC2 compliance, and enterprise SLAs."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "llama", "whatsapp-cloud-api", "enterprise-ai", "security", "cloud-infrastructure"]
-readTime: "8 min read"
 ---
 
 Picture this. It is 4 p.m. on a Thursday, and your bank's compliance lead pings you: "Can we use an AI assistant on customer chats, yes or no? And please tell me customer records never leave our private cloud."

@@ -3,10 +3,9 @@ title: "How to Use GitHub Copilot for Automated Code Reviews & PR Approvals"
 description: "Step-by-step tutorial on configuring GitHub Copilot for pull request code reviews: automated diff audits, inline security analysis, and branch protection rules."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "code-review", "pull-requests", "ci-cd", "devops"]
-readTime: "7 min read"
 ---
 
 > **Quick workflow:** GitHub Copilot code review inspects the unified Git diff of pull requests, posts contextual inline comments identifying subtle logic flaws and security exposures, and offers single-click commit suggestions. It serves best as an automated initial reviewer combined with mandatory CI status checks and final human approval gates.

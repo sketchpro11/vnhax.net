@@ -3,10 +3,9 @@ title: "Claude Sonnet 5.5 vs. Sonnet 5: Speed, Context Recall & Coding Benchmark
 description: "Claude Sonnet 5.5 vs Sonnet 5 compared: speed, 1M context recall, coding benchmarks, pricing, tool-calling changes, and a safe step-by-step migration guide."
 date: "2026-10-06"
 updatedAt: "2026-10-06"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Developer Tools & Models"
 tags: ["anthropic", "claude", "claude-sonnet-5-5", "claude-sonnet-5", "anthropic-updates", "coding-agents", "benchmarks"]
-readTime: "7 min read"
 ---
 
 Picture this. It's late on a Friday, your agent pipeline has been running happily on Sonnet 5 for three months, and then a changelog lands in your feed: a new Sonnet, same price, faster, better at agentic coding. You swap one string in your config, deploy, and go to dinner.

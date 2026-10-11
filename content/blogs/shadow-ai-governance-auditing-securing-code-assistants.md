@@ -3,10 +3,9 @@ title: "Shadow AI Governance in 2026: Auditing and Securing Unsanctioned AI Code
 description: "A comprehensive security architecture for detecting, auditing, and governing unsanctioned AI coding assistants, IDE extensions, and API tokens across distributed engineering teams."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Security & Governance"
 tags: ["shadow-ai", "cybersecurity", "code-governance", "dlp", "soc2", "enterprise-ai", "developer-tools"]
-readTime: "10 min read"
 ---
 
 The incident wasn't a malicious external hack. That is what made it unsettling.

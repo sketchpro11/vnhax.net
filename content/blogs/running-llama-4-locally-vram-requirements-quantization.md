@@ -3,10 +3,9 @@ title: "Running Llama 4 Locally: VRAM Requirements, Flash-Attention 3, and GGUF 
 description: "Complete hardware analysis and VRAM benchmark matrix for running Meta's Llama 4 locally across RTX 4090, RTX 5090, and Apple Silicon M-series hardware."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Local AI & Runtimes"
 tags: ["llama-4", "vram-requirements", "quantization", "flash-attention-3", "rtx-4090", "rtx-5090", "local-llm", "llama-cpp"]
-readTime: "9 min read"
 ---
 
 The first time I tried to run Llama 4 Scout on my RTX 4090, it looked like it should work. 24GB card, roughly 65GB of Q4_K_M weights, a lot of optimism. It didn't work.

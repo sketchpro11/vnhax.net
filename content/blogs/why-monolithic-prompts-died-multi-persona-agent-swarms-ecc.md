@@ -3,10 +3,9 @@ title: "Why Monolithic Prompts Died in 2026: Architecting Multi-Persona Agent Sw
 description: "Why monolithic prompts suffer from instruction dilution and persona conflict in 2026, and how to architect multi-persona agent swarms with Everything Claude Code."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Agent Architecture"
 tags: ["agent-swarms", "everything-claude-code", "multi-persona", "claude-code", "software-engineering", "ecc", "ai-agents"]
-readTime: "11 min read"
 ---
 
 The task was a payment service refactor. Move from one validation approach to another, across about forty files, without breaking the test suite.

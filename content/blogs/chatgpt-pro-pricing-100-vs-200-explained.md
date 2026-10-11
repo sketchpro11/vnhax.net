@@ -3,10 +3,9 @@ title: "ChatGPT Pro Pricing in 2026: The $100 and $200 Tiers, Features & Value B
 description: "Comprehensive guide to ChatGPT Pro pricing: $100 vs $200 tiers, 5x to 20x usage limits, Codex workflows, and how to determine return on investment."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "chatgpt-pro", "pricing-tiers", "codex", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Quick reality check:** Rumors of a flat "$500 ChatGPT plan" are inaccurate. OpenAI's individual subscription tiers center on **Plus ($20/mo)**, **Pro Tier 1 ($100/mo, ~5x Plus usage)**, and **Pro Tier 2 ($200/mo, ~20x Plus usage)**. Corporate teams requiring dedicated hardware isolation or custom SLAs purchase through negotiated Business and Enterprise agreements. Always verify current quotas inside your OpenAI billing console.

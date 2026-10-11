@@ -3,10 +3,9 @@ title: "Meta Muse AI Agent Explained: How to Build, Automate & Deploy Across Met
 description: "Complete guide to Meta Muse AI Agent: architecture, Muse Spark model, connector ecosystem, WhatsApp workflows, and essential security guardrails."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "meta-muse", "ai-agents", "whatsapp-automation", "social-commerce", "ai-models"]
-readTime: "8 min read"
 ---
 
 Imagine running a growing online brand. Every morning starts with a mountain of unread Instagram direct messages, dozens of price checks on WhatsApp, and the looming deadline of planning next week's advertising campaigns.

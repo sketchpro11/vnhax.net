@@ -3,10 +3,9 @@ title: "Gemini 4 Argon Explained: DeepMind's Frontier Features & Benchmark Break
 description: "Gemini 4 Argon explained: Google DeepMind's features, 1M context architecture, benchmarks vs GPT-6 Astra and Claude Opus 5.5, and pricing breakdown."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "google-deepmind", "gemini-4-argon", "benchmarks", "multimodal-ai"]
-readTime: "8 min read"
 ---
 
 You see the headline, get excited, and open your API console to try the new model. You type the model ID, hit send, and get back a `404 NOT_FOUND`.

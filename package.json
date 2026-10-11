@@ -5,6 +5,7 @@
   "description": "vnhax - Next.js App Router",
   "scripts": {
     "dev": "next dev -p 3000",
+    "prebuild": "node scripts/sync-repo-stats.mjs",
     "build": "next build",
     "start": "next start -p 3000",
     "indexnow": "node scripts/submit-indexnow.mjs"

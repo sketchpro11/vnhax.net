@@ -10,7 +10,7 @@ import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Trending GitHub Repos & Toolkits',
   description:
-    'Curated open-source runtimes, libraries, and agent frameworks with interactive architecture breakdowns, benchmarks, and integration guides. Verified on October 4, 2026.',
+    'Curated open-source runtimes, libraries, and agent frameworks with interactive architecture breakdowns, benchmarks, and integration guides. Star counts refresh from GitHub on every build.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/repos`,
   },
@@ -105,9 +105,9 @@ export default function ReposIndexPage() {
             }}
           >
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Trending Today</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>Top {repos.length} Repos</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Verified Leaderboard</div>
+              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Reviewed</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>{repos.length} Repos</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Independent write-ups</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Focus Areas</div>
@@ -115,9 +115,9 @@ export default function ReposIndexPage() {
               <div style={{ fontSize: '12px', color: '#94a3b8' }}>Token reduction, UI linters, Effect</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Verification</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#16a34a', marginTop: '4px' }}>100% Tested</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Architecture &amp; CLI validated</div>
+              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Live Data</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#16a34a', marginTop: '4px' }}>GitHub API</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Stars, forks &amp; license</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>License</div>
@@ -129,7 +129,7 @@ export default function ReposIndexPage() {
           {/* Repos Grid */}
           <section className="topic-section" aria-labelledby="repos-heading">
             <h2 id="repos-heading" className="topic-section-title" style={{ marginBottom: '20px' }}>
-              Verified Repository Teardowns
+              Repository Reviews
             </h2>
 
             <div
@@ -168,7 +168,7 @@ export default function ReposIndexPage() {
                           borderRadius: '99px',
                         }}
                       >
-                        {repo.trendRanking}
+                        {repo.license}
                       </span>
                       <span
                         style={{
@@ -317,10 +317,10 @@ export default function ReposIndexPage() {
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1.5px solid #2563eb', background: '#0f172a' }}>
                 <Image src="/icon.png" alt="VNHAX" width={32} height={32} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <h2 style={{ margin: 0, fontSize: '20px' }}>Independent Open-Source Verification</h2>
+              <h2 style={{ margin: 0, fontSize: '20px' }}>How We Review Repositories</h2>
             </div>
             <p>
-              Every repository indexed on VNHAX undergoes rigorous technical auditing by the <strong>VNHAX Engineering Team</strong>. We assess commit activity, license permissiveness, security vulnerability disclosures, and performance benchmarks to ensure developers make informed architectural decisions.
+              Each write-up is based on the project&apos;s own README, documentation and source code on GitHub, plus our notes on where it fits in a real workflow. Benchmark figures quoted on these pages come from the project authors unless we say otherwise. VNHAX is not affiliated with any of these projects &mdash; always check the repository itself before adopting it.
             </p>
           </section>
         </div>

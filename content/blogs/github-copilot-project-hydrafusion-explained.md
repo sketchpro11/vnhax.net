@@ -3,10 +3,9 @@ title: "Inside GitHub Copilot Project HydraFusion: Multi-Model Ensemble Code Syn
 description: "Deep dive into GitHub Copilot Project HydraFusion: dynamic multi-model routing, ensemble cascade workflows, critique verification loops, and latency optimization."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "hydrafusion", "multi-model-ai", "code-synthesis", "developer-tools"]
-readTime: "8 min read"
 ---
 
 > **Architecture briefing:** Announced as a developer research preview in September 2026, **Project HydraFusion** evolves GitHub Copilot beyond single-model selection. Instead of merely choosing which model answers a prompt, HydraFusion selects the optimal **execution workflow**—dynamically orchestrating single fast passes, cascading verification chains, or multi-model critique ensembles across frontier architectures.

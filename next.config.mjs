@@ -60,7 +60,12 @@ const nextConfig = {
       },
       {
         source: '/component-template',
-        destination: '/ui-components/component-page-starter',
+        destination: '/ui-components',
+        permanent: true,
+      },
+      {
+        source: '/ui-components/component-page-starter',
+        destination: '/ui-components',
         permanent: true,
       },
       {

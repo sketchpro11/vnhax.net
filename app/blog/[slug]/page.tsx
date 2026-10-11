@@ -10,7 +10,7 @@ import CodeBlockEnhancer from '@/components/CodeBlockEnhancer';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import SlideDeck from '@/components/SlideDeck';
 import StickyArticleBar from '@/components/StickyArticleBar';
-import { getBlogPost, getAllBlogSlugs, getAllBlogs } from '@/lib/blog';
+import { getBlogPost, getAllBlogSlugs, getAllBlogs, SITE_AUTHOR } from '@/lib/blog';
 import { BRAND_CONFIG, getBreadcrumbSchema, shortenSeoTitle } from '@/lib/seo';
 
 interface BlogPostPageProps {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.frontmatter.date,
       modifiedTime: post.frontmatter.updatedAt || post.frontmatter.date,
-      authors: [post.frontmatter.author || 'VNHAX Editorial'],
+      authors: [post.frontmatter.author || SITE_AUTHOR],
       tags: post.frontmatter.tags,
       images: [
         {
@@ -103,9 +103,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     datePublished: post.frontmatter.date,
     dateModified: post.frontmatter.updatedAt || post.frontmatter.date,
     author: {
-      '@type': 'Organization',
-      name: post.frontmatter.author || BRAND_CONFIG.name,
-      url: BRAND_CONFIG.siteUrl,
+      '@type': 'Person',
+      name: post.frontmatter.author || SITE_AUTHOR,
+      url: 'https://www.umarhashmi.dev',
+      sameAs: BRAND_CONFIG.socialLinks.map((l) => l.url),
     },
     publisher: {
       '@type': 'Organization',
@@ -164,7 +165,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="author-avatar" aria-hidden="true" style={{ overflow: 'hidden', padding: 0, background: '#0f172a', border: '1.5px solid #3b82f6' }}>
                     <Image
                       src="/icon.png"
-                      alt={post.frontmatter.author || 'VNHAX Engineering Team'}
+                      alt={post.frontmatter.author || SITE_AUTHOR}
                       width={44}
                       height={44}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -172,12 +173,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </div>
                   <div className="author-info">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span className="author-name">{post.frontmatter.author || 'VNHAX Engineering Team'}</span>
-                      <span title="Verified Publisher" style={{ display: 'inline-flex', alignItems: 'center', color: '#2563eb' }}>
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                      </span>
+                      <span className="author-name">{post.frontmatter.author || SITE_AUTHOR}</span>
                     </div>
                     <div className="author-meta">
                       <time dateTime={post.frontmatter.date}>{formattedDate}</time>
@@ -261,7 +257,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               >
                 <Image
                   src="/icon.png"
-                  alt={post.frontmatter.author || 'VNHAX Engineering Team'}
+                  alt={post.frontmatter.author || SITE_AUTHOR}
                   width={56}
                   height={56}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -270,29 +266,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
                   <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 700, color: '#0f172a' }}>
-                    {post.frontmatter.author || 'VNHAX Engineering Team'}
+                    {post.frontmatter.author || SITE_AUTHOR}
                   </h3>
-                  <span
-                    style={{
-                      fontSize: '11.5px',
-                      background: '#eff6ff',
-                      color: '#2563eb',
-                      padding: '2px 8px',
-                      borderRadius: '12px',
-                      fontWeight: 600,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    Verified Author
-                  </span>
                 </div>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
-                  The <strong>{post.frontmatter.author || 'VNHAX Engineering Team'}</strong> conducts empirical testing, hardware benchmarking, and architectural auditing across local LLMs, AI coding harnesses, and modern cloud infrastructure. All technical guides adhere to rigorous Google AdSense E-E-A-T standards with reproducible configurations and verified upstream documentation.
+                  Full-stack web developer since 2018, building AI tools and automations since 2022. I research each article from official announcements and documentation and update it when things change. Spotted a mistake? <a href="/contact">Let me know</a>.
                 </p>
               </div>
             </div>

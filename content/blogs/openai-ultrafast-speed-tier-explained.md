@@ -3,10 +3,9 @@ title: "OpenAI Ultrafast Speed Tier: 300+ Tokens/sec Low-Latency Inference Expla
 description: "Technical teardown of OpenAI Ultrafast tier: how to enable via service_tier parameter, speculative decoding hardware, real-time voice latency, and pricing."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "ultrafast-tier", "speculative-decoding", "low-latency-inference", "api-infrastructure", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Operational summary:** The **Ultrafast** speed tier is OpenAI's dedicated low-latency API routing path. Activated by specifying `"service_tier": "ultrafast"` in standard API payload headers on supported models, it delivers inference output speeds exceeding 300 to 750 tokens per second—reducing Time-to-First-Token (TTFT) and accelerating chained multi-agent tool loops.

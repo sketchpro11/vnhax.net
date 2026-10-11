@@ -3,10 +3,9 @@ title: "Grok 4.7 API Pricing Guide: Token Rates, Prompt Caching & Rate Limits"
 description: "Comprehensive breakdown of xAI Grok 4.7 API pricing: cost per 1M input/output tokens, 75% prompt caching discounts, 500K context limits, and rate tier rules."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "grok-4-7", "grok-api", "xai-pricing", "prompt-caching", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Pricing summary:** Grok 4.7 on the official xAI API operates under flat baseline rates of **$2.00 per 1M input tokens** and **$6.00 per 1M output tokens** for standard requests. Cached context reads receive up to a 75% reduction (~$0.50/1M tokens). Requests exceeding 200K tokens shift to tiered high-context billing (~$4.00 in / $12.00 out). The maximum context window is 500K tokens.

@@ -3,10 +3,9 @@ title: "Llama 4 Enterprise Fine-Tuning & Quantization: On-Premise Deployment Gui
 description: "Production guide to fine-tuning and deploying Meta's Llama 4 on-premise: QLoRA parameter-efficient training, FP8 & 4-bit AWQ quantization, and vLLM serving."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "llama-4", "fine-tuning", "quantization", "vllm", "enterprise-ai", "open-source"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** Deploying Meta's open-weights **Llama 4** within private enterprise infrastructure guarantees complete data sovereignty, zero external API egress costs, and microsecond network latencies. By leveraging **QLoRA parameter-efficient fine-tuning**, **FP8 and 4-bit AWQ quantization**, and high-throughput **vLLM inference engines**, organizations can run enterprise-grade models on cost-effective on-premise hardware clusters.

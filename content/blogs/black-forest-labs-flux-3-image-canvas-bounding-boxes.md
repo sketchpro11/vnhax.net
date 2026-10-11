@@ -3,10 +3,9 @@ title: "Black Forest Labs Flux 3 Image: Canvas Bounding Boxes, Multi-Reference &
 description: "Flux 3 Image from Black Forest Labs brings canvas bounding boxes, up to 10 reference images, and text-based editing to generative AI. Complete hands-on teardown."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "UI Components & Design"
 tags: ["ui", "ui-components", "canvas-design", "bounding-boxes", "flux-3", "layout-composition", "interface-design"]
-readTime: "9 min read"
 ---
 
 You know that moment when you ask an AI image tool for a poster, and the headline lands in the wrong corner, the product floats where the logo should be, and the "perfect" result needs ten more tries? Most of us who work with AI images have been there.

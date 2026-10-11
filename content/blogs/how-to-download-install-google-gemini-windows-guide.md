@@ -3,10 +3,9 @@ title: "How to Download & Install Google Gemini for Windows 11/10: Full Setup Gu
 description: "Step-by-step tutorial to download, install, and configure the official Google Gemini desktop app on Windows 11 and 10 with global hotkeys and Workspace integration."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "gemini-windows", "desktop-apps", "windows-11", "google-gemini-pc", "productivity-tools"]
-readTime: "7 min read"
 ---
 
 > **Executive summary:** Google has launched the official native **Gemini desktop application for Windows 11 and Windows 10**. Activated via a global **Alt + Space** hotkey, the desktop client brings multimodal intelligence, Google Workspace integration (Docs, Drive, Gmail), and agentic workflows via Gemini Spark directly to desktop PCs.

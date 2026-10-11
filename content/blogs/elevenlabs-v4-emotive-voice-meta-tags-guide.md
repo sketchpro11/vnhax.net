@@ -3,10 +3,9 @@ title: "ElevenLabs V4 Review: Meta-Tags, Emotive AI Voice & Free Plan Guide"
 description: "ElevenLabs V4 is billed as the company's most emotive text-to-speech model. Learn how inline meta-tags work, what the free plan gives you, and practical workflows."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Developer Tools & Repos"
 tags: ["developer", "tools", "voice-api", "elevenlabs-v4", "xml-tags", "code-integration", "developer-workflows"]
-readTime: "9 min read"
 ---
 
 Picture this. It's late, you've finished a script for a short horror story video, and you paste it into a text-to-speech tool. You hit play. The voice reads "Something was standing at the end of the hallway" in the same cheerful tone it would use for a weather report.

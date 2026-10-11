@@ -3,10 +3,9 @@ title: "NVIDIA PixelUMM Explained: Pixel-Space Image and Video AI Without a VAE"
 description: "NVIDIA's PixelUMM generates images and video directly in pixel space with no latent space or VAE decoder. Technical deep dive into this decoder-only Transformer."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Tech Platforms & Infrastructure"
 tags: ["technology", "platforms", "infrastructure", "nvidia", "pixel-space", "hardware-compute", "cloud-platforms"]
-readTime: "9 min read"
 ---
 
 Every few weeks a new AI model lands, and the first thing I do is look at the demo clips. Pretty, polished, shareable. Then I close the tab and forget about it.

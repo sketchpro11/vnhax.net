@@ -3,10 +3,9 @@ title: "Vector Database Cost Optimization: Scaling Pinecone, Qdrant, and Chroma 
 description: "Learn how to slash vector database and embedding API costs by up to 75% using scalar quantization, Matryoshka dimensionality reduction, and two-stage product quantization."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Cloud Architecture"
 tags: ["vector-database", "pinecone", "qdrant", "chroma", "cost-optimization", "embeddings", "quantization"]
-readTime: "11 min read"
 ---
 
 The first thing I did when our vector bill crossed $8,000 a month was look at the vector database.

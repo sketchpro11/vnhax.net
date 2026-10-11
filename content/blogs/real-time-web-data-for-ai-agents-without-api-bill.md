@@ -3,10 +3,9 @@ title: "Real-Time Web Data for AI Agents Without the API Bill: RSS, Free Tiers, 
 description: "How to build affordable real-time data pipelines for AI agents using RSS, official free tiers, conditional HTTP caching, and smart sitemap ingestion."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "AI Workflows & Data"
 tags: ["ai-agents", "web-retrieval", "rss-feeds", "caching", "agent-reach", "api-costs", "mcp-server"]
-readTime: "8 min read"
 ---
 
 The invoice that started this was **$340 for a single month**. One agent, one data pipeline, and an API bill I couldn't explain to my manager because I didn't understand where the traffic was going.

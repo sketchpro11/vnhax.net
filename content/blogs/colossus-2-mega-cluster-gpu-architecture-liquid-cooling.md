@@ -3,10 +3,9 @@ title: "Colossus 2 Mega-Cluster: 200k+ GPU Architecture, Power Delivery & Liquid
 description: "Engineering breakdown of xAI's Colossus 2 datacenter in Memphis: scaling to 200,000+ Nvidia Blackwell GPUs, gigawatt power substations, direct-to-chip liquid cooling, and optical network fabrics."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "colossus-supercluster", "gpu-clusters", "datacenter-engineering", "grok-5", "liquid-cooling"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** **Colossus 2** is xAI's expanded AI training supercluster located in Memphis, Tennessee. Scaling from the initial 100,000 Nvidia H100 deployment to **over 200,000 GPUs** incorporating next-generation Nvidia Blackwell B200 silicon, Colossus 2 represents one of the largest concentrated compute clusters on Earth, powered by multi-hundred-megawatt utility feeds, direct-to-chip liquid cooling manifolds, and single-hop optical InfiniBand fabrics.

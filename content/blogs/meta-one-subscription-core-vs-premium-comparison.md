@@ -3,10 +3,9 @@ title: "Meta One Subscription Breakdown: Core vs. Premium Features, Tools & Pric
 description: "Detailed comparison of Meta One subscription plans: Core vs. Premium tiers, Meta Verified badges, Meta Muse AI limits, and creator tools."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "meta-one", "meta-verified", "creator-tools", "pricing-tiers", "ai-models"]
-readTime: "7 min read"
 ---
 
 A fellow creator recently asked a practical question: *"Meta is showing six different subscription tiers in my app settings. Which plan do I actually need, and does the entry tier include the blue verification check?"*

@@ -3,10 +3,9 @@ title: "Creative Canvas Face-Off: Meta Muse vs. Dots vs. Spark Canvas Workflows"
 description: "Compare the leading creative agent workspaces: Meta Muse for social commerce, Dots for developer graphs, and Spark for enterprise collaboration."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "meta-muse", "ai-agents", "canvas-workflows", "social-commerce", "ecommerce"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** Frontier AI vendors have evolved beyond single-prompt chatbots into interactive agent canvases. **Meta Muse** leads the social commerce and messaging domain across Instagram and WhatsApp; **Dots** targets persistent developer orchestration; and **Spark** integrates directly into office documents. Choosing the right canvas depends on your primary customer channels and operational tech stack.

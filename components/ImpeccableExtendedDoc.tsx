@@ -255,7 +255,7 @@ export default function ImpeccableExtendedDoc() {
       {/* Top Badges Bar */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px', alignItems: 'center' }}>
         <span style={{ background: '#7c3aed', color: '#ffffff', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '6px', letterSpacing: '0.04em' }}>
-          #2 TRENDING IN FRONTEND DESIGN
+          FRONTEND DESIGN
         </span>
         <span style={{ background: '#0284c7', color: '#ffffff', fontSize: '11px', fontWeight: 600, padding: '4px 10px', borderRadius: '6px' }}>
           61 DETECTORS

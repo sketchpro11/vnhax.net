@@ -3,10 +3,9 @@ title: "How to Cut AI Coding Agent API Costs by 60% with Prompt Optimization & T
 description: "A battle-tested developer guide to cutting AI coding agent API bills by 60%. Covers context window budgeting, prompt streamlining, and lightweight token proxies like Caveman."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Token Optimization"
 tags: ["token-optimization", "claude-code", "caveman", "api-cost-reduction", "llm-proxy", "prompt-engineering", "cost-management"]
-readTime: "9 min read"
 ---
 
 Back in March, my API bill for coding agents hit **$1,840 in a single month**. Four developers, one codebase, and Claude Code running basically non-stop. I remember staring at the invoice thinking there had to be a bug, because nobody on the team was doing anything that felt like it justified that number. Turns out there was no bug. There was just nobody watching what the agents were actually saying.

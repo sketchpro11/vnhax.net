@@ -3,10 +3,9 @@ title: "ByteDance PDMD: Projected Distribution Matching Distillation for Fast 4-
 description: "PDMD from ByteDance and UC San Diego cuts video generation from 50 steps to 4 with a one-line math projection that removes critic errors. Teardown and benchmarks."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "AI & Models"
 tags: ["bytedance", "pdmd", "video-generation", "diffusion-distillation", "ai-models", "open-source"]
-readTime: "8 min read"
 ---
 
 **Quick answer:** PDMD (Projected Distribution Matching Distillation) is a new method from ByteDance and UC San Diego that lets a video model generate in 4 steps instead of the usual 50. It works by adding one line of math that removes the "critic's mistakes" from the training signal. On the team's own tests, the 4-step model scored higher than other 4-step methods, and even higher than the 50-step teacher on the overall video score.

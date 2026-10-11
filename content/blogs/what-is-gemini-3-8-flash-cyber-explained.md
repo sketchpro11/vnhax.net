@@ -3,10 +3,9 @@ title: "What Is Gemini 3.8 Flash Cyber? Google's Real-Time Threat Intelligence M
 description: "Comprehensive guide to Gemini 3.8 Flash Cyber: Google Fairwind program, automated vulnerability remediation, CyberGym benchmarks, and SOC defense workflows."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "gemini-cyber", "threat-intelligence", "mandiant", "security-ai", "cybersecurity"]
-readTime: "8 min read"
 ---
 
 > **Quick briefing:** Announced in September 2026 alongside standard Gemini 3.8 Flash, **Gemini 3.8 Flash Cyber** is Google's specialized cybersecurity variant engineered for autonomous vulnerability discovery and automated code remediation. Access is strictly partitioned through Google's **Fairwind Program** for critical infrastructure operators, national cyber defense agencies, and verified enterprise platform maintainers.

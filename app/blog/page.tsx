@@ -163,7 +163,7 @@ export default async function BlogIndexPage() {
                     />
                   </div>
                   <span style={{ fontSize: '12.5px', fontWeight: 600, color: '#334155' }}>
-                    {post.frontmatter.author || 'VNHAX Engineering Team'}
+                    {post.frontmatter.author || 'Umar Hashmi'}
                   </span>
                 </div>
 

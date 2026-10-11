@@ -3,10 +3,9 @@ title: "Meta Muse for Small Business: Turn WhatsApp & Instagram into 24/7 Sales 
 description: "How small businesses can scale sales with Meta Muse and Meta Business Agent: automated WhatsApp replies, organized Instagram DMs, and CRM integrations."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Meta & Llama Ecosystem"
 tags: ["meta", "meta-muse", "whatsapp-business", "instagram-sales", "ecommerce", "ai-agents"]
-readTime: "7 min read"
 ---
 
 It is 1:40 a.m. A customer messages your online shop on WhatsApp: *"Is this linen jacket available in medium? How many days for express delivery?"*

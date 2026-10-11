@@ -3,10 +3,9 @@ title: "Grok 4.7 vs. Grok 4.6: Colossus Cluster Scaling, Coding & Real-Time Reas
 description: "Technical benchmark comparison between Grok 4.7 and Grok 4.6: Colossus cluster training scale, real-time X telemetry, coding accuracy, and latency."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "grok-4-7", "grok-4-6", "colossus-supercluster", "model-benchmarks", "coding-agents"]
-readTime: "8 min read"
 ---
 
 You've got a coding agent running happily on one model. Then a new version drops, your timeline fills up with "switch immediately," and a nagging voice asks: *is it actually better for my work, or just louder?*

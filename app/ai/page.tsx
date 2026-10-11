@@ -119,7 +119,7 @@ export default async function AIPage() {
               Open-source AI &amp; agent frameworks
             </h2>
             <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 20px' }}>
-              Curated local LLM agents, token optimization proxies, and retrieval backends with verified architecture teardowns.
+              Curated local LLM agents, token optimization proxies, and retrieval backends with plain-English architecture write-ups.
             </p>
 
             <div className="repo-liquid-grid" style={{ margin: 0 }}>

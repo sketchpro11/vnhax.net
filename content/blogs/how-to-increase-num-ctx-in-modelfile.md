@@ -3,10 +3,9 @@ title: "How to Increase num_ctx in Ollama Modelfiles for 32k+ Context Windows"
 description: "A comprehensive developer guide to configuring num_ctx in Ollama Modelfiles, calculating KV cache VRAM overhead, and avoiding out-of-memory errors on local inference setups."
 date: "2026-10-04"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "AI Tools & Runtimes"
 tags: ["ollama", "local-llm", "context-window", "vram", "deepseek-r1", "llama-3"]
-readTime: "7 min read"
 ---
 
 ## Understanding the Default Context Window in Ollama

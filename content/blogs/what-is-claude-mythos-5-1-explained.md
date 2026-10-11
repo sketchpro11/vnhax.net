@@ -3,10 +3,9 @@ title: "What Is Claude Mythos 5.1? Anthropic's Autonomous Scientific Discovery E
 description: "Everything you need to know about Claude Mythos 5.1: Anthropic's frontier model built for formal mathematical verification, biophysics, and deep scientific research."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude", "claude-mythos", "frontier-ai", "formal-verification", "ai-research"]
-readTime: "8 min read"
 ---
 
 > **Summary:** Claude Mythos 5.1 is Anthropic's restricted frontier model released alongside Claude Fable 5.1 on September 1, 2026. While Fable 5.1 is generally available to commercial developers, Mythos 5.1 provides specialized, vetted access with adjusted safeguards for accredited cybersecurity defenders and computational life sciences researchers.

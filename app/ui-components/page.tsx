@@ -148,12 +148,6 @@ export default async function UIComponentsPage() {
                   Select any component to inspect full source code, installation steps, and live interactive sandbox.
                 </p>
               </div>
-              <Link
-                href="/ui-components/component-page-starter"
-                style={{ fontSize: '13px', fontWeight: 600, color: '#2563eb' }}
-              >
-                Inspect Layout Starter →
-              </Link>
             </div>
 
             <div
@@ -324,7 +318,7 @@ export default async function UIComponentsPage() {
                   </p>
                 </div>
                 <div className="editorial-column-item">
-                  <h4>♿ Certified WCAG AA Contrast</h4>
+                  <h4>♿ WCAG AA Contrast</h4>
                   <p>
                     All semantic surfaces and text tokens are pre-calculated to exceed WCAG 2.1 AA 4.5:1 contrast requirements, ensuring full legibility across light and dark modes.
                   </p>

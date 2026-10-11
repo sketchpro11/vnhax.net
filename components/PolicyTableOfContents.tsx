@@ -98,7 +98,7 @@ export default function PolicyTableOfContents() {
         {/* Quick Compliance Snapshot Widget */}
         <div className="sidebar-widget policy-snapshot-widget">
           <div className="sidebar-widget-header">
-            <span className="sidebar-kicker">Compliance Snapshot</span>
+            <span className="sidebar-kicker">Summary</span>
             <h3>Key Privacy Highlights</h3>
           </div>
           <ul className="policy-snapshot-list">
@@ -111,25 +111,25 @@ export default function PolicyTableOfContents() {
             <li>
               <span className="snapshot-icon">🍪</span>
               <div>
-                <strong>Google DART Opt-Out:</strong> Direct links provided to disable personalized ads.
+                <strong>Ad Opt-Out:</strong> Links to turn off personalised ads from Google and other vendors.
               </div>
             </li>
             <li>
               <span className="snapshot-icon">⚖️</span>
               <div>
-                <strong>GDPR &amp; CCPA Rights:</strong> Full access, correction, and deletion mechanisms.
+                <strong>Your Rights:</strong> Ask us to access, correct or delete your data.
               </div>
             </li>
             <li>
               <span className="snapshot-icon">👶</span>
               <div>
-                <strong>COPPA Safe:</strong> Zero knowingly collected data from children under 13.
+                <strong>Children:</strong> We do not knowingly collect data from children under 13.
               </div>
             </li>
             <li>
               <span className="snapshot-icon">🔒</span>
               <div>
-                <strong>Encrypted:</strong> End-to-end TLS 1.3 encryption across all traffic.
+                <strong>Encrypted:</strong> The whole site is served over HTTPS.
               </div>
             </li>
           </ul>
@@ -138,11 +138,11 @@ export default function PolicyTableOfContents() {
         {/* Official Privacy Officer Contact Widget */}
         <div className="sidebar-widget policy-contact-widget">
           <div className="sidebar-widget-header">
-            <span className="sidebar-kicker">Privacy Desk</span>
+            <span className="sidebar-kicker">Privacy</span>
             <h3>Questions or Data Requests?</h3>
           </div>
           <p className="policy-contact-desc">
-            Direct your GDPR/CCPA inquiries, data export requests, or policy questions to our data desk:
+            Questions about your data or this policy? Email:
           </p>
           <a href="mailto:privacy@vnhax.net" className="policy-email-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -156,7 +156,7 @@ export default function PolicyTableOfContents() {
               Terms of Service &amp; Disclaimer →
             </Link>
             <Link href="/contact" className="policy-text-link">
-              Web Contact Channel →
+              Contact Form →
             </Link>
           </div>
         </div>

@@ -55,14 +55,6 @@ export const SEARCH_INDEX: SearchItem[] = [
     url: '/ui-components',
     tags: ['ui', 'components', 'css', 'design system', 'buttons', 'cards'],
   },
-  {
-    id: 'hub-ui-starter',
-    title: 'UI Component Page Starter',
-    category: 'Hub',
-    description: 'Clean starter blueprint and template for designing accessible UI components.',
-    url: '/ui-components/component-page-starter',
-    tags: ['template', 'blueprint', 'starter', 'ui'],
-  },
   // UI Components
   {
     id: 'comp-tweet-card',
@@ -213,7 +205,7 @@ export const SEARCH_INDEX: SearchItem[] = [
     id: 'hub-about',
     title: 'About VNHAX',
     category: 'Legal',
-    description: 'Mission statement, editorial background, and the engineering team behind VNHAX.',
+    description: 'Who runs VNHAX, how articles are researched, and how to send corrections.',
     url: '/about',
     tags: ['about', 'team', 'mission', 'company'],
   },

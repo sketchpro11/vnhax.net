@@ -3,10 +3,9 @@ title: "GitHub Copilot Local Sandboxing: Containerized Workspaces & Host Securit
 description: "Learn how GitHub Copilot local sandboxing restricts terminal commands, executes tests safely, and protects host credentials without system risk."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "sandboxing", "security", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Quick answer:** Copilot local sandboxing restricts what an AI agent's terminal commands can touch on your machine: which folders it can read or write, and which network domains it can reach. In VS Code you turn it on with the `chat.agent.sandbox.enabled` setting (macOS, Linux and WSL2 today, with Windows experimental). It protects the host from dangerous commands, but it is not a magic undo button, so keep Git close.

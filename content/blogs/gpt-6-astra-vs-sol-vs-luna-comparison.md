@@ -3,10 +3,9 @@ title: "GPT-6 Astra vs. GPT-6 Sol vs. GPT-6 Luna: Architecture & Benchmark Compa
 description: "Technical comparison of GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna: architecture, pricing, coding benchmarks, and how to choose the right model tier."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "gpt-6", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna", "benchmarks", "coding-agents"]
-readTime: "9 min read"
 ---
 
 I'll be honest: the first time I saw three model names with a sun, a moon and a star in them, I assumed it was marketing fluff and I'd just pick the biggest one. That was a mistake. A few evenings of reading the launch posts, the pricing pages and the independent benchmark write-ups changed my mind completely.

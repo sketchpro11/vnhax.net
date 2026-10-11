@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = 'October 2, 2026';
-  const effectiveDate = 'January 15, 2025';
+  const lastUpdated = 'October 11, 2026';
+  const effectiveDate = 'October 4, 2026';
 
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: 'Home', url: '/' },
@@ -60,17 +60,6 @@ export default function PrivacyPolicyPage() {
 
             {/* Page Header */}
             <header className="policy-header">
-              <div className="policy-badge-row">
-                <span className="policy-badge policy-badge--verified">
-                  ✓ AdSense Policy Compliant
-                </span>
-                <span className="policy-badge">
-                  GDPR &amp; CCPA Aligned
-                </span>
-                <span className="policy-badge">
-                  COPPA Certified Standards
-                </span>
-              </div>
 
               <h1 className="policy-title">Privacy Policy &amp; Cookie Disclosure</h1>
 
@@ -82,7 +71,7 @@ export default function PrivacyPolicyPage() {
               <div className="policy-meta-bar">
                 <div className="policy-meta-item">
                   <span>Last Updated:</span>
-                  <strong><time dateTime="2026-10-02">{lastUpdated}</time></strong>
+                  <strong><time dateTime="2026-10-11">{lastUpdated}</time></strong>
                 </div>
                 <div className="policy-meta-item">
                   <span>Effective Date:</span>
@@ -107,9 +96,9 @@ export default function PrivacyPolicyPage() {
 
               <div className="policy-highlight-card">
                 <div className="policy-highlight-icon">🍪</div>
-                <h2 className="policy-highlight-title">AdSense Transparency</h2>
+                <h2 className="policy-highlight-title">Clear Ad Disclosures</h2>
                 <p className="policy-highlight-desc">
-                  Direct opt-out links and complete disclosures for Google DoubleClick DART cookies and advertising partners.
+                  How advertising cookies work and direct links to opt out of personalised ads.
                 </p>
               </div>
 
@@ -461,9 +450,8 @@ export default function PrivacyPolicyPage() {
                   <strong>Official Contact Channel:</strong> If you have any additional questions, require more information about our Privacy Policy, or wish to exercise your data subject rights under GDPR/CCPA, please do not hesitate to contact our dedicated privacy desk:
                 </p>
                 <ul>
-                  <li><strong>Privacy &amp; Data Protection Officer:</strong> <a href="mailto:privacy@vnhax.net">privacy@vnhax.net</a></li>
-                  <li><strong>General Editorial Inquiries:</strong> <a href="mailto:hello@vnhax.net">hello@vnhax.net</a></li>
-                  <li><strong>Legal &amp; Compliance Inquiries:</strong> <a href="mailto:legal@vnhax.net">legal@vnhax.net</a></li>
+                  <li><strong>Privacy requests:</strong> <a href="mailto:privacy@vnhax.net">privacy@vnhax.net</a></li>
+                                    <li><strong>Everything else:</strong> <a href="mailto:contact@vnhax.net">contact@vnhax.net</a></li>
                   <li><strong>Interactive Web Form:</strong> Visit our <Link href="/contact">Official Contact Page</Link></li>
                   <li><strong>Related Legal Terms:</strong> Review our <Link href="/terms">Terms of Service &amp; Disclaimer</Link></li>
                 </ul>

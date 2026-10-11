@@ -3,10 +3,9 @@ title: "ChatGPT Pro 500 Plan: Price, Usage Limits and What Changed for the $200 
 description: "Detailed breakdown of the new ChatGPT Pro 500 subscription tier, updated usage limits on the $200 Pro plan, Ultrafast speed access, and plan comparisons."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "chatgpt-pro", "chatgpt-pro-500", "pricing-tiers", "ultrafast-tier", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Executive summary:** At OpenAI DevDay on 29 September 2026, Sam Altman introduced the **ChatGPT Pro 500** subscription tier alongside key structural revisions to the existing $200/month Pro plan. New sign-ups for the $200 tier receive 10x the usage limits of ChatGPT Plus, while Pro 500 and Enterprise subscribers gain exclusive access to the **Ultrafast** speed tier on GPT-6 Astra.

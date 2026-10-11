@@ -3,10 +3,9 @@ title: "Claude Sonnet 4.5 End-of-Life Schedule: Retirement Dates & Migration Alt
 description: "Migration guide for engineering teams on Claude Sonnet 4.5: official retirement date (Nov 30, 2026), breaking changes, and alternatives (Sonnet 5.5, Sonnet 5, Haiku 4.5)."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude", "claude-sonnet-4-5", "end-of-life", "api-migration", "claude-sonnet-5-5"]
-readTime: "7 min read"
 ---
 
 > **Executive summary:** Anthropic has set the official retirement deadline for **Claude Sonnet 4.5** on **November 30, 2026**. After this sunset date, all API requests to `claude-sonnet-4-5-20250929` will fail. Upgrading to the recommended replacement, **Claude Sonnet 5.5**, requires code adjustments for adaptive thinking parameters, tokenizer changes, and removed assistant prefill.

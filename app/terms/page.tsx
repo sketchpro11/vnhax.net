@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
-  const lastUpdated = 'October 2, 2026';
-  const effectiveDate = 'January 15, 2025';
+  const lastUpdated = 'October 11, 2026';
+  const effectiveDate = 'October 4, 2026';
 
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: 'Home', url: '/' },
@@ -60,17 +60,6 @@ export default function TermsPage() {
 
             {/* Document Header */}
             <header className="policy-header">
-              <div className="policy-badge-row">
-                <span className="policy-badge policy-badge--verified">
-                  ✓ Legal Compliance Verified
-                </span>
-                <span className="policy-badge">
-                  Open-Source Safe Harbor
-                </span>
-                <span className="policy-badge">
-                  AdSense Publisher Standard
-                </span>
-              </div>
 
               <h1 className="policy-title">Terms of Service &amp; Disclaimer</h1>
 
@@ -82,7 +71,7 @@ export default function TermsPage() {
               <div className="policy-meta-bar">
                 <div className="policy-meta-item">
                   <span>Last Updated:</span>
-                  <strong><time dateTime="2026-10-02">{lastUpdated}</time></strong>
+                  <strong><time dateTime="2026-10-11">{lastUpdated}</time></strong>
                 </div>
                 <div className="policy-meta-item">
                   <span>Effective Date:</span>
@@ -299,12 +288,10 @@ export default function TermsPage() {
                   <h2 className="policy-section-title">Legal Contact &amp; Safe Harbor Channels</h2>
                 </div>
                 <p>
-                  For inquiries regarding licensing, terms interpretation, commercial permissions, or DMCA safe harbor notifications, please contact our legal desk:
+                  For inquiries regarding licensing, terms interpretation, commercial permissions, or DMCA safe harbor notifications, please contact us:
                 </p>
                 <ul>
-                  <li><strong>Legal Counsel &amp; Terms Inquiries:</strong> <a href="mailto:legal@vnhax.net">legal@vnhax.net</a></li>
-                  <li><strong>DMCA &amp; Copyright Agent:</strong> <a href="mailto:dmca@vnhax.net">dmca@vnhax.net</a></li>
-                  <li><strong>General Editorial Desk:</strong> <a href="mailto:hello@vnhax.net">hello@vnhax.net</a></li>
+                                                      <li><strong>Terms, licensing &amp; copyright questions:</strong> <a href="mailto:contact@vnhax.net">contact@vnhax.net</a> (use the subject &ldquo;Copyright&rdquo; for copyright notices)</li>
                   <li><strong>Web Contact Channel:</strong> Visit our <Link href="/contact">Official Contact Desk</Link></li>
                   <li><strong>Related Policy:</strong> Read our <Link href="/privacy-policy">Privacy Policy &amp; Cookie Disclosure</Link></li>
                 </ul>

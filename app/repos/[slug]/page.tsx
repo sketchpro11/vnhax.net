@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
-import GitHubRepoViewer from '@/components/GitHubRepoViewer';
+import RepoReview from '@/components/RepoReview';
 import { getAllRepos, getRepoBySlug } from '@/lib/repos-data';
 import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
 
@@ -139,8 +139,7 @@ export default async function RepoDetailPage({ params }: RepoPageProps) {
 
       <SiteHeader variant="standard" />
 
-      {/* Interactive Official GitHub Repository Viewer with functional sub-tabs */}
-      <GitHubRepoViewer repo={repo} />
+      <RepoReview repo={repo} />
 
       <SiteFooter />
     </>

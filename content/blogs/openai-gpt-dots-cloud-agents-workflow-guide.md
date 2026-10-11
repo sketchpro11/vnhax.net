@@ -3,10 +3,9 @@ title: "OpenAI GPT Dots: Practical Guide to Always-On Cloud Agents & Workflows"
 description: "GPT Dots is OpenAI's always-on AI agent with its own cloud computer and browser. Learn what it does, eligibility, Slack & Teams integrations, and workflows."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "AI & Autonomous Agents"
 tags: ["ai", "models", "openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-agents", "productivity"]
-readTime: "7 min read"
 ---
 
 Every developer and small-business owner knows the feeling. You close your laptop at night with a pile of unfinished things: customer feedback nobody has read, a bug you meant to look at, a pull request that still needs tests. The work doesn't stop just because you did.

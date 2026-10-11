@@ -23,6 +23,15 @@ export interface BlogPost {
   fileModifiedDate?: Date;
 }
 
+export const SITE_AUTHOR = 'Umar Hashmi';
+
+/** Read time from the actual article text (~230 words per minute), ignoring code blocks. */
+export function estimateReadTime(markdown: string): string {
+  const prose = markdown.replace(/```[\s\S]*?```/g, ' ');
+  const words = prose.split(/\s+/).filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / 230))} min read`;
+}
+
 const blogsDirectory = path.join(process.cwd(), 'content', 'blogs');
 
 // Configure marked with GitHub Flavored Markdown (GFM) and custom renderers
@@ -138,10 +147,10 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     title: cleanTitle,
     description,
     date: data.date ? new Date(data.date).toISOString().split('T')[0] : '2026-09-27',
-    author: data.author || 'VNHAX Editorial',
+    author: data.author || SITE_AUTHOR,
     category: data.category || 'AI & Models',
     tags: Array.isArray(data.tags) ? data.tags : (data.tags ? [data.tags] : ['AI', 'Open Source', 'Guides']),
-    readTime: data.readTime || `${Math.max(1, Math.round(content.split(/\s+/).length / 200))} min read`,
+    readTime: estimateReadTime(content),
     image: data.image || '/og-image.png',
     updatedAt: data.updatedAt || undefined,
   };
@@ -251,7 +260,7 @@ export function getLatestBlogSummaries(): BlogSummary[] {
       const dateStr = data.date ? new Date(data.date).toISOString().split('T')[0] : '2026-10-05';
       const category = data.category || 'AI & Models';
       const tags: string[] = Array.isArray(data.tags) ? data.tags : data.tags ? [data.tags] : ['AI', 'Guides'];
-      const readTime = data.readTime || `${Math.max(1, Math.round(content.split(/\s+/).length / 200))} min read`;
+      const readTime = estimateReadTime(content);
 
       // Determine Silos & Badge
       const combined = `${category} ${tags.join(' ')} ${slug}`.toLowerCase();
@@ -308,7 +317,7 @@ export function getLatestBlogSummaries(): BlogSummary[] {
         description,
         date: dateStr,
         formattedDate,
-        author: data.author || 'VNHAX Editorial',
+        author: data.author || SITE_AUTHOR,
         category,
         tags,
         readTime,

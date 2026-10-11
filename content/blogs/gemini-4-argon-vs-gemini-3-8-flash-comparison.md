@@ -3,10 +3,9 @@ title: "Gemini 4 Argon vs. Gemini 3.8 Flash: Heavyweight Reasoning vs. Sub-Secon
 description: "Architectural comparison of Gemini 4 Argon and Gemini 3.8 Flash: latency profiles, terminal coding benchmarks, token economics, and model routing."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "gemini-4-argon", "gemini-3-8-flash", "model-comparison", "speed-vs-reasoning", "benchmarks"]
-readTime: "7 min read"
 ---
 
 > **Operational takeaway:** Select **Gemini 3.8 Flash** for high-volume customer conversational chat, semantic document indexing, and real-time audio/video streaming. Reserve **Gemini 4 Argon** for multi-step agentic software development, complex mathematical verification, and enterprise architectural refactoring.

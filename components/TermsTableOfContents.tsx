@@ -137,25 +137,25 @@ export default function TermsTableOfContents() {
         {/* Legal Inquiries Contact Card */}
         <div className="sidebar-widget policy-contact-widget">
           <div className="sidebar-widget-header">
-            <span className="sidebar-kicker">Legal Desk</span>
+            <span className="sidebar-kicker">Contact</span>
             <h3>Questions Regarding Terms?</h3>
           </div>
           <p className="policy-contact-desc">
-            Direct formal legal notices, licensing inquiries, or copyright questions to our legal counsel:
+            Questions about these terms, licensing or copyright? Email:
           </p>
-          <a href="mailto:legal@vnhax.net" className="policy-email-btn">
+          <a href="mailto:contact@vnhax.net" className="policy-email-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <polyline points="22,6 12,13 2,6" />
             </svg>
-            <span>legal@vnhax.net</span>
+            <span>contact@vnhax.net</span>
           </a>
           <div className="policy-secondary-links">
             <Link href="/privacy-policy" className="policy-text-link">
-              Privacy Policy &amp; Disclosures →
+              Privacy Policy →
             </Link>
             <Link href="/contact" className="policy-text-link">
-              Contact Editorial Desk →
+              Contact Form →
             </Link>
           </div>
         </div>

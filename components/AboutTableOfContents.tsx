@@ -11,18 +11,18 @@ interface SectionItem {
 }
 
 const SECTIONS: SectionItem[] = [
-  { id: 'brand-mission', number: '01', title: 'Brand Definition & Core Mission' },
-  { id: 'editorial-pillars', number: '02', title: 'The Three Engineering Pillars' },
-  { id: 'hardware-lab', number: '03', title: 'Physical Hardware Testing (E-E-A-T)' },
-  { id: 'anti-piracy-standards', number: '04', title: 'Ethical Standards & Anti-Piracy' },
-  { id: 'engineering-leadership', number: '05', title: 'Leadership & Author Background' },
-  { id: 'core-values', number: '06', title: 'Core Values & Philosophy' },
-  { id: 'trademarks-fairuse', number: '07', title: 'Trademarks & Open Licensing' },
-  { id: 'editorial-contact', number: '08', title: 'Editorial Desk & Inquiries' },
+  { id: 'who-runs-vnhax', number: '01', title: 'Who Runs VNHAX' },
+  { id: 'what-we-publish', number: '02', title: "What You'll Find Here" },
+  { id: 'how-articles-are-made', number: '03', title: 'How Articles Are Researched' },
+  { id: 'use-of-ai', number: '04', title: 'How AI Tools Are Used' },
+  { id: 'corrections', number: '05', title: 'Corrections & Updates' },
+  { id: 'independence', number: '06', title: 'Independence & Advertising' },
+  { id: 'the-name', number: '07', title: 'About the Name' },
+  { id: 'contact', number: '08', title: 'Get in Touch' },
 ];
 
 export default function AboutTableOfContents() {
-  const [activeId, setActiveId] = useState<string>('brand-mission');
+  const [activeId, setActiveId] = useState<string>('who-runs-vnhax');
 
   useEffect(() => {
     let ticking = false;
@@ -93,76 +93,37 @@ export default function AboutTableOfContents() {
           </nav>
         </div>
 
-        {/* E-E-A-T Standards Snapshot */}
-        <div className="sidebar-widget policy-snapshot-widget">
-          <div className="sidebar-widget-header">
-            <span className="sidebar-kicker">E-E-A-T Standards</span>
-            <h3>Publishing Highlights</h3>
-          </div>
-          <ul className="policy-snapshot-list">
-            <li>
-              <span className="snapshot-icon">🔬</span>
-              <div>
-                <strong>Physical Hardware:</strong> 100% of tutorials validated on real GPU &amp; Apple Silicon testbeds.
-              </div>
-            </li>
-            <li>
-              <span className="snapshot-icon">🧠</span>
-              <div>
-                <strong>Deep Tech Focus:</strong> Local LLM runtimes, GGUF quants, and agentic protocols.
-              </div>
-            </li>
-            <li>
-              <span className="snapshot-icon">🛡️</span>
-              <div>
-                <strong>Ethical &amp; Clean:</strong> Zero affiliation with game cracks, warez, or malicious hacks.
-              </div>
-            </li>
-            <li>
-              <span className="snapshot-icon">🔓</span>
-              <div>
-                <strong>Free &amp; Open:</strong> No paywalls, no forced registrations, open developer tools.
-              </div>
-            </li>
-            <li>
-              <span className="snapshot-icon">⚖️</span>
-              <div>
-                <strong>Fully Compliant:</strong> AdSense, GDPR, CCPA, and COPPA compliant documentation.
-              </div>
-            </li>
-          </ul>
-        </div>
 
         {/* Contact Editorial Desk Widget */}
         <div className="sidebar-widget policy-contact-widget">
           <div className="sidebar-widget-header">
-            <span className="sidebar-kicker">Editorial Desk</span>
+            <span className="sidebar-kicker">Contact</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
               <div style={{ width: '22px', height: '22px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1px solid #2563eb', background: '#0f172a' }}>
                 <Image src="/icon.png" alt="VNHAX" width={22} height={22} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <h3 style={{ margin: 0 }}>Reach Our Engineering Team</h3>
+              <h3 style={{ margin: 0 }}>Questions or Corrections?</h3>
             </div>
           </div>
           <p className="policy-contact-desc">
-            Technical corrections, benchmark feedback, or open-source repo submissions:
+            Spotted a mistake or have a suggestion? Email me:
           </p>
-          <a href="mailto:hello@vnhax.net" className="policy-email-btn">
+          <a href="mailto:contact@vnhax.net" className="policy-email-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <polyline points="22,6 12,13 2,6" />
             </svg>
-            <span>hello@vnhax.net</span>
+            <span>contact@vnhax.net</span>
           </a>
           <div className="policy-secondary-links">
             <Link href="/contact" className="policy-text-link">
-              Interactive Contact Form →
+              Contact Form →
             </Link>
             <Link href="/privacy-policy" className="policy-text-link">
-              Privacy Policy &amp; Disclosures →
+              Privacy Policy →
             </Link>
             <Link href="/terms" className="policy-text-link">
-              Terms of Service &amp; Disclaimer →
+              Terms of Service →
             </Link>
           </div>
         </div>

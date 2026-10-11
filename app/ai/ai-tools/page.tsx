@@ -30,7 +30,6 @@ const AI_TOOLS_LIST = [
     slug: 'agent-reach',
     category: 'Multi-Platform Agent Retrieval',
     badge: 'Python',
-    stars: '90.6k ★',
     desc: 'Gives AI agents direct, zero-API-fee internet access across 13+ platforms—including X/Twitter, Reddit, YouTube, GitHub, and web pages.',
     href: '/repos/agent-reach',
   },
@@ -39,7 +38,6 @@ const AI_TOOLS_LIST = [
     slug: 'caveman',
     category: 'Token Optimization & LLM Proxy',
     badge: 'Go / Shell',
-    stars: '507 ★',
     desc: 'A high-speed Go proxy and terminal preprocessor that aggressively strips conversational prose from AI coding agents to slash LLM token costs.',
     href: '/repos/caveman',
   },
@@ -48,7 +46,6 @@ const AI_TOOLS_LIST = [
     slug: 'ponytail',
     category: 'AI Coding Agent Constraints',
     badge: 'JavaScript',
-    stars: '1,281 ★',
     desc: 'A runtime constraints and prompt-engineering harness that prevents AI coding agents from writing bloated, over-engineered code by enforcing YAGNI.',
     href: '/repos/ponytail',
   },
@@ -56,8 +53,7 @@ const AI_TOOLS_LIST = [
     name: 'ECC (Everything Claude Code)',
     slug: 'ecc',
     category: 'Enterprise Agent Harness',
-    badge: 'TypeScript / Shell',
-    stars: '897 ★',
+    badge: 'JavaScript',
     desc: 'An enterprise agent-harness optimization system providing 68 specialized persona agents, 293 custom skills, and automated verification loops.',
     href: '/repos/ecc',
   },
@@ -65,8 +61,7 @@ const AI_TOOLS_LIST = [
     name: 'Impeccable',
     slug: 'impeccable',
     category: 'Frontend & UI Design System',
-    badge: 'TypeScript',
-    stars: '699 ★',
+    badge: 'JavaScript',
     desc: 'A dedicated frontend and UI design system harness for AI coding agents featuring 24 design commands and live design auditing.',
     href: '/repos/impeccable',
   },
@@ -75,7 +70,6 @@ const AI_TOOLS_LIST = [
     slug: 'effect',
     category: 'Production TypeScript Runtime',
     badge: 'TypeScript',
-    stars: '11.4k ★',
     desc: 'The definitive production-grade standard library for enterprise TypeScript, providing typed errors, concurrency, and telemetry for AI agent loops.',
     href: '/repos/effect',
   },
@@ -134,7 +128,7 @@ export default async function AIToolsPage() {
           {/* Tools Grid */}
           <section className="topic-section" aria-labelledby="tools-directory-heading">
             <h2 id="tools-directory-heading" className="topic-section-title">
-              Verified Open-Source AI Tools
+              Open-Source AI Tools We Reviewed
             </h2>
             <div className="card-grid hub-card-grid">
               {AI_TOOLS_LIST.map((tool) => (
@@ -144,7 +138,7 @@ export default async function AIToolsPage() {
                       {tool.category}
                     </span>
                     <span style={{ fontSize: '11px', fontWeight: 650, color: '#16a34a', background: '#dcfce7', padding: '2px 8px', borderRadius: '4px' }}>
-                      {tool.stars}
+                      {repos.find((r) => r.slug === tool.slug)?.stars} ★
                     </span>
                   </div>
                   <h3>{tool.name}</h3>

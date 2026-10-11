@@ -3,10 +3,9 @@ title: "OpenAI Dots Explained: What Are Always-On ChatGPT Agents and How to Use 
 description: "OpenAI launched dots, always-on AI agents inside ChatGPT powered by GPT-6 Astra. Learn what they do, who can use them, app integrations, and architecture."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "openai-dots", "chatgpt", "gpt-6-astra", "always-on-agents", "developer-tools"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** **OpenAI dots** are persistent, autonomous AI agents hosted natively inside ChatGPT. Unveiled at OpenAI DevDay on 29 September 2026, dots operate around the clock with dedicated cloud compute and browser sandboxes, executing multi-step goals, connecting with enterprise tools like Slack and Teams, and collaborating in multi-agent swarms.

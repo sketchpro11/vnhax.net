@@ -3,10 +3,9 @@ title: "ByteDance DMAD: 4-Step Video Generation via Distribution Matching Advers
 description: "ByteDance's DMAD cuts video generation from 20-30 steps to just 4 with LoRA weights under 1.4 GB. Here is how it works, hardware requirements, and setup."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Developer Tools & Repos"
 tags: ["developer", "tools", "code-distillation", "bytedance", "dmad", "open-source-repos", "developer-workflows"]
-readTime: "7 min read"
 ---
 
 If you have ever typed a prompt into a video model and then gone to make tea while the progress bar crawled along, you already know the real cost of AI video. It is not the idea. It is the waiting. Twenty steps, thirty steps, and by the time the clip appears you have half forgotten what you asked for.

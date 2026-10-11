@@ -6,18 +6,23 @@
 export const BRAND_CONFIG = {
   name: "VNHAX — Virtual Next-Gen Hub for AI & eXploration",
   shortName: "VNHAX",
-  legalName: "VNHAX Media",
+  legalName: "VNHAX",
   acronymExplanation: "Virtual Next-Gen Hub for AI & eXploration",
   siteUrl: "https://vnhax.net",
   description: "VNHAX (Virtual Next-Gen Hub for AI & eXploration) provides technical architecture reviews, open-source AI tools, developer guides, and high-performance UI components.",
   ogImage: "https://vnhax.net/og-image.png",
-  twitterHandle: "@vnhax",
+  twitterHandle: "@umarhashmi_dev",
+  // Real, owned profiles of the site's founder (VNHAX has no separate brand accounts yet)
   socialLinks: [
-    "https://github.com/vnhax",
-    "https://x.com/vnhax",
-    "https://linkedin.com/company/vnhax"
-  ]
+    { label: "GitHub", url: "https://github.com/umarhashmi-dev" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/umarhashmi-dev" },
+    { label: "X / Twitter", url: "https://x.com/umarhashmi_dev" },
+    { label: "Portfolio", url: "https://www.umarhashmi.dev" },
+  ],
 };
+
+export const CONTACT_EMAIL = "contact@vnhax.net";
+export const PRIVACY_EMAIL = "privacy@vnhax.net";
 
 /**
  * Generate Root Organization Schema (JSON-LD)
@@ -29,7 +34,7 @@ export function getOrganizationSchema() {
     "@id": `${BRAND_CONFIG.siteUrl}/#organization`,
     "name": BRAND_CONFIG.shortName,
     "alternateName": BRAND_CONFIG.acronymExplanation,
-    "legalName": BRAND_CONFIG.name,
+    "legalName": BRAND_CONFIG.shortName,
     "url": BRAND_CONFIG.siteUrl,
     "logo": {
       "@type": "ImageObject",
@@ -37,7 +42,7 @@ export function getOrganizationSchema() {
       "width": "1024",
       "height": "403"
     },
-    "sameAs": BRAND_CONFIG.socialLinks,
+    "sameAs": BRAND_CONFIG.socialLinks.map((l) => l.url),
     "description": BRAND_CONFIG.description
   };
 }
@@ -125,8 +130,8 @@ export function getSoftwareRepoSchema(options: SoftwareRepoSchemaOptions) {
     "publisher": {
       "@id": `${BRAND_CONFIG.siteUrl}/#organization`
     },
-    "datePublished": options.datePublished || "2025-01-15T00:00:00Z",
-    "dateModified": options.dateModified || "2026-09-27T00:00:00Z"
+    "datePublished": options.datePublished || "2026-10-04T00:00:00Z",
+    "dateModified": options.dateModified || "2026-10-11T00:00:00Z"
   };
 }
 
@@ -156,9 +161,9 @@ export function getTechArticleSchema(options: TechArticleSchemaOptions) {
     "datePublished": options.datePublished,
     "dateModified": options.dateModified,
     "author": {
-      "@type": "Organization",
-      "name": options.authorName || BRAND_CONFIG.name,
-      "url": BRAND_CONFIG.siteUrl
+      "@type": "Person",
+      "name": options.authorName || "Umar Hashmi",
+      "url": "https://www.umarhashmi.dev"
     },
     "publisher": {
       "@id": `${BRAND_CONFIG.siteUrl}/#organization`

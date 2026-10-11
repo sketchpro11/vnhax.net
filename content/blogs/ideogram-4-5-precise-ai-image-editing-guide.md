@@ -3,10 +3,9 @@ title: "Ideogram 4.5: Precise AI Image Editing With Natural Language (Hands-On G
 description: "Ideogram 4.5 edits only the target areas of an image while preserving surroundings pixel-perfect without drift. How it works, multi-edit workflows, and setup."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "UI Components & Design"
 tags: ["ui", "ui-components", "visual-design", "ideogram-4-5", "canvas-editing", "interface-patterns", "design-tools"]
-readTime: "7 min read"
 ---
 
 You know that moment when an image is 95% perfect? The lighting is right, the composition is right, the colors are exactly what you wanted. Then one small thing bothers you: a wrong object on the table, a sign with the wrong text, a color that is slightly off.

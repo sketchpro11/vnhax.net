@@ -3,10 +3,9 @@ title: "Claude Code vs. Antigravity vs. Grok Build: The 2026 AI Agent Harness Sh
 description: "A hands-on engineering benchmark comparing Claude Code, Antigravity, and Grok Build on a complex Next.js 16 refactor. Permission models, git autonomy, and parallel orchestration analyzed."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Developer Tools"
 tags: ["claude-code", "antigravity", "grok-build", "ai-agents", "developer-harness", "nextjs-16", "benchmarks"]
-readTime: "10 min read"
 ---
 
 Three tools, one afternoon, one shared frustration.

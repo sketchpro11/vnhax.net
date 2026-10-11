@@ -3,10 +3,9 @@ title: "Enterprise MCP Server Security: Hardening Model Context Protocol Bridges
 description: "A production guide to securing Model Context Protocol (MCP) servers: RFC 8707 token validation, tool poisoning prevention, argument-level authorization, and client-side pre-tool hooks."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "AI Security"
 tags: ["mcp", "model-context-protocol", "ai-security", "oauth2", "zero-trust", "jwt", "claude-code"]
-readTime: "11 min read"
 ---
 
 The moment that made this risk tangible for our security team wasn't an external vulnerability report. It was inspecting local file permissions after installing an MCP server for internal developer documentation.

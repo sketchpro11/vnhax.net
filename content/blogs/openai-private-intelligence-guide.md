@@ -3,10 +3,9 @@ title: "OpenAI Private Intelligence: Sovereign AI, Air-Gapped Enclaves & Zero Re
 description: "Comprehensive breakdown of OpenAI Private Intelligence: Zero Data Retention (ZDR) with Private Safety Processing, confidential computing, and compliance."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "private-intelligence", "confidential-computing", "zero-data-retention", "enterprise-security", "cloud-compliance"]
-readTime: "8 min read"
 ---
 
 > **Quick summary:** Announced at OpenAI DevDay in late September 2026, **Private Intelligence** provides enterprise mechanisms for isolating sensitive customer data: **Zero Data Retention (ZDR) with Private Safety Processing** (available immediately) and preview architectures for **Confidential Computing Private Inference**. It targets regulated sectors needing frontier intelligence without data residency compromises.

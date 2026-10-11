@@ -3,10 +3,9 @@ title: "GitHub Copilot Multi-Model Routing: Model Selection, Latency & Task Spec
 description: "How GitHub Copilot dynamically routes coding tasks across multiple frontier models: GPT-6 Sol, Claude Opus 5.5, and Grok 4.7. Benchmarks and selection strategies."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "model-routing", "developer-tools", "code-generation", "benchmarks"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** GitHub Copilot has evolved from a single-model autocomplete engine into an intelligent **multi-model developer harness**. Developers can now toggle between or dynamically route prompts across frontier architectures—including **OpenAI GPT-6 Sol**, **Anthropic Claude Opus 5.5**, and **xAI Grok 4.7**—matching specific engineering tasks to optimal latency, context, and reasoning capabilities.

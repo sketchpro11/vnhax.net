@@ -19,7 +19,7 @@ export default function CavemanExtendedDoc() {
       {/* 1. Top Badges & Accolades */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px', alignItems: 'center' }}>
         <span style={{ background: '#ea580c', color: '#ffffff', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '6px' }}>
-          🪨 #1 ON GITHUB TRENDING
+          🪨 #1 GITHUB TRENDING (JUL 2026)
         </span>
         <span style={{ background: '#d97706', color: '#ffffff', fontSize: '11px', fontWeight: 700, padding: '4px 10px', borderRadius: '6px' }}>
           #1 ON HACKER NEWS (904 PTS)

@@ -87,8 +87,13 @@ export default function ContactForm() {
 
     setIsSubmitting(true);
 
-    // Simulate reliable dispatch
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    // Open the visitor's email app with the message pre-filled, addressed to our real inbox.
+    const topicLabel = TOPIC_LABELS[formData.topic] || formData.topic;
+    const subject = encodeURIComponent(`[VNHAX] ${topicLabel}`);
+    const body = encodeURIComponent(`${formData.message}
+
+— ${formData.name} (${formData.email})`);
+    window.location.href = `mailto:contact@vnhax.net?subject=${subject}&body=${body}`;
 
     setSubmittedData({ ...formData });
     setIsSubmitting(false);
@@ -116,13 +121,14 @@ export default function ContactForm() {
           <div className="feedback-success-icon" aria-hidden="true">
             ✓
           </div>
-          <h3 className="feedback-success-title">Message Received Successfully!</h3>
+          <h3 className="feedback-success-title">Your email app should now open</h3>
           <p className="feedback-success-desc">
-            Thank you, <strong>{submittedData.name}</strong>. Your message regarding{' '}
-            <strong>&quot;{topicText}&quot;</strong> has been securely logged and forwarded to our editorial engineering desk.
+            Thanks, <strong>{submittedData.name}</strong>. We&apos;ve opened a new email to{' '}
+            <strong>contact@vnhax.net</strong> about <strong>&quot;{topicText}&quot;</strong> with your message filled in &mdash;
+            just press <strong>Send</strong> in your email app.
           </p>
           <p className="feedback-success-desc" style={{ marginTop: '-8px' }}>
-            A copy has been routed for response to <strong>{submittedData.email}</strong>. In accordance with our publisher SLA, you will receive a response within <strong>24–48 business hours</strong>.
+            If nothing opened, email <a href="mailto:contact@vnhax.net">contact@vnhax.net</a> directly. I usually reply within a few working days.
           </p>
           <button
             type="button"
@@ -140,7 +146,7 @@ export default function ContactForm() {
     <div className="contact-form-card">
       <h2 className="contact-form-title">Send a Direct Message</h2>
       <p className="contact-form-subtitle">
-        Fill out the verified dispatch form below to route your inquiry directly to our engineering desk.
+        Fill in the form and your email app will open with the message ready to send to contact@vnhax.net.
       </p>
 
       <form onSubmit={handleSubmit} noValidate>
@@ -277,7 +283,7 @@ export default function ContactForm() {
               <span>Routing Message...</span>
             </>
           ) : (
-            <span>Send Verified Message →</span>
+            <span>Send Message →</span>
           )}
         </button>
       </form>

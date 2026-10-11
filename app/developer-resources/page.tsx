@@ -11,14 +11,14 @@ import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Developer Toolkits & Architecture Hub',
   description:
-    'Curated engineering knowledge base: verified GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
+    'Curated engineering knowledge base: reviewed GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/developer-resources`,
   },
   openGraph: {
     title: `Developer Toolkits & Architecture Hub | ${BRAND_CONFIG.shortName}`,
     description:
-      'Curated engineering knowledge base: verified GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
+      'Curated engineering knowledge base: reviewed GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
     url: `${BRAND_CONFIG.siteUrl}/developer-resources`,
     siteName: BRAND_CONFIG.shortName,
     type: 'website',
@@ -114,7 +114,7 @@ export default async function DeveloperResourcesPage() {
     '@type': 'CollectionPage',
     name: 'Developer Resources Hub',
     description:
-      'Curated engineering knowledge base: verified GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
+      'Curated engineering knowledge base: reviewed GitHub repositories, production CLI toolkits, architecture decision rubrics, and open-source implementation guides.',
     url: `${BRAND_CONFIG.siteUrl}/developer-resources`,
     publisher: {
       '@type': 'Organization',
@@ -192,7 +192,7 @@ export default async function DeveloperResourcesPage() {
             </div>
           </section>
 
-          {/* Flagship Verified Repositories Showcase (Liquid Cards Grid) */}
+          {/* Reviewed Repositories Showcase (Liquid Cards Grid) */}
           <section className="topic-section" aria-labelledby="audited-repos">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
               <div>
@@ -218,7 +218,7 @@ export default async function DeveloperResourcesPage() {
                   category: repo.category || 'Developer Tool',
                   mockupTitle: `${repo.slug}-cli`,
                   cmd: `$ git clone ${repo.githubUrl}`,
-                  cmdSub: 'Verified Repository',
+                  cmdSub: 'Reviewed Repository',
                   status: 'Active',
                 };
 
@@ -316,12 +316,7 @@ export default async function DeveloperResourcesPage() {
               <span className="card-eyebrow">Engineering Decision Rubric</span>
               <h3 id="audit-framework">Auditing Open-Source Dependencies Before Production Adoption</h3>
               <p>
-                GitHub stars and social media buzz are weak proxies for engineering safety. Before pulling an external package into production codebases, the{' '}
-                <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', verticalAlign: 'middle', color: '#0f172a' }}>
-                  <Image src="/icon.png" alt="VNHAX" width={18} height={18} style={{ borderRadius: '50%', border: '1px solid #2563eb' }} />
-                  VNHAX Engineering Team
-                </strong>{' '}
-                audits the codebase across four foundational quality gates:
+                GitHub stars and social media buzz are weak proxies for engineering safety. Before pulling an external package into a production codebase, check it against four basic quality gates:
               </p>
               <div className="editorial-feature-columns">
                 <div className="editorial-column-item">

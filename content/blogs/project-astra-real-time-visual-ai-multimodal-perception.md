@@ -3,10 +3,9 @@ title: "Project Astra Real-Time Visual AI: Sub-100ms Video Perception & Spatial 
 description: "Inside Google DeepMind's Project Astra: continuous video stream ingestion, sub-100ms multimodal latency, spatial memory caches, and edge perception architectures."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "project-astra", "gemini-research", "multimodal-ai", "computer-vision", "edge-inference"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** **Project Astra** is Google DeepMind's flagship real-time multimodal AI agent system. By processing continuous high-framerate video and audio streams at **sub-100ms latency**, Project Astra demonstrates real-time spatial memory, object tracking, and immediate conversational feedback across smartphones and smart glasses.

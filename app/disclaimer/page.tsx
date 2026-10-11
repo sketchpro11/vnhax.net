@@ -39,8 +39,8 @@ export const metadata: Metadata = {
 };
 
 export default function DisclaimerPage() {
-  const lastUpdated = 'October 6, 2026';
-  const effectiveDate = 'January 15, 2025';
+  const lastUpdated = 'October 11, 2026';
+  const effectiveDate = 'October 4, 2026';
 
   const breadcrumbSchema = getBreadcrumbSchema([
     { name: 'Home', url: '/' },
@@ -59,10 +59,6 @@ export default function DisclaimerPage() {
 
             <header className="policy-header">
               <div className="policy-badge-row">
-                <span className="policy-badge">Official Policy</span>
-                <span className="policy-badge" style={{ background: '#f0fdf4', color: '#166534', borderColor: '#bbf7d0' }}>
-                  AdSense Verified
-                </span>
                 <span className="policy-version">Effective: {effectiveDate}</span>
                 <span className="policy-version">Updated: {lastUpdated}</span>
               </div>
@@ -84,8 +80,7 @@ export default function DisclaimerPage() {
                 </p>
                 <p>
                   The information provided does not constitute certified enterprise architecture advice, legal consultation,
-                  financial planning, or cybersecurity guarantees. While our editorial team rigorously tests configurations
-                  on dedicated hardware labs, we make no representations or warranties of any kind—express or implied—about the
+                  financial planning, or cybersecurity guarantees. We check articles against their sources, but we make no representations or warranties of any kind—express or implied—about the
                   completeness, suitability, reliability, or accuracy of the information for your specific deployment needs.
                 </p>
               </section>
@@ -94,8 +89,8 @@ export default function DisclaimerPage() {
               <section className="policy-section" id="adsense-advertising">
                 <h2>2. Google AdSense &amp; Third-Party Advertising Disclosure</h2>
                 <p>
-                  VNHAX displays third-party advertisements served by <strong>Google AdSense</strong> and affiliated ad networks
-                  to support independent research and maintenance costs.
+                  VNHAX may display third-party advertisements served by <strong>Google AdSense</strong> and other ad networks
+                  to cover hosting and maintenance costs.
                 </p>
                 <ul>
                   <li>
@@ -213,10 +208,7 @@ export default function DisclaimerPage() {
                     </Link>
                   </li>
                   <li>
-                    <strong>Official Inquiries:</strong> <code>contact@vnhax.net</code>
-                  </li>
-                  <li>
-                    <strong>Response Guarantee:</strong> 24–48 business hour SLA for all verified inquiries.
+                    <strong>Official Inquiries:</strong> <a href="mailto:contact@vnhax.net">contact@vnhax.net</a>
                   </li>
                 </ul>
               </section>

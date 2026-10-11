@@ -3,10 +3,9 @@ title: "NVIDIA Soul Refiner: Single-Step 4K Video Upscaling for AI Generators"
 description: "NVIDIA's Soul Refiner upscales low-resolution AI video to sharp 4K in a single step across MiniMax H3, Cosmos, and open models. Architecture teardown and benchmarks."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Tech Platforms & Infrastructure"
 tags: ["technology", "platforms", "hardware", "nvidia", "gpu-acceleration", "video-infrastructure", "compute-scaling"]
-readTime: "9 min read"
 ---
 
 ## Quick Answer

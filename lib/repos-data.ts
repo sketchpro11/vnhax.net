@@ -1,51 +1,11 @@
+import repoStats from './repo-stats.json';
+
 /**
  * Repositories Data & GEO/AEO Knowledge Base
  * VNHAX — Virtual Next-Gen Hub for AI & eXploration
  * 
- * October 4, 2026 — Verified GitHub Trending Leaderboard Repositories
+ * Independent reviews of open-source repositories. Live stats: lib/repo-stats.json
  */
-
-export interface RepoFile {
-  name: string;
-  type: 'dir' | 'file';
-  message: string;
-  time: string;
-}
-
-export interface RepoLanguage {
-  name: string;
-  percent: number;
-  color: string;
-}
-
-export interface RepoIssue {
-  id: number;
-  title: string;
-  author: string;
-  time: string;
-  comments: number;
-  labels: { name: string; color: string }[];
-  description: string;
-}
-
-export interface RepoPR {
-  id: number;
-  title: string;
-  author: string;
-  time: string;
-  branch: string;
-  labels: { name: string; color: string }[];
-}
-
-export interface RepoActionRun {
-  id: string;
-  name: string;
-  status: 'success' | 'queued' | 'in_progress';
-  branch: string;
-  commitHash: string;
-  time: string;
-  duration: string;
-}
 
 export interface RepoDetails {
   slug: string;
@@ -57,9 +17,7 @@ export interface RepoDetails {
   license: string;
   stars: string;
   forks: string;
-  watching: string;
-  releases: string;
-  trendRanking: string;
+  statsUpdatedAt?: string;
   category: string;
   summary: string;
   metaDescription: string;
@@ -68,17 +26,6 @@ export interface RepoDetails {
   benchmarks: string;
   quickstart: string;
   topics: string[];
-  latestCommit: {
-    message: string;
-    hash: string;
-    time: string;
-    author: string;
-  };
-  files: RepoFile[];
-  languages: RepoLanguage[];
-  issues: RepoIssue[];
-  pullRequests: RepoPR[];
-  actions: RepoActionRun[];
   keyTakeaways: string[];
   faqs: {
     question: string;
@@ -97,15 +44,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'MIT',
     stars: '1,281',
     forks: '128',
-    watching: '45',
-    releases: 'v1.4.2 (Latest)',
-    trendRanking: '#1 Trending Today on GitHub',
     category: 'AI Coding Agents',
     topics: ['ai-agents', 'yagni', 'prompt-engineering', 'claude-code', 'developer-tools', 'anti-bloat', 'token-optimization'],
     summary:
       'A runtime constraints and prompt-engineering harness that prevents AI coding agents from writing bloated, over-engineered code by enforcing YAGNI, code reuse, and minimal viable implementations.',
     metaDescription:
-      'In-depth technical architecture breakdown of Ponytail (DietrichGebert/ponytail), the #1 trending GitHub tool that prevents AI coding agents from over-architecting software. Benchmarks, integration guides, and YAGNI enforcement.',
+      'In-depth technical architecture breakdown of Ponytail (DietrichGebert/ponytail), the open-source tool that prevents AI coding agents from over-architecting software. Benchmarks, integration guides, and YAGNI enforcement.',
     whyUse:
       'Modern LLM-powered coding agents (Claude Code, OpenAI Codex, Gemini CLI, Cursor, OpenCode) have a well-documented tendency toward over-engineering. When tasked with a simple feature, an agent will frequently invent unnecessary abstraction layers, create redundant helper utilities, import heavy npm dependencies for trivial tasks, and produce defensive boilerplate that degrades codebase maintainability. Ponytail solves this by injecting hard architectural boundaries: it forces the agent to explore existing codebase utilities first, use native runtime APIs (such as native fetch, Web Crypto, and Web Streams), and implement strictly what was requested without speculative abstractions.',
     architecture:
@@ -114,88 +58,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'In empirical benchmarks published in the repository across representative full-stack React, Next.js, and Node.js tasks, Ponytail demonstrated an average of 54% fewer lines of code (LOC), a 22% reduction in total input/output tokens, a 20% drop in API billing costs, and a 27% faster overall task completion time compared to unconstrained baseline agents.',
     quickstart:
       '# Install Ponytail CLI globally or in your project\nnpm install -g ponytail-agent\n\n# Run with your preferred agent harness\nponytail wrap "claude code"\n\n# Or configure via .agents/rules/ponytail.json\nponytail init --strict-yagni',
-    latestCommit: {
-      message: 'feat: add strict YAGNI static analysis pass for React 19 RSCs',
-      hash: '8f2b1a4',
-      time: '3 hours ago',
-      author: 'DietrichGebert',
-    },
-    files: [
-      { name: '.github/workflows', type: 'dir', message: 'ci: add multi-agent benchmark matrix across LLM providers', time: '2 days ago' },
-      { name: 'src/core', type: 'dir', message: 'feat: implement AST token reuse detector & YAGNI scoring', time: '3 hours ago' },
-      { name: 'src/prompts', type: 'dir', message: 'chore: update system prompts for Claude Code and Gemini CLI', time: '5 hours ago' },
-      { name: 'tests', type: 'dir', message: 'test: verify YAGNI rejection on redundant npm imports', time: 'yesterday' },
-      { name: '.gitignore', type: 'file', message: 'chore: ignore test coverage outputs and cache', time: '1 week ago' },
-      { name: 'LICENSE', type: 'file', message: 'docs: update MIT license headers', time: '2 weeks ago' },
-      { name: 'README.md', type: 'file', message: 'docs: add empirical benchmark charts & quickstart guide', time: '4 hours ago' },
-      { name: 'package.json', type: 'file', message: 'release: bump version to v1.4.2', time: '3 hours ago' },
-    ],
-    languages: [
-      { name: 'JavaScript', percent: 84.2, color: '#f1e05a' },
-      { name: 'Shell', percent: 11.5, color: '#89e051' },
-      { name: 'Other', percent: 4.3, color: '#d0d7de' },
-    ],
-    issues: [
-      {
-        id: 14,
-        title: 'Add native Web Crypto support check to prevent agent from importing crypto-js',
-        author: 'steven-w',
-        time: '4 hours ago',
-        comments: 3,
-        labels: [{ name: 'enhancement', color: '#a2eeef' }, { name: 'agent-rules', color: '#1d76db' }],
-        description: 'Currently coding models frequently add crypto-js when Web Crypto is globally available in Node 18+ and edge runtimes. Ponytail should flag this as a YAGNI violation.',
-      },
-      {
-        id: 12,
-        title: 'YAGNI heuristic false-positive on custom recursive tree traversal algorithms',
-        author: 'elena-chen',
-        time: 'yesterday',
-        comments: 7,
-        labels: [{ name: 'bug', color: '#d73a4a' }, { name: 'heuristics', color: '#cfd3d7' }],
-        description: 'When implementing non-trivial AST transformations, Ponytail flagged recursive visitor helpers as speculative abstractions.',
-      },
-      {
-        id: 9,
-        title: 'Support Gemini CLI --yagni-strict flag in wrap command',
-        author: 'm-kumar',
-        time: '3 days ago',
-        comments: 2,
-        labels: [{ name: 'cli', color: '#0e8a16' }],
-        description: 'Provide first-class flag passthrough when running ponytail wrap "gemini cli".',
-      },
-      {
-        id: 7,
-        title: 'Benchmark test suite runner fails on Windows PowerShell path delimiters',
-        author: 'umar-h',
-        time: '5 days ago',
-        comments: 4,
-        labels: [{ name: 'windows', color: '#fbca04' }],
-        description: 'Path normalization required in benchmark matrix scripts for cross-platform execution.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 15,
-        title: 'feat: AST parser optimization for React 19 Server Components',
-        author: 'alex-dev',
-        time: '2 hours ago',
-        branch: 'main <- feature/react-19-ast',
-        labels: [{ name: 'core', color: '#0052cc' }],
-      },
-      {
-        id: 13,
-        title: 'fix: handle monorepo package resolution in AST reuse detector',
-        author: 's-tanaka',
-        time: 'yesterday',
-        branch: 'main <- fix/monorepo-resolver',
-        labels: [{ name: 'bugfix', color: '#d73a4a' }],
-      },
-    ],
-    actions: [
-      { id: 'run-101', name: 'CI Multi-Agent Benchmarks (Claude, Gemini, Codex)', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '1m 42s' },
-      { id: 'run-102', name: 'Static AST Analysis & ESLint', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '32s' },
-      { id: 'run-103', name: 'NPM Publish Dry Run', status: 'success', branch: 'main', commitHash: '8f2b1a4', time: '3 hours ago', duration: '45s' },
-    ],
     keyTakeaways: [
       'Eliminates AI agent over-engineering by enforcing strict YAGNI (You Aren\'t Gonna Need It) boundaries.',
       'Achieves ~54% fewer lines of code (LOC) and ~22% fewer consumed LLM tokens across verified benchmarks.',
@@ -237,15 +99,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'Apache-2.0',
     stars: '699',
     forks: '86',
-    watching: '38',
-    releases: 'v2.1.0 (Latest)',
-    trendRanking: '#2 Trending Today on GitHub',
     category: 'Frontend & Design Systems',
     topics: ['design-system', 'ui-audit', 'ai-agents', 'accessibility', 'wcag', 'browser-automation', 'frontend-testing'],
     summary:
       'A dedicated frontend and UI design system harness for AI coding agents featuring 24 design commands, live headless browser iteration, and 61 deterministic UI quality detectors.',
     metaDescription:
-      'Technical architecture guide for Impeccable (pbakaus/impeccable), the #2 trending GitHub frontend design system for AI coding agents. Learn how its 61 quality detectors and 24 commands audit accessibility and visual hierarchy.',
+      'Technical architecture guide for Impeccable (pbakaus/impeccable), the open-source frontend design system for AI coding agents. Learn how its 61 quality detectors and 24 commands audit accessibility and visual hierarchy.',
     whyUse:
       'While AI agents can generate syntactically correct JSX and HTML, the visual quality of AI-generated interfaces is notoriously uneven. AI agents frequently output interfaces with irregular 4px/8px spacing rhythms, muddy color contrast failing WCAG AA guidelines, missing hover and focus states, clumsy typography hierarchy, and broken responsive breakpoints on mobile devices. Impeccable bridges this gap by acting as a visual design director and automated design linter for AI coding agents.',
     architecture:
@@ -254,78 +113,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'In audits across 120 AI-generated web interfaces, Impeccable eliminated 100% of horizontal mobile overflow defects, raised average WCAG 2.1 AA color contrast compliance from 61% to 99.4%, and standardized layout spacing across an 8pt spatial grid in a single iterative pass.',
     quickstart:
       '# Install Impeccable for your frontend workspace\nnpm install -D impeccable-ui\n\n# Audit existing components with 61 deterministic detectors\nnpx impeccable audit ./components\n\n# Run live browser critique during agent generation\nnpx impeccable critique --watch --port 3000',
-    latestCommit: {
-      message: 'feat: add 61st detector for dynamic dark-mode contrast calculation',
-      hash: 'c90e4d2',
-      time: '5 hours ago',
-      author: 'pbakaus',
-    },
-    files: [
-      { name: '.github', type: 'dir', message: 'ci: automate headless chrome cross-browser test suites', time: '3 days ago' },
-      { name: 'detectors', type: 'dir', message: 'feat: add contrast, touch-target, and 8pt grid detectors', time: '5 hours ago' },
-      { name: 'commands', type: 'dir', message: 'feat: add 24 interactive design commands for agent loops', time: 'yesterday' },
-      { name: 'browser', type: 'dir', message: 'fix: handle high-DPI retina canvas scaling in DOM audits', time: '2 days ago' },
-      { name: 'LICENSE', type: 'file', message: 'legal: Apache 2.0 license file', time: '3 weeks ago' },
-      { name: 'README.md', type: 'file', message: 'docs: add screenshot comparison of before/after UI audits', time: '2 hours ago' },
-      { name: 'package.json', type: 'file', message: 'release: bump version to v2.1.0', time: '5 hours ago' },
-    ],
-    languages: [
-      { name: 'JavaScript', percent: 76.8, color: '#f1e05a' },
-      { name: 'TypeScript', percent: 18.4, color: '#3178c6' },
-      { name: 'CSS', percent: 4.8, color: '#563d7c' },
-    ],
-    issues: [
-      {
-        id: 28,
-        title: 'Contrast detector should calculate APCA perceptual contrast in addition to WCAG 2.1',
-        author: 'dan-abramov-fan',
-        time: '6 hours ago',
-        comments: 5,
-        labels: [{ name: 'accessibility', color: '#1d76db' }, { name: 'color', color: '#a2eeef' }],
-        description: 'WCAG 2.1 contrast formulas have known flaws on dark backgrounds with saturated colors. Supporting APCA will prevent false positives.',
-      },
-      {
-        id: 24,
-        title: 'Headless chrome viewport zoom emulation on 4K high-density displays',
-        author: 'j-doe',
-        time: '2 days ago',
-        comments: 1,
-        labels: [{ name: 'browser', color: '#fbca04' }],
-        description: 'When running on displays with devicePixelRatio > 2, bounding box calculations need proper DPR scaling.',
-      },
-      {
-        id: 19,
-        title: 'Add automated fix recommendation for 44x44px touch targets on mobile drawer items',
-        author: 'lisa-k',
-        time: '4 days ago',
-        comments: 3,
-        labels: [{ name: 'enhancement', color: '#0e8a16' }],
-        description: 'Detectors identify elements under 44px, but could automatically propose CSS min-height: 44px diffs.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 29,
-        title: 'feat: add 61st detector for CSS clamp() fluid typography scaling',
-        author: 'pbakaus',
-        time: '5 hours ago',
-        branch: 'main <- feature/clamp-detector',
-        labels: [{ name: 'detector', color: '#0052cc' }],
-      },
-      {
-        id: 26,
-        title: 'fix: eliminate false positive horizontal overflow on sticky headers',
-        author: 'sarah-c',
-        time: 'yesterday',
-        branch: 'main <- fix/sticky-overflow',
-        labels: [{ name: 'bugfix', color: '#d73a4a' }],
-      },
-    ],
-    actions: [
-      { id: 'run-201', name: 'Headless Chrome E2E Suite', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '2m 14s' },
-      { id: 'run-202', name: 'Quality Detectors Unit Tests', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '48s' },
-      { id: 'run-203', name: 'Design Command CLI Tests', status: 'success', branch: 'main', commitHash: 'c90e4d2', time: '5 hours ago', duration: '54s' },
-    ],
     keyTakeaways: [
       '61 deterministic frontend quality detectors covering typography, contrast, spacing, and touch targets.',
       '24 interactive design commands allowing developers and agents to audit, polish, and critique live UI.',
@@ -362,15 +149,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'MIT',
     stars: '897',
     forks: '194',
-    watching: '62',
-    releases: 'v3.0.1 (Latest)',
-    trendRanking: '#3 Trending Today on GitHub',
     category: 'Agent Harness & Workflows',
     topics: ['claude-code', 'agents', 'skills', 'tdd', 'security', 'workflow-automation', 'memory-layer'],
     summary:
       'An enterprise agent-harness optimization system providing 68 specialized persona agents, 293 custom skills, 94 interactive commands, persistent memory, and automated security pipelines.',
     metaDescription:
-      'Complete teardown of ECC (affaan-m/ECC), the #3 trending GitHub repository for Claude Code and coding agents. Explore its 68 specialized agents, 293 skills, TDD workflows, and security audit harnesses.',
+      'Complete teardown of ECC (affaan-m/ECC), the open-source repository for Claude Code and coding agents. Explore its 68 specialized agents, 293 skills, TDD workflows, and security audit harnesses.',
     whyUse:
       'Out of the box, AI coding agents possess general programming knowledge but lack structured engineering discipline. They lack specialized domain personas (such as a dedicated Cloud Security Auditor or Database Migration Specialist), fail to remember project conventions across terminal restarts, and lack structured Test-Driven Development (TDD) pipelines. ECC transforms raw coding agents into a fully coordinated engineering squad with pre-packaged skills, persistent workspace memory, automated test suites, and strict pre-commit security audits.',
     architecture:
@@ -379,78 +163,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'Teams employing ECC report a 40% reduction in context window thrashing due to lazy skill loading, zero unreviewed security vulnerabilities in generated pull requests, and automated TDD test generation reaching 88%+ code coverage on greenfield modules.',
     quickstart:
       '# Clone and initialize ECC in your repository\ngit clone https://github.com/affaan-m/ECC.git ~/.ecc\ncd ~/.ecc && npm install\n\n# Link ECC skills and agents to your active project\necc link --all\n\n# Run with Claude Code or Codex\necc run "Build high-throughput RAG vector pipeline with TDD"',
-    latestCommit: {
-      message: 'feat: add 68th specialized persona for cloud infrastructure auditing',
-      hash: 'e41a9bc',
-      time: '2 hours ago',
-      author: 'affaan-m',
-    },
-    files: [
-      { name: 'agents', type: 'dir', message: 'feat: add 68 persona definitions with custom system prompts', time: '2 hours ago' },
-      { name: 'skills', type: 'dir', message: 'feat: add 293 on-demand skills with lazy loading index', time: 'yesterday' },
-      { name: 'commands', type: 'dir', message: 'feat: implement 94 interactive terminal shortcuts', time: '3 days ago' },
-      { name: 'memory', type: 'dir', message: 'feat: persistent SQLite cross-session memory layer', time: '4 days ago' },
-      { name: 'LICENSE', type: 'file', message: 'docs: MIT license declaration', time: '1 month ago' },
-      { name: 'README.md', type: 'file', message: 'docs: add complete command index and TDD guide', time: '1 hour ago' },
-      { name: 'package.json', type: 'file', message: 'chore: dependencies update for v3.0.1', time: '2 hours ago' },
-    ],
-    languages: [
-      { name: 'JavaScript', percent: 79.1, color: '#f1e05a' },
-      { name: 'Shell', percent: 14.2, color: '#89e051' },
-      { name: 'Markdown', percent: 6.7, color: '#083fa1' },
-    ],
-    issues: [
-      {
-        id: 42,
-        title: 'Allow dynamic memory pruning when SQLite database exceeds 50MB',
-        author: 'charlie-dev',
-        time: '8 hours ago',
-        comments: 6,
-        labels: [{ name: 'memory', color: '#1d76db' }, { name: 'performance', color: '#a2eeef' }],
-        description: 'In very long running monorepo workflows, the vector memory database should prune older transient tool outputs.',
-      },
-      {
-        id: 38,
-        title: 'Security hook false alarm on benign regex in Markdown sanitizer script',
-        author: 'kenji-s',
-        time: 'yesterday',
-        comments: 2,
-        labels: [{ name: 'security', color: '#d73a4a' }],
-        description: 'ReDoS regex detector triggered on safe table row delimiter matching in documentation generator.',
-      },
-      {
-        id: 31,
-        title: 'Add specialized Kubernetes & Helm persona agent to DevOps skill cluster',
-        author: 'patricia-m',
-        time: '3 days ago',
-        comments: 8,
-        labels: [{ name: 'enhancement', color: '#0e8a16' }],
-        description: 'Request for specialized persona containing kubectl, helm template, and ingress manifest validation skills.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 44,
-        title: 'feat: 68th persona for Cloud Security & SOC2 Compliance',
-        author: 'affaan-m',
-        time: '2 hours ago',
-        branch: 'main <- feature/soc2-auditor',
-        labels: [{ name: 'persona', color: '#0052cc' }],
-      },
-      {
-        id: 39,
-        title: 'perf: cache compiled regex in security AST scanner',
-        author: 'dev-team',
-        time: 'yesterday',
-        branch: 'main <- perf/regex-cache',
-        labels: [{ name: 'performance', color: '#a2eeef' }],
-      },
-    ],
-    actions: [
-      { id: 'run-301', name: 'Security Scanner & CVE Database Sync', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '1m 10s' },
-      { id: 'run-302', name: 'Skill Harness Index Validation', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '40s' },
-      { id: 'run-303', name: 'Agent Persona TDD Test Runner', status: 'success', branch: 'main', commitHash: 'e41a9bc', time: '2 hours ago', duration: '3m 05s' },
-    ],
     keyTakeaways: [
       '68 specialized agent personas tailored for Frontend, Security, DevOps, Architecture, and TDD.',
       '293 on-demand skills with zero context bloat through dynamic reference loading.',
@@ -487,15 +199,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'MIT',
     stars: '11.4k',
     forks: '740',
-    watching: '280',
-    releases: 'v4.0.0-LTS (Latest)',
-    trendRanking: '#4 Trending Today on GitHub (Effect 4.x LTS)',
     category: 'Production TypeScript Runtime',
     topics: ['typescript', 'functional-programming', 'concurrency', 'fibers', 'typed-errors', 'enterprise', 'lts'],
     summary:
       'The definitive production-grade standard library for enterprise TypeScript. Provides typed errors, dependency injection, structured concurrency, fibers, distributed tracing, and runtime schema validation.',
     metaDescription:
-      'Comprehensive architectural breakdown of Effect (Effect-TS/effect), the #4 trending GitHub library for production TypeScript. Discover typed error handling, structured concurrency, fibers, and Effect 4.x LTS features.',
+      'Comprehensive architectural breakdown of Effect (Effect-TS/effect), the open-source library for production TypeScript. Discover typed error handling, structured concurrency, fibers, and Effect 4.x LTS features.',
     whyUse:
       'Standard TypeScript only offers type guarantees at build time; at runtime, unhandled Promise rejections and unexpected throws can crash Node.js processes without warning. As enterprise applications grow, coordinating asynchronous cancellation, managing resource lifecycles, and injecting dependencies becomes unmanageable with vanilla Promises. Effect solves this by bringing functional programming principles—comparable to Rust and Haskell—into idiomatic TypeScript, ensuring zero unhandled runtime exceptions and rock-solid concurrency.',
     architecture:
@@ -504,77 +213,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'Effect 4.x LTS benchmarks demonstrate fiber execution speeds exceeding native Node.js Promise.all by 2.4x under high concurrency loads, with 35% lower memory footprint and zero memory leaks during long-running streaming operations.',
     quickstart:
       '# Install Effect into your TypeScript project\nnpm install effect\n\n# Minimal Example: Safe typed error handling\nimport { Effect, Console } from "effect";\n\nconst program = Console.log("Hello from Effect 4.x!");\nEffect.runSync(program);',
-    latestCommit: {
-      message: 'release: Effect 4.0.0 LTS stable release milestone',
-      hash: '3d7b88e',
-      time: '1 day ago',
-      author: 'Effect-TS Team',
-    },
-    files: [
-      { name: 'packages/effect', type: 'dir', message: 'core: Effect 4.0 LTS runtime and fiber scheduler', time: '1 day ago' },
-      { name: 'packages/schema', type: 'dir', message: 'schema: zero-cost runtime validation replacing Zod', time: '2 days ago' },
-      { name: 'packages/platform', type: 'dir', message: 'platform: multi-runtime HTTP, FileSystem & Worker APIs', time: '3 days ago' },
-      { name: 'docs', type: 'dir', message: 'docs: add interactive guides for Effect 4.x migration', time: 'yesterday' },
-      { name: 'LICENSE', type: 'file', message: 'legal: MIT license', time: '3 years ago' },
-      { name: 'README.md', type: 'file', message: 'docs: announce Effect 4.x LTS with fiber benchmarks', time: '1 day ago' },
-      { name: 'package.json', type: 'file', message: 'release: 4.0.0 LTS', time: '1 day ago' },
-    ],
-    languages: [
-      { name: 'TypeScript', percent: 98.4, color: '#3178c6' },
-      { name: 'Other', percent: 1.6, color: '#d0d7de' },
-    ],
-    issues: [
-      {
-        id: 3892,
-        title: 'Effect 4.x LTS: fiber scheduling performance regression on Node 22 worker threads',
-        author: 'm-rosen',
-        time: '12 hours ago',
-        comments: 14,
-        labels: [{ name: 'performance', color: '#a2eeef' }, { name: 'core', color: '#1d76db' }],
-        description: 'Under extreme thread pools (64+ workers), fiber queue synchronization shows 8% latency increase.',
-      },
-      {
-        id: 3880,
-        title: 'Schema.parseJson should support BigInt deserialization without custom encoders',
-        author: 'v-gupta',
-        time: 'yesterday',
-        comments: 4,
-        labels: [{ name: 'schema', color: '#0e8a16' }],
-        description: 'Native JSON.parse lacks BigInt support; Schema should provide built-in lossless reviver.',
-      },
-      {
-        id: 3864,
-        title: 'Enhance OpenTelemetry trace propagation across HTTP client boundaries in @effect/platform',
-        author: 'tracer-bullet',
-        time: '3 days ago',
-        comments: 9,
-        labels: [{ name: 'platform', color: '#fbca04' }, { name: 'opentelemetry', color: '#0052cc' }],
-        description: 'Trace context headers should automatically inject into outgoing platform HTTP client requests.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 3895,
-        title: 'core: optimize fiber runtime state transitions in Effect 4.0 LTS',
-        author: 'Effect-Core',
-        time: '1 day ago',
-        branch: 'main <- perf/fiber-states',
-        labels: [{ name: 'core', color: '#0052cc' }],
-      },
-      {
-        id: 3888,
-        title: 'schema: zero-allocation fast path for ASCII string validations',
-        author: 'ts-wizard',
-        time: '2 days ago',
-        branch: 'main <- perf/schema-ascii',
-        labels: [{ name: 'schema', color: '#0e8a16' }],
-      },
-    ],
-    actions: [
-      { id: 'run-401', name: 'Cross-Runtime Matrix (Node.js, Bun, Deno, Cloudflare Workers)', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '4m 30s' },
-      { id: 'run-402', name: 'Typecheck & Monorepo DTS Emit', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '1m 55s' },
-      { id: 'run-403', name: 'Benchmarks Regression Suite', status: 'success', branch: 'main', commitHash: '3d7b88e', time: '1 day ago', duration: '6m 12s' },
-    ],
     keyTakeaways: [
       'Declarative Effect<Success, Error, Requirements> type model eliminating untyped throws.',
       'Lightweight green-thread fibers with automatic cancellation and structured concurrency.',
@@ -611,15 +249,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'MIT',
     stars: '507',
     forks: '67',
-    watching: '29',
-    releases: 'v1.1.4 (Latest)',
-    trendRanking: '#5 Trending Today on GitHub',
     category: 'Token Optimization & LLM Proxy',
     topics: ['go', 'llm-proxy', 'token-optimization', 'terminal', 'developer-tools', 'stream-lexer'],
     summary:
       'A high-speed Go proxy and terminal preprocessor that aggressively strips conversational prose from AI coding agents while preserving 100% of code blocks, CLI commands, file paths, and exact stack traces.',
     metaDescription:
-      'Technical architecture guide for Caveman (JuliusBrussee/caveman), the #5 trending GitHub Go proxy that slashes AI coding agent token consumption by 30-45% through prose compression and A/B benchmarking.',
+      'Technical architecture guide for Caveman (JuliusBrussee/caveman), the open-source Go proxy that slashes AI coding agent token consumption by 30-45% through prose compression and A/B benchmarking.',
     whyUse:
       'When developers interact with AI coding agents in the terminal, models frequently generate verbose conversational introductions, polite summaries, and redundant restatements of code changes. In continuous pair-programming workflows with dozens of tool calls, this conversational filler rapidly exhausts context windows, triggers token rate limits, and multiplies API costs. Caveman eliminates this waste by stripping conversational fluff and delivering direct, terse, high-signal technical outputs.',
     architecture:
@@ -628,75 +263,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'Real-world A/B session benchmarks recorded in the repository demonstrate a 30% to 45% reduction in total token consumption across long-running debugging workflows, with zero degradation in code accuracy and a noticeable speedup in perceived terminal response times.',
     quickstart:
       '# Install Caveman via Go or Homebrew\ngo install github.com/JuliusBrussee/caveman@latest\n\n# Run Caveman proxy on localhost:8080\ncaveman start --port 8080\n\n# Configure your AI agent to route through Caveman proxy\nexport OPENAI_BASE_URL="http://localhost:8080/v1"\nexport ANTHROPIC_BASE_URL="http://localhost:8080"',
-    latestCommit: {
-      message: 'perf: optimize Go stream lexer chunk parsing to sub-100µs latency',
-      hash: '5b11c09',
-      time: '4 hours ago',
-      author: 'JuliusBrussee',
-    },
-    files: [
-      { name: 'cmd/caveman', type: 'dir', message: 'cli: add start and ab-test terminal commands', time: '4 hours ago' },
-      { name: 'pkg/lexer', type: 'dir', message: 'perf: streaming markdown lexer preserving code fences and diffs', time: '4 hours ago' },
-      { name: 'pkg/proxy', type: 'dir', message: 'proxy: non-blocking reverse proxy for OpenAI/Anthropic APIs', time: 'yesterday' },
-      { name: 'go.mod', type: 'file', message: 'chore: update Go runtime to 1.23', time: '2 days ago' },
-      { name: 'LICENSE', type: 'file', message: 'docs: MIT license', time: '2 weeks ago' },
-      { name: 'README.md', type: 'file', message: 'docs: add A/B benchmark graphs showing 40% token savings', time: '3 hours ago' },
-    ],
-    languages: [
-      { name: 'Go', percent: 96.2, color: '#00add8' },
-      { name: 'Shell', percent: 3.8, color: '#89e051' },
-    ],
-    issues: [
-      {
-        id: 18,
-        title: 'Stream lexer edge-case: preserve nested triple backticks inside markdown tables',
-        author: 'b-van-dijk',
-        time: '5 hours ago',
-        comments: 3,
-        labels: [{ name: 'lexer', color: '#1d76db' }, { name: 'bug', color: '#d73a4a' }],
-        description: 'Nested backticks inside markdown table columns caused premature closing of code fence blocks.',
-      },
-      {
-        id: 14,
-        title: 'Add support for Ollama local streaming chunk formats in reverse proxy',
-        author: 'alex-k',
-        time: '2 days ago',
-        comments: 7,
-        labels: [{ name: 'enhancement', color: '#0e8a16' }],
-        description: 'Ollama streaming API emits JSON objects per chunk rather than Server-Sent Events (SSE). Proxy needs format detection.',
-      },
-      {
-        id: 11,
-        title: 'A/B test harness output formatting: export JSON summary report',
-        author: 'j-brussee',
-        time: '4 days ago',
-        comments: 2,
-        labels: [{ name: 'cli', color: '#fbca04' }],
-        description: 'Allow CI pipelines to export benchmark deltas as machine-readable JSON artifacts.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 19,
-        title: 'perf: zero-copy byte buffer pooling in markdown stream lexer',
-        author: 'JuliusBrussee',
-        time: '4 hours ago',
-        branch: 'main <- perf/buffer-pool',
-        labels: [{ name: 'performance', color: '#a2eeef' }],
-      },
-      {
-        id: 16,
-        title: 'cli: add --ab-benchmark flag with automatic p99 latency logging',
-        author: 'dev-contributor',
-        time: 'yesterday',
-        branch: 'main <- feature/ab-logging',
-        labels: [{ name: 'cli', color: '#0052cc' }],
-      },
-    ],
-    actions: [
-      { id: 'run-501', name: 'Go Cross-Platform Build (Linux, macOS, Windows ARM64/AMD64)', status: 'success', branch: 'main', commitHash: '5b11c09', time: '4 hours ago', duration: '1m 15s' },
-      { id: 'run-502', name: 'Stream Lexer Fuzzing & Memory Leak Tests', status: 'success', branch: 'main', commitHash: '5b11c09', time: '4 hours ago', duration: '2m 40s' },
-    ],
     keyTakeaways: [
       'Written in Go with sub-millisecond proxy forwarding latency.',
       'Slashes prompt and completion token usage by 30% to 45% in real pair-programming sessions.',
@@ -733,9 +299,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     license: 'MIT',
     stars: '90.6k',
     forks: '8.9k',
-    watching: '1.4k',
-    releases: 'v2.3.0 (Latest)',
-    trendRanking: '#6 Trending Today on GitHub (+979 stars today)',
     category: 'Multi-Platform Agent Retrieval',
     topics: [
       'ai-agents',
@@ -753,7 +316,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     summary:
       'Gives AI agents direct, zero-API-fee internet access across 13+ platforms—including X/Twitter, Reddit, YouTube, GitHub, Facebook, Instagram, Bilibili, XiaoHongShu, LinkedIn, and web pages with automated backend health checking and smart routing.',
     metaDescription:
-      'Architecture deep-dive on Agent-Reach (Panniantong/Agent-Reach), the #6 trending GitHub repo giving AI agents zero-API-cost direct access across 13+ social platforms, web scrapers, and MCP endpoints.',
+      'Architecture deep-dive on Agent-Reach (Panniantong/Agent-Reach), the open-source repo giving AI agents zero-API-cost direct access across 13+ social platforms, web scrapers, and MCP endpoints.',
     whyUse:
       'Modern AI agents (Claude Code, Cursor, Windsurf, OpenClaw, Codex, Antigravity) are exceptional at processing text and code, but hit severe roadblocks when querying live internet data across social networks and media platforms. Commercial APIs for services like X/Twitter require prohibitive fees (often $215+/month for moderate usage), Reddit blocks cloud server IPs with 403 Forbidden errors, and platforms like XiaoHongShu, Instagram, and Bilibili demand user session states or block non-browser requests. Agent-Reach eliminates this friction by unifying 13+ social and web platforms into a single, zero-API-fee toolchain. It removes the need for developers to maintain fragile custom scrapers or pay recurring subscription fees, while keeping user session cookies strictly stored on the local machine.',
     architecture:
@@ -762,79 +325,6 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       'In automated regression benchmarks across 1,000 queries spanning Twitter, Reddit, Bilibili, and YouTube, Agent-Reach achieved a 98.6% content retrieval success rate. Automatic backend failover resolved 100% of blocked requests within 350ms, while slashing enterprise API costs to $0 for supported public data routes.',
     quickstart:
       '# Install Agent Reach for your AI Agent via NPX\nnpx skills add Panniantong/Agent-Reach@agent-reach\n\n# Run the automated backend health check\nagent-reach doctor\n\n# Query multi-platform content from your agent harness\nagent-reach query twitter "Claude 3.7 Sonnet benchmarks"\nagent-reach query reddit "best local embedding models 2026"',
-    latestCommit: {
-      message: 'feat: add automated failover routing for Reddit and Bilibili backends',
-      hash: '7d4e21a',
-      time: '3 hours ago',
-      author: 'Panniantong',
-    },
-    files: [
-      { name: '.github/workflows', type: 'dir', message: 'ci: test platform adapter health checks across runtimes', time: '2 days ago' },
-      { name: 'agent_reach/core', type: 'dir', message: 'feat: implement dynamic backend routing & health checker', time: '3 hours ago' },
-      { name: 'agent_reach/platforms', type: 'dir', message: 'feat: update Twitter, Reddit, and XiaoHongShu adapters', time: '5 hours ago' },
-      { name: 'agent_reach/mcp', type: 'dir', message: 'feat: Model Context Protocol (MCP) server endpoints', time: 'yesterday' },
-      { name: 'docs', type: 'dir', message: 'docs: update multi-language READMEs and quickstart guide', time: '4 hours ago' },
-      { name: 'LICENSE', type: 'file', message: 'docs: MIT license', time: '2 months ago' },
-      { name: 'README.md', type: 'file', message: 'docs: add trendshift badge & supported platforms matrix', time: '3 hours ago' },
-      { name: 'pyproject.toml', type: 'file', message: 'release: bump version to v2.3.0', time: '3 hours ago' },
-    ],
-    languages: [
-      { name: 'Python', percent: 78.4, color: '#3572A5' },
-      { name: 'TypeScript', percent: 14.2, color: '#3178c6' },
-      { name: 'Shell', percent: 7.4, color: '#89e051' },
-    ],
-    issues: [
-      {
-        id: 34,
-        title: 'Reddit adapter: handle 403 Forbidden with automated rotating proxy fallback',
-        author: 'dev-crawler',
-        time: '2 hours ago',
-        comments: 6,
-        labels: [{ name: 'enhancement', color: '#a2eeef' }, { name: 'reddit', color: '#ff4500' }],
-        description: 'Server environments hosted on common cloud providers receive 403 on old Reddit API endpoints. Fallback to open search endpoint needed.',
-      },
-      {
-        id: 31,
-        title: 'Support MCP transport stdio mode in Claude Code terminal sessions',
-        author: 'agent-builder',
-        time: 'yesterday',
-        comments: 4,
-        labels: [{ name: 'mcp', color: '#1d76db' }, { name: 'claude-code', color: '#d97706' }],
-        description: 'Allow Claude Code to directly initialize agent-reach as an MCP server using stdio pipe without manual port bindings.',
-      },
-      {
-        id: 27,
-        title: 'Bilibili video transcript extractor failing on 412 status code in overseas IPs',
-        author: 'chen-wei',
-        time: '3 days ago',
-        comments: 8,
-        labels: [{ name: 'bug', color: '#d73a4a' }, { name: 'bilibili', color: '#00a1d6' }],
-        description: 'Switched from yt-dlp to bili-cli backend to bypass regional 412 status blocks seamlessly.',
-      },
-    ],
-    pullRequests: [
-      {
-        id: 35,
-        title: 'feat: add doctor healthcheck command with automatic dependency diagnosis',
-        author: 'Panniantong',
-        time: '3 hours ago',
-        branch: 'main <- feature/doctor-diagnostics',
-        labels: [{ name: 'core', color: '#0052cc' }],
-      },
-      {
-        id: 32,
-        title: 'feat: support OpenCLI local session re-use for Instagram and Facebook',
-        author: 'jackwener',
-        time: '2 days ago',
-        branch: 'main <- feature/opencli-meta',
-        labels: [{ name: 'platform', color: '#0e8a16' }],
-      },
-    ],
-    actions: [
-      { id: 'run-601', name: 'Platform Adapters Matrix (13+ Networks)', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '2m 10s' },
-      { id: 'run-602', name: 'MCP Protocol Compliance & Lint', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '48s' },
-      { id: 'run-603', name: 'Python Multi-Version Test (3.10, 3.11, 3.12)', status: 'success', branch: 'main', commitHash: '7d4e21a', time: '3 hours ago', duration: '1m 35s' },
-    ],
     keyTakeaways: [
       'Direct, zero-API-fee internet & social access across 13+ platforms for AI agents.',
       'Dynamic multi-backend failover routing ensures seamless queries even when endpoints change.',
@@ -867,16 +357,50 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
   },
 };
 
+type LiveRepoStats = {
+  stars: number;
+  forks: number;
+  license: string | null;
+  language: string | null;
+  pushedAt: string;
+  fetchedAt: string;
+};
+
+const LIVE_STATS = repoStats as Record<string, LiveRepoStats>;
+
+function formatCount(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/, '')}k`;
+  return n.toLocaleString('en-US');
+}
+
+/**
+ * Overlays real GitHub numbers (from lib/repo-stats.json, refreshed on every
+ * build by scripts/sync-repo-stats.mjs) on top of the static review data.
+ */
+function withLiveStats(repo: RepoDetails): RepoDetails {
+  const live = LIVE_STATS[repo.slug];
+  if (!live) return repo;
+  return {
+    ...repo,
+    stars: formatCount(live.stars),
+    forks: formatCount(live.forks),
+    license: live.license ?? repo.license,
+    language: live.language ?? repo.language,
+    statsUpdatedAt: live.fetchedAt,
+  };
+}
+
 /**
  * Returns all repositories as an array
  */
 export function getAllRepos(): RepoDetails[] {
-  return Object.values(REPOS_DATA);
+  return Object.values(REPOS_DATA).map(withLiveStats);
 }
 
 /**
  * Retrieves a single repository by its slug
  */
 export function getRepoBySlug(slug: string): RepoDetails | undefined {
-  return REPOS_DATA[slug];
+  const repo = REPOS_DATA[slug];
+  return repo ? withLiveStats(repo) : undefined;
 }

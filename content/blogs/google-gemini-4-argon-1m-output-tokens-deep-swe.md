@@ -3,10 +3,9 @@ title: "Google Gemini 4 Argon: 1-Million Output Tokens, DeepSWE & Architecture T
 description: "Gemini 4 Argon explained: 1-million output tokens, #1 on DeepSWE and Vals Index, a 15% hallucination rate on AA Omniscience, and practical benchmark analysis."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "AI & Frontier Models"
 tags: ["ai", "models", "google", "gemini-4-argon", "google-ai", "gpt-6-astra", "claude-opus-5-5", "ai-benchmarks"]
-readTime: "9 min read"
 ---
 
 *Official reference: [Google's Gemini 4 Argon announcement](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/)*

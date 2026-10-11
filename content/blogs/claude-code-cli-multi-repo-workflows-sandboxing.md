@@ -3,10 +3,9 @@ title: "Claude Code CLI: Multi-Repository Workflows & Sandbox Isolation Guide"
 description: "Master the Claude Code CLI: architect multi-repository dependencies, enforce sandbox isolation, configure terminal tools, and automate git triage."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Anthropic & Claude Models"
 tags: ["anthropic", "claude-code", "cli-agents", "developer-tools", "sandboxing", "terminal-automation"]
-readTime: "8 min read"
 ---
 
 > **Executive summary:** **Claude Code CLI** represents Anthropic's agentic command-line interface, giving Claude direct terminal execution rights to navigate repositories, edit code, run test runners, and draft pull requests. Operating Claude Code safely across complex distributed microservices requires configuring strict **multi-repository context indexing** and **ephemeral sandbox isolation**.

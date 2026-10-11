@@ -3,10 +3,9 @@ title: "Grok 5 Release Timeline: Expected Launch Date, Architecture & Capabiliti
 description: "Anticipated release window for xAI Grok 5: Colossus cluster expansion, Nvidia Blackwell B200 scaling, multimodal physics simulation, and frontier benchmarks."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "grok-5", "colossus-supercluster", "blackwell-b200", "ai-roadmaps", "frontier-models"]
-readTime: "7 min read"
 ---
 
 > **Roadmap status:** Grok 5 has no finalized public launch date. The expected release window is **late 2026 (Q4 2026)**, with model training progressing across xAI's expanded **Colossus supercluster** in Memphis, Tennessee. Below is a factual synthesis separating confirmed technical disclosures from community speculation.

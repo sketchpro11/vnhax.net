@@ -3,10 +3,9 @@ title: "Googlebook Revealed: Google's AI-First Laptop Specs, Gemini NPU & Pricin
 description: "Comprehensive guide to Googlebook laptops: Android-based Googlebook OS, Snapdragon X Elite & Intel silicon, on-device Gemini AI features, and price breakdown."
 date: "2026-10-07"
 updatedAt: "2026-10-07"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "Google AI & Research"
 tags: ["google", "googlebook", "gemini-npu", "hardware", "on-device-ai", "laptop-specs"]
-readTime: "7 min read"
 ---
 
 > **Quick summary:** Googlebook represents a distinct laptop category co-developed with leading OEM hardware partners (Acer, ASUS, Dell, HP, and Lenovo). Built around an Android-derived **Googlebook OS** paired with localized Gemini AI acceleration, US pricing ranges from **$899** (Acer convertible) up to **$1,299** (HP Snapdragon X Elite). Every purchase includes 12 months of Google AI Pro with Gemini Advanced.

@@ -3,10 +3,9 @@ title: "GitHub Copilot Prepaid Seats & Upfront Billing for Business & Enterprise
 description: "Comprehensive guide to GitHub Copilot's upfront prepaid seat billing policy for Business ($19/mo) and Enterprise ($39/mo) tiers, pooled AI credits, and license audits."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "copilot-billing", "prepaid-seats", "enterprise-licensing", "developer-tools"]
-readTime: "7 min read"
 ---
 
 > **Executive summary:** GitHub has updated its billing model for Copilot Business ($19/mo) and Copilot Enterprise ($39/mo) accounts paying via credit card or PayPal to an **upfront prepaid seat model**. Seats are charged at the beginning of each billing cycle with no mid-cycle prorated refunds, and organizations draw from **pooled monthly AI credits**.

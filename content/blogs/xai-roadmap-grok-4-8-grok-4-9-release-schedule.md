@@ -3,10 +3,9 @@ title: "xAI Roadmap: Grok 4.8 and Grok 4.9 Release Dates, Features & Enhancement
 description: "Inside xAI's iterative model roadmap: expected launch schedules, 1M context expansion, terminal shell sandboxing, and test-time compute algorithms in Grok 4.8 and 4.9."
 date: "2026-10-08"
 updatedAt: "2026-10-08"
-author: "VNHAX Editorial"
+author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "grok-4-8", "grok-4-9", "ai-roadmap", "frontier-models", "context-window"]
-readTime: "7 min read"
 ---
 
 > **Executive summary:** xAI continues its high-cadence development cycle following the release of Grok 4.7. The upcoming **Grok 4.8** and **Grok 4.9** updates serve as critical architectural bridges toward **Grok 5**, bringing **1-million-token context windows**, native **cloud shell execution**, and preview access to **test-time compute verification loops**.

@@ -3,10 +3,9 @@ title: "Deploying Small Language Models (SLMs) on Edge: Phi-4, Mistral-Small, an
 description: "A comprehensive hardware and quantization guide for deploying Phi-4, Ministral, and SLMs on mobile and edge devices using GGUF K-quants, EXL2, and ONNX Runtime."
 date: "2026-10-05"
 updatedAt: "2026-10-05"
-author: "VNHAX Engineering Team"
+author: "Umar Hashmi"
 category: "Edge AI & Hardware"
 tags: ["slm", "phi-4", "mistral", "edge-ai", "quantization", "gguf", "llama-cpp", "onnx-runtime"]
-readTime: "10 min read"
 ---
 
 The cloud invoice that triggered our edge migration was $18,400 for a month of what seemed like a simple utility: a field-service mobile application used by roughly 4,000 industrial technicians. The sole AI feature was pasting an unstructured field inspection note and generating a structured JSON summary.
