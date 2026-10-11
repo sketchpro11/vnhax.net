@@ -135,6 +135,12 @@ export default function SiteFooter() {
                 <Link href="/about">About Us</Link>
               </li>
               <li>
+                <Link href="/author/umar-hashmi">Author: Umar Hashmi</Link>
+              </li>
+              <li>
+                <Link href="/editorial-policy">Editorial Policy</Link>
+              </li>
+              <li>
                 <Link href="/contact">Contact Us</Link>
               </li>
               <li>

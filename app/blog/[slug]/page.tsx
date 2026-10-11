@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -12,6 +11,8 @@ import SlideDeck from '@/components/SlideDeck';
 import StickyArticleBar from '@/components/StickyArticleBar';
 import { getBlogPost, getAllBlogSlugs, getAllBlogs, SITE_AUTHOR } from '@/lib/blog';
 import { BRAND_CONFIG, getBreadcrumbSchema, shortenSeoTitle } from '@/lib/seo';
+import { AUTHOR, AUTHOR_PAGE_PATH, getAuthorSchema } from '@/lib/author';
+import AuthorAvatar from '@/components/AuthorAvatar';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -102,12 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     description: post.frontmatter.description,
     datePublished: post.frontmatter.date,
     dateModified: post.frontmatter.updatedAt || post.frontmatter.date,
-    author: {
-      '@type': 'Person',
-      name: post.frontmatter.author || SITE_AUTHOR,
-      url: 'https://www.umarhashmi.dev',
-      sameAs: BRAND_CONFIG.socialLinks.map((l) => l.url),
-    },
+    author: getAuthorSchema(BRAND_CONFIG.siteUrl),
     publisher: {
       '@type': 'Organization',
       name: BRAND_CONFIG.name,
@@ -162,18 +158,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               
               <div className="post-meta-bar">
                 <div className="author-chip">
-                  <div className="author-avatar" aria-hidden="true" style={{ overflow: 'hidden', padding: 0, background: '#0f172a', border: '1.5px solid #3b82f6' }}>
-                    <Image
-                      src="/icon.png"
-                      alt={post.frontmatter.author || SITE_AUTHOR}
-                      width={44}
-                      height={44}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </div>
+                  <AuthorAvatar size={44} />
                   <div className="author-info">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span className="author-name">{post.frontmatter.author || SITE_AUTHOR}</span>
+                      <Link href={AUTHOR_PAGE_PATH} className="author-name" rel="author">{post.frontmatter.author || SITE_AUTHOR}</Link>
                     </div>
                     <div className="author-meta">
                       <time dateTime={post.frontmatter.date}>{formattedDate}</time>
@@ -243,34 +231,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 alignItems: 'flex-start',
               }}
             >
-              <div
-                style={{
-                  width: '56px',
-                  height: '56px',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  flexShrink: 0,
-                  border: '2px solid #2563eb',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.15)',
-                  background: '#ffffff',
-                }}
-              >
-                <Image
-                  src="/icon.png"
-                  alt={post.frontmatter.author || SITE_AUTHOR}
-                  width={56}
-                  height={56}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
+              <AuthorAvatar size={56} />
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
                   <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 700, color: '#0f172a' }}>
-                    {post.frontmatter.author || SITE_AUTHOR}
+                    <Link href={AUTHOR_PAGE_PATH} rel="author" style={{ color: 'inherit' }}>
+                      {post.frontmatter.author || SITE_AUTHOR}
+                    </Link>
                   </h3>
+                  <span style={{ fontSize: '12.5px', color: '#64748b' }}>{AUTHOR.role}</span>
                 </div>
                 <p style={{ margin: 0, fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}>
-                  Full-stack web developer since 2018, building AI tools and automations since 2022. I research each article from official announcements and documentation and update it when things change. Spotted a mistake? <a href="/contact">Let me know</a>.
+                  {AUTHOR.shortBio} <Link href="/editorial-policy">How I write</Link> · <Link href="/contact">Report a mistake</Link>
                 </p>
               </div>
             </div>

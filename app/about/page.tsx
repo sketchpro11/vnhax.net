@@ -6,6 +6,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AboutTableOfContents from '@/components/AboutTableOfContents';
 import { BRAND_CONFIG, CONTACT_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { AUTHOR_PAGE_PATH } from '@/lib/author';
+import AuthorAvatar from '@/components/AuthorAvatar';
 
 export const metadata: Metadata = {
   title: 'About VNHAX',
@@ -117,11 +119,11 @@ export default function AboutPage() {
                 </div>
 
                 <div className="about-team-card" style={{ margin: '24px 0' }}>
-                  <div className="about-team-avatar" aria-hidden="true">
-                    UH
-                  </div>
+                  <AuthorAvatar size={72} />
                   <div className="about-team-info">
-                    <h3 className="about-team-name">Umar Hashmi</h3>
+                    <h3 className="about-team-name">
+                      <Link href={AUTHOR_PAGE_PATH}>Umar Hashmi</Link>
+                    </h3>
                     <div className="about-team-role">Founder &amp; Editor</div>
                     <p className="about-team-bio">
                       I&apos;m a full-stack web developer and UI/UX designer. I have been building websites and web
@@ -153,7 +155,8 @@ export default function AboutPage() {
                   and who it matters for.
                 </p>
                 <p>
-                  VNHAX is a one-person project. There is no company or newsroom behind it.
+                  VNHAX is a one-person project. There is no company or newsroom behind it. You can read more on my{' '}
+                  <Link href={AUTHOR_PAGE_PATH}>author page</Link>.
                 </p>
               </section>
 
@@ -195,7 +198,9 @@ export default function AboutPage() {
                   they change often.
                 </p>
                 <p>
-                  When I have installed or tried something myself, the article says so and shows what I saw. When I
+                  When I have installed or tried something myself, the article says so and shows what I saw. My hands-on
+                  tests run on my own laptop, an Alienware x15 R2 (Intel Core i7-12700H, NVIDIA RTX 3070 Ti Laptop GPU
+                  with 8 GB VRAM, 16 GB RAM, Windows 11). When I
                   haven&apos;t, the article is an explainer based on the sources, and it does not pretend otherwise.
                   Benchmark numbers come from the company or project that published them unless the article clearly says
                   they are my own measurements.
@@ -210,7 +215,8 @@ export default function AboutPage() {
                 <p>
                   This is a site about AI, and I use AI tools while working on it: for research summaries, outlines, first
                   drafts and code. Every article is then checked against its sources, edited and published by me, and I am
-                  responsible for what it says. If you find something that is wrong, please tell me.
+                  responsible for what it says. If you find something that is wrong, please tell me. The full rules are in
+                  our <Link href="/editorial-policy">Editorial Policy</Link>.
                 </p>
               </section>
 
