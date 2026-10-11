@@ -1,35 +1,35 @@
 {
   "ponytail": {
-    "stars": 160446,
-    "forks": 8626,
+    "stars": 160457,
+    "forks": 8628,
     "license": "MIT",
     "language": "JavaScript",
     "pushedAt": "2026-10-10T04:19:53Z",
-    "fetchedAt": "2026-10-11T00:11:09.766Z"
+    "fetchedAt": "2026-10-11T00:36:23.936Z"
   },
   "impeccable": {
-    "stars": 79404,
+    "stars": 79408,
     "forks": 4726,
     "license": "Apache-2.0",
     "language": "JavaScript",
     "pushedAt": "2026-10-09T18:44:27Z",
-    "fetchedAt": "2026-10-11T00:11:09.841Z"
+    "fetchedAt": "2026-10-11T00:36:24.297Z"
   },
   "ecc": {
-    "stars": 276523,
+    "stars": 276534,
     "forks": 41242,
     "license": "MIT",
     "language": "JavaScript",
-    "pushedAt": "2026-10-10T23:56:31Z",
-    "fetchedAt": "2026-10-11T00:11:09.917Z"
+    "pushedAt": "2026-10-11T00:30:36Z",
+    "fetchedAt": "2026-10-11T00:36:24.666Z"
   },
   "effect": {
-    "stars": 17205,
+    "stars": 17207,
     "forks": 847,
     "license": "MIT",
     "language": "TypeScript",
     "pushedAt": "2026-10-10T22:17:40Z",
-    "fetchedAt": "2026-10-11T00:11:09.992Z"
+    "fetchedAt": "2026-10-11T00:36:25.032Z"
   },
   "caveman": {
     "stars": 110928,
@@ -37,14 +37,14 @@
     "license": "Apache-2.0",
     "language": "Go",
     "pushedAt": "2026-10-10T16:01:18Z",
-    "fetchedAt": "2026-10-11T00:11:10.066Z"
+    "fetchedAt": "2026-10-11T00:36:25.390Z"
   },
   "agent-reach": {
-    "stars": 95479,
-    "forks": 8355,
+    "stars": 95483,
+    "forks": 8356,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-08T08:31:08Z",
-    "fetchedAt": "2026-10-11T00:11:10.144Z"
+    "fetchedAt": "2026-10-11T00:36:25.800Z"
   }
 }

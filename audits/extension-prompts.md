@@ -114,3 +114,30 @@ Final report: a short summary list of every finding + all screenshots.
 ```
 
 Report + screenshots mujhe chat me bhejna; disavow file main bana dunga (zaroorat hui to).
+
+---
+
+## Prompt 4 — Web3Forms key + Vercel environment variable (contact form)
+
+```
+Task: Get a free Web3Forms access key for contact@vnhax.net and add it to my Vercel project as an environment variable, then redeploy.
+
+Rules:
+- I will log in myself. Never type a password. Stop and ask if a login screen appears.
+- Do not paste the access key anywhere except the Vercel environment variable value field.
+- Do not change any other Vercel setting, domain or environment variable.
+
+Steps:
+1. Open https://web3forms.com → "Create your Access Key" → enter the email contact@vnhax.net → submit.
+2. Tell me to open my Gmail (contact@vnhax.net mail is forwarded there) and wait while I open the Web3Forms email. I will copy the access key from that email.
+3. Open https://vercel.com/dashboard → the project that serves vnhax.net → Settings → Environment Variables.
+4. Add a new variable:
+   - Key: NEXT_PUBLIC_WEB3FORMS_KEY
+   - Value: (I will paste the access key)
+   - Environments: Production, Preview and Development
+   Save.
+5. Go to Deployments → open the latest Production deployment → "Redeploy" (without build cache is fine). Wait until it shows "Ready".
+6. Report back with a screenshot of the Environment Variables list showing NEXT_PUBLIC_WEB3FORMS_KEY (value hidden) and the deployment status "Ready".
+```
+
+Test: https://vnhax.net/contact par form bhar kar bhejo → "Message sent" aana chahiye aur Gmail me email aani chahiye.

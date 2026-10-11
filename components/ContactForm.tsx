@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 
+const CONTACT_EMAIL = 'contact@vnhax.net';
+// Web3Forms public access key (safe to expose; it only allows sending to our inbox).
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+
 interface FormState {
   name: string;
   email: string;
@@ -38,6 +42,8 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormState | null>(null);
+  const [delivery, setDelivery] = useState<'sent' | 'mailto'>('sent');
+  const [sendError, setSendError] = useState<string | null>(null);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -78,26 +84,64 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validate()) {
       return;
     }
 
-    setIsSubmitting(true);
+    // Honeypot: real visitors never fill this hidden field
+    const honeypot = new FormData(e.currentTarget).get('botcheck');
+    if (honeypot) {
+      return;
+    }
 
-    // Open the visitor's email app with the message pre-filled, addressed to our real inbox.
     const topicLabel = TOPIC_LABELS[formData.topic] || formData.topic;
-    const subject = encodeURIComponent(`[VNHAX] ${topicLabel}`);
-    const body = encodeURIComponent(`${formData.message}
+    setIsSubmitting(true);
+    setSendError(null);
 
-— ${formData.name} (${formData.email})`);
-    window.location.href = `mailto:contact@vnhax.net?subject=${subject}&body=${body}`;
+    if (!WEB3FORMS_KEY) {
+      // No form backend configured: fall back to the visitor's email app.
+      const subject = encodeURIComponent(`[VNHAX] ${topicLabel}`);
+      const body = encodeURIComponent(`${formData.message}
 
-    setSubmittedData({ ...formData });
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+- ${formData.name} (${formData.email})`);
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      setDelivery('mailto');
+      setSubmittedData({ ...formData });
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      return;
+    }
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `[VNHAX] ${topicLabel}`,
+          from_name: 'VNHAX Contact Form',
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          replyto: formData.email.trim(),
+          topic: topicLabel,
+          message: formData.message.trim(),
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || `HTTP ${res.status}`);
+      }
+      setDelivery('sent');
+      setSubmittedData({ ...formData });
+      setIsSubmitted(true);
+    } catch {
+      setSendError(`Sorry, your message could not be sent. Please email ${CONTACT_EMAIL} directly.`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -110,6 +154,7 @@ export default function ContactForm() {
     setErrors({});
     setIsSubmitted(false);
     setSubmittedData(null);
+    setSendError(null);
   };
 
   if (isSubmitted && submittedData) {
@@ -121,15 +166,25 @@ export default function ContactForm() {
           <div className="feedback-success-icon" aria-hidden="true">
             ✓
           </div>
-          <h3 className="feedback-success-title">Your email app should now open</h3>
-          <p className="feedback-success-desc">
-            Thanks, <strong>{submittedData.name}</strong>. We&apos;ve opened a new email to{' '}
-            <strong>contact@vnhax.net</strong> about <strong>&quot;{topicText}&quot;</strong> with your message filled in &mdash;
-            just press <strong>Send</strong> in your email app.
-          </p>
-          <p className="feedback-success-desc" style={{ marginTop: '-8px' }}>
-            If nothing opened, email <a href="mailto:contact@vnhax.net">contact@vnhax.net</a> directly. I usually reply within a few working days.
-          </p>
+          {delivery === 'sent' ? (
+            <>
+              <h3 className="feedback-success-title">Message sent</h3>
+              <p className="feedback-success-desc">
+                Thanks, <strong>{submittedData.name}</strong>. Your message about <strong>&quot;{topicText}&quot;</strong> has
+                been sent to {CONTACT_EMAIL}. I&apos;ll reply to <strong>{submittedData.email}</strong>, usually within a few
+                working days.
+              </p>
+            </>
+          ) : (
+            <>
+              <h3 className="feedback-success-title">Your email app should now open</h3>
+              <p className="feedback-success-desc">
+                Thanks, <strong>{submittedData.name}</strong>. A new email to <strong>{CONTACT_EMAIL}</strong> about{' '}
+                <strong>&quot;{topicText}&quot;</strong> has been filled in &mdash; just press <strong>Send</strong>. If nothing
+                opened, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> directly.
+              </p>
+            </>
+          )}
           <button
             type="button"
             onClick={handleReset}
@@ -146,10 +201,18 @@ export default function ContactForm() {
     <div className="contact-form-card">
       <h2 className="contact-form-title">Send a Direct Message</h2>
       <p className="contact-form-subtitle">
-        Fill in the form and your email app will open with the message ready to send to contact@vnhax.net.
+        Your message goes straight to {CONTACT_EMAIL}. I read every message and usually reply within a few working days.
       </p>
 
       <form onSubmit={handleSubmit} noValidate>
+        <input
+          type="checkbox"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+        />
         <div className="form-row">
           <div className="field">
             <label htmlFor="cf-name">
@@ -260,6 +323,12 @@ export default function ContactForm() {
           )}
         </div>
 
+        {sendError && (
+          <p role="alert" className="field-error-msg" style={{ marginBottom: '12px' }}>
+            {sendError}
+          </p>
+        )}
+
         <button
           type="submit"
           className="contact-submit-btn"
@@ -280,7 +349,7 @@ export default function ContactForm() {
                 <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
                 <path d="M12 2a10 10 0 0 1 10 10" />
               </svg>
-              <span>Routing Message...</span>
+              <span>Sending...</span>
             </>
           ) : (
             <span>Send Message →</span>

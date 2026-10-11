@@ -78,7 +78,7 @@ Posts: #3 Flux 3, #35 Ideogram, #16 ElevenLabs, #15 SLMs edge, #32 API costs
 
 ## Progress
 - [x] Day 1 (2026-10-11) — code done; 👤 Vercel 308 redirect pending. Extra fixed: fake GitHub clone UI on repo pages (fake issues/PRs/commits) → honest RepoReview; fake phone in schema; old github.com/vnhax (not ours) → founder profiles; About rewritten honestly; contact form now opens mailto (real backend on Day 2)
-- [ ] Day 2
+- [x] Day 2 (2026-10-11) — code done: Web3Forms form (mailto fallback), Consent Mode v2 + Cookie Settings, new Privacy Policy. 👤 pending: Prompt 4 (Web3Forms key), Prompt 3 (Search Console), form test
 - [ ] Day 3
 - [ ] Day 4
 - [ ] Day 5

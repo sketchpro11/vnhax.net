@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { BRAND_CONFIG } from '@/lib/seo';
+import { OPEN_COOKIE_SETTINGS_EVENT } from '@/components/CookieConsent';
 
 export default function SiteFooter() {
   function scrollToTop() {
@@ -138,6 +139,15 @@ export default function SiteFooter() {
               </li>
               <li>
                 <Link href="/disclaimer">Disclaimer</Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS_EVENT))}
+                  style={{ background: 'none', border: 0, padding: 0, font: 'inherit', color: 'inherit', cursor: 'pointer' }}
+                >
+                  Cookie Settings
+                </button>
               </li>
               <li>
                 <Link href="/sitemap.xml" target="_blank">XML Sitemap</Link>

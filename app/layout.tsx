@@ -112,6 +112,33 @@ export default function RootLayout({
           <meta name="google-adsense-account" content={adsenseId} />
         )}
 
+        {/* Google Consent Mode v2: nothing is stored until the visitor accepts in the cookie banner */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                analytics_storage: 'denied',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500
+              });
+              try {
+                if (localStorage.getItem('vnhax_cookie_consent') === 'accepted') {
+                  gtag('consent', 'update', {
+                    analytics_storage: 'granted',
+                    ad_storage: 'granted',
+                    ad_user_data: 'granted',
+                    ad_personalization: 'granted'
+                  });
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+
         {/* Schema.org Root Schemas: Organization & WebSite */}
         <script
           type="application/ld+json"
@@ -130,8 +157,6 @@ export default function RootLayout({
         />
         <Script id="google-analytics" strategy="lazyOnload">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-SW29Z5PQFR');
           `}

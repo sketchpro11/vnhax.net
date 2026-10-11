@@ -11,20 +11,20 @@ interface SectionItem {
 }
 
 const SECTIONS: SectionItem[] = [
-  { id: 'brand-identification', number: '01', title: 'Brand Identification & Scope', shortTitle: 'Brand & Scope' },
-  { id: 'log-files', number: '02', title: 'Web Hosting Log Files & Data', shortTitle: 'Log Files' },
-  { id: 'cookies-web-beacons', number: '03', title: 'Cookies & Web Beacons', shortTitle: 'Cookies & Beacons' },
-  { id: 'google-dart-cookies', number: '04', title: 'Google DoubleClick DART Cookies', shortTitle: 'Google DART Cookies' },
-  { id: 'third-party-ad-networks', number: '05', title: 'Third-Party Advertising Partners', shortTitle: 'Third-Party Ad Networks' },
-  { id: 'analytics-telemetry', number: '06', title: 'Analytics & Traffic Measurement', shortTitle: 'Analytics' },
-  { id: 'user-rights-gdpr-ccpa', number: '07', title: 'User Rights (GDPR & CCPA/CPRA)', shortTitle: 'GDPR & CCPA Rights' },
-  { id: 'childrens-privacy', number: '08', title: "Children's Privacy Protection (COPPA)", shortTitle: "Children's Privacy (COPPA)" },
-  { id: 'data-security-retention', number: '09', title: 'Data Security & Retention', shortTitle: 'Security & Retention' },
-  { id: 'consent-policy-updates', number: '10', title: 'Consent, Updates & Contact', shortTitle: 'Consent & Contact' },
+  { id: 'who-we-are', number: '01', title: 'Who We Are', shortTitle: 'Who We Are' },
+  { id: 'information-we-collect', number: '02', title: 'Information We Collect', shortTitle: 'Information' },
+  { id: 'cookies', number: '03', title: 'Cookies & Your Consent', shortTitle: 'Cookies' },
+  { id: 'analytics', number: '04', title: 'Analytics', shortTitle: 'Analytics' },
+  { id: 'advertising', number: '05', title: 'Advertising (Google AdSense)', shortTitle: 'Advertising' },
+  { id: 'third-parties', number: '06', title: 'Services We Use', shortTitle: 'Services' },
+  { id: 'your-rights', number: '07', title: 'Your Rights', shortTitle: 'Your Rights' },
+  { id: 'childrens-privacy', number: '08', title: "Children's Privacy", shortTitle: "Children's Privacy" },
+  { id: 'retention-security', number: '09', title: 'Retention & Security', shortTitle: 'Retention' },
+  { id: 'changes-contact', number: '10', title: 'Changes & Contact', shortTitle: 'Contact' },
 ];
 
 export default function PolicyTableOfContents() {
-  const [activeId, setActiveId] = useState<string>('brand-identification');
+  const [activeId, setActiveId] = useState<string>('who-we-are');
 
   useEffect(() => {
     let ticking = false;
@@ -111,7 +111,7 @@ export default function PolicyTableOfContents() {
             <li>
               <span className="snapshot-icon">🍪</span>
               <div>
-                <strong>Ad Opt-Out:</strong> Links to turn off personalised ads from Google and other vendors.
+                <strong>Your Choice:</strong> Analytics and ad cookies only after you click Accept.
               </div>
             </li>
             <li>
