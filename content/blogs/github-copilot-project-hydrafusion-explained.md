@@ -63,7 +63,7 @@ GitHub's own research results, reported by [InfoQ](https://infoq.com/news/2026/0
 - **A tricky bug, or a change that touches several files:** HydraFusion is worth trying. The Critique pattern effectively gives you a second opinion from a different model family.
 - **Anything production-critical on a deadline:** remember it is a research preview with **no SLA**, and GitHub says it isn't intended for production workloads yet. Keep reviewing diffs yourself.
 
-This is an explainer based on GitHub's documentation. I'll add my own results here once I've used HydraFusion on real projects.
+This is an explainer based on GitHub's documentation, not a hands-on benchmark.
 
 ## Frequently asked questions
 

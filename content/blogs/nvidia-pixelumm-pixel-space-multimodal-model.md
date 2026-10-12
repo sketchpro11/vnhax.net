@@ -227,7 +227,7 @@ If you're exploring this area, these guides pair well with this article:
 - [Black Forest Labs Flux 3 Image: Canvas Bounding Boxes](/blog/black-forest-labs-flux-3-image-canvas-bounding-boxes)
 - [ByteDance PDMD: 4-Step Video Generation Distillation](/blog/bytedance-pdmd-video-generation-distillation)
 - [How to Increase num_ctx in Ollama Modelfiles](/blog/how-to-increase-num-ctx-in-modelfile)
-- [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling Guide](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling)
+- [NVIDIA SoL-Refiner: one-step 4K video refinement](/blog/nvidia-sol-refiner-one-step-4k-video-refinement)
 
 ---
 

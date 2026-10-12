@@ -1,202 +1,119 @@
 ---
-title: "How to Cut AI Coding Agent API Costs by 60% with Prompt Optimization & Token Proxies"
-description: "A battle-tested developer guide to cutting AI coding agent API bills by 60%. Covers context window budgeting, prompt streamlining, and lightweight token proxies like Caveman."
+title: "How to Cut AI Coding Agent Costs: Prompt Caching, Context Hygiene and Token Proxies"
+description: "Practical ways to lower the token bill of coding agents like Claude Code: why output and context dominate cost, prompt caching, /clear and /compact, effort levels, hooks that trim tool output, subagents, and token proxies. Based on official docs and current pricing."
 date: "2026-10-05"
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Token Optimization"
-tags: ["token-optimization", "claude-code", "caveman", "api-cost-reduction", "llm-proxy", "prompt-engineering", "cost-management"]
+tags: ["token-optimization", "claude-code", "prompt-caching", "api-cost-reduction", "llm-proxy", "cost-management"]
 ---
 
-Back in March, my API bill for coding agents hit **$1,840 in a single month**. Four developers, one codebase, and Claude Code running basically non-stop. I remember staring at the invoice thinking there had to be a bug, because nobody on the team was doing anything that felt like it justified that number. Turns out there was no bug. There was just nobody watching what the agents were actually saying.
+> **Quick answer (checked 12 October 2026):** Coding agents get expensive because they **resend a growing context on every turn** and **write a lot of output**, and output costs about **5× input** on current Claude models (Sonnet 5.5: $2 in / $10 out per million tokens). The biggest savings come from **keeping context small** (`/clear` between tasks, `/compact` with instructions), **letting prompt caching work** (cache reads cost a small fraction of normal input), **using the cheapest model and effort level that does the job**, and **filtering huge tool output** before the model reads it, with hooks or a token proxy.
 
-The fix wasn't switching vendors. It wasn't negotiating an enterprise contract. It was three boring things: tightening our prompts, budgeting the context window on purpose, and putting a small preprocessing layer in front of the model. Together they took us from **$1,840/month down to $735**. That's a 60% cut, and the code quality didn't drop — it actually went up because the agents stopped rambling.
+This guide collects the cost levers that actually exist in today's tools, with links to the official documentation for each. I've kept the numbers to published prices and documented behaviour. Your own savings depend on how your team uses the agent, so measure first and change one thing at a time.
 
-Here's how I did it, and more importantly, what I got wrong along the way.
+## Why coding agents are expensive
 
-## **Why coding agents are such expensive talkers**
+Three things drive most of the bill:
 
-Here's the thing nobody tells you when you start using an agentic coding tool: the model isn't just answering your question. It's narrating its entire reasoning process back to you in prose, then reading back entire files, then re-reading them after edits, then summarizing what it did in three paragraphs.
+1. **Output is the expensive side.** On Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing), Claude Sonnet 5.5 costs **$2 per million input tokens** and **$10 per million output tokens**, and Opus 5.5 costs $4 / $20. That's 5× for output. Thinking tokens are billed as output too.
+2. **Context is resent every turn.** Each new message includes the system prompt, your project instructions, the conversation so far and every tool result in it. A long session carries a lot of tokens on every request.
+3. **Tool output is big and mostly noise.** A full test log, a large file read or a broad search can add thousands of tokens, when the useful part is a few lines.
 
-Sonnet-class models and Codex-class models both do this, and there's a reason. They're trained to be helpful, thorough assistants. Verbosity is a trained behavior. When your prompt is vague, "helpful and thorough" expands to fill the available space.
+## 1. Measure before you optimize
 
-Three specific things make agent bills brutal:
+You can't cut what you can't see. In Claude Code:
 
-1. **Output tokens cost roughly 5x input tokens.** This is the single most important pricing fact. On modern Sonnet-class pricing you're looking at something in the range of $3 per million input and $15 per million output. A verbose agent that writes 4,000 tokens of explanation burns through $0.06 of output budget per turn, while the 20,000-token context you fed it cost about $0.06. The expensive half is the talking, not the reading.
-2. **Agents re-send context constantly.** Every turn of a session resends the system prompt, the conversation history, the file contents, and the tool results. Turn 20 of a session can carry 100k+ tokens of accumulated context. Do that 200 times a day across a team and you're paying to re-transmit the same README over and over.
-3. **Tool output is enormous and mostly noise.** A single `rg` search or `cat` of a large file can dump 10,000 tokens back into context. A stack trace might be 15,000 characters where the actual error is on line 3.
+- **`/usage`** shows the current session's token usage and cost estimate ([costs docs](https://code.claude.com/docs/en/costs)).
+- **Headless runs** with `--output-format json` include **`total_cost_usd`** and a per-model breakdown, so scripts can log spend per task ([headless docs](https://code.claude.com/docs/en/headless)). Anthropic notes these are client-side estimates that can differ from your actual bill.
 
-That's the baseline problem. Let's fix it in order of impact.
-
-## **What a token proxy actually does to your request**
-
-A token proxy is a small service that sits between your IDE/CLI and the model API. Your agent sends the request to the proxy, the proxy makes surgical edits to what's being sent, then forwards it upstream and passes the response back.
-
-The concept is simple. Open-source tools like [Caveman](/repos/caveman) sit squarely in this token-pruning developer tools space — reducing input and output tokens before they hit a billable endpoint. Read our hands-on [Caveman Architecture & Benchmarking Review](/repos/caveman) to see how it strips conversational filler. Similarly, open-source gateways like [LiteLLM Proxy](https://github.com/BerriAI/litellm) and [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) allow engineering leads to set hard rate limits and fallback routes across models.
-
-Three things a good preprocessing layer does:
-
-- **Truncates oversized tool results.** Instead of sending 8,000 tokens of `cat` output, it sends the first chunk, the last chunk, and a marker. You lose some context, but you lose the part that was never useful anyway. Combine this with our [2026 AI Agent Harness Shootout](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout) to choose harnesses with smart tool truncators.
-- **Deduplicates and normalizes.** Blank line runs, repeated file headers, whitespace padding — all of it burns tokens and carries zero signal. For real-time data feeding without commercial scrapers, see [Real-Time Web Data for AI Agents Without the API Bill](/blog/real-time-web-data-for-ai-agents-without-api-bill).
-- **Caches repeated prefixes.** If the same repository context appears at the start of every request, you mark it for prompt caching instead of paying full price every time. For database and embedding costs, explore [Vector Database Cost Optimization](/blog/vector-database-cost-optimization-scaling-pinecone-qdrant-chroma).
-
-The important detail most people get wrong: a good proxy streams. It passes SSE chunks straight through instead of buffering the whole response. More on that below, because that's where LLM proxy latency problems come from.
-
-## **Prompt optimization: the boring changes that paid off**
-
-Before touching any infrastructure, I changed how we wrote prompts. This is free and it worked.
-
-### **Kill the preamble**
-
-Our old system prompt opened with a paragraph explaining that the assistant was a helpful coding assistant who should write clean code. Something like 180 tokens, sent on every single request, saying almost nothing.
-
-Compare:
-
-```markdown
-You are a senior engineer on this repo. Match existing style.  
-Don't comment obvious code. Match surrounding comment density.  
-When you're unsure about an API, read the source, don't guess.
-```
-
-That's about 40 tokens and it actually changes behavior. "Match existing style" does more work than the entire paragraph it replaced.
-
-### **Be explicit about output length**
-
-The cheapest tokens are the ones the model never had to write. After a few days of reading agent transcripts, I noticed a pattern: the model wrote long answers when the prompt left room for it.
-
-Adding one line to our base prompt:
-
-```markdown
-Default to terse answers. Show code, not prose about code.  
-If you changed 3 files, list them in 3 lines, not 3 paragraphs.
-```
-
-Output tokens dropped around 25% on the same tasks. This is the single easiest win on this whole list and almost nobody does it.
-
-### **Cap reasoning budget where your tool allows it**
-
-Both Claude Code and the Codex CLI expose a thinking or reasoning effort setting. Defaulting to the highest setting for every task is waste. Code formatting, grep, simple refactors — these don't need maximum reasoning depth. Reserve high effort for actual architecture work.
-
-We set the default down one notch and let individual devs bump it for hard problems. That was worth a few hundred dollars a month on its own.
-
-### **Use prompt caching properly**
-
-This is the big one. Modern prompt caching lets you mark stable prefixes — system prompt, project instructions, core reference files — and pay a fraction of the price for them on repeat.
-
-The trick is **ordering**. Anything stable goes at the very front. Anything that changes every turn goes at the back. If you put your file diffs before your `CLAUDE.md`, you cache nothing.
-
-We restructured so the cached prefix was roughly:
-
-1. System prompt (~400 tokens, stable)  
-2. Project conventions file (~1,500 tokens, stable per repo)  
-3. Architecture summary (~800 tokens, regenerate weekly)
-
-That's about 2,700 tokens running at cache-read rates instead of full input rates, on every request in the session. This single change accounted for **$410/month of our savings**.
-
-## **Context window budgeting**
-
-Here's the mental model that finally made this click for me. Your context window isn't a buffer. It's a budget with a ceiling, and everything in it competes.
-
-I started setting an explicit allocation before each session:
-
-| Bucket | Budget | What's in it |
-| :--- | :--- | :--- |
-| **System + conventions** | ~2,700 tokens | Cached prefix, counted separately |
-| **Current task** | ~30% | The active diff, the files being edited |
-| **Recent tool output** | ~20% | Last few greps, last file reads |
-| **Long-term notes** | ~10% | Decisions, gotchas, conventions discovered |
-| **Headroom** | ~40% | Safety margin |
-
-Claude Code has `/compact` and `/clear` for exactly this reason — they summarize and reset the conversation rather than letting it grow unbounded. I set up a rule where devs run `/compact` whenever the session gets unwieldy, instead of just starting a new terminal tab and leaving old context to rot.
-
-## **The terminal wrapper**
-
-Before optimizing anything, I wanted per-run numbers. This wrapper is what we used:
+A minimal logger for scripted runs:
 
 ```bash
-#!/usr/bin/env bash  
-# tokenwatch - log wall time and rough run cost per agent invocation  
-LOG_DIR="$HOME/.tokenwatch"
-LOG_FILE="${LOG_DIR}/runs.jsonl"  
-mkdir -p "$LOG_DIR"
-
-# Pricing per million tokens - verify against your provider rates
-IN_RATE="${IN_RATE:-3.00}"  
-OUT_RATE="${OUT_RATE:-15.00}"
-
-log_run() {  
-  local label="$1" in_tok="$2" out_tok="$3" wall="$4"
-  local cost
-  cost=$(awk -v i="$in_tok" -v o="$out_tok" \
-             -v ir="$IN_RATE" -v orr="$OUT_RATE" \
-             'BEGIN { printf "%.4f", (i/1e6)*ir + (o/1e6)*orr }')
-
-  printf '{"label":"%s","in":%s,"out":%s,"wall_s":%s,"cost":%s,"ts":"%s"}\n' \
-    "$label" "$in_tok" "$out_tok" "$wall" "$cost" "$(date -Is)" >> "$LOG_FILE"  
-  echo "[tokenwatch] $label - ${in_tok} in / ${out_tok} out - \$${cost}" >&2  
-}
-
-cc() {  
-  local start end  
-  start=$(date +%s)
-  command claude "$@" --output-format json \
-    | tee >(jq -r 'if .usage then log_run "claude" .usage.input_tokens .usage.output_tokens "'"$(( $(date +%s) - start ))"'" else empty end' 2>/dev/null)
-  end=$(date +%s)  
-}
+#!/usr/bin/env bash
+# Run one headless Claude Code task and append its estimated cost to a log
+task="$1"
+result=$(claude -p "$task" --output-format json)
+echo "$result" | jq -r '.result'
+echo "$result" | jq -c --arg task "$task" \
+  '{ts: (now | todate), task: $task, cost_usd: .total_cost_usd}' >> ~/.agent-costs.jsonl
 ```
 
-The point is that three weeks in you'll see which repo, which task type, which developer is burning the budget.
+After a week, sort `~/.agent-costs.jsonl` by cost and look at the most expensive task types first. That's usually where the easy savings are.
 
-## **The trimming middleware**
+## 2. Keep the context small
 
-This is the core concept of the preprocessing logic used in token trimming proxies:
+Claude Code already uses prompt caching and **auto-compaction** (it summarizes history as you approach the context limit). You can do better with a few habits from Anthropic's [cost guide](https://code.claude.com/docs/en/costs):
+
+- **`/clear` between unrelated tasks.** Stale context is paid for on every later message. Use `/rename` first so you can `/resume` the session later.
+- **`/compact` with instructions**, for example `/compact Focus on code samples and API usage`, so the summary keeps what matters. You can also put compaction instructions in `CLAUDE.md`.
+- **Keep `CLAUDE.md` short.** It loads at the start of every session. Move workflow-specific instructions (PR reviews, migrations) into **skills**, which only load when used.
+- **Trim MCP servers.** Run `/context` to see what fills the window, and `/mcp` to disable servers you aren't using. CLI tools like `gh` are cheaper than MCP servers because they add no tool listings.
+
+## 3. Let prompt caching do its job
+
+Prompt caching lets the API reuse a stable prefix (system prompt, project instructions, reference files) at a much lower price. On Anthropic's pricing page, a cache **hit** for Sonnet 5.5 costs **$0.10 per million tokens**, versus $2 for normal input. Writing to the cache costs a bit more than normal input ($2.50 per million for a 5-minute cache).
+
+The rule that matters if you build your own agent on the API: **put stable content first and changing content last.** If something that changes every turn (a diff, a timestamp) sits before your instructions, the cached prefix breaks and you pay full price. Claude Code handles caching for you; this matters most for custom agents.
+
+## 4. Use the cheapest model and effort that works
+
+- **Pick the model per task.** Anthropic's guide says Sonnet handles most coding tasks and costs less than Opus; save Opus for complex architecture and multi-step reasoning. Switch with `/model`. For simple subagent work, a Haiku model is cheaper still.
+- **Lower the effort level** for routine work with `/effort` or in `/model`. Thinking tokens are billed as output, and the docs note the thinking budget can be tens of thousands of tokens per request on default settings. (On the newest Claude models thinking can't be switched off, but lower effort uses less.)
+
+## 5. Stop huge tool output from reaching the model
+
+This is where **hooks** and **token proxies** help.
+
+**Hooks.** A Claude Code `PreToolUse` hook can rewrite a command before it runs. Anthropic's docs show a hook that pipes test runs through a filter so only failures reach Claude, turning tens of thousands of tokens of test output into a few hundred. The same idea works for log files: return the matching `ERROR` lines, not the whole log.
+
+**Subagents.** Delegate noisy jobs (running the full test suite, reading long docs) to a subagent. The verbose output stays in the subagent's context and only a summary comes back. The subagent still costs tokens, so give it a smaller model.
+
+**Token proxies.** A proxy sits between your agent and the API and trims what's sent. For example, it can cut oversized tool results, collapse whitespace and drop repeated boilerplate. If you write your own trimming step, keep the **end** of long output too, because stack traces put the actual error at the bottom:
 
 ```python
-# trim.py - shrink oversized tool results before they hit the model
-
-MAX_CHARS = 2400  
-KEEP_HEAD = 1400  
+MAX_CHARS = 2400
+KEEP_HEAD = 1400
 KEEP_TAIL = 600
 
-def trim(payload: str, max_chars: int = MAX_CHARS) -> str:  
-    if len(payload) <= max_chars:  
+def trim(payload: str) -> str:
+    """Shrink an oversized tool result, keeping its start and its end."""
+    if len(payload) <= MAX_CHARS:
         return payload
-
-    dropped = len(payload) - KEEP_HEAD - KEEP_TAIL  
-    return (  
-        payload[:KEEP_HEAD]  
-        + f"\n\n[...{dropped} characters truncated...]\n\n"  
-        + payload[-KEEP_TAIL:]  
-    )
+    dropped = len(payload) - KEEP_HEAD - KEEP_TAIL
+    return payload[:KEEP_HEAD] + f"\n\n[...{dropped} characters truncated...]\n\n" + payload[-KEEP_TAIL:]
 ```
 
-`KEEP_TAIL` matters more than people expect. Stack traces put the actual error message at the bottom. Files put closing braces and function signatures at the end. Cutting only from the front removes exactly the part you needed.
+An open-source example is [Caveman](/repos/caveman) ([GitHub](https://github.com/JuliusBrussee/caveman)), which combines a local proxy with terse output rules. Its README reports **33.2% fewer input tokens** across sessions from the proxy; treat that as the project's own figure and measure on your workload. If you run a proxy, make sure it **streams responses through** rather than buffering them, or the agent will feel slow.
 
-## **Before and after: one month**
+## 6. Write specific prompts and plan first
 
-Here's the actual breakdown from the transition month:
+Vague requests ("improve this codebase") make the agent read widely. Specific ones ("add input validation to the login function in auth.ts") keep reads small. For bigger tasks, use **plan mode** (Shift+Tab in Claude Code) so the agent proposes an approach before writing code, and press **Escape** early if it heads the wrong way. Redoing work is the most expensive outcome of all.
 
-| Category | Before | After | Saved |
-| :--- | :--- | :--- | :--- |
-| **Prompt caching (prefix reads)** | $918 | $508 | **$410** |
-| **Output length control** | $476 | $191 | **$285** |
-| **Proxy tool-output trimming** | $232 | $0 | **$232** |
-| **Context pruning / compaction** | $214 | $12 | **$202** |
-| **Total** | **$1,840** | **$732** | **$1,108 (60.2% saved)** |
+## A simple order to work through
 
-## **LLM proxy latency is a real tax**
+1. Measure with `/usage` or `total_cost_usd` for a week.
+2. Add `/clear` and `/compact` habits; shorten `CLAUDE.md`.
+3. Match the model and effort level to the task.
+4. Filter test and log output with a hook, or add a proxy.
+5. Re-measure, and keep only the changes that saved money without hurting results.
 
-Nobody warns you about this. You add a proxy, and suddenly the agent feels sluggish. There are three usual causes:
+## Frequently asked questions
 
-1. **Buffering.** If your proxy reads the entire response before forwarding it, you just killed streaming. Pass SSE chunks straight through, unbuffered.
-2. **Double logging.** Logging the full request and response body at info level is slow and expensive. Log metadata, not payloads.
-3. **Connection churn.** Create the upstream client once and keep the connection alive. Re-establishing TLS on every request adds real milliseconds.
+### Why are output tokens so expensive?
+Generating tokens costs providers more than reading them, so output is priced higher, 5× input on current Claude Sonnet and Opus models.
 
-Measure p50 and p95 separately after you deploy. Ours went from a 40ms median overhead to under 15ms once we stopped buffering.
+### Does Claude Code use prompt caching automatically?
+Yes. Anthropic's docs say Claude Code automatically uses prompt caching and auto-compaction.
 
-## **Key Takeaways & Lessons Learned**
+### What is a token proxy?
+A small service between your agent and the model API that reduces what is sent, for example by trimming large tool outputs, before forwarding the request.
 
-- **I optimized before measuring.** Two weeks of prompt rewriting before I logged anything. Half of it was unnecessary — the expensive agent was one specific task, not the whole codebase.
-- **I cached too aggressively.** Caching a prefix that changes every few requests saves nothing and still eats context window. Check that your prefix is genuinely stable.
-- **I set the output cap too tight.** The agent got so terse it started looping on the same edit, retrying because its own summary was too vague to verify its own work. Loose is better than clever here.
-- **The discipline saves the money.** The tooling helps, but deciding what the model doesn't need to say is the part that actually cuts bills.
+## Sources
+
+- Claude Code Docs: [Manage costs effectively](https://code.claude.com/docs/en/costs)
+- Claude Code Docs: [Run Claude Code programmatically](https://code.claude.com/docs/en/headless) (`--output-format json`, `total_cost_usd`)
+- Anthropic: [Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+- GitHub: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman)
+
+Related on VNHAX: [Caveman repository review](/repos/caveman) · [Claude Code across multiple repositories](/blog/claude-code-cli-multi-repo-workflows-sandboxing) · [ChatGPT Pro plans and Ultrafast](/blog/chatgpt-pro-plans-100-200-500-ultrafast) · [Vector database cost optimization](/blog/vector-database-cost-optimization-scaling-pinecone-qdrant-chroma)

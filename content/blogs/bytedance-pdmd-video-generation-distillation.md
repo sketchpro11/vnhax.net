@@ -185,7 +185,7 @@ If you do try it, test it on your own prompts, keep your seed fixed, and write d
 ## Related reading on this site
 
 - [ByteDance DMAD: 4-Step Video Generation Distillation](/blog/bytedance-dmad-video-generation-distillation)
-- [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling Guide](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling)
+- [NVIDIA SoL-Refiner: one-step 4K video refinement](/blog/nvidia-sol-refiner-one-step-4k-video-refinement)
 - [Cloud Infrastructure & AI Runtimes Hub](/technology)
 
 ## Sources

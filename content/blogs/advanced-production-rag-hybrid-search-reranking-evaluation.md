@@ -2,21 +2,17 @@
 title: "Advanced Production RAG in 2026: Hybrid Search, Cross-Encoder Reranking, and Automated Evaluation Pipelines"
 description: "How to build enterprise RAG pipelines that solve hallucination and retrieval misses using BM25 + dense hybrid search, reciprocal rank fusion, cross-encoders, and Ragas CI gates."
 date: "2026-10-05"
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "RAG Architecture"
 tags: ["rag", "hybrid-search", "cross-encoders", "reranking", "bm25", "ragas", "evaluation-pipelines"]
 ---
 
-The customer support escalation that broke our confidence in naive RAG wasn't an AI hallucination. It was the AI stating: *"I couldn't find any information regarding refund eligibility for this case."*
+Picture a support assistant answering *"I couldn't find any information about refund eligibility for this case"*, even though the refund policy is clearly written in two runbooks in the knowledge base.
 
-The knowledge base contained the exact policy — clearly articulated, in two separate operational runbooks. The answer existed within our corpus, but the retrieval pipeline completely failed to reach it.
+The user's query was something like `ERR-4471 partial refund window`. The problem is the error code. A dense embedding model has no special understanding of an arbitrary token like `ERR-4471`, so pure cosine-similarity search can rank the right chunks low or miss them, while a plain keyword search (BM25) would match the exact string immediately.
 
-The user's query was: `ERR-4471 partial refund window`.
-
-That single error code was the breakdown. Our dense embedding model had converted `ERR-4471` into an arbitrary vector cluster because it had never encountered that specific alphanumeric token during pretraining. Pure cosine similarity search on the vector database returned zero relevant chunks. A simple `grep` or BM25 keyword search would have found the policy in three milliseconds.
-
-That incident forced us to abandon basic vector similarity and architect a production RAG system that we could defend in enterprise design reviews. Here is the blueprint. For backend indexing and compression tradeoffs, see our companion teardown on [Vector Database Cost Optimization (Pinecone, Qdrant, Chroma)](/blog/vector-database-cost-optimization-scaling-pinecone-qdrant-chroma).
+That failure mode is why production RAG systems combine several retrieval methods instead of relying on vector similarity alone. Here is the blueprint. For backend indexing and compression tradeoffs, see our companion teardown on [Vector Database Cost Optimization (Pinecone, Qdrant, Chroma)](/blog/vector-database-cost-optimization-scaling-pinecone-qdrant-chroma).
 
 ---
 
@@ -172,7 +168,7 @@ def rerank_candidates(query: str, candidate_ids: list[str], top_n: int = 8):
      6 Gold Standard Chunks ──► LLM Generator
 ```
 
-Passing 6 surgically reranked chunks into the generation model eliminates hallucinations, drops token costs by 70%, and speeds up time-to-first-token.
+Passing a handful of well-ranked chunks to the generation model (instead of dozens of loosely related ones) reduces irrelevant context, cuts input tokens and tends to reduce answers built on the wrong passage. It doesn't eliminate hallucinations, so keep evaluating.
 
 ---
 
@@ -229,7 +225,9 @@ If a prompt change causes faithfulness to drop by more than 2%, the pull request
 
 ## Production Latency & Architecture Summary
 
-| Pipeline Stage | Technology | Latency (Single GPU) | Primary Responsibility |
+The latency column below gives rough, order-of-magnitude ranges to help you plan a budget. They are not benchmarks; actual numbers depend on your hardware, index size, model and batch size, so measure each stage in your own system.
+
+| Pipeline Stage | Technology | Rough latency range | Primary Responsibility |
 |---|---|---|---|
 | **1. Lexical Search** | BM25 (Elastic / Qdrant) | 10–25 ms | Exact matches, error codes, SKUs |
 | **2. Semantic Search** | Vector Index (HNSW) | 15–35 ms | Conceptual meaning, synonyms |
@@ -249,3 +247,9 @@ Injecting too many chunks (e.g., 20 or more) introduces distractors and irreleva
 
 ### How does Reciprocal Rank Fusion handle conflicting search scores?
 RRF discards raw numerical scores entirely and evaluates only relative rankings. By scoring documents as $\sum \frac{1}{k + \text{rank}}$, RRF eliminates the need to calibrate incompatible scoring systems (such as unbounded BM25 scores versus bounded cosine distances).
+
+## Sources
+
+- Cormack, Clarke and Büttcher: [Reciprocal Rank Fusion outperforms Condorcet and individual rank learning methods (SIGIR 2009)](https://dl.acm.org/doi/10.1145/1571941.1572114)
+- BAAI: [bge-reranker-v2-m3 model card](https://huggingface.co/BAAI/bge-reranker-v2-m3)
+- [Ragas documentation](https://docs.ragas.io/)

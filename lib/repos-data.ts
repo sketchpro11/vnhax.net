@@ -55,12 +55,12 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     architecture:
       'Ponytail operates as an interceptor in the agent execution loop. Before the coding model generates a solution diff, Ponytail runs a fast static analysis pass across the repository to index existing reusable functions. It then prepends an uncompromised constraint rubric to the agent system prompt that scores candidate diffs against YAGNI principles. If an agent attempts to introduce an external library where a native standard API exists, Ponytail rejects the tool call and instructs the agent to simplify. The entire harness runs locally with sub-millisecond overhead.',
     benchmarks:
-      'In empirical benchmarks published in the repository across representative full-stack React, Next.js, and Node.js tasks, Ponytail demonstrated an average of 54% fewer lines of code (LOC), a 22% reduction in total input/output tokens, a 20% drop in API billing costs, and a 27% faster overall task completion time compared to unconstrained baseline agents.',
+      'Ponytail publishes its benchmarks in the repository. The Ponytail 5 README (October 2026) reports -53% code, -41% time, -26% cost and -45% tokens versus the same agent without the skill (39 tasks in Claude Code, Opus 5.5, 5 runs each), and 98% of risky logic shipped with a test versus 68% without Ponytail. An earlier v4 agentic benchmark (June 2026) reported -54% lines of code, -22% tokens, -20% cost and -27% time.',
     quickstart:
       '# Install Ponytail CLI globally or in your project\nnpm install -g ponytail-agent\n\n# Run with your preferred agent harness\nponytail wrap "claude code"\n\n# Or configure via .agents/rules/ponytail.json\nponytail init --strict-yagni',
     keyTakeaways: [
       'Eliminates AI agent over-engineering by enforcing strict YAGNI (You Aren\'t Gonna Need It) boundaries.',
-      'Achieves ~54% fewer lines of code (LOC) and ~22% fewer consumed LLM tokens across verified benchmarks.',
+      'The project reports -53% code and -45% tokens in its Ponytail 5 benchmark (vendor-run, 39 tasks).',
       'Forces agent reuse of existing codebase utilities before authoring duplicate helper functions.',
       'Compatible with Claude Code, OpenAI Codex, Gemini CLI, Antigravity, and OpenCode.',
       'Operates locally with sub-millisecond static analysis overhead and zero external telemetries.',
@@ -72,7 +72,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
           'Ponytail stops AI coding models from writing bloated, overly complex code. Instead of generating sprawling class hierarchies or installing unnecessary npm packages for simple tasks, it constrains the agent to simple, idiomatic, and minimal implementations.',
       },
       {
-        question: 'How does Ponytail achieve a 54% reduction in lines of code?',
+        question: 'How does Ponytail reduce the amount of code agents write?',
         answer:
           'By indexing existing repository utilities and providing them to the agent context, Ponytail prevents duplicate helper implementations. It also penalizes speculative abstractions and boilerplate in the agent decision loop.',
       },
@@ -110,7 +110,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     architecture:
       'Impeccable couples a deterministic rule engine with automated headless browser verification. As the agent builds or modifies UI components, Impeccable spawns a background browser context to inspect the computed CSS styles and DOM box model. It runs 61 deterministic quality checks—evaluating typographic scale ratios, color contrast mathematics, 44x44px minimum touch targets, layout overflow risks, and responsive wrapping behavior. If issues are detected, Impeccable issues precise, actionable design feedback directly back to the agent.',
     benchmarks:
-      'In audits across 120 AI-generated web interfaces, Impeccable eliminated 100% of horizontal mobile overflow defects, raised average WCAG 2.1 AA color contrast compliance from 61% to 99.4%, and standardized layout spacing across an 8pt spatial grid in a single iterative pass.',
+      'The Impeccable README does not publish a headline benchmark figure. Its value is in the deterministic detectors and design commands it adds to an agent workflow, so measure the effect on your own UI work.',
     quickstart:
       '# Install Impeccable for your frontend workspace\nnpm install -D impeccable-ui\n\n# Audit existing components with 61 deterministic detectors\nnpx impeccable audit ./components\n\n# Run live browser critique during agent generation\nnpx impeccable critique --watch --port 3000',
     keyTakeaways: [
@@ -160,7 +160,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     architecture:
       'ECC utilizes a modular, plugin-based agent architecture. It defines skills in structured YAML frontmatter directories with executable scripts and Markdown reference files that are loaded into the agent context only on demand, preventing prompt context bloat. The system includes a persistent SQLite/JSON memory layer that captures codebase architectural decisions, API contracts, and user preferences. Automated hooks trigger security scans on every proposed code edit before files are modified.',
     benchmarks:
-      'Teams employing ECC report a 40% reduction in context window thrashing due to lazy skill loading, zero unreviewed security vulnerabilities in generated pull requests, and automated TDD test generation reaching 88%+ code coverage on greenfield modules.',
+      'The ECC README does not publish aggregate benchmark figures. Evaluate it by the agents, skills, commands and hooks it provides for your own workflow.',
     quickstart:
       '# Clone and initialize ECC in your repository\ngit clone https://github.com/affaan-m/ECC.git ~/.ecc\ncd ~/.ecc && npm install\n\n# Link ECC skills and agents to your active project\necc link --all\n\n# Run with Claude Code or Codex\necc run "Build high-throughput RAG vector pipeline with TDD"',
     keyTakeaways: [
@@ -210,7 +210,7 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     architecture:
       'At the heart of Effect is the Effect<Success, Error, Requirements> type signature. A computation is represented as a declarative blueprint rather than an immediately executing promise. The Effect runtime executes these blueprints on a lightweight green-thread fiber system, enabling automatic cancellation propagation, timeouts, and resource scoping (Resource Management via Scope). It includes built-in dependency injection (Context/Layer), distributed OpenTelemetry tracing, and Schema validation.',
     benchmarks:
-      'Effect 4.x LTS benchmarks demonstrate fiber execution speeds exceeding native Node.js Promise.all by 2.4x under high concurrency loads, with 35% lower memory footprint and zero memory leaks during long-running streaming operations.',
+      'Effect does not position itself on a single benchmark number. Its benefits are typed errors, structured concurrency, dependency injection and observability; performance depends on your workload, so profile your own code paths.',
     quickstart:
       '# Install Effect into your TypeScript project\nnpm install effect\n\n# Minimal Example: Safe typed error handling\nimport { Effect, Console } from "effect";\n\nconst program = Console.log("Hello from Effect 4.x!");\nEffect.runSync(program);',
     keyTakeaways: [
@@ -254,18 +254,18 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     summary:
       'A high-speed Go proxy and terminal preprocessor that aggressively strips conversational prose from AI coding agents while preserving 100% of code blocks, CLI commands, file paths, and exact stack traces.',
     metaDescription:
-      'Technical architecture guide for Caveman (JuliusBrussee/caveman), the open-source Go proxy that slashes AI coding agent token consumption by 30-45% through prose compression and A/B benchmarking.',
+      'Architecture guide for Caveman (JuliusBrussee/caveman), the open-source tool that cuts AI coding agent tokens with a local proxy and terse output rules. The project reports 33.2% fewer input tokens from its proxy.',
     whyUse:
       'When developers interact with AI coding agents in the terminal, models frequently generate verbose conversational introductions, polite summaries, and redundant restatements of code changes. In continuous pair-programming workflows with dozens of tool calls, this conversational filler rapidly exhausts context windows, triggers token rate limits, and multiplies API costs. Caveman eliminates this waste by stripping conversational fluff and delivering direct, terse, high-signal technical outputs.',
     architecture:
       'Written in Go for microsecond latency, Caveman functions as a local proxy between the developer terminal and the LLM API endpoint (or CLI pipe). It employs a deterministic streaming lexer that parses Markdown blocks. Code snippets (```), shell commands ($), absolute file paths, line numbers, and error traces are passed through byte-for-byte untouched, while conversational English paragraphs are compressed into concise telegraphic summaries ("caveman mode"). An integrated A/B testing suite measures exact token delta across live sessions.',
     benchmarks:
-      'Real-world A/B session benchmarks recorded in the repository demonstrate a 30% to 45% reduction in total token consumption across long-running debugging workflows, with zero degradation in code accuracy and a noticeable speedup in perceived terminal response times.',
+      'The Caveman README reports 33.2% fewer input tokens across whole sessions from its local proxy, web pages 129.8x smaller for the agent with caveman browse versus a Playwright snapshot, and 1.4 to 2.4x cheaper output with caveman-style responses. These are the project measurements, not independent tests.',
     quickstart:
       '# Install Caveman via Go or Homebrew\ngo install github.com/JuliusBrussee/caveman@latest\n\n# Run Caveman proxy on localhost:8080\ncaveman start --port 8080\n\n# Configure your AI agent to route through Caveman proxy\nexport OPENAI_BASE_URL="http://localhost:8080/v1"\nexport ANTHROPIC_BASE_URL="http://localhost:8080"',
     keyTakeaways: [
       'Written in Go with sub-millisecond proxy forwarding latency.',
-      'Slashes prompt and completion token usage by 30% to 45% in real pair-programming sessions.',
+      'The project reports 33.2% fewer input tokens through its proxy and 1.4 to 2.4x cheaper output with caveman-style responses.',
       'Deterministic stream lexer protects code blocks, diffs, paths, and stack traces from alteration.',
       'Built-in A/B testing harness measuring real-time token cost and latency savings.',
       'Compatible with any agent supporting custom HTTP proxy base URLs.',
@@ -322,14 +322,14 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
     architecture:
       'Agent-Reach employs a multi-backend failover routing architecture. Each platform is configured with a prioritized sequence of scrapers and protocols (e.g. Jina Reader for zero-config clean markdown conversions, OpenCLI for reusing user-authenticated desktop Chrome sessions, and community CLI utilities like twitter-cli and bili-cli). If a primary backend is blocked by upstream changes (such as IP bans or anti-scraping updates), Agent-Reach automatically fails over to the next available route without agent interruption. A central diagnostic tool (agent-reach doctor) performs continuous health checks on installed backends, verifies network connectivity, and guides dependency resolution.',
     benchmarks:
-      'In automated regression benchmarks across 1,000 queries spanning Twitter, Reddit, Bilibili, and YouTube, Agent-Reach achieved a 98.6% content retrieval success rate. Automatic backend failover resolved 100% of blocked requests within 350ms, while slashing enterprise API costs to $0 for supported public data routes.',
+      'The Agent-Reach README does not publish aggregate success-rate benchmarks. Reliability depends on each platform backend and on platforms changing their sites, so test the sources you rely on.',
     quickstart:
       '# Install Agent Reach for your AI Agent via NPX\nnpx skills add Panniantong/Agent-Reach@agent-reach\n\n# Run the automated backend health check\nagent-reach doctor\n\n# Query multi-platform content from your agent harness\nagent-reach query twitter "Claude 3.7 Sonnet benchmarks"\nagent-reach query reddit "best local embedding models 2026"',
     keyTakeaways: [
       'Direct, zero-API-fee internet & social access across 13+ platforms for AI agents.',
       'Dynamic multi-backend failover routing ensures seamless queries even when endpoints change.',
       'Universal compatibility with Claude Code, Cursor, Windsurf, OpenClaw, and any CLI agent.',
-      '100% privacy-safe: user cookies and authentication tokens stay strictly on the local machine.',
+      'Platform cookies and credentials are configured locally on your machine; review the README before connecting accounts.',
       'Built-in "agent-reach doctor" command for one-click environment diagnosis and self-healing.',
     ],
     faqs: [

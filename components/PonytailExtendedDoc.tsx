@@ -258,13 +258,15 @@ export default function PonytailExtendedDoc() {
             color: '#0f172a',
           }}
         >
-          <span>📉 ~54% less code (up to 94%)</span>
+          <span>📉 -53% code</span>
           <span>·</span>
-          <span>💰 ~20% cheaper</span>
+          <span>⚡ -41% time</span>
           <span>·</span>
-          <span>⚡ ~27% faster</span>
+          <span>💰 -26% cost</span>
           <span>·</span>
-          <span style={{ color: '#16a34a' }}>🛡️ 100% safe</span>
+          <span>🔤 -45% tokens</span>
+          <span>·</span>
+          <span style={{ color: '#64748b', fontWeight: 500 }}>Ponytail 5, project-reported</span>
         </div>
       </div>
 
@@ -379,6 +381,12 @@ export default function PonytailExtendedDoc() {
           />
         </div>
 
+        <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 12px' }}>
+          The chart and table below are from the project&apos;s earlier v4 agentic benchmark (June 2026). Ponytail 5 (October 2026)
+          reports -53% code, -41% time, -26% cost and -45% tokens across 39 tasks in Claude Code with Opus 5.5 (5 runs each); see the{' '}
+          <a href="https://github.com/DietrichGebert/ponytail#numbers" target="_blank" rel="noopener noreferrer">project README</a>.
+        </p>
+
         {/* Numbers Comparison Table */}
         <div style={{ overflowX: 'auto', marginBottom: '16px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13.5px', textAlign: 'left' }}>
@@ -422,7 +430,7 @@ export default function PonytailExtendedDoc() {
         </div>
 
         <p style={{ fontSize: '13px', color: '#64748b' }}>
-          <strong>Key Takeaway:</strong> Ponytail is the only arm that cuts every single metric while maintaining <strong>100% security and safety compliance</strong>. The cut is largest where over-building is common (date picker 404 → 23 lines; color picker 287 → 23 lines) by reaching for native browser elements.
+          <strong>Key Takeaway:</strong> In that v4 benchmark, Ponytail was the only arm that cut every metric while passing all safety checks. The cut is largest where over-building is common (date picker 404 → 23 lines; color picker 287 → 23 lines) by reaching for native browser elements.
         </p>
       </section>
 

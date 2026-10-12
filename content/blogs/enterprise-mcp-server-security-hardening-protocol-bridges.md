@@ -2,21 +2,19 @@
 title: "Enterprise MCP Server Security: Hardening Model Context Protocol Bridges Against Unauthorized Access in 2026"
 description: "A production guide to securing Model Context Protocol (MCP) servers: RFC 8707 token validation, tool poisoning prevention, argument-level authorization, and client-side pre-tool hooks."
 date: "2026-10-05"
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "AI Security"
 tags: ["mcp", "model-context-protocol", "ai-security", "oauth2", "zero-trust", "jwt", "claude-code"]
 ---
 
-The moment that made this risk tangible for our security team wasn't an external vulnerability report. It was inspecting local file permissions after installing an MCP server for internal developer documentation.
+Here is the scenario that makes MCP risk concrete. A developer installs a local MCP server so their coding agent can search the team's internal documentation. The server only "needs" read access to a folder of markdown files.
 
-The server was configured to grant read access to our markdown documentation repository. Harmless on the surface. But because it launched as a subprocess under my primary developer login account, it quietly inherited full read and write permissions to my entire home directory: including `~/.ssh/id_ed25519`, `~/.aws/credentials`, and active `.env` secret files across three separate microservices.
+But a local MCP server started by the developer runs as an ordinary process under their own account. Unless it is sandboxed, it can read and write anything that account can: `~/.ssh` keys, `~/.aws/credentials`, `.env` files in every project. A "documentation search" plugin, driven by an AI agent that decides what to call next, now sits one prompt-injection away from those secrets.
 
-By connecting what felt like a simple documentation search plugin, I had handed an autonomous LLM agent the keys to our entire production infrastructure.
+Nothing about this looks abnormal to the operating system: **An MCP server is an operating system process. Processes inherit the permissions of the user who executes them.** The protocol simply adds an AI reasoning engine capable of autonomously choosing what to execute next.
 
-The protocol documentation did not flag this as an anomaly, because from an OS perspective, everything functioned normally: **An MCP server is an operating system process. Processes inherit the permissions of the user who executes them.** The protocol simply adds an AI reasoning engine capable of autonomously choosing what to execute next.
-
-In this guide, we provide an architectural blueprint for securing [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers in enterprise production environments. For broader agent governance, see our hands-on [2026 AI Agent Harness Shootout](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout) and our analysis of [Shadow AI Code Governance](/blog/shadow-ai-governance-auditing-securing-code-assistants).
+In this guide, we provide an architectural blueprint for securing [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers in enterprise production environments. For broader agent governance, see our [coding agent comparison](/blog/claude-code-vs-antigravity-vs-grok-build-2026-shootout) and our analysis of [Shadow AI Code Governance](/blog/shadow-ai-governance-auditing-securing-code-assistants).
 
 ---
 
@@ -201,3 +199,9 @@ Tool poisoning occurs when a malicious or compromised MCP server registers a too
 
 ### Why is audience validation (aud) critical for remote MCP servers?
 Under RFC 8707, audience validation ensures that a JWT was issued specifically for the target MCP server. Without audience verification, any valid token issued by your corporate Okta or Keycloak identity provider for another internal application (such as Jira or internal wikis) could be replayed to access your MCP bridge.
+
+## Sources
+
+- Model Context Protocol: [Authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) (references RFC 8707 resource indicators and RFC 9728 protected resource metadata)
+- Model Context Protocol: [Security best practices](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)
+- OWASP: [Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/)

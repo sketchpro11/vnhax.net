@@ -1,8 +1,8 @@
 ---
 title: "ByteDance DMAD: 4-Step Video Generation via Distribution Matching Adversarial Distillation"
-description: "ByteDance's DMAD cuts video generation from 20-30 steps to just 4 with LoRA weights under 1.4 GB. Here is how it works, hardware requirements, and setup."
+description: "ByteDance's DMAD cuts video generation to just 4 steps, with a 1.4 GB LoRA for MiniMax-H3. Here is how it works, hardware requirements, and setup."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-10-12"
 author: "Umar Hashmi"
 category: "Developer Tools & Repos"
 tags: ["developer", "tools", "code-distillation", "bytedance", "dmad", "open-source-repos", "developer-workflows"]
@@ -20,7 +20,7 @@ This post walks through what DMAD is, why the "teacher and student" idea behind 
 > - **Main promise:** video generation in 4 steps instead of the usual 20–30
 > - **Works with:** MiniMax for video, and the approach can be used on other video and image models
 > - **Code:** released on GitHub
-> - **Size of the add-on files:** LoRA files of roughly 1.4 GB each
+> - **Size of the add-on files:** the MiniMax-H3 LoRA is about 1.4 GB; the Wan2.1 and SDXL releases are full checkpoints (2.8 GB to 28.6 GB)
 
 ## What DMAD actually is (in plain words)
 
@@ -89,7 +89,7 @@ Here is the general path:
 
 1. **Open the code repository.** Start with the [DMAD GitHub repository](https://github.com/Yzmblog/DMAD) and read the setup instructions before you download anything.
 2. **Download the base MiniMax model.** DMAD does not replace it. You need the base model first.
-3. **Download the LoRA files.** The [DMAD models on Hugging Face](https://huggingface.co/ZhengmingYu/DMAD) are lightweight compared with the base model, with each LoRA file at roughly 1.4 GB.
+3. **Download the LoRA files.** The [DMAD models on Hugging Face](https://huggingface.co/ZhengmingYu/DMAD) include a MiniMax-H3 4-step LoRA of about 1.4 GB (a ComfyUI version is about 2 GB). The Wan2.1 files are full checkpoints instead: about 2.8 GB for the 1.3B model and 28.6 GB for the 14B model.
 4. **Follow the repository's instructions.** Set up the environment exactly as described, then run a short test prompt first.
 5. **Compare against your normal workflow.** Run the same prompt both ways and judge the quality yourself.
 
@@ -119,7 +119,7 @@ Where does a 4-step generator actually help?
 - **Learning.** Students and hobbyists can explore video AI without waiting forever on every attempt.
 - **Product experiments.** Small teams can prototype video features without huge compute bills.
 
-If you want more background on this kind of tooling, you might also like our guide to [ByteDance PDMD 4-Step Video Distillation](/blog/bytedance-pdmd-video-generation-distillation) and our teardown on [NVIDIA Soul Refiner: Single-Step 4K Video Upscaling](/blog/nvidia-soul-refiner-single-step-4k-video-upscaling).
+If you want more background on this kind of tooling, you might also like our guide to [ByteDance PDMD 4-Step Video Distillation](/blog/bytedance-pdmd-video-generation-distillation) and our teardown on [NVIDIA SoL-Refiner: one-step 4K video refinement](/blog/nvidia-sol-refiner-one-step-4k-video-refinement).
 
 ## My take
 

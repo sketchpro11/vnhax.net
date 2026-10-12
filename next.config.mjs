@@ -120,6 +120,11 @@ const nextConfig = {
       },
       // Day 4 content consolidation: merged or removed articles
       {
+        source: '/blog/nvidia-soul-refiner-single-step-4k-video-upscaling',
+        destination: '/blog/nvidia-sol-refiner-one-step-4k-video-refinement',
+        permanent: true,
+      },
+      {
         source: '/blog/meta-enterprise-platform-private-llama-security-architecture',
         destination: '/meta',
         permanent: true,

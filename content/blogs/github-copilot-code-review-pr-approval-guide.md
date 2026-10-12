@@ -83,7 +83,6 @@ Copilot reviews don't count as an approving review, and they shouldn't. A setup 
 - **Write a real PR description** saying what the change is meant to do, so the reviewer can check intent and not just syntax.
 - **Add repository custom instructions** (for example in `.github/copilot-instructions.md`) describing your conventions, such as "all new endpoints need an integration test", so feedback matches your team's standards.
 
-I'll add screenshots and real review examples from my own repositories in a future update.
 
 ## Frequently asked questions
 
