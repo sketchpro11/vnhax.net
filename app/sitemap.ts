@@ -4,180 +4,74 @@ import { getAllRepos } from '@/lib/repos-data';
 import { getAllBlogs } from '@/lib/blog';
 import { getAllUIComponents } from '@/lib/components-data';
 
+/**
+ * lastmod must reflect the last *significant* change to each page — Google ignores it
+ * when it is not consistently accurate (e.g. stamped with the build time on every deploy).
+ * Static pages use the date their content last changed; update the date here when you
+ * meaningfully edit that page. Blog posts use frontmatter `updatedAt` (or `date`).
+ */
+const PAGE_UPDATED: Record<string, string> = {
+  '/about': '2026-10-12',
+  '/author/umar-hashmi': '2026-10-12',
+  '/editorial-policy': '2026-10-12',
+  '/contact': '2026-10-11',
+  '/privacy-policy': '2026-10-11',
+  '/terms': '2026-10-11',
+  '/disclaimer': '2026-10-11',
+  '/repos': '2026-10-11',
+  '/ai': '2026-10-11',
+  '/ai/ai-tools': '2026-10-11',
+  '/developer-resources': '2026-10-11',
+  '/developer-resources/github-repos': '2026-10-09',
+  '/technology': '2026-10-10',
+  '/technology/platforms': '2026-10-09',
+  '/ui-components': '2026-10-11',
+  '/openai': '2026-10-12',
+  '/anthropic': '2026-10-12',
+  '/google': '2026-10-12',
+  '/github': '2026-10-12',
+  '/xai': '2026-10-12',
+  '/meta': '2026-10-12',
+};
+
+/** Repository review pages were last rewritten on this date (live star counts are not a significant change). */
+const REPO_PAGES_UPDATED = '2026-10-11';
+/** UI component pages were last changed on this date. */
+const UI_COMPONENT_PAGES_UPDATED = '2026-10-09';
+
+const latest = (...dates: string[]) => dates.reduce((a, b) => (a > b ? a : b));
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = BRAND_CONFIG.siteUrl;
-  const now = new Date();
 
-  // Core pages
-  const routes: MetadataRoute.Sitemap = [
-    {
-      url: `${baseUrl}`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/author/umar-hashmi`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/editorial-policy`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/disclaimer`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/repos`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    // Category Hubs
-    {
-      url: `${baseUrl}/ai`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/ai/ai-tools`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/developer-resources`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/developer-resources/github-repos`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/technology`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/technology/platforms`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/ui-components`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    // Company Ecosystem Hubs
-    {
-      url: `${baseUrl}/openai`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/anthropic`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/google`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/github`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/xai`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/meta`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
+  const blogPosts = await getAllBlogs();
+  const postDate = (p: (typeof blogPosts)[number]) => p.frontmatter.updatedAt || p.frontmatter.date;
+  const newestPost = latest(...blogPosts.map(postDate));
+
+  const staticRoutes: MetadataRoute.Sitemap = [
+    // Homepage and blog index list the latest posts, so they change when a post changes.
+    { url: baseUrl, lastModified: latest('2026-10-11', newestPost) },
+    { url: `${baseUrl}/blog`, lastModified: latest('2026-10-12', newestPost) },
+    ...Object.entries(PAGE_UPDATED).map(([path, date]) => ({
+      url: `${baseUrl}${path}`,
+      lastModified: date,
+    })),
   ];
 
-  // Dynamic Blog Posts from local content/blogs/ directory
-  const blogPosts = await getAllBlogs();
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.fileModifiedDate || new Date(post.frontmatter.date),
-    changeFrequency: 'weekly',
-    priority: 0.85,
+    lastModified: postDate(post),
   }));
 
-  // Dynamic Repository Architecture pages
-  const repos = getAllRepos();
-  const repoRoutes: MetadataRoute.Sitemap = repos.map((repo) => ({
+  const repoRoutes: MetadataRoute.Sitemap = getAllRepos().map((repo) => ({
     url: `${baseUrl}/repos/${repo.slug}`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.9,
+    lastModified: REPO_PAGES_UPDATED,
   }));
 
-  // Dynamic UI Components
-  const uiComponents = getAllUIComponents();
-  const componentRoutes: MetadataRoute.Sitemap = uiComponents.map((comp) => ({
+  const componentRoutes: MetadataRoute.Sitemap = getAllUIComponents().map((comp) => ({
     url: `${baseUrl}/ui-components/${comp.slug}`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.85,
+    lastModified: UI_COMPONENT_PAGES_UPDATED,
   }));
 
-  return [...routes, ...blogRoutes, ...repoRoutes, ...componentRoutes];
+  return [...staticRoutes, ...blogRoutes, ...repoRoutes, ...componentRoutes];
 }

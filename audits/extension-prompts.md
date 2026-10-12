@@ -141,3 +141,45 @@ Steps:
 ```
 
 Test: https://vnhax.net/contact par form bhar kar bhejo → "Message sent" aana chahiye aur Gmail me email aani chahiye.
+
+---
+
+## Prompt 5 — Vercel www → 308 (short replies)
+
+```
+Style: Jawab bohat short do. Sirf zaroori baat, koi lambi explanation nahi.
+
+Task: Vercel me www.vnhax.net ko vnhax.net par permanent redirect (308) karo. Abhi 307 hai.
+
+Rules:
+- Login main khud karunga. Password kabhi type mat karna. Login screen aaye to ruko, mujhe bolo.
+- Koi domain delete mat karna. DNS mat chhedna. Koi aur setting mat badalna.
+- Save se pehle mujhe dikhao kya badal rahe ho.
+
+Steps:
+1. https://vercel.com/dashboard → vnhax.net wala project kholo.
+2. Settings → Domains.
+3. Check: vnhax.net primary hai, us par koi redirect nahi.
+4. www.vnhax.net → Edit → "Redirect to" = vnhax.net → status code 308 Permanent Redirect (308 na ho to 301). Save.
+5. Screenshot bhejo: Domains list, redirect aur status code dikhe.
+```
+
+## Prompt 6 — LinkedIn, X, GitHub par vnhax.net link (short replies)
+
+```
+Style: Jawab bohat short do. Sirf zaroori baat, koi lambi explanation nahi.
+
+Task: Meri LinkedIn, X aur GitHub profiles par website link https://vnhax.net lagao.
+
+Rules:
+- Login main khud karunga. Password kabhi type mat karna. Login screen aaye to ruko, mujhe bolo.
+- Sirf website/link field badlo. Naam, bio, photo, baqi koi cheez mat chhedna.
+- Koi post, tweet, message ya connection request mat bhejna.
+- Har Save se pehle mujhe dikhao aur meri haan ka wait karo.
+
+Steps:
+1. GitHub: https://github.com/settings/profile (account: umarhashmi-dev) → "URL" field me https://vnhax.net → mujhe dikhao → meri haan par "Update profile".
+2. X: https://x.com/umarhashmi_dev → Edit profile → "Website" = https://vnhax.net → mujhe dikhao → meri haan par Save.
+3. LinkedIn: https://www.linkedin.com/in/umarhashmi-dev → Contact info (pencil) → Website add karo: https://vnhax.net, type "Personal" ya "Blog" → mujhe dikhao → meri haan par Save.
+4. Har profile ka final screenshot bhejo jisme link dikhe.
+```
