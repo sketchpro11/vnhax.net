@@ -169,7 +169,7 @@ export default function CavemanExtendedDoc() {
           Caveman is a disciplined voice, not broken grammar. Every reply follows strict linguistic rules:
         </p>
 
-        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden' }}>
+        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
             <thead>
               <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#475569' }}>
@@ -277,7 +277,7 @@ irm https://raw.githubusercontent.com/JuliusBrussee/caveman/v3.1.0/install.ps1 |
           Outside research labs first, then ours. Nothing rounded up:
         </p>
 
-        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden', marginBottom: '20px' }}>
+        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflowX: 'auto', marginBottom: '20px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
             <thead>
               <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#475569' }}>
@@ -378,7 +378,7 @@ caveman claude        # or codex · gemini · aider · kilo · qwen · opencode 
           What You Get: Commands, Subagents &amp; Work Patterns
         </h2>
 
-        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden' }}>
+        <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', textAlign: 'left' }}>
             <thead>
               <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#475569' }}>

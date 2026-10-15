@@ -59,6 +59,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/terms-and-conditions',
+        destination: '/terms',
+        permanent: true,
+      },
+      {
         source: '/component-template',
         destination: '/ui-components',
         permanent: true,
