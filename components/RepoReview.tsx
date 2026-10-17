@@ -6,6 +6,7 @@ import ECCExtendedDoc from '@/components/ECCExtendedDoc';
 import EffectExtendedDoc from '@/components/EffectExtendedDoc';
 import CavemanExtendedDoc from '@/components/CavemanExtendedDoc';
 import AgentReachExtendedDoc from '@/components/AgentReachExtendedDoc';
+import TrendingRepoDoc from '@/components/TrendingRepoDoc';
 import type { RepoDetails } from '@/lib/repos-data';
 
 interface RepoReviewProps {
@@ -19,6 +20,9 @@ const EXTENDED_DOCS: Record<string, React.ComponentType> = {
   effect: EffectExtendedDoc,
   caveman: CavemanExtendedDoc,
   'agent-reach': AgentReachExtendedDoc,
+  voicestudio: () => <TrendingRepoDoc slug="voicestudio" />,
+  'ai-job-search': () => <TrendingRepoDoc slug="ai-job-search" />,
+  'claude-plugins-official': () => <TrendingRepoDoc slug="claude-plugins-official" />,
 };
 
 const h2Style = {
