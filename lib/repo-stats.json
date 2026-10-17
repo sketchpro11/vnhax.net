@@ -1,50 +1,74 @@
 {
   "ponytail": {
-    "stars": 161563,
-    "forks": 8714,
+    "stars": 166164,
+    "forks": 8985,
     "license": "MIT",
     "language": "JavaScript",
-    "pushedAt": "2026-10-10T04:19:53Z",
-    "fetchedAt": "2026-10-12T13:25:00.769Z"
+    "pushedAt": "2026-10-16T23:04:42Z",
+    "fetchedAt": "2026-10-17T21:56:24.102Z"
   },
   "impeccable": {
-    "stars": 80118,
-    "forks": 4768,
+    "stars": 82343,
+    "forks": 4950,
     "license": "Apache-2.0",
-    "language": "JavaScript",
-    "pushedAt": "2026-10-12T11:07:53Z",
-    "fetchedAt": "2026-10-12T13:25:00.847Z"
+    "language": "Rust",
+    "pushedAt": "2026-10-17T20:15:40Z",
+    "fetchedAt": "2026-10-17T21:56:24.457Z"
   },
   "ecc": {
-    "stars": 277581,
-    "forks": 41389,
+    "stars": 282399,
+    "forks": 41974,
     "license": "MIT",
     "language": "JavaScript",
-    "pushedAt": "2026-10-12T06:22:31Z",
-    "fetchedAt": "2026-10-12T13:25:00.928Z"
+    "pushedAt": "2026-10-15T19:17:01Z",
+    "fetchedAt": "2026-10-17T21:56:24.823Z"
   },
   "effect": {
-    "stars": 17246,
-    "forks": 852,
+    "stars": 17317,
+    "forks": 866,
     "license": "MIT",
     "language": "TypeScript",
-    "pushedAt": "2026-10-12T12:44:46Z",
-    "fetchedAt": "2026-10-12T13:25:01.007Z"
+    "pushedAt": "2026-10-17T21:56:02Z",
+    "fetchedAt": "2026-10-17T21:56:25.189Z"
   },
   "caveman": {
-    "stars": 111156,
-    "forks": 6436,
+    "stars": 113275,
+    "forks": 6553,
     "license": "Apache-2.0",
     "language": "Go",
-    "pushedAt": "2026-10-12T08:33:16Z",
-    "fetchedAt": "2026-10-12T13:25:01.092Z"
+    "pushedAt": "2026-10-17T21:09:51Z",
+    "fetchedAt": "2026-10-17T21:56:25.554Z"
   },
   "agent-reach": {
-    "stars": 96423,
-    "forks": 8437,
+    "stars": 98701,
+    "forks": 8692,
     "license": "MIT",
     "language": "Python",
-    "pushedAt": "2026-10-08T08:31:08Z",
-    "fetchedAt": "2026-10-12T13:25:01.172Z"
+    "pushedAt": "2026-10-15T11:34:42Z",
+    "fetchedAt": "2026-10-17T21:56:25.924Z"
+  },
+  "voicestudio": {
+    "stars": 73141,
+    "forks": 8002,
+    "license": "AGPL-3.0",
+    "language": "Python",
+    "pushedAt": "2026-10-17T21:55:55Z",
+    "fetchedAt": "2026-10-17T21:56:26.278Z"
+  },
+  "ai-job-search": {
+    "stars": 50229,
+    "forks": 16916,
+    "license": "MIT",
+    "language": "Python",
+    "pushedAt": "2026-10-17T18:12:49Z",
+    "fetchedAt": "2026-10-17T21:56:26.683Z"
+  },
+  "claude-plugins-official": {
+    "stars": 41646,
+    "forks": 4455,
+    "license": "Apache-2.0",
+    "language": "Python",
+    "pushedAt": "2026-10-17T16:41:00Z",
+    "fetchedAt": "2026-10-17T21:56:27.058Z"
   }
 }

@@ -86,7 +86,7 @@ export default function ReposIndexPage() {
                 🔥 GitHub Trending Leaderboard
               </span>
               <span style={{ fontSize: '12px', color: '#64748b' }}>
-                Updated October 4, 2026
+                Updated October 18, 2026
               </span>
             </div>
             <h1 className="page-title">github repositories</h1>
@@ -112,7 +112,7 @@ export default function ReposIndexPage() {
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Focus Areas</div>
               <div style={{ fontSize: '24px', fontWeight: 800, color: '#2563eb', marginTop: '4px' }}>AI Agents &amp; TS</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Token reduction, UI linters, Effect</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Coding agents, voice AI, plugins</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Live Data</div>
@@ -122,7 +122,7 @@ export default function ReposIndexPage() {
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>License</div>
               <div style={{ fontSize: '24px', fontWeight: 800, color: '#9333ea', marginTop: '4px' }}>Open Source</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Permissive MIT &amp; Apache-2.0</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>MIT, Apache-2.0 &amp; AGPL-3.0</div>
             </div>
           </section>
 

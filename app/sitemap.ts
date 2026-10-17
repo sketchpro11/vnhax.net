@@ -18,7 +18,7 @@ const PAGE_UPDATED: Record<string, string> = {
   '/privacy-policy': '2026-10-11',
   '/terms': '2026-10-11',
   '/disclaimer': '2026-10-11',
-  '/repos': '2026-10-11',
+  '/repos': '2026-10-18',
   '/ai': '2026-10-11',
   '/ai/ai-tools': '2026-10-11',
   '/developer-resources': '2026-10-11',
@@ -36,6 +36,11 @@ const PAGE_UPDATED: Record<string, string> = {
 
 /** Repository review pages were last rewritten on this date (live star counts are not a significant change). */
 const REPO_PAGES_UPDATED = '2026-10-11';
+const REPO_PAGES_ADDED: Record<string, string> = {
+  voicestudio: '2026-10-18',
+  'ai-job-search': '2026-10-18',
+  'claude-plugins-official': '2026-10-18',
+};
 /** UI component pages were last changed on this date. */
 const UI_COMPONENT_PAGES_UPDATED = '2026-10-09';
 
@@ -65,7 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const repoRoutes: MetadataRoute.Sitemap = getAllRepos().map((repo) => ({
     url: `${baseUrl}/repos/${repo.slug}`,
-    lastModified: REPO_PAGES_UPDATED,
+    lastModified: REPO_PAGES_ADDED[repo.slug] ?? REPO_PAGES_UPDATED,
   }));
 
   const componentRoutes: MetadataRoute.Sitemap = getAllUIComponents().map((comp) => ({

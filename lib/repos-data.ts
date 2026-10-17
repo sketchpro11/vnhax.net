@@ -355,6 +355,171 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       },
     ],
   },
+
+  voicestudio: {
+    slug: 'voicestudio',
+    name: 'VoiceStudio',
+    repoFullName: 'debpalash/VoiceStudio',
+    githubUrl: 'https://github.com/debpalash/VoiceStudio',
+    image: '/images/VoiceStudio by vnhax.net.png',
+    language: 'Python',
+    license: 'AGPL-3.0',
+    stars: '73.1k',
+    forks: '8k',
+    category: 'Local Voice AI & Dubbing',
+    topics: ['voice-cloning', 'text-to-speech', 'dubbing', 'transcription', 'local-first', 'elevenlabs-alternative', 'mcp', 'electron'],
+    summary:
+      'An open-source, local-first desktop app for voice cloning, voice design, video dubbing, dictation, transcription and audiobook creation, with a local API and MCP server so AI agents can use it too.',
+    metaDescription:
+      'VoiceStudio (debpalash/VoiceStudio) review: the open-source, local-first ElevenLabs alternative for voice cloning, dubbing, dictation and audiobooks. Install steps, hardware support, AGPL-3.0 licensing and responsible-use notes.',
+    whyUse:
+      'Cloud voice services are convenient, but every script, recording and cloned voice leaves your machine, and per-character pricing adds up quickly on long projects like audiobooks or dubbed videos. VoiceStudio puts those workflows into one desktop app that runs on your own hardware. You can clone a voice from a clean reference recording or design a new one, dub a video with timed speech, dictate with a floating widget, transcribe audio, and batch-produce stories or audiobooks. The README says local workflows run on your hardware, remote services are optional, and usage analytics require consent. For developers, the local API and MCP support matter most: an AI agent can call VoiceStudio as a tool instead of a paid cloud API.',
+    architecture:
+      'VoiceStudio is an Electron desktop app (the README says Electron is now the only desktop app and web UI; version 0.5.3 was the final Tauri release) with a Python backend that runs the speech models. The default engine is VoiceStudio, powered by k2-fsa/OmniVoice, and other engines can be picked from its engine catalog. A built-in Model Manager downloads models when a workspace needs them and shows versioned model-source and licence notices. Acceleration depends on hardware: CUDA on NVIDIA GPUs (Windows and Linux), Metal (MPS) on Apple Silicon, and a CPU-only PyTorch build on machines without a dedicated GPU. Windows on ARM is experimental (CPU only), and Intel Macs run the UI only and connect to a remote backend. Integrations include a local speech API, an MCP server for agents, reusable recipes, watch folders, and preview iOS and Android companion apps.',
+    benchmarks:
+      'The README does not publish headline speed or quality numbers; it links to a benchmarks page and a performance guide in the repository docs, and notes that hardware needs vary by engine. We have not run our own tests, so check the docs for the engine you plan to use and measure on your own machine.',
+    quickstart:
+      '# macOS / Linux: one-command install of the latest Electron release\ncurl -fsSL https://voicestudio.sh/install | sh\n\n# Windows (PowerShell)\nirm https://voicestudio.sh/install | iex\n\n# Or run the Electron preview from source\ngit clone https://github.com/debpalash/VoiceStudio.git\ncd VoiceStudio\nbun install\nbun run setup:api\nbun run dev',
+    keyTakeaways: [
+      'One desktop app for voice cloning, voice design, dubbing, dictation, transcription and audiobooks.',
+      'Runs locally: CUDA on NVIDIA, Metal on Apple Silicon, and a slower CPU mode on machines without a GPU.',
+      'Default engine is built on k2-fsa/OmniVoice; other engines are available from its catalog.',
+      'Local API and MCP server let AI agents use it as a tool.',
+      'The app is AGPL-3.0, but model weights and voices have their own licences; clone voices only with permission.',
+    ],
+    faqs: [
+      {
+        question: 'Is VoiceStudio free?',
+        answer:
+          'The application is open source under AGPL-3.0, which allows commercial use under its conditions. The README stresses that model weights, tokenizers, voices and generated-output conditions are licensed separately, so check the licence of each model you download before commercial use.',
+      },
+      {
+        question: 'Does VoiceStudio need a GPU?',
+        answer:
+          'No. NVIDIA GPUs (CUDA) and Apple Silicon (Metal) are accelerated, but the README says machines without a dedicated GPU are fully usable on the CPU, just slower. That setup installs a small CPU build of PyTorch and needs about 5 GB of free disk space.',
+      },
+      {
+        question: 'Can AI agents like Claude Code use VoiceStudio?',
+        answer:
+          'Yes. VoiceStudio provides a local API and an MCP server, and the project offers agent skills via npx skills add debpalash/VoiceStudio. The README also includes a prompt you can paste into a coding agent to install and verify the app.',
+      },
+      {
+        question: 'Is it legal to clone voices with VoiceStudio?',
+        answer:
+          'The project says to clone voices only with permission. Cloning someone else\'s voice without consent can break the law in many countries, so use your own voice, a contracted voice actor, or a voice you have the rights to.',
+      },
+    ],
+  },
+
+  'ai-job-search': {
+    slug: 'ai-job-search',
+    name: 'AI Job Search',
+    repoFullName: 'MadsLorentzen/ai-job-search',
+    githubUrl: 'https://github.com/MadsLorentzen/ai-job-search',
+    image: '/images/AI Job Search by vnhax.net.png',
+    language: 'Python',
+    license: 'MIT',
+    stars: '50.2k',
+    forks: '16.9k',
+    category: 'Claude Code Workflows & Career Tools',
+    topics: ['claude-code', 'ai-agents', 'job-search', 'resume', 'cover-letter', 'latex', 'interview-preparation'],
+    summary:
+      'A Claude Code framework that evaluates job postings against your profile, drafts a tailored LaTeX CV and cover letter, has a second agent review them, and prepares you for interviews, all from your own machine.',
+    metaDescription:
+      'AI Job Search (MadsLorentzen/ai-job-search) review: a Claude Code job application framework with /setup, /scrape and /apply commands, a drafter-reviewer workflow, LaTeX CV and cover letters, ATS checks and interview prep.',
+    whyUse:
+      'Tailoring a CV and cover letter for every job is slow, and generic AI-written applications are easy to spot. This framework turns Claude Code into a structured job application assistant that works from your real profile. You fill in your experience once, then each posting is scored for fit before anything is written. Its rules say every claim in the CV and cover letter is checked against your actual profile and that it never fabricates skills or experience, which is the right line to hold when an AI writes on your behalf. The author, a geophysicist whose position was cut in late 2025, says he built it for his own search and reports 69 tailored applications, 20 first interviews and one signed contract, starting as an AI engineer in June 2026. That is one person\'s result, not a guarantee, but it shows the workflow in real use.',
+    architecture:
+      'The repository is a set of Claude Code slash commands and skills plus small tools. /setup builds your profile from a documents folder (CV, LinkedIn export, diplomas), a pasted CV, or an interview. /scrape searches job portals through Bun-based CLI skills (the shipped ones target Danish boards plus LinkedIn and freehire.me), and /add-portal generates a new portal skill for your market. /apply runs a drafter-reviewer pipeline: parse the posting, score fit, draft a LaTeX CV and cover letter, spawn a separate reviewer agent that researches the company and critiques the drafts, revise, then compile the PDFs (lualatex for the CV, xelatex for the letter) and iterate until the CV is exactly two pages and the letter one page. A final ATS check extracts the PDF text layer to confirm contact details, reading order and keyword coverage. Extra commands cover ranking (/rank), interview prep (/interview), outcome tracking (/outcome), Gmail and Notion sync, skill-gap analysis (/upskill) and an offline HTML dashboard.',
+    benchmarks:
+      'There are no formal benchmarks. The only result reported in the README is the author\'s own job search: 69 tailored applications, 20 first interviews and one signed contract. Treat it as a single personal outcome.',
+    quickstart:
+      '# Use a PRIVATE repo for your personal data (forks of public repos are public)\ngh repo fork MadsLorentzen/ai-job-search --clone\ncd ai-job-search\n\n# Install the job portal CLI tools (needs Bun)\npython3 tools/install_portal_clis.py\n\n# Start Claude Code, then run the workflow\nclaude\n/setup\n/scrape\n/apply https://example-job-board.com/job/123',
+    keyTakeaways: [
+      'Core workflow: /setup builds your profile, /scrape finds postings, /apply writes a tailored application.',
+      'A second reviewer agent critiques every draft before revision.',
+      'Compiles real LaTeX PDFs and checks them for layout problems and ATS readability.',
+      'Built-in honesty rule: claims are checked against your profile and skills are never invented.',
+      'Portal skills ship for Denmark plus LinkedIn and freehire.me; /add-portal adapts it to your country.',
+    ],
+    faqs: [
+      {
+        question: 'Do I need a paid Claude plan to use AI Job Search?',
+        answer:
+          'Yes. The README notes Claude Code has no free tier, so you need a Claude Pro, Max or Team subscription or Anthropic API credits. It also points users of other agent tools to AGENTS.md and community forks.',
+      },
+      {
+        question: 'Is my personal data safe in this repository?',
+        answer:
+          'Your profile is written into tracked files in your copy of the repo. The README warns that a fork of a public repository is always public, so for your own job search it recommends a private repository with this project as upstream instead of a public fork.',
+      },
+      {
+        question: 'Does it work outside Denmark?',
+        answer:
+          'The profile, fit evaluation and application pipeline are language- and country-agnostic. The shipped job-portal skills target Danish boards, plus LinkedIn and freehire.me; /add-portal generates a search skill for a job board in your own market.',
+      },
+      {
+        question: 'Will employers mind an AI-assisted application?',
+        answer:
+          'The author says he was open about using the tool with every employer and that it usually started a technical conversation rather than counting against him. Whatever tool you use, review every application yourself before you send it.',
+      },
+    ],
+  },
+
+  'claude-plugins-official': {
+    slug: 'claude-plugins-official',
+    name: 'Claude Plugins Official',
+    repoFullName: 'anthropics/claude-plugins-official',
+    githubUrl: 'https://github.com/anthropics/claude-plugins-official',
+    image: '/images/Claude Plugins Official by vnhax.net.png',
+    language: 'Python',
+    license: 'Apache-2.0',
+    stars: '41.6k',
+    forks: '4.5k',
+    category: 'Claude Code Plugins & Marketplace',
+    topics: ['claude-code', 'plugins', 'mcp', 'skills', 'marketplace', 'anthropic'],
+    summary:
+      'Anthropic\'s official, curated directory of Claude Code plugins: internal plugins built by Anthropic plus reviewed third-party plugins, installable straight from Claude Code\'s plugin system.',
+    metaDescription:
+      'Claude Plugins Official (anthropics/claude-plugins-official) review: Anthropic\'s curated Claude Code plugin marketplace. How to install plugins, what is inside (LSP, code review, skills, MCP integrations), plugin structure and safety advice.',
+    whyUse:
+      'Claude Code can be extended with slash commands, subagents, skills, hooks and MCP servers, but finding good ones and keeping them updated is work. This repository is the default marketplace that Claude Code\'s plugin system reads from, so you can browse and install plugins without hunting through random repositories. It is split into plugins developed and maintained by Anthropic and external plugins from partners and the community, which have to meet quality and security standards for approval. Even so, the README is clear that you should trust a plugin before installing it: Anthropic does not control what MCP servers, files or other software a plugin includes and cannot verify that they will work as intended or won\'t change.',
+    architecture:
+      'The repository has two main folders: /plugins for Anthropic\'s internal plugins and /external_plugins for third-party ones. Each plugin follows a standard layout: a required .claude-plugin/plugin.json with metadata, an optional .mcp.json for MCP server configuration, and optional commands/, agents/ and skills/ folders, plus a README. At the time of writing, /plugins held 40 entries, including language-server plugins (typescript-lsp, pyright-lsp, rust-analyzer-lsp, gopls-lsp and more), code-review, pr-review-toolkit, security-guidance, commit-commands, feature-dev, frontend-design, hookify, plugin-dev, mcp-server-dev and skill-creator. /external_plugins held 14, including github, gitlab, linear, asana, playwright, context7, firebase and terraform. Plugin names are immutable slugs; a renames map in .claude-plugin/marketplace.json migrates installs when a rename is unavoidable, and skill-bundle plugins can declare SKILL.md folders directly with strict set to false.',
+    benchmarks:
+      'Not applicable. This is a plugin directory, not a tool with performance claims.',
+    quickstart:
+      '# Inside Claude Code: install a plugin from the official marketplace\n/plugin install code-review@claude-plugins-official\n\n# Or browse everything interactively\n/plugin\n# then open the Discover tab',
+    keyTakeaways: [
+      'The official, curated plugin marketplace for Claude Code, maintained by Anthropic.',
+      'Install with /plugin install <name>@claude-plugins-official or browse in /plugin > Discover.',
+      'Includes Anthropic plugins (LSP servers, code review, security guidance, skill tools) and partner plugins (GitHub, Linear, Playwright and more).',
+      'Every plugin uses the same structure: plugin.json plus optional MCP config, commands, agents and skills.',
+      'Anthropic warns it cannot verify third-party plugin contents, so review a plugin before installing it.',
+    ],
+    faqs: [
+      {
+        question: 'How do I install a plugin from claude-plugins-official?',
+        answer:
+          'In Claude Code, run /plugin install followed by the plugin name and @claude-plugins-official, for example /plugin install code-review@claude-plugins-official. You can also browse plugins under /plugin, in the Discover tab.',
+      },
+      {
+        question: 'Are the plugins in this directory safe?',
+        answer:
+          'Internal plugins are built by Anthropic, and external plugins must meet quality and security standards to be accepted. The README still advises trusting a plugin before installing, updating or using it, because Anthropic does not control what MCP servers or other software third-party plugins include.',
+      },
+      {
+        question: 'Can I submit my own plugin?',
+        answer:
+          'Third-party partners can submit plugins through Anthropic\'s plugin directory submission form linked in the README. External plugins are reviewed for quality and security before inclusion.',
+      },
+      {
+        question: 'What is inside a Claude Code plugin?',
+        answer:
+          'A plugin needs a .claude-plugin/plugin.json metadata file and can add a .mcp.json MCP server configuration, slash commands, agent definitions and skills, plus a README. See /plugins/example-plugin in the repository for a reference implementation.',
+      },
+    ],
+  },
 };
 
 type LiveRepoStats = {
