@@ -23,6 +23,9 @@ const EXTENDED_DOCS: Record<string, React.ComponentType> = {
   voicestudio: () => <TrendingRepoDoc slug="voicestudio" />,
   'ai-job-search': () => <TrendingRepoDoc slug="ai-job-search" />,
   'claude-plugins-official': () => <TrendingRepoDoc slug="claude-plugins-official" />,
+  t3code: () => <TrendingRepoDoc slug="t3code" />,
+  'claude-mem': () => <TrendingRepoDoc slug="claude-mem" />,
+  lightpanda: () => <TrendingRepoDoc slug="lightpanda" />,
 };
 
 const h2Style = {

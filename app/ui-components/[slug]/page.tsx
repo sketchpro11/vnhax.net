@@ -516,6 +516,23 @@ export default async function ComponentDetailPage({ params }: PageProps) {
             </div>
           </section>
 
+          {/* FAQs */}
+          {comp.faqs && comp.faqs.length > 0 && (
+            <section className="topic-section" aria-labelledby="faq-heading" style={{ marginBottom: '48px' }}>
+              <h2 id="faq-heading" className="topic-section-title">
+                Frequently Asked Questions
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+                {comp.faqs.map((faq, i) => (
+                  <details key={i} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '14px 18px' }}>
+                    <summary style={{ fontWeight: 700, fontSize: '14.5px', color: '#0f172a', cursor: 'pointer' }}>{faq.question}</summary>
+                    <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.65, margin: '10px 0 0' }}>{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Related Components */}
           <section className="topic-section" aria-labelledby="related-heading" style={{ marginBottom: '60px' }}>
             <h2 id="related-heading" className="topic-section-title">

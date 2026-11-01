@@ -40,6 +40,7 @@ export interface UIComponent {
     clsScore: string;
     performanceTips: string;
   };
+  faqs?: { question: string; answer: string }[];
 }
 
 export const UI_COMPONENTS: Record<string, UIComponent> = {
@@ -2053,6 +2054,266 @@ export const ModernHero: React.FC<ModernHeroProps> = ({
       clsScore: '0.00 (Typography uses clamp() without post-load font resizing jumps)',
       performanceTips: 'Use font-display: swap with system fallback fonts to guarantee immediate text visibility during font file delivery.',
     },
+  },
+
+  marquee: {
+    slug: 'marquee',
+    title: 'Infinite Marquee',
+    subtitle: 'Seamless scrolling strip for logos, tools or testimonials, built with pure CSS, pause on hover and reduced-motion support.',
+    category: 'Motion & Display',
+    badge: 'MagicUI Pattern',
+    description:
+      'The Infinite Marquee scrolls a row of items, such as partner logos, tech stack badges or short testimonials, in a smooth endless loop. It is a common "trusted by" or "built with" strip on landing pages. This version runs on a single CSS keyframe animation, so it needs no animation library and no JavaScript timer, and it stops moving for visitors who have asked their system for reduced motion.',
+    architecturalOverview:
+      'The trick is duplication: the list is rendered twice inside one flex track, and the track is moved left by exactly half its width (plus half the gap). When the first copy has scrolled out, the second copy sits exactly where the first one started, so the loop has no visible jump. A CSS mask fades both edges. The duplicate copy is marked aria-hidden so screen readers only hear each item once, and animation-play-state pauses the track on hover.',
+    features: [
+      'Pure CSS animation: no JavaScript timers, no animation library',
+      'Seamless loop by rendering the list twice and translating by half the track',
+      'Pause on hover, plus an optional pause button for users who need it',
+      'Respects prefers-reduced-motion by stopping the animation and wrapping items',
+      'Reverse direction and speed controlled with one prop each',
+    ],
+    props: [
+      { prop: 'items', type: 'ReactNode[]', default: 'Required', description: 'The logos, badges or cards to scroll.' },
+      { prop: 'reverse', type: 'boolean', default: 'false', description: 'Scrolls right to left when false, left to right when true.' },
+      { prop: 'duration', type: 'number (seconds)', default: '28', description: 'Time for one full loop. Larger numbers scroll slower.' },
+      { prop: 'pauseOnHover', type: 'boolean', default: 'true', description: 'Pauses the track while the pointer is over it.' },
+      { prop: 'label', type: 'string', default: 'Required', description: 'Accessible name for the region, e.g. "Companies using our product".' },
+    ],
+    installGuide: {
+      cliCommand: 'npx shadcn@latest add "https://magicui.design/r/marquee"',
+      npmPackages: ['None (pure React + CSS)'],
+      steps: [
+        {
+          title: 'Step 1: Copy the component',
+          lang: 'bash',
+          code: '# No dependencies. Copy Marquee.tsx and marquee.css into your project,\n# or use the MagicUI registry command above if you already use shadcn/ui.',
+        },
+        {
+          title: 'Step 2: Use it on a page',
+          lang: 'tsx',
+          code: "import { Marquee } from '@/components/Marquee';\n\n<Marquee\n  label=\"Tools we write about\"\n  items={['Next.js', 'React', 'Ollama', 'vLLM']}\n  duration={30}\n/>",
+          notes: 'Keep items short. A marquee is for recognition (logos, names), not for text people need to read carefully.',
+        },
+      ],
+    },
+    codeReact: `import React from 'react';
+import './marquee.css';
+
+type MarqueeProps = {
+  items: React.ReactNode[];
+  label: string;
+  reverse?: boolean;
+  duration?: number;
+  pauseOnHover?: boolean;
+};
+
+export function Marquee({ items, label, reverse = false, duration = 28, pauseOnHover = true }: MarqueeProps) {
+  const classes = ['marquee'];
+  if (reverse) classes.push('marquee--reverse');
+  if (pauseOnHover) classes.push('marquee--hover-pause');
+
+  return (
+    <div className={classes.join(' ')} role="region" aria-label={label}>
+      <ul className="marquee__track" style={{ animationDuration: duration + 's' }}>
+        {items.concat(items).map((item, i) => (
+          <li key={i} className="marquee__item" aria-hidden={i >= items.length}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`,
+    codeTailwind: `<!-- Tailwind: add the keyframes to tailwind.config (theme.extend.keyframes / animation) -->
+<!-- keyframes: marquee { from { transform: translateX(0) } to { transform: translateX(calc(-50% - 0.375rem)) } } -->
+<div class="group overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]" role="region" aria-label="Tools we write about">
+  <ul class="flex w-max gap-3 animate-[marquee_28s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+    <li class="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold">Next.js</li>
+    <li class="shrink-0 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold">React</li>
+    <!-- ...repeat the same items a second time, with aria-hidden="true" -->
+  </ul>
+</div>`,
+    codeVanillaCSS: `@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 6px)); } /* half the track + half the gap */
+}
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee__track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: marquee-scroll 28s linear infinite;
+}
+.marquee--reverse .marquee__track { animation-direction: reverse; }
+.marquee--hover-pause:hover .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background: #ffffff;
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; flex-wrap: wrap; width: auto; }
+}`,
+    accessibility: {
+      wcagCriteria: 'Designed for WCAG 2.2.2 (Pause, Stop, Hide)',
+      ariaNotes: [
+        'The strip is a labelled region (role="region" with aria-label) so screen-reader users know what it contains.',
+        'The duplicated copy of the items is aria-hidden, so each item is announced once.',
+        'Content that moves for more than 5 seconds needs a way to pause it (WCAG 2.2.2): hover pause plus an explicit pause button covers this.',
+      ],
+      keyboardSupport: [
+        'The pause button is a native <button> with aria-pressed, reachable with Tab and toggled with Enter or Space.',
+        'Avoid putting links inside a moving marquee; moving focus targets are hard to use. Link to the full list elsewhere.',
+      ],
+    },
+    coreWebVitals: {
+      inpScore: 'No JS on the main thread during scrolling',
+      clsScore: '0.00 (transform-only animation does not shift layout)',
+      performanceTips: 'Animate only transform, never left or margin, so the browser can run it on the compositor. Give logo images fixed width and height so the track size is known before they load.',
+    },
+    faqs: [
+      { question: 'How does an infinite marquee loop without a visible jump?', answer: 'The items are rendered twice in one track, and the track moves left by exactly half its width (plus half the gap). When the first copy finishes, the second copy is in the same spot the first one started, so the animation restarts invisibly.' },
+      { question: 'Is a scrolling marquee bad for accessibility?', answer: 'It can be. WCAG 2.2.2 says moving content that lasts more than 5 seconds needs a way to pause it. Add pause on hover, an explicit pause button, and stop the animation for users with prefers-reduced-motion. Do not put essential text or links in it.' },
+      { question: 'Do I need Framer Motion or GSAP for a marquee?', answer: 'No. A single CSS keyframe that animates transform is enough and is cheaper to run than a JavaScript animation loop.' },
+      { question: 'How do I change the speed?', answer: 'Change the animation duration. With the component above, pass duration={40} for slower scrolling or duration={15} for faster.' },
+    ],
+  },
+
+  'number-ticker': {
+    slug: 'number-ticker',
+    title: 'Number Ticker',
+    subtitle: 'Animated count-up for stats and KPIs that starts when visible, keeps width stable and reads the final value to screen readers.',
+    category: 'Motion & Display',
+    badge: 'MagicUI Pattern',
+    description:
+      'The Number Ticker counts a number up from zero to its final value, the familiar effect on landing-page stat rows ("48,250 readers", "99.98% uptime"). This version starts only when the number scrolls into view, uses an ease-out curve so it slows down near the end, formats with locale separators and decimals, and shows the final value immediately to people who prefer reduced motion.',
+    architecturalOverview:
+      'An IntersectionObserver waits until the element is at least 40% visible, then disconnects so the animation runs once. A requestAnimationFrame loop computes progress from elapsed time (not frame count), applies an ease-out cubic curve, and formats the value with toLocaleString. tabular-nums keeps every digit the same width so the layout does not wobble while counting. The animated digits are aria-hidden and a visually hidden copy holds the final value, so screen readers announce the real number once instead of every intermediate frame.',
+    features: [
+      'Starts on scroll into view with IntersectionObserver, runs once',
+      'Time-based easing with requestAnimationFrame, smooth at any frame rate',
+      'Locale formatting with thousands separators and fixed decimals',
+      'tabular-nums keeps width stable during the count',
+      'Reduced-motion users and screen readers get the final value directly',
+    ],
+    props: [
+      { prop: 'value', type: 'number', default: 'Required', description: 'The final number to count up to.' },
+      { prop: 'decimals', type: 'number', default: '0', description: 'Digits after the decimal point, e.g. 2 for 99.98.' },
+      { prop: 'duration', type: 'number (ms)', default: '1400', description: 'Length of the count-up animation.' },
+      { prop: 'locale', type: 'string', default: "'en-US'", description: 'Locale for number formatting, e.g. "de-DE" for 48.250.' },
+    ],
+    installGuide: {
+      cliCommand: 'npx shadcn@latest add "https://magicui.design/r/number-ticker"',
+      npmPackages: ['None (pure React)'],
+      steps: [
+        {
+          title: 'Step 1: Copy the component',
+          lang: 'bash',
+          code: '# No dependencies. Copy NumberTicker.tsx into your components folder,\n# or use the MagicUI registry command above if you already use shadcn/ui.',
+        },
+        {
+          title: 'Step 2: Use it in a stats row',
+          lang: 'tsx',
+          code: "import { NumberTicker } from '@/components/NumberTicker';\n\n<p className=\"stat\">\n  <NumberTicker value={99.98} decimals={2} />%\n  <span>uptime this year</span>\n</p>",
+          notes: 'Only animate numbers that are true. A count-up makes a stat more noticeable, so make sure it is accurate and up to date.',
+        },
+      ],
+    },
+    codeReact: `'use client';
+import React, { useEffect, useRef, useState } from 'react';
+
+type NumberTickerProps = { value: number; decimals?: number; duration?: number; locale?: string };
+
+export function NumberTicker({ value, decimals = 0, duration = 1400, locale = 'en-US' }: NumberTickerProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(0);
+  const format = (n: number) =>
+    n.toLocaleString(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplay(value);
+      return;
+    }
+    let frame = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min((now - start) / duration, 1);
+        setDisplay(value * (1 - Math.pow(1 - t, 3))); // ease-out cubic
+        if (t < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    observer.observe(el);
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+  }, [value, duration]);
+
+  return (
+    <span className="number-ticker">
+      <span ref={ref} aria-hidden="true">{format(display)}</span>
+      <span className="sr-only">{format(value)}</span>
+    </span>
+  );
+}`,
+    codeTailwind: `<!-- Tailwind markup for the stat card; the counting needs the React (or vanilla JS) logic -->
+<div class="rounded-2xl border border-slate-200 bg-white p-5">
+  <p class="text-3xl font-extrabold tabular-nums tracking-tight text-slate-900">
+    <span aria-hidden="true" data-ticker-value="48250">0</span><span class="sr-only">48,250</span>
+  </p>
+  <p class="mt-1 text-sm text-slate-500">Monthly readers</p>
+</div>`,
+    codeVanillaCSS: `.number-ticker {
+  font-variant-numeric: tabular-nums; /* equal-width digits: no wobble while counting */
+  letter-spacing: -0.02em;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}`,
+    accessibility: {
+      wcagCriteria: 'Screen-reader safe and reduced-motion aware',
+      ariaNotes: [
+        'The animated digits are aria-hidden; a visually hidden span holds the final value, so assistive tech reads the real number once.',
+        'Users with prefers-reduced-motion see the final value immediately with no animation.',
+      ],
+      keyboardSupport: [
+        'The ticker is not interactive, so it adds no tab stops.',
+      ],
+    },
+    coreWebVitals: {
+      inpScore: 'Animation runs only once, after the element is visible',
+      clsScore: '0.00 (tabular-nums keeps the width constant while counting)',
+      performanceTips: 'Render the final value on the server and animate only on the client after hydration, so search engines and no-JS visitors still see the real number.',
+    },
+    faqs: [
+      { question: 'How do I start the count-up only when the number is visible?', answer: 'Use an IntersectionObserver. When the element becomes visible (the demo uses 40%), start a requestAnimationFrame loop and disconnect the observer so it runs only once.' },
+      { question: 'Why does my counter make the layout jump?', answer: 'Proportional fonts give digits different widths, so the number changes width as it counts. Set font-variant-numeric: tabular-nums (Tailwind: tabular-nums) to make every digit the same width.' },
+      { question: 'Will screen readers read every number as it counts?', answer: 'They can if the counting text is exposed. Mark the animated text aria-hidden and put the final value in a visually hidden span, as in the code above.' },
+      { question: 'Is it okay to animate made-up stats?', answer: 'No. A count-up draws attention to the number, so it must be accurate. Showing invented figures as real ones is misleading to visitors and can break advertising policies.' },
+    ],
   },
 };
 

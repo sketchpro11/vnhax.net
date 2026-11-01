@@ -10,6 +10,8 @@ import SparklesFieldDemo from './ui-showcase/SparklesFieldDemo';
 import ImageAccordionsDemo from './ui-showcase/ImageAccordionsDemo';
 import PricingTableDemo from './ui-showcase/PricingTableDemo';
 import HeroSectionDemo from './ui-showcase/HeroSectionDemo';
+import MarqueeDemo from './ui-showcase/MarqueeDemo';
+import NumberTickerDemo from './ui-showcase/NumberTickerDemo';
 
 interface ComponentPreviewSandboxProps {
   slug: string;
@@ -47,6 +49,10 @@ export default function ComponentPreviewSandbox({ slug, codeReact }: ComponentPr
         return <PricingTableDemo />;
       case 'hero-section':
         return <HeroSectionDemo />;
+      case 'marquee':
+        return <MarqueeDemo />;
+      case 'number-ticker':
+        return <NumberTickerDemo />;
       default:
         return (
           <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>

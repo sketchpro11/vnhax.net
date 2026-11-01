@@ -18,14 +18,14 @@ const PAGE_UPDATED: Record<string, string> = {
   '/privacy-policy': '2026-10-11',
   '/terms': '2026-10-11',
   '/disclaimer': '2026-10-11',
-  '/repos': '2026-10-18',
+  '/repos': '2026-11-02',
   '/ai': '2026-10-11',
   '/ai/ai-tools': '2026-10-11',
   '/developer-resources': '2026-10-11',
   '/developer-resources/github-repos': '2026-10-09',
   '/technology': '2026-10-10',
   '/technology/platforms': '2026-10-09',
-  '/ui-components': '2026-10-11',
+  '/ui-components': '2026-11-02',
   '/openai': '2026-10-12',
   '/anthropic': '2026-10-12',
   '/google': '2026-10-12',
@@ -40,9 +40,13 @@ const REPO_PAGES_ADDED: Record<string, string> = {
   voicestudio: '2026-10-18',
   'ai-job-search': '2026-10-18',
   'claude-plugins-official': '2026-10-18',
+  t3code: '2026-11-02',
+  'claude-mem': '2026-11-02',
+  lightpanda: '2026-11-02',
 };
 /** UI component pages were last changed on this date. */
 const UI_COMPONENT_PAGES_UPDATED = '2026-10-09';
+const UI_COMPONENT_PAGES_ADDED: Record<string, string> = { marquee: '2026-11-02', 'number-ticker': '2026-11-02' };
 
 const latest = (...dates: string[]) => dates.reduce((a, b) => (a > b ? a : b));
 
@@ -75,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const componentRoutes: MetadataRoute.Sitemap = getAllUIComponents().map((comp) => ({
     url: `${baseUrl}/ui-components/${comp.slug}`,
-    lastModified: UI_COMPONENT_PAGES_UPDATED,
+    lastModified: UI_COMPONENT_PAGES_ADDED[comp.slug] ?? UI_COMPONENT_PAGES_UPDATED,
   }));
 
   return [...staticRoutes, ...blogRoutes, ...repoRoutes, ...componentRoutes];

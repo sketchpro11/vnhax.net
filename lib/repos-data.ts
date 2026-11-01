@@ -520,6 +520,171 @@ export const REPOS_DATA: Record<string, RepoDetails> = {
       },
     ],
   },
+
+  t3code: {
+    slug: 't3code',
+    name: 'T3 Code',
+    repoFullName: 'pingdotgg/t3code',
+    githubUrl: 'https://github.com/pingdotgg/t3code',
+    image: '/images/T3 Code by vnhax.net.png',
+    language: 'TypeScript',
+    license: 'MIT',
+    stars: '37.6k',
+    forks: '8.9k',
+    category: 'Coding Agent Control Surface',
+    topics: ['coding-agents', 'claude-code', 'codex', 'remote-development', 'electron', 'mobile', 'mcp'],
+    summary:
+      'An open-source control surface for the coding agents already on your machine (Claude Code, Codex, Cursor, Grok Build, OpenCode, Antigravity and fx), with a desktop app, a web app and iOS and Android apps for remote access.',
+    metaDescription:
+      'T3 Code (pingdotgg/t3code) review: an open-source app to run and monitor Claude Code, Codex, Cursor and other coding agents from desktop, web or phone. Install steps, supported providers, remote access and honest caveats.',
+    whyUse:
+      'Most developers who use coding agents end up juggling terminals: Claude Code in one tab, Codex in another, and no easy way to check on a long task from a phone. T3 Code puts those agents behind one interface. It does not resell a model or add its own subscription; it drives the agents you already have installed and logged in, using your existing plans. The team says they built it because the desktop agent apps they tried were not fast enough, not remote-ready, or not truly open, and that the MIT licence means you can fork it if they ever head in the wrong direction.',
+    architecture:
+      'T3 Code runs a local server, started with the t3 command, that talks to the agent CLIs installed on your computer. You use it through a local web app, an Electron desktop app, or the iOS and Android apps, which connect remotely to that server. Supported providers are Codex, Claude Code, Cursor, Grok Build, OpenCode, Google Antigravity and fx; each one has to be installed and authenticated first. The docs cover permission modes, project settings, keyboard shortcuts, source-control integrations, multiple Codex and Claude accounts, running as a background service, and connecting outside agents over MCP. The project is built with Vite+ and is still very early.',
+    benchmarks:
+      'The project publishes no benchmarks. It is an interface for other agents, so speed and quality depend on the agent and model you connect.',
+    quickstart:
+      '# macOS / Linux: install the t3 command\ncurl -fsSL https://t3.codes/install.sh | sh\n\n# Windows (PowerShell)\nirm https://t3.codes/install.ps1 | iex\n\n# Start the server and open the local web app\nt3\n\n# Try once without installing\nnpx t3@latest',
+    keyTakeaways: [
+      'One interface for Claude Code, Codex, Cursor, Grok Build, OpenCode, Antigravity and fx.',
+      'Uses your existing subscriptions; T3 Code itself sells nothing.',
+      'Desktop (Electron), web, iOS and Android apps, with remote access from a phone.',
+      'Install with one command, or try it with npx t3@latest.',
+      'Very early project: the README says to expect bugs, and big outside contributions are not accepted yet.',
+    ],
+    faqs: [
+      {
+        question: 'Does T3 Code include its own AI model?',
+        answer:
+          'No. It controls coding agents that are already installed and logged in on your machine, such as Claude Code or Codex, and works with the subscriptions you already have for them.',
+      },
+      {
+        question: 'Which agents does T3 Code support?',
+        answer:
+          'Codex, Claude Code, Cursor, Grok Build, OpenCode, Google Antigravity and fx. Install and authenticate at least one of them before you start T3 Code.',
+      },
+      {
+        question: 'Can I check on my agents from my phone?',
+        answer:
+          'Yes. T3 Code has iOS and Android apps, and its docs include a guide to remote access from a phone or another machine.',
+      },
+      {
+        question: 'Is T3 Code free?',
+        answer:
+          'Yes. It is open source under the MIT licence. You still pay for whichever agent subscriptions or API usage you connect to it.',
+      },
+    ],
+  },
+
+  'claude-mem': {
+    slug: 'claude-mem',
+    name: 'Claude-Mem',
+    repoFullName: 'thedotmack/claude-mem',
+    githubUrl: 'https://github.com/thedotmack/claude-mem',
+    image: '/images/Claude-Mem by vnhax.net.png',
+    language: 'TypeScript',
+    license: 'Apache-2.0',
+    stars: '109k',
+    forks: '9.6k',
+    category: 'Agent Memory & Context',
+    topics: ['claude-code', 'ai-memory', 'long-term-memory', 'mcp', 'sqlite', 'chromadb', 'claude-code-plugin'],
+    summary:
+      'A persistent memory plugin for Claude Code and other coding agents: it records what the agent does, compresses it into summaries, and brings the relevant parts back into future sessions.',
+    metaDescription:
+      'Claude-Mem (thedotmack/claude-mem) review: persistent memory for Claude Code and other agents. How the hooks, SQLite store and MCP search tools work, install commands, privacy controls and the hosted vs local memory choice.',
+    whyUse:
+      'Every new Claude Code session starts with an empty context. You re-explain the project, the bug you fixed yesterday, and the decision you made last week. Claude-Mem fixes that by capturing tool usage and observations during a session, generating summaries, and injecting the relevant ones into the next session automatically. It also gives the agent search tools over that history, so it can look up an old bugfix instead of rediscovering it. The README says it works with Claude Code, Codex, Gemini, OpenCode, Copilot, T3 Code, Antigravity and several other harnesses.',
+    architecture:
+      'Claude-Mem hooks into the agent lifecycle (SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Stop and SessionEnd), each as a single command run by a small launcher. A local worker service, managed by Bun, exposes an HTTP API and a web viewer. Sessions, observations and summaries are stored in SQLite with full-text search, and a Chroma vector database adds semantic search. The agent queries memory through four MCP tools in a three-step pattern: search returns a compact index (about 50 to 100 tokens per result), timeline shows what happened around a result, and get_observations fetches full details only for chosen IDs. The README says filtering before fetching saves about 10x tokens.',
+    benchmarks:
+      'The README claims about 10x token savings from its search-then-fetch pattern compared with loading full details up front. That is the project\'s own figure; we have not measured it.',
+    quickstart:
+      '# Install for Claude Code (sets up hooks and the worker)\nnpx claude-mem install\n\n# Or from inside Claude Code\n/plugin marketplace add thedotmack/claude-mem\n/plugin install claude-mem\n\n# Install for another harness, e.g. OpenCode or T3 Code\nnpx claude-mem install --ide opencode\nnpx claude-mem install --ide t3code',
+    keyTakeaways: [
+      'Gives coding agents memory across sessions by capturing, summarizing and re-injecting context.',
+      'Local worker with SQLite full-text search plus Chroma vector search.',
+      'Four MCP tools with a search, timeline, fetch pattern to keep token use low.',
+      'Default setup offers a hosted memory service with a free trial; local and bring-your-own-key providers are available.',
+      'Use <private> tags to keep sensitive content out of memory.',
+    ],
+    faqs: [
+      {
+        question: 'How do I install Claude-Mem for Claude Code?',
+        answer:
+          'Run npx claude-mem install, or inside Claude Code run /plugin marketplace add thedotmack/claude-mem and then /plugin install claude-mem. The README warns that npm install -g claude-mem installs only the library and does not set up the hooks.',
+      },
+      {
+        question: 'Does Claude-Mem send my code to a server?',
+        answer:
+          'It depends on the provider you choose. The installer offers a hosted claude-mem observer with a 30-day free trial, your own OpenRouter or Gemini key, or your Anthropic plan, and you can skip the sign-in with an explicit --provider flag. Cloud Sync and screenshot capture are optional. Read the configuration docs before you use it on private code.',
+      },
+      {
+        question: 'How do I keep secrets out of Claude-Mem?',
+        answer:
+          'Wrap sensitive content in <private> tags and it is excluded from storage. Screenshot capture is off by default.',
+      },
+      {
+        question: 'What does Claude-Mem need to run?',
+        answer:
+          'Node.js 20 or later and a current Claude Code with plugin support. Bun and uv are installed automatically if missing, and SQLite is bundled.',
+      },
+    ],
+  },
+
+  lightpanda: {
+    slug: 'lightpanda',
+    name: 'Lightpanda',
+    repoFullName: 'lightpanda-io/browser',
+    githubUrl: 'https://github.com/lightpanda-io/browser',
+    image: '/images/Lightpanda by vnhax.net.png',
+    language: 'Zig',
+    license: 'AGPL-3.0',
+    stars: '40k',
+    forks: '2k',
+    category: 'Headless Browser for AI Agents',
+    topics: ['headless-browser', 'zig', 'cdp', 'playwright', 'puppeteer', 'mcp', 'web-scraping', 'ai-agents'],
+    summary:
+      'A headless browser written from scratch in Zig for AI agents and automation. It is not a Chromium fork, speaks the Chrome DevTools Protocol for Puppeteer and Playwright, and includes an MCP server and a built-in agent mode.',
+    metaDescription:
+      'Lightpanda (lightpanda-io/browser) review: the Zig headless browser built for AI agents. Benchmarks vs headless Chrome, install via Docker or binary, CDP with Puppeteer, MCP server, agent mode and honest limits.',
+    whyUse:
+      'Headless Chrome is heavy. Running dozens of pages for scraping, testing or AI agents eats gigabytes of RAM and seconds per page. Lightpanda is a new browser built only for machines: no rendering of pixels for humans, a much smaller memory footprint, and fast startup. In the project\'s own benchmark of 100 real pages on an AWS m5.large, it used 123 MB of peak memory versus 2 GB for headless Chrome, and finished in 5 seconds versus 46. Because it speaks the Chrome DevTools Protocol, many existing Puppeteer or Playwright scripts can point at it with a one-line change.',
+    architecture:
+      'Lightpanda is written in Zig and uses the V8 engine for JavaScript. It can fetch and dump a page as HTML, Markdown, PNG, PDF or structured data (JSON-LD, OpenGraph, meta tags), or run as a server: a CDP server on port 9222 for Puppeteer and Playwright, or a WebDriver BiDi server. It also ships an MCP server (stdio or HTTP, with isolated or shared browsing sessions per client) and an agent mode that drives the browser from plain-English tasks with Anthropic, OpenAI, Gemini, Mistral, OpenRouter or local models via Ollama and llama.cpp. Agent sessions can be saved as PandaScript, plain JavaScript that replays without an LLM.',
+    benchmarks:
+      'Lightpanda\'s README reports, for 100 real pages requested over the network on an AWS EC2 m5.large: 123 MB peak memory versus 2 GB for headless Chrome (about 16x less), and 5 seconds versus 46 seconds (about 9x faster). These are the project\'s own measurements; results depend on the sites you load.',
+    quickstart:
+      '# Run the CDP server in Docker (local only)\ndocker run -d --name lightpanda -p 127.0.0.1:9222:9222 lightpanda/browser:latest\n\n# Or download the Linux binary\ncurl -L -o lightpanda https://github.com/lightpanda-io/browser/releases/download/nightly/lightpanda-x86_64-linux && chmod a+x ./lightpanda\n\n# Dump a page as Markdown\n./lightpanda fetch --obey-robots --dump markdown https://example.com\n\n# Point Puppeteer at it\n# puppeteer.connect({ browserWSEndpoint: "ws://127.0.0.1:9222" })',
+    keyTakeaways: [
+      'A new headless browser in Zig, not a Chromium or WebKit fork.',
+      'Project benchmark: about 16x less memory and 9x faster than headless Chrome on 100 pages.',
+      'Works with Puppeteer and Playwright through the Chrome DevTools Protocol.',
+      'Built-in MCP server and an agent mode that saves replayable, LLM-free scripts.',
+      'Linux and macOS binaries plus Docker; Windows only through WSL. Telemetry is on by default.',
+    ],
+    faqs: [
+      {
+        question: 'Can Lightpanda replace headless Chrome in my Puppeteer scripts?',
+        answer:
+          'Often, yes. Lightpanda runs a Chrome DevTools Protocol server, so you connect with puppeteer.connect and its browserWSEndpoint. Test your pages first, since Lightpanda is a new browser and may not support every web feature that Chrome does.',
+      },
+      {
+        question: 'Does Lightpanda work on Windows?',
+        answer:
+          'Not natively. The README says to install it inside WSL2 using the Linux steps; your automation client can run on Windows and reach it on localhost:9222.',
+      },
+      {
+        question: 'How do I turn off Lightpanda telemetry?',
+        answer:
+          'Set the environment variable LIGHTPANDA_DISABLE_TELEMETRY=true. Telemetry is enabled by default.',
+      },
+      {
+        question: 'Can AI agents use Lightpanda directly?',
+        answer:
+          'Yes. Run lightpanda mcp to expose it as an MCP server, or use lightpanda agent to drive it with plain-English tasks using models from Anthropic, OpenAI, Gemini, Mistral, OpenRouter or local models.',
+      },
+    ],
+  },
 };
 
 type LiveRepoStats = {

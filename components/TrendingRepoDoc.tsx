@@ -35,6 +35,9 @@ const ACCENTS: Record<string, Accent> = {
   violet: { main: '#7c3aed', soft: '#f5f3ff', text: '#6d28d9', muted: '#ddd6fe', glow: 'rgba(124, 58, 237, 0.25)' },
   emerald: { main: '#059669', soft: '#ecfdf5', text: '#047857', muted: '#a7f3d0', glow: 'rgba(5, 150, 105, 0.25)' },
   amber: { main: '#d97706', soft: '#fffbeb', text: '#b45309', muted: '#fde68a', glow: 'rgba(217, 119, 6, 0.25)' },
+  sky: { main: '#0284c7', soft: '#f0f9ff', text: '#0369a1', muted: '#bae6fd', glow: 'rgba(2, 132, 199, 0.25)' },
+  rose: { main: '#e11d48', soft: '#fff1f2', text: '#be123c', muted: '#fecdd3', glow: 'rgba(225, 29, 72, 0.25)' },
+  teal: { main: '#0d9488', soft: '#f0fdfa', text: '#0f766e', muted: '#99f6e4', glow: 'rgba(13, 148, 136, 0.25)' },
 };
 
 const code = (s: string) => <code>{s}</code>;
@@ -342,6 +345,306 @@ export const TRENDING_DOCS: Record<string, TrendingDocConfig> = {
       { icon: '🏢', title: 'Maintainer', body: 'Anthropic. Internal plugins are built by Anthropic team members; external ones are reviewed submissions.' },
       { icon: '⚖️', title: 'License', body: <><strong>Apache-2.0</strong> for the repository. Individual plugins may carry their own licences.</> },
       { icon: '📘', title: 'Docs', body: 'Official guide to building plugins: code.claude.com/docs/en/plugins, and plugin marketplaces for the schema.' },
+    ],
+  },
+
+  t3code: {
+    accent: ACCENTS.sky,
+    badges: ['🔥 3,100 STARS IN ONE DAY (2 NOV 2026)', '7 AGENT PROVIDERS', 'DESKTOP · WEB · iOS · ANDROID', 'USES YOUR OWN SUBSCRIPTIONS', 'MIT LICENSE'],
+    image: '/images/T3 Code by vnhax.net.png',
+    imageAlt: 'T3 Code architecture: desktop, web and phone apps controlling Claude Code, Codex and other agents through a local server',
+    kicker: 'pingdotgg / t3code — an agent harness control surface',
+    title: 'T3 Code: One App to Run Claude Code, Codex, Cursor & More From Desktop or Phone',
+    lead: (
+      <>
+        <strong>T3 Code doesn&apos;t replace your coding agent. It gives all of them one home.</strong>
+        <br />
+        If Claude Code, Codex or Cursor are set up on your computer, T3 Code can control them from a desktop app, a web app, or
+        your phone, using the subscriptions you already pay for.
+      </>
+    ),
+    metrics: [
+      { value: '7', label: 'Agent providers supported', note: 'Codex, Claude, Cursor, Grok Build, OpenCode, Antigravity, fx' },
+      { value: '4 apps', label: 'Desktop · Web · iOS · Android', note: 'Phone apps connect to your machine remotely' },
+      { value: '$0', label: 'For T3 Code itself', note: 'MIT licensed; you pay only for your agents' },
+    ],
+    flow: {
+      title: 'How T3 Code Fits Together',
+      intro: 'Based on the README and docs, the setup has three layers:',
+      steps: [
+        { name: '1. Your agents', desc: 'Install and log in to at least one CLI, e.g. claude auth login or codex login. Antigravity needs no CLI.' },
+        { name: '2. The t3 server', desc: 'Run t3 on your machine. It talks to the installed agents and serves a local web app. t3 service install keeps it running.' },
+        { name: '3. Your screens', desc: 'Use the web app, the Electron desktop app, or the iOS and Android apps to start, watch and steer agent work remotely.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Supported Providers & How to Connect Them',
+        intro: 'From the README. T3 Code needs at least one of these installed and authenticated before first use.',
+        columns: ['Provider', 'Setup'],
+        rows: [
+          ['Claude Code', 'Install Claude Code, then run claude auth login'],
+          ['Codex', 'Install the Codex CLI, then run codex login'],
+          ['Cursor', 'Install the Cursor CLI, then run agent login'],
+          ['Grok Build', 'Install the Grok Build CLI, then run grok login'],
+          ['OpenCode', 'Install OpenCode, then run opencode auth login'],
+          ['Google Antigravity', 'Enable it in Settings, use Install Antigravity and Sign in with Google (no CLI needed)'],
+          ['fx', 'Install fx and run fx login on the machine running the T3 Code server'],
+        ],
+      },
+      {
+        title: 'Install Options',
+        columns: ['Platform', 'Command'],
+        rows: [
+          ['macOS / Linux (CLI)', 'curl -fsSL https://t3.codes/install.sh | sh'],
+          ['Windows (CLI)', 'irm https://t3.codes/install.ps1 | iex'],
+          ['Windows desktop', 'winget install T3Tools.T3Code  ·  scoop install extras/t3code'],
+          ['macOS desktop', 'brew install --cask t3-code'],
+          ['Debian / Ubuntu', 'Download the .deb from GitHub Releases, then sudo apt install ./T3-Code-*.deb'],
+          ['Arch Linux', 'yay -S t3code-bin (stable) or yay -S t3code-nightly-bin'],
+          ['Nix', 'nix profile add github:NixOS/nixpkgs/nixos-unstable#t3code'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Quick Start',
+      title: 'Install & Run',
+      primary: 'curl -fsSL https://t3.codes/install.sh | sh',
+      note: (
+        <>
+          Then run {code('t3')} to start the server and open the local web app. {code('t3 update')} upgrades it and {code('t3 --help')} lists every
+          command.
+        </>
+      ),
+      extras: [
+        { label: 'Try once without installing:', cmd: 'npx t3@latest' },
+        { label: 'Keep it running in the background:', cmd: 't3 service install' },
+        { label: 'Windows (PowerShell):', cmd: 'irm https://t3.codes/install.ps1 | iex' },
+        { label: 'Contributors (Vite+ toolchain):', cmd: 'curl -fsSL https://vite.plus | bash && vp i' },
+      ],
+    },
+    split: [
+      {
+        title: '"Wait, What Are You Selling Me?"',
+        body: 'The README answers this directly: nothing. The team says they built T3 Code because existing tools like the Codex desktop app, Conductor, Claude Desktop and Cursor Glass did not meet their bar for performance, remote access and openness, and that the code is open so you can fork it if they go in the wrong direction.',
+      },
+      {
+        title: 'Why Remote Access Matters for Agents',
+        body: 'Agent tasks can run for many minutes. With the server on your workstation and the app on your phone, you can check progress, answer a permission prompt, or start the next task without sitting at your desk. The docs include a dedicated guide for remote access from a phone or another machine.',
+      },
+    ],
+    honest: {
+      title: 'Know This Before You Rely On It',
+      intro: 'Straight from the README:',
+      items: [
+        ['Very early', 'The team says "We are very very early in this project. Expect bugs."'],
+        ['Limited contributions', 'They are mostly not accepting contributions yet; small fixes may be considered, big features will not be.'],
+        ['Your agents, your costs', 'T3 Code is free, but every task still runs on your Claude, Codex or other subscription or API account.'],
+        ['Remote means exposure', 'Remote access gives a phone control over agents that can edit files on your machine. Follow the remote-access guide and keep it secured.'],
+      ],
+    },
+    cards: [
+      { icon: '🧩', title: 'Works With', body: 'Claude Code, Codex, Cursor, Grok Build, OpenCode, Google Antigravity and fx.' },
+      { icon: '⚖️', title: 'License', body: <><strong>MIT License.</strong> Fork it and build the editor you want.</> },
+      { icon: '📘', title: 'Docs', body: 'Docs live in the repo under docs/: install, permission modes, remote access, MCP and background service guides.' },
+    ],
+  },
+
+  'claude-mem': {
+    accent: ACCENTS.rose,
+    badges: ['🔥 1,527 STARS IN ONE DAY (2 NOV 2026)', 'PERSISTENT AGENT MEMORY', '4 MCP SEARCH TOOLS', 'SQLITE + CHROMA', 'APACHE-2.0 LICENSE'],
+    image: '/images/Claude-Mem by vnhax.net.png',
+    imageAlt: 'Claude-Mem architecture: lifecycle hooks capture agent work into SQLite and Chroma, and MCP search tools bring it back into new sessions',
+    kicker: 'thedotmack / claude-mem — persistent context across sessions',
+    title: 'Claude-Mem: Give Claude Code (and Other Agents) Memory That Survives Sessions',
+    lead: (
+      <>
+        <strong>Stop re-explaining your project every time you open a new session.</strong>
+        <br />
+        Claude-Mem captures what your agent does, compresses it into summaries, and injects the relevant parts into future sessions.
+        The agent can also search that history on its own.
+      </>
+    ),
+    metrics: [
+      { value: '6 hooks', label: 'Lifecycle events captured', note: 'SessionStart through SessionEnd' },
+      { value: '~10×', label: 'Token savings (project claim)', note: 'Search an index first, fetch details only for chosen IDs' },
+      { value: '10+', label: 'Agent harnesses supported', note: 'Claude Code, Codex, OpenCode, T3 Code, Antigravity…' },
+    ],
+    flow: {
+      title: 'The 3-Layer Memory Search',
+      intro: 'Claude-Mem exposes four MCP tools. The README recommends this order to keep token use low:',
+      steps: [
+        { name: 'search', desc: 'Get a compact index of matching memories with IDs, about 50–100 tokens per result. Filter by type, date or project.' },
+        { name: 'timeline', desc: 'See what was happening around an interesting result, in chronological order.' },
+        { name: 'get_observations', desc: 'Fetch the full details only for the IDs you picked, about 500–1,000 tokens each. Batch several IDs per call.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Core Components',
+        columns: ['Component', 'What It Does'],
+        rows: [
+          ['Lifecycle hooks', 'SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Stop and SessionEnd, each one command run by a small launcher on PATH.'],
+          ['Worker service', 'A local HTTP API with a web viewer and search endpoints, managed by Bun.'],
+          ['SQLite database', 'Stores sessions, observations and summaries, with FTS5 full-text search.'],
+          ['Chroma vector DB', 'Adds semantic search next to keyword search (hybrid retrieval).'],
+          ['mem-search skill', 'Lets you ask questions of your project history in natural language.'],
+          ['Web viewer & My Work', 'Browse memory, sessions and settings; track live requests and a review queue locally.'],
+        ],
+      },
+      {
+        title: 'Install for Your Agent',
+        intro: 'Commands from the README. Restart the agent afterwards.',
+        columns: ['Agent', 'Command'],
+        rows: [
+          ['Claude Code', 'npx claude-mem install  (or /plugin marketplace add thedotmack/claude-mem, then /plugin install claude-mem)'],
+          ['OpenCode', 'npx claude-mem install --ide opencode  (OpenCode 1.3.4 or later)'],
+          ['T3 Code', 'npx claude-mem install --ide t3code'],
+          ['Antigravity CLI', 'npx claude-mem install --ide antigravity'],
+          ['Pi / DeepSeek Harness', 'npx claude-mem install --ide pi  ·  npx claude-mem install --ide dsh --dsh-profile tui'],
+          ['OpenClaw gateway', 'curl -fsSL https://install.cmem.ai/openclaw.sh | bash'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Setup',
+      title: 'Install (Claude Code)',
+      primary: 'npx claude-mem install',
+      note: (
+        <>
+          The installer sets up hooks and the worker, then offers a browser sign-in for the hosted memory service. To skip it, pass an
+          explicit {code('--provider')} flag or set {code('CLAUDE_MEM_ONLINE_OPTIN=false')}.
+        </>
+      ),
+      extras: [
+        { label: 'From inside Claude Code:', cmd: '/plugin marketplace add thedotmack/claude-mem' },
+        { label: 'Then:', cmd: '/plugin install claude-mem' },
+        { label: 'Not this (library only, no hooks):', cmd: 'npm install -g claude-mem' },
+        { label: 'Requirements:', cmd: 'Node.js 20+, Claude Code with plugin support (Bun & uv auto-installed)' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why Progressive Disclosure Saves Tokens',
+        body: 'Loading every past observation into context would be expensive and noisy. Claude-Mem gives the agent a cheap index first, lets it look around a promising result, and only then pulls full details for the few memories that matter. The README puts the saving at about 10x compared with fetching everything up front.',
+      },
+      {
+        title: 'Choosing a Memory Provider',
+        body: 'After install you choose who generates the summaries: the hosted claude-mem observer (30-day free trial, then it falls back to your Anthropic plan unless you subscribe), your own OpenRouter or Gemini key, or your Anthropic plan. Pick based on cost and on where you are comfortable sending session content.',
+      },
+    ],
+    honest: {
+      title: 'Privacy & Cost Checklist',
+      intro: 'Memory tools see a lot of your work. Before you install:',
+      items: [
+        ['Hosted by default', 'The default sign-in path uses the hosted memory service. Choose a local or bring-your-own-key provider if your code must stay in-house.'],
+        ['Mark secrets', 'Wrap sensitive content in <private> tags so it is not stored.'],
+        ['Opt-in extras', 'Screenshots are off by default; Cloud Sync uploads to cmem.ai only when you enable it.'],
+        ['Summaries cost tokens', 'Generating summaries uses a model. After the free trial, that comes out of your plan or your own API key.'],
+      ],
+    },
+    cards: [
+      { icon: '🔒', title: 'Privacy Controls', body: '<private> tags, opt-in screenshots and Cloud Sync, and a choice of memory provider.' },
+      { icon: '⚖️', title: 'License', body: <><strong>Apache-2.0</strong> (per the GitHub repository metadata).</> },
+      { icon: '📘', title: 'Docs', body: 'docs.claude-mem.ai: installation, search tools, configuration, architecture and troubleshooting.' },
+    ],
+  },
+
+  lightpanda: {
+    accent: ACCENTS.teal,
+    badges: ['🔥 827 STARS IN ONE DAY (2 NOV 2026)', 'WRITTEN IN ZIG', 'NOT A CHROMIUM FORK', 'CDP · MCP · AGENT MODE', 'AGPL-3.0 LICENSE'],
+    image: '/images/Lightpanda by vnhax.net.png',
+    imageAlt: 'Lightpanda architecture: Puppeteer, Playwright, MCP clients and the built-in agent drive a lightweight Zig browser',
+    kicker: 'lightpanda-io / browser — the headless browser built for AI and automation',
+    title: 'Lightpanda: A Lightweight Headless Browser for AI Agents, Scrapers & Tests',
+    lead: (
+      <>
+        <strong>Headless Chrome was built for people. Lightpanda was built for machines.</strong>
+        <br />
+        A new browser written from scratch in Zig, with V8 for JavaScript. It speaks the Chrome DevTools Protocol, so Puppeteer and
+        Playwright can connect, and it adds an MCP server and an agent mode for AI workflows.
+      </>
+    ),
+    metrics: [
+      { value: '123 MB', label: 'Peak memory, 100 pages', note: 'vs 2 GB for headless Chrome (project benchmark)' },
+      { value: '5 s', label: 'Execution time, 100 pages', note: 'vs 46 s for headless Chrome (project benchmark)' },
+      { value: '3 protocols', label: 'CDP · WebDriver BiDi · MCP', note: 'Plus a built-in agent mode' },
+    ],
+    flow: {
+      title: 'Ways to Use Lightpanda',
+      intro: 'One binary, several modes, according to the README:',
+      steps: [
+        { name: 'lightpanda fetch', desc: 'Load a URL and dump it as HTML, Markdown, PNG, PDF or structured data (JSON-LD, OpenGraph, meta tags).' },
+        { name: 'lightpanda serve', desc: 'Run a CDP server (default) or WebDriver BiDi server for Puppeteer, Playwright and other clients.' },
+        { name: 'lightpanda mcp', desc: 'Expose the browser as an MCP server over stdio or HTTP, with isolated or shared sessions per agent.' },
+        { name: 'lightpanda agent', desc: 'Drive the browser with plain-English tasks, then /save the session as a replayable PandaScript.' },
+        { name: 'lightpanda run', desc: 'Replay a saved PandaScript deterministically, with no LLM and no tokens at runtime.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'The Benchmark, Read Carefully',
+        intro: "Lightpanda's own test: 933 real web pages requested over the network on an AWS EC2 m5.large. Figures below are for 100 pages.",
+        columns: ['Metric', 'Lightpanda vs Headless Chrome'],
+        rows: [
+          ['Peak memory', '123 MB vs 2 GB, about 16x less'],
+          ['Execution time', '5 s vs 46 s, about 9x faster'],
+          ['Who measured it', 'The Lightpanda team; benchmark details are in the lightpanda-io/demo repository'],
+        ],
+      },
+      {
+        title: 'Platforms & Install',
+        columns: ['Platform', 'How'],
+        rows: [
+          ['Linux (x86_64, aarch64)', 'Nightly binary from GitHub Releases; needs glibc 2.35+ (x86_64) or 2.38+ (arm64), so not Alpine/musl'],
+          ['macOS (Apple Silicon, Intel)', 'Nightly binary, or brew install lightpanda-io/browser/lightpanda'],
+          ['Docker', 'docker run -d --name lightpanda -p 127.0.0.1:9222:9222 lightpanda/browser:latest'],
+          ['Windows', 'No native binary: install inside WSL2 using the Linux steps'],
+          ['Nix / Arch', 'nix run github:lightpanda-io/browser -- --help  ·  yay -S lightpanda-nightly-bin'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Quick Start',
+      title: 'Run the CDP Server',
+      primary: 'docker run -d --name lightpanda -p 127.0.0.1:9222:9222 lightpanda/browser:latest',
+      note: (
+        <>
+          Then connect Puppeteer with {code('puppeteer.connect({ browserWSEndpoint: "ws://127.0.0.1:9222" })')}. The rest of your script stays
+          the same. Binding to 127.0.0.1 keeps the browser off your network.
+        </>
+      ),
+      extras: [
+        { label: 'Dump a page as Markdown:', cmd: './lightpanda fetch --obey-robots --dump markdown https://example.com' },
+        { label: 'MCP server for agents (stdio):', cmd: './lightpanda mcp' },
+        { label: 'Agent mode with a task:', cmd: './lightpanda agent --task "top story on news.ycombinator.com?"' },
+        { label: 'Turn off telemetry:', cmd: 'export LIGHTPANDA_DISABLE_TELEMETRY=true' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why a New Browser Instead of a Chromium Fork',
+        body: 'A Chromium fork carries everything needed to paint pages for people: compositing, GPU work, fonts and much more. An agent or scraper mostly needs the DOM, JavaScript and the network. Building only that is what lets Lightpanda use far less memory and start fast, which matters when you run many pages at once.',
+      },
+      {
+        title: 'PandaScript: Prototype With an LLM, Ship Without One',
+        body: 'In agent mode you describe a task in plain English and the model drives the browser. Run /save to export the session as PandaScript, plain JavaScript with a few browser primitives, then replay it with lightpanda run. The replay is deterministic and uses no tokens, so production jobs do not need a model at all.',
+      },
+    ],
+    honest: {
+      title: 'Limits to Plan Around',
+      intro: 'From the README and from what a young browser implies:',
+      items: [
+        ['Not every site will work', 'Lightpanda is a new engine, not Chromium. Test your target pages before swapping it into production.'],
+        ['Telemetry is on by default', 'Disable it with LIGHTPANDA_DISABLE_TELEMETRY=true.'],
+        ['No native Windows or Android', 'Use WSL2 on Windows; Android/Termux is not supported. Linux builds need glibc, not musl.'],
+        ['AGPL-3.0', 'Offering a modified version as a network service can trigger AGPL source-sharing obligations. Check with your legal team.'],
+      ],
+    },
+    cards: [
+      { icon: '🤖', title: 'AI Providers (Agent Mode)', body: 'Anthropic, OpenAI, Gemini, Vertex AI, Mistral, Hugging Face, OpenRouter, Vercel AI Gateway, and local models via Ollama or llama.cpp.' },
+      { icon: '⚖️', title: 'License', body: <><strong>AGPL-3.0.</strong> Free to use; read the terms before offering it as a hosted service.</> },
+      { icon: '📘', title: 'Docs', body: 'lightpanda.io/docs: MCP server guide, agent mode and PandaScript reference.' },
     ],
   },
 };
