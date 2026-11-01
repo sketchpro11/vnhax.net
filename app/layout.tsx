@@ -86,6 +86,8 @@ import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
+const ADSENSE_CLIENT = 'ca-pub-2516304860397688';
+
 export default function RootLayout({
   children,
 }: {
@@ -93,7 +95,6 @@ export default function RootLayout({
 }) {
   const orgSchema = getOrganizationSchema();
   const siteSchema = getWebSiteSchema();
-  const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
@@ -107,10 +108,9 @@ export default function RootLayout({
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         
-        {/* Optional Google AdSense Verification Tag (set NEXT_PUBLIC_ADSENSE_ID in .env) */}
-        {adsenseId && (
-          <meta name="google-adsense-account" content={adsenseId} />
-        )}
+        {/* Google AdSense account verification */}
+        <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
+
 
         {/* Google Consent Mode v2: nothing is stored until the visitor accepts in the cookie banner */}
         <script
@@ -137,6 +137,13 @@ export default function RootLayout({
               } catch (e) {}
             `,
           }}
+        />
+
+        {/* Google AdSense (loads after the Consent Mode defaults above) */}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          crossOrigin="anonymous"
         />
 
         {/* Schema.org Root Schemas: Organization & WebSite */}
