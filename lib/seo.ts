@@ -33,7 +33,7 @@ export function getOrganizationSchema() {
     "@type": "Organization",
     "@id": `${BRAND_CONFIG.siteUrl}/#organization`,
     "name": BRAND_CONFIG.shortName,
-    "alternateName": BRAND_CONFIG.acronymExplanation,
+    "alternateName": ["vnhax.net", BRAND_CONFIG.acronymExplanation],
     "legalName": BRAND_CONFIG.shortName,
     "url": BRAND_CONFIG.siteUrl,
     "logo": {
@@ -56,7 +56,7 @@ export function getWebSiteSchema() {
     "@type": "WebSite",
     "@id": `${BRAND_CONFIG.siteUrl}/#website`,
     "name": BRAND_CONFIG.shortName,
-    "alternateName": BRAND_CONFIG.name,
+    "alternateName": ["vnhax.net", BRAND_CONFIG.name],
     "url": BRAND_CONFIG.siteUrl,
     "description": BRAND_CONFIG.description,
     "publisher": {

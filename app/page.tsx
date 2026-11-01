@@ -10,14 +10,14 @@ import { getAllRepos } from '@/lib/repos-data';
 import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'vnhax — Tech News, AI Trends & Developer Hub',
+  title: { absolute: 'VNHAX.net — AI News, Model Guides & Developer Repos' },
   description:
     'Explore the latest tech news, AI trends, helpful education guides, free UI components, developer designs, and top GitHub repos all in one place.',
   alternates: {
     canonical: BRAND_CONFIG.siteUrl,
   },
   openGraph: {
-    title: 'vnhax — Tech News, AI Trends, Education Guides & Developer Repos',
+    title: 'VNHAX.net — AI News, Model Guides & Developer Repos',
     description:
       'Explore the latest tech news, AI trends, helpful education guides, free UI components, developer designs, and top GitHub repos all in one place.',
     url: BRAND_CONFIG.siteUrl,
