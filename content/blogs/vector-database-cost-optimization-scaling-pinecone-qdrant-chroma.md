@@ -40,7 +40,7 @@ Dropping from **1536 to 768 dimensions** halves your raw vector storage, halves 
 
 ### The Role of Matryoshka Embeddings (MRL)
 
-The primary objection is retrieval quality loss. Here is where [Matryoshka Representation Learning (MRL)](https://arxiv.org/abs/2205.13147) changes the game: models trained with nested dimensional structures degrade gracefully when truncated. Truncating to half the dimensions does not yield half a model — it yields a model that preserves 98%+ of its top-10 retrieval recall because the first dimensions were explicitly optimized during pretraining to capture the core variance. For local embedding generation, see our curated [Local AI Tools & Runtimes Hub](/ai/ai-tools).
+The primary objection is retrieval quality loss. Here is where [Matryoshka Representation Learning (MRL)](https://arxiv.org/abs/2205.13147) changes the game: models trained with nested dimensional structures degrade gracefully when truncated. Truncating to half the dimensions does not yield half a model — it yields a model that preserves 98%+ of its top-10 retrieval recall because the first dimensions were explicitly optimized during pretraining to capture the core variance. For local embedding generation, see our curated [Local AI Tools & Runtimes Hub](/ai).
 
 > **Production Warning:** Always verify retrieval quality on your eval set. Not every model is Matryoshka-trained. Truncating an arbitrary non-nested model causes catastrophic recall degradation.
 
@@ -176,7 +176,7 @@ Post-filtering searches the vector space first and discards results that do not 
 ```
 
 1. **Self-Hosted ([Qdrant](https://qdrant.tech/), Milvus)**:
-   - Drastically cheaper at steady state. A single dedicated bare-metal or cloud instance (e.g., 32 vCPU, 64GB RAM) easily handles millions of vectors with native scalar quantization. Marginal query cost is effectively zero. Compare deployment environments in our [Technology & Cloud Platforms Guide](/technology/platforms).
+   - Drastically cheaper at steady state. A single dedicated bare-metal or cloud instance (e.g., 32 vCPU, 64GB RAM) easily handles millions of vectors with native scalar quantization. Marginal query cost is effectively zero. Compare deployment environments in our [Technology & Cloud Platforms Guide](/technology).
    - *Operational Tradeoff*: Your engineering team must maintain backups, upgrades, monitoring, and replication.
 2. **Managed Serverless ([Pinecone](https://docs.pinecone.io/))**:
    - Eliminates capacity planning completely. You pay for read units and write units. If query traffic is unpredictable or bursty, serverless pricing avoids over-provisioning idle instances.

@@ -5,7 +5,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getAllRepos } from '@/lib/repos-data';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Trending GitHub Repos & Toolkits',
@@ -41,21 +41,12 @@ export default function ReposIndexPage() {
     },
   };
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Developer Resources', url: '/developer-resources' },
-    { name: 'Repositories', url: '/repos' },
-  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <SiteHeader variant="standard" />

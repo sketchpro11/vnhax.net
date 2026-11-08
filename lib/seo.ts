@@ -61,14 +61,6 @@ export function getWebSiteSchema() {
     "description": BRAND_CONFIG.description,
     "publisher": {
       "@id": `${BRAND_CONFIG.siteUrl}/#organization`
-    },
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": `${BRAND_CONFIG.siteUrl}/?search={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
     }
   };
 }
@@ -91,84 +83,6 @@ export function getBreadcrumbSchema(items: BreadcrumbItem[]) {
       "name": item.name,
       "item": item.url.startsWith("http") ? item.url : `${BRAND_CONFIG.siteUrl}${item.url}`
     }))
-  };
-}
-
-/**
- * Generate SoftwareSourceCode / SoftwareApplication Schema for Repo Reviews (JSON-LD)
- */
-export interface SoftwareRepoSchemaOptions {
-  name: string;
-  description: string;
-  url: string;
-  codeRepository: string;
-  programmingLanguage: string;
-  license?: string;
-  stars?: string;
-  forks?: string;
-  datePublished?: string;
-  dateModified?: string;
-}
-
-export function getSoftwareRepoSchema(options: SoftwareRepoSchemaOptions) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    "@id": `${options.url}/#software`,
-    "name": options.name,
-    "headline": `${options.name} Technical Architecture & Implementation Deep Dive`,
-    "description": options.description,
-    "codeRepository": options.codeRepository,
-    "programmingLanguage": options.programmingLanguage,
-    "runtimePlatform": "Cross-platform (Linux, macOS, Windows)",
-    "applicationCategory": "DeveloperApplication",
-    "author": {
-      "@type": "Organization",
-      "name": BRAND_CONFIG.name,
-      "url": BRAND_CONFIG.siteUrl
-    },
-    "publisher": {
-      "@id": `${BRAND_CONFIG.siteUrl}/#organization`
-    },
-    "datePublished": options.datePublished || "2026-10-04T00:00:00Z",
-    "dateModified": options.dateModified || "2026-10-11T00:00:00Z"
-  };
-}
-
-/**
- * Generate TechArticle / BlogPosting Schema (JSON-LD)
- */
-export interface TechArticleSchemaOptions {
-  headline: string;
-  description: string;
-  url: string;
-  datePublished: string;
-  dateModified: string;
-  authorName?: string;
-  keywords?: string[];
-}
-
-export function getTechArticleSchema(options: TechArticleSchemaOptions) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "@id": `${options.url}/#article`,
-    "headline": options.headline,
-    "description": options.description,
-    "url": options.url,
-    "mainEntityOfPage": options.url,
-    "inLanguage": "en-US",
-    "datePublished": options.datePublished,
-    "dateModified": options.dateModified,
-    "author": {
-      "@type": "Person",
-      "name": options.authorName || "Umar Hashmi",
-      "url": "https://www.umarhashmi.dev"
-    },
-    "publisher": {
-      "@id": `${BRAND_CONFIG.siteUrl}/#organization`
-    },
-    "keywords": options.keywords?.join(", ") || "AI tools, open source, local LLM, developer tools"
   };
 }
 

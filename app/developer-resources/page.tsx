@@ -6,7 +6,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getAllRepos } from '@/lib/repos-data';
 import { getBlogsBySilo } from '@/lib/blog';
-import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
+import { BRAND_CONFIG, getFAQSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Developer Toolkits & Architecture Hub',
@@ -29,12 +29,12 @@ const DEV_FAQS = [
   {
     question: 'How does vnhax evaluate and verify open-source GitHub repositories?',
     answer:
-      'We audit repositories across five strict dimensions: permissive licensing (MIT/Apache-2.0), commit recency, issue resolution velocity, benchmarked hardware footprint, and absence of telemetry or proprietary lock-in mechanisms.',
+      'Each review is written from each project README and documentation, with live star and fork counts from the GitHub API. We note the licence, what the project claims, and any caveats it states. We do not run security audits or benchmarks ourselves, so test a project in your own environment before relying on it.',
   },
   {
     question: 'Can I clone and deploy these repositories in commercial enterprise workflows?',
     answer:
-      'All featured repositories in this hub are open source with verified licenses. Permissive licenses such as MIT and Apache-2.0 allow commercial usage, distribution, and modification. Always verify specific model weights licenses (e.g. Llama Community License) separately from the software runtime code.',
+      'Usually, but check each licence. Most projects here use permissive licences such as MIT or Apache-2.0, while some, like VoiceStudio and Lightpanda, use AGPL-3.0, which has extra obligations if you offer a modified version as a network service. Model weights can have separate licences from the code.',
   },
   {
     question: 'How do I choose between Cline and Aider for AI-assisted coding?',
@@ -147,7 +147,7 @@ export default async function DeveloperResourcesPage() {
             <p className="section-kicker">Engineering knowledge base</p>
             <h1 className="page-title">developer resources &amp; tooling</h1>
             <p className="page-lede">
-              Audited open-source repositories, local runtimes, architectural decision rubrics, and developer environments. Built to inspect, benchmark, and deploy with confidence.
+              Plain-English reviews of popular open-source repositories, local AI runtimes and developer tools, written from each project's own documentation.
             </p>
           </header>
 
@@ -157,11 +157,11 @@ export default async function DeveloperResourcesPage() {
               Engineering Pillars
             </h2>
             <div className="topic-grid">
-              <Link className="topic-card" href="/developer-resources/github-repos">
+              <Link className="topic-card" href="/repos">
                 <span className="card-eyebrow">Repositories</span>
-                <h3>Audited Open-Source Codebases</h3>
+                <h3>Open-Source Repository Reviews</h3>
                 <p>
-                  Vetted runtimes and developer libraries audited for permissive licensing, commit velocity, and minimal external dependencies.
+                  What each project does, how to install it, its licence and its stated limits, with live GitHub stats.
                 </p>
                 <span className="card-link">
                   Browse repos <span aria-hidden="true">→</span>
@@ -172,7 +172,7 @@ export default async function DeveloperResourcesPage() {
                 <span className="card-eyebrow">Pair Programming</span>
                 <h3>Enterprise Agent Harness</h3>
                 <p>
-                  Specialized multi-persona coding harness with 68 subagents, custom skills, and verification loops.
+                  Multi-agent coding harness with 70+ specialized agents, 300+ skills and verification loops.
                 </p>
                 <span className="card-link">
                   Inspect Everything Claude Code <span aria-hidden="true">→</span>
@@ -200,11 +200,11 @@ export default async function DeveloperResourcesPage() {
                   Featured Open-Source Repositories
                 </h2>
                 <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
-                  Audited codebases with deep architectural breakdowns, dependency audits, and hardware benchmarks.
+                  Reviews based on each project's README, with live star counts from GitHub.
                 </p>
               </div>
               <Link
-                href="/developer-resources/github-repos"
+                href="/repos"
                 style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}
               >
                 View Repository Index →
@@ -212,7 +212,7 @@ export default async function DeveloperResourcesPage() {
             </div>
 
             <div className="repo-liquid-grid" style={{ margin: 0 }}>
-              {repos.map((repo) => {
+              {repos.slice(0, 6).map((repo) => {
                 const meta = REPOS_LIQUID_METAS[repo.slug] || {
                   mesh: 'liquid-mesh--ollama',
                   category: repo.category || 'Developer Tool',

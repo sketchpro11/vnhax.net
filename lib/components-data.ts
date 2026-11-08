@@ -47,11 +47,11 @@ export const UI_COMPONENTS: Record<string, UIComponent> = {
   'tweet-card': {
     slug: 'tweet-card',
     title: 'Tweet Card',
-    subtitle: 'Verified social testimonial card with live engagement metrics, media embed, and responsive theme support.',
+    subtitle: 'Social post card for testimonials, with a verified badge, engagement counts, media embed and light or dark themes.',
     category: 'Cards & Social',
     badge: 'MagicUI Pattern',
     description:
-      'The Tweet Card is an engineered, accessible social proof card that displays user feedback, developer tweets, or product reviews with zero client-side iframe overhead. Unlike standard Twitter/X widgets that fetch third-party tracking scripts and introduce 800+ kB of bundle weight, this native component compiles to under 2 kB of clean HTML and CSS.',
+      'The Tweet Card is an engineered, accessible social proof card that displays user feedback, developer tweets, or product reviews with zero client-side iframe overhead. Unlike the official X embed, which loads a third-party script and iframe, this component is plain HTML and CSS that you control, so it adds no tracking and no extra network requests.',
     architecturalOverview:
       'Engineered with semantic <article> tags, accessible SVG iconography for verified checkmarks, and responsive CSS variables. It includes dynamic engagement counters (replies, retweets, likes, bookmarks) with optimistic state updates and keyboard-navigable interaction triggers.',
     features: [
@@ -59,7 +59,7 @@ export const UI_COMPONENTS: Record<string, UIComponent> = {
       'Optimistic like/bookmark toggles with responsive feedback',
       'High-resolution avatar and verified badge support',
       'Dark and light mode surfaces using CSS variables or Tailwind classes',
-      'Sub-millisecond initial paint with 0 CLS (Cumulative Layout Shift)',
+      'Fixed avatar and media sizes, so the card does not shift the layout while images load',
     ],
     props: [
       { prop: 'author', type: 'AuthorObject', default: 'Required', description: 'Author name, handle, avatar URL, and verified status flag.' },
@@ -215,7 +215,7 @@ export const TweetCard: React.FC<TweetCardProps> = ({
     </div>
   </div>
   <p class="mt-3.5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-    Clean semantic UI components with sub-10ms rendering time.
+    Clean, readable UI components I can copy straight into my project.
   </p>
   <div class="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3 text-xs text-neutral-500 dark:border-neutral-800">
     <button class="flex items-center gap-1.5 hover:text-sky-500">...</button>
@@ -282,7 +282,7 @@ export const TweetCard: React.FC<TweetCardProps> = ({
 .tweet-liked { color: #e11d48 !important; }
 .tweet-bookmarked { color: #2563eb !important; }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Uses semantic <article> landmark tag with descriptive aria-label.',
         'Action buttons provide explicit aria-label attributes reflecting current like/bookmark state.',
@@ -312,7 +312,7 @@ export const TweetCard: React.FC<TweetCardProps> = ({
       'Built upon CSS Grid with fluid grid-template-columns and auto-flow dense algorithms. Mouse movement calculates radial gradient coordinates in real time via CSS variables (--mouse-x, --mouse-y), enabling hardware-accelerated spotlight highlights without triggering re-layouts or React re-renders.',
     features: [
       'Responsive CSS Grid spans (1x1, 2x1, and 2x2 asymmetric modular tiles)',
-      'Hardware-accelerated ambient cursor spotlight with zero FPS drop',
+      'Cursor spotlight animated with CSS transforms and custom properties',
       'Contextual headers supporting live diagrams, graphs, and code snippets',
       'Built-in mobile touch fallback with graceful CSS degradation',
       'Accessible semantic structure with full keyboard tab navigation',
@@ -465,7 +465,7 @@ export const BentoGrid: React.FC<{ children: React.ReactNode; className?: string
   color: #2563eb;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Spotlight layer uses pointer-events: none so it does not intercept accessibility cursors.',
         'Card links provide descriptive destination anchor text.',
@@ -648,7 +648,7 @@ export const AnimatedList: React.FC<AnimatedListProps> = ({
   margin-top: 2px;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Container uses role="log" with aria-live="polite" so screen readers can consume feed updates without voice interruption.',
         'Hover-to-pause allows low-vision users to read notifications at their own pace.',
@@ -862,7 +862,7 @@ const DockIconItem: React.FC<{
   background: #38bdf8;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Wrapped with role="toolbar" and aria-label="Application dock navigation".',
         'All icons have aria-label matching their visible tooltip text.',
@@ -882,7 +882,7 @@ const DockIconItem: React.FC<{
   'sparkles-title': {
     slug: 'sparkles-title',
     title: 'Sparkles Title',
-    subtitle: 'High-impact hero headline with shimmering canvas sparkle particles floating across gradient typography.',
+    subtitle: 'Hero headline with shimmering canvas sparkle particles floating across gradient typography.',
     category: 'Typography & Effects',
     badge: 'UI-Layouts Pattern',
     description:
@@ -903,7 +903,7 @@ const DockIconItem: React.FC<{
       { prop: 'gradient', type: 'string', default: "'linear-gradient(135deg, #0f172a 0%, #2563eb 50%, #7c3aed 100%)'", description: 'CSS gradient string for the text background.' },
     ],
     installGuide: {
-      cliCommand: 'npx shadcn@latest add "https://ui-layouts.com/r/sparkles-title"',
+      cliCommand: 'npx shadcn@latest add "https://www.ui-layouts.com/r/sparkles-title.json"',
       npmPackages: ['None required'],
       steps: [
         {
@@ -1063,7 +1063,7 @@ export const SparklesTitle: React.FC<SparklesTitleProps> = ({
   display: inline;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'The canvas is explicitly marked with aria-hidden="true" so screen readers ignore cosmetic sparkles.',
         'Text gradient uses high contrast stops ensuring 4.5:1 legibility against light or dark backgrounds.',
@@ -1104,7 +1104,7 @@ export const SparklesTitle: React.FC<SparklesTitleProps> = ({
       { prop: 'interactive', type: 'boolean', default: 'true', description: 'Whether particles respond to mouse pointer coordinates.' },
     ],
     installGuide: {
-      cliCommand: 'npx shadcn@latest add "https://ui-layouts.com/r/sparkles"',
+      cliCommand: 'npx shadcn@latest add "https://www.ui-layouts.com/r/sparkles.json"',
       npmPackages: ['None required'],
       steps: [
         {
@@ -1243,7 +1243,7 @@ export const SparklesField: React.FC<SparklesFieldProps> = ({
   z-index: 1;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Pure background canvas marked with aria-hidden="true" to keep accessibility tree clean.',
       ],
@@ -1281,7 +1281,7 @@ export const SparklesField: React.FC<SparklesFieldProps> = ({
       { prop: 'className', type: 'string', default: "''", description: 'Custom CSS class for container wrapper.' },
     ],
     installGuide: {
-      cliCommand: 'npx shadcn@latest add "https://ui-layouts.com/r/image-accordions"',
+      cliCommand: '# No registry install available: copy the React and CSS code below',
       npmPackages: ['None required'],
       steps: [
         {
@@ -1471,7 +1471,7 @@ export const ImageAccordions: React.FC<ImageAccordionsProps> = ({
   color: #38bdf8;
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Cards have role="button" and aria-expanded attributes reflecting active status.',
         'High contrast text overlay ensures >7:1 readability on dark gradient backdrops.',
@@ -1490,13 +1490,13 @@ export const ImageAccordions: React.FC<ImageAccordionsProps> = ({
   'pricing-table': {
     slug: 'pricing-table',
     title: 'Modern Pricing Table',
-    subtitle: 'Conversion-optimized SaaS pricing matrix with annual discount toggle, featured tier spotlight, and feature checklist.',
+    subtitle: 'SaaS pricing table with annual discount toggle, featured tier spotlight, and feature checklist.',
     category: 'Marketing Blocks',
     badge: 'UI-Layouts Pattern',
     description:
       'The Modern Pricing Table is an engineered subscription matrix designed to drive customer conversion. It features a responsive billing frequency toggle (Monthly / Annual with a "Save 20%" discount badge), prominent visual spotlight for the recommended tier with ambient glow, detailed feature checklists with SVG checkmarks, and accessible CTA action triggers.',
     architecturalOverview:
-      'Manages billing state through React useState with dynamic price recalculation. Designed with semantic radio group attributes for the frequency selector and high-contrast typography satisfying WCAG 2.1 AA requirements.',
+      'Manages billing state through React useState with dynamic price recalculation. Designed with semantic radio group attributes for the frequency selector and high-contrast typography; check contrast again after you change the colours.',
     features: [
       'Interactive Monthly / Annual toggle with automatic 20% discount calculation',
       'Featured tier with glowing border spotlight and "Most Popular" pill badge',
@@ -1510,7 +1510,7 @@ export const ImageAccordions: React.FC<ImageAccordionsProps> = ({
       { prop: 'className', type: 'string', default: "''", description: 'Custom CSS class for outer container.' },
     ],
     installGuide: {
-      cliCommand: 'npx shadcn@latest add "https://pro.ui-layouts.com/r/pricing1"',
+      cliCommand: '# No registry install available: copy the React and CSS code below',
       npmPackages: ['lucide-react (optional)'],
       steps: [
         {
@@ -1777,7 +1777,7 @@ export const PricingTable: React.FC<{ currency?: string; className?: string }> =
 .pricing-feature-item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #334155; }
 .pricing-check-icon { color: #16a34a; flex-shrink: 0; }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Frequency toggle is marked with role="radiogroup" and aria-checked states.',
         'Feature list items use high contrast SVG checkmarks paired with explicit descriptive text.',
@@ -1796,13 +1796,13 @@ export const PricingTable: React.FC<{ currency?: string; className?: string }> =
   'hero-section': {
     slug: 'hero-section',
     title: 'Futuristic Hero Section',
-    subtitle: 'Production-ready SaaS hero block with glowing announcement pill, gradient headline, dual CTAs, and interactive preview.',
+    subtitle: 'SaaS landing page hero block with glowing announcement pill, gradient headline, dual CTAs, and interactive preview.',
     category: 'Marketing Blocks',
     badge: 'UI-Layouts Pattern',
     description:
       'The Futuristic Hero Section provides a turnkey landing page framework built for developer tools and AI products. Features a shimmering announcement badge with glowing border, high-impact gradient typography, dual call-to-action buttons (primary filled with hover glow + secondary ghost with arrow), social proof metrics, and an integrated preview showcase.',
     architecturalOverview:
-      'Engineered with pure semantic HTML5 (<header>, <h1>, <nav>, <section>) and CSS clamp() fluid typography. Sub-10ms render latency with zero client-side layout shifts ensures 100% Core Web Vitals scores in Google Lighthouse.',
+      'Engineered with pure semantic HTML5 (<header>, <h1>, <nav>, <section>) and CSS clamp() fluid typography. Sizes are set up front to avoid layout shift; measure the result on your own page with Lighthouse or PageSpeed Insights.',
     features: [
       'Shimmering announcement badge pill with interactive link',
       'Fluid clamp() typography scaling smoothly from 320px mobile to 4K displays',
@@ -1818,7 +1818,7 @@ export const PricingTable: React.FC<{ currency?: string; className?: string }> =
       { prop: 'secondaryCta', type: '{ text: string, href: string }', default: 'Optional', description: 'Secondary ghost button configuration.' },
     ],
     installGuide: {
-      cliCommand: 'npx shadcn@latest add "https://ui-layouts.com/r/hero-section"',
+      cliCommand: '# No registry install available: copy the React and CSS code below',
       npmPackages: ['None required'],
       steps: [
         {
@@ -1846,7 +1846,7 @@ export interface ModernHeroProps {
 
 export const ModernHero: React.FC<ModernHeroProps> = ({
   badge = { text: '✨ New: Zero-Dependency Component System', href: '/ui-components' },
-  title = 'Build Exceptional Web Interfaces with Zero Bloat',
+  title = 'Build Fast, Accessible Web Interfaces',
   description = 'Accessible, high-performance UI patterns and architecture components engineered for modern developers. Drop them into any framework.',
   primaryCta = { text: 'Browse Components', href: '/ui-components' },
   secondaryCta = { text: 'Read Guide', href: '/blog' },
@@ -1885,18 +1885,18 @@ export const ModernHero: React.FC<ModernHeroProps> = ({
 
         <div className="modern-hero-stats">
           <div className="stat-item">
-            <span className="stat-val">100%</span>
-            <span className="stat-lbl">WCAG AA Compliant</span>
+            <span className="stat-val">24</span>
+            <span className="stat-lbl">Components</span>
           </div>
           <div className="stat-sep" />
           <div className="stat-item">
-            <span className="stat-val">&lt; 2 kB</span>
-            <span className="stat-lbl">Average Component Size</span>
+            <span className="stat-val">3</span>
+            <span className="stat-lbl">Code Formats</span>
           </div>
           <div className="stat-sep" />
           <div className="stat-item">
-            <span className="stat-val">0 kB</span>
-            <span className="stat-lbl">Runtime JavaScript Bloat</span>
+            <span className="stat-val">Free</span>
+            <span className="stat-lbl">To Copy and Adapt</span>
           </div>
         </div>
       </div>
@@ -2040,7 +2040,7 @@ export const ModernHero: React.FC<ModernHeroProps> = ({
   .modern-hero-stats { gap: 16px; }
 }`,
     accessibility: {
-      wcagCriteria: 'WCAG 2.1 Level AA Compliant',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'Single semantic <h1> tag established for clear page heading hierarchy.',
         'CTAs provide clear action descriptions avoiding generic "click here" text.',
@@ -2166,7 +2166,7 @@ export function Marquee({ items, label, reverse = false, duration = 28, pauseOnH
   .marquee__track { animation: none; flex-wrap: wrap; width: auto; }
 }`,
     accessibility: {
-      wcagCriteria: 'Designed for WCAG 2.2.2 (Pause, Stop, Hide)',
+      wcagCriteria: 'Accessibility notes (see WCAG 2.2.2: Pause, Stop, Hide)',
       ariaNotes: [
         'The strip is a labelled region (role="region" with aria-label) so screen-reader users know what it contains.',
         'The duplicated copy of the items is aria-hidden, so each item is announced once.',
@@ -2294,7 +2294,7 @@ export function NumberTicker({ value, decimals = 0, duration = 1400, locale = 'e
   border: 0;
 }`,
     accessibility: {
-      wcagCriteria: 'Screen-reader safe and reduced-motion aware',
+      wcagCriteria: 'Accessibility notes',
       ariaNotes: [
         'The animated digits are aria-hidden; a visually hidden span holds the final value, so assistive tech reads the real number once.',
         'Users with prefers-reduced-motion see the final value immediately with no animation.',

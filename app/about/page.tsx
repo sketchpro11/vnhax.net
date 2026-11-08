@@ -5,7 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AboutTableOfContents from '@/components/AboutTableOfContents';
-import { BRAND_CONFIG, CONTACT_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, CONTACT_EMAIL } from '@/lib/seo';
 import { AUTHOR_PAGE_PATH } from '@/lib/author';
 import AuthorAvatar from '@/components/AuthorAvatar';
 
@@ -43,10 +43,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const lastUpdated = 'October 11, 2026';
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'About', url: '/about' },
-  ]);
 
   const aboutSchema = {
     '@context': 'https://schema.org',
@@ -76,10 +72,6 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <ReadingProgressBar />
@@ -256,8 +248,8 @@ export default function AboutPage() {
                 </div>
                 <p>
                   VNHAX stands for <strong>Virtual Next-Gen Hub for AI &amp; eXploration</strong>. The site publishes
-                  only legitimate educational content about software and AI. It does not publish or link to cracked
-                  software, game cheats or hacking tools.
+                  educational explainers and guides about AI, software and developer tools, and links only to official
+                  and reputable sources.
                 </p>
               </section>
 

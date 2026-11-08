@@ -5,7 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import TermsTableOfContents from '@/components/TermsTableOfContents';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -43,10 +43,6 @@ export default function TermsPage() {
   const lastUpdated = 'October 11, 2026';
   const effectiveDate = 'October 4, 2026';
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Terms of Service', url: '/terms' },
-  ]);
 
   return (
     <>

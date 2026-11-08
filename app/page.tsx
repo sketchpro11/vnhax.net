@@ -39,7 +39,7 @@ export default function HomePage() {
           <h1 className="wordmark">
             vnhax
             <span style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
-              {' '}— Tech News, AI Trends, Education Guides &amp; Developer Tools
+              {' '}— AI News, Model Guides &amp; Developer Repos
             </span>
           </h1>
 
@@ -199,13 +199,13 @@ export default function HomePage() {
               <p style={{ fontSize: '14.5px', color: '#64748b', lineHeight: 1.6, marginBottom: '20px' }}>
                 New repository reviews are on the way. In the meantime, browse our developer resources.
               </p>
-              <Link href="/developer-resources/github-repos" className="btn btn--dark" style={{ height: '38px', padding: '0 18px', fontSize: '13px', textDecoration: 'none' }}>
+              <Link href="/repos" className="btn btn--dark" style={{ height: '38px', padding: '0 18px', fontSize: '13px', textDecoration: 'none' }}>
                 Explore Developer Resources
               </Link>
             </div>
           ) : (
             <div className="repo-liquid-grid">
-              {repos.map((repo) => (
+              {repos.slice(0, 6).map((repo) => (
                 <Link key={repo.slug} className="liquid-card" href={`/repos/${repo.slug}`}>
                   <div className="liquid-card-inner">
                     {repo.image ? (

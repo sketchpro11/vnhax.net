@@ -1,32 +1,10 @@
-import type React from 'react';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import PonytailExtendedDoc from '@/components/PonytailExtendedDoc';
-import ImpeccableExtendedDoc from '@/components/ImpeccableExtendedDoc';
-import ECCExtendedDoc from '@/components/ECCExtendedDoc';
-import EffectExtendedDoc from '@/components/EffectExtendedDoc';
-import CavemanExtendedDoc from '@/components/CavemanExtendedDoc';
-import AgentReachExtendedDoc from '@/components/AgentReachExtendedDoc';
 import TrendingRepoDoc from '@/components/TrendingRepoDoc';
 import type { RepoDetails } from '@/lib/repos-data';
 
 interface RepoReviewProps {
   repo: RepoDetails;
 }
-
-const EXTENDED_DOCS: Record<string, React.ComponentType> = {
-  ponytail: PonytailExtendedDoc,
-  impeccable: ImpeccableExtendedDoc,
-  ecc: ECCExtendedDoc,
-  effect: EffectExtendedDoc,
-  caveman: CavemanExtendedDoc,
-  'agent-reach': AgentReachExtendedDoc,
-  voicestudio: () => <TrendingRepoDoc slug="voicestudio" />,
-  'ai-job-search': () => <TrendingRepoDoc slug="ai-job-search" />,
-  'claude-plugins-official': () => <TrendingRepoDoc slug="claude-plugins-official" />,
-  t3code: () => <TrendingRepoDoc slug="t3code" />,
-  'claude-mem': () => <TrendingRepoDoc slug="claude-mem" />,
-  lightpanda: () => <TrendingRepoDoc slug="lightpanda" />,
-};
 
 const h2Style = {
   fontSize: '20px',
@@ -42,7 +20,6 @@ const h2Style = {
  */
 export default function RepoReview({ repo }: RepoReviewProps) {
   const [owner, repoShortName] = repo.repoFullName.split('/');
-  const ExtendedDoc = EXTENDED_DOCS[repo.slug];
   const statsDate = repo.statsUpdatedAt
     ? new Date(repo.statsUpdatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
     : null;
@@ -106,41 +83,7 @@ export default function RepoReview({ repo }: RepoReviewProps) {
               minWidth: 0,
             }}
           >
-            {ExtendedDoc ? (
-              <ExtendedDoc />
-            ) : (
-              <>
-                <h1 style={{ fontSize: '28px', fontWeight: 700, borderBottom: '1px solid #d0d7de', paddingBottom: '10px', marginBottom: '16px' }}>
-                  {repo.name}
-                </h1>
-                <p style={{ fontSize: '16px', color: '#334155', marginBottom: '24px' }}>{repo.summary}</p>
-
-                <h2 style={h2Style}>Key Takeaways</h2>
-                <ul style={{ paddingLeft: '20px', fontSize: '14.5px', color: '#334155' }}>
-                  {repo.keyTakeaways.map((takeaway, i) => (
-                    <li key={i}>{takeaway}</li>
-                  ))}
-                </ul>
-
-                <h2 style={h2Style}>Why Use {repo.name}?</h2>
-                <p style={{ fontSize: '14.5px', color: '#334155' }}>{repo.whyUse}</p>
-
-                <h2 style={h2Style}>Architecture</h2>
-                <p style={{ fontSize: '14.5px', color: '#334155' }}>{repo.architecture}</p>
-
-                {repo.benchmarks && (
-                  <>
-                    <h2 style={h2Style}>Benchmarks (as reported by the project)</h2>
-                    <p style={{ fontSize: '14.5px', color: '#334155' }}>{repo.benchmarks}</p>
-                  </>
-                )}
-
-                <h2 style={h2Style}>Quickstart</h2>
-                <pre style={{ background: '#1f2328', color: '#f0f6fc', padding: '16px', borderRadius: '8px', fontSize: '13px', overflowX: 'auto' }}>
-                  <code>{repo.quickstart}</code>
-                </pre>
-              </>
-            )}
+            <TrendingRepoDoc slug={repo.slug} />
 
             {repo.faqs && repo.faqs.length > 0 && (
               <section>

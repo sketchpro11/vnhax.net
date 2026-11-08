@@ -3,7 +3,7 @@ import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
+import { BRAND_CONFIG, getFAQSchema } from '@/lib/seo';
 import { getBlogsBySilo } from '@/lib/blog';
 
 export const metadata: Metadata = {
@@ -32,17 +32,17 @@ const PLATFORM_FAQS = [
   {
     question: 'What is the latency difference between edge inference and centralized GPU clusters?',
     answer:
-      'Centralized GPU clusters (like AWS us-east-1) typically introduce 70ms-150ms of network transit latency depending on client location. Edge inference runs models within 10ms-30ms of users at global points of presence, dramatically improving Time-to-First-Token for interactive user experiences.',
+      'Network distance adds round-trip time to every request, so serving from a region close to your users lowers time to first token. How much depends on where your users are and which regions your provider offers; measure from where your users are rather than relying on general figures.',
   },
   {
     question: 'Why are custom inference LPUs (like Groq) faster than standard GPUs for LLMs?',
     answer:
-      'Standard GPUs are optimized for parallel graphics and matrix batching with high memory latency. Language Processing Units (LPUs) utilize on-chip SRAM with instantaneous memory bandwidth, eliminating memory bus bottlenecks for sequential autoregressive token generation.',
+      'Generating tokens one at a time is limited by how fast model weights can be read from memory. Chips like the Groq LPU keep weights in large on-chip SRAM, which has much higher bandwidth than the external memory GPUs use, so single-stream generation can be faster. GPUs remain more flexible and better suited to large batches and training.',
   },
   {
     question: 'When should an engineering team migrate from serverless to dedicated compute?',
     answer:
-      'Serverless is ideal for spiky, unpredictable traffic and rapid iteration. When baseline request concurrency becomes continuous and monthly cloud bills exceed the cost of dedicated instances (often around $2,000-$5,000/month in serverless execution and egress), migrating core services to dedicated containers or Kubernetes yields significant margin savings.',
+      'Serverless suits spiky, unpredictable traffic and fast iteration. Once traffic is steady around the clock, compare your monthly serverless bill with the cost of always-on instances for the same load; when the dedicated option is clearly cheaper and your team can run it, moving core services makes sense.',
   },
 ];
 
@@ -94,47 +94,6 @@ export default async function TechnologyPage() {
             </p>
           </header>
 
-          {/* Core Platform Pillars */}
-          <section className="topic-section" aria-labelledby="platform-pillars">
-            <h2 id="platform-pillars" className="topic-section-title">
-              Infrastructure Pillars
-            </h2>
-            <div className="topic-grid">
-              <Link className="topic-card" href="/technology/platforms">
-                <span className="card-eyebrow">Cloud Platforms</span>
-                <h3>Platform Adoption Guide</h3>
-                <p>
-                  Comprehensive architectural evaluation across serverless edge runtimes, GPU clusters, and modern cloud deployment models.
-                </p>
-                <span className="card-link">
-                  Read guide <span aria-hidden="true">→</span>
-                </span>
-              </Link>
-
-              <div className="topic-card">
-                <span className="card-eyebrow">Silicon Clusters</span>
-                <h3>AI Inference Hardware</h3>
-                <p>
-                  Profiling LPUs, unified-memory clusters, and GPU tensor parallelism for low-latency autoregressive token generation.
-                </p>
-                <span className="card-link">
-                  Hardware Benchmarks
-                </span>
-              </div>
-
-              <div className="topic-card">
-                <span className="card-eyebrow">Edge Computing</span>
-                <h3>V8 Isolates &amp; MicroVMs</h3>
-                <p>
-                  Comparing lightweight JavaScript isolate execution models with Firecracker micro-virtual machines for multi-tenant code isolation.
-                </p>
-                <span className="card-link">
-                  Systems Analysis
-                </span>
-              </div>
-            </div>
-          </section>
-
           {/* In-Depth Editorial Architectural Guide */}
           <section className="topic-section" aria-labelledby="platform-audit">
             <div className="editorial-feature-card">
@@ -166,51 +125,33 @@ export default async function TechnologyPage() {
             </div>
           </section>
 
-          {/* Curated Platform Deep-Dives */}
-          <section className="topic-section" aria-labelledby="systems-radar">
-            <h2 id="systems-radar" className="topic-section-title">
-              2026 Systems Architecture Deep-Dives
+          {/* Platform evaluation checklist (merged from /technology/platforms) */}
+          <section className="topic-section" aria-labelledby="platform-checklist">
+            <h2 id="platform-checklist" className="topic-section-title">
+              Five questions before adopting any platform
             </h2>
-            <p className="topic-section-desc">
-              Analysis of production platform choices, silicon shifts, and state management patterns.
-            </p>
-            <div className="card-grid hub-card-grid" style={{ marginTop: '20px' }}>
-              <div className="card card--content">
-                <span className="card-eyebrow">Silicon Innovation</span>
-                <h3>Custom LPUs &amp; SRAM Processing</h3>
-                <p>
-                  Architectures shifting from high-latency HBM memory to on-chip SRAM LPUs like Groq, enabling sub-20ms generation speeds for conversational AI.
-                </p>
-                <span className="card-link">Explore Silicon Analysis <span aria-hidden="true">→</span></span>
-              </div>
-
-              <div className="card card--content">
-                <span className="card-eyebrow">Distributed Compute</span>
-                <h3>Edge WebAssembly Micro-Runtimes</h3>
-                <p>
-                  WASM and WebGPU bringing lightweight, zero-cold-start sandboxed compute directly to distributed points of presence worldwide.
-                </p>
-                <span className="card-link">Explore Edge Runtimes <span aria-hidden="true">→</span></span>
-              </div>
-
-              <div className="card card--content">
-                <span className="card-eyebrow">State Management</span>
-                <h3>Embedded SQLite &amp; Vector Storage</h3>
-                <p>
-                  Why relational databases with pgvector and embedded SQLite (Turso libSQL) frequently outperform complex standalone vector databases in production.
-                </p>
-                <span className="card-link">Explore Data Storage <span aria-hidden="true">→</span></span>
-              </div>
-
-              <div className="card card--content">
-                <span className="card-eyebrow">Agent Isolation</span>
-                <h3>Firecracker MicroVM Sandboxing</h3>
-                <p>
-                  Sub-5ms ephemeral virtual machine provisioning on Fly.io and AWS for safe execution of untrusted code and autonomous agent tool loops.
-                </p>
-                <span className="card-link">Explore Sandboxing <span aria-hidden="true">→</span></span>
-              </div>
-            </div>
+            <ol className="hub-checklist" style={{ paddingLeft: '20px', lineHeight: 1.7, color: '#334155', fontSize: '15px' }}>
+              <li>
+                <strong>Does it fit your current architecture without a big refactor?</strong> Map the network access, data models and identity
+                boundaries it needs before a proof of concept turns into a production dependency.
+              </li>
+              <li>
+                <strong>Can you change course if pricing or terms change?</strong> Check data export, API portability and whether your code can run
+                on standard containers or another cloud.
+              </li>
+              <li>
+                <strong>Who owns operations?</strong> Count the cost of logging, monitoring, incident response, regional failover and upgrades, not
+                just day-one setup.
+              </li>
+              <li>
+                <strong>What enters the vendor&apos;s trust boundary?</strong> Read the data retention and training policies and the compliance
+                reports (such as SOC 2) that matter to your customers.
+              </li>
+              <li>
+                <strong>What does success look like at peak load?</strong> Write down latency targets (p95, p99), throughput and a monthly budget
+                cap before you move critical workloads.
+              </li>
+            </ol>
           </section>
 
           {/* Featured Platform Architecture & Acceleration Guides */}
@@ -222,7 +163,7 @@ export default async function TechnologyPage() {
                     Platform Architecture &amp; Acceleration Guides
                   </h2>
                   <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
-                    Hardware benchmarks, GPU compute scaling, and distributed model serving infrastructure.
+                    Explainers on AI hardware, model serving and developer infrastructure.
                   </p>
                 </div>
                 <Link href="/blog" style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}>
@@ -231,7 +172,7 @@ export default async function TechnologyPage() {
               </div>
 
               <div className="card-grid hub-card-grid">
-                {techArticles.map((article) => (
+                {techArticles.slice(0, 9).map((article) => (
                   <Link
                     key={article.slug}
                     className="card card--content"

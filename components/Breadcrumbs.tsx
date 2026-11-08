@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { BRAND_CONFIG, BreadcrumbItem, getBreadcrumbSchema } from '@/lib/seo';
+import { usePathname } from 'next/navigation';
+import { BreadcrumbItem, getBreadcrumbSchema } from '@/lib/seo';
 
 export interface BreadcrumbSegment {
   label: string;
@@ -13,17 +14,23 @@ interface BreadcrumbsProps {
   className?: string;
 }
 
+/**
+ * Visible breadcrumb trail plus the page's single BreadcrumbList JSON-LD.
+ * Pages should not emit their own breadcrumb schema; this component is the one source.
+ */
 export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
+  const pathname = usePathname() || '/';
+
   // Ensure "Home" is always the root item
   const allSegments: BreadcrumbSegment[] =
     items[0]?.href === '/' || items[0]?.label.toLowerCase() === 'home'
       ? items
       : [{ label: 'Home', href: '/' }, ...items];
 
-  // Schema items for JSON-LD
-  const schemaItems: BreadcrumbItem[] = allSegments.map((segment) => ({
+  // The current page (last item) links to itself in the schema, not to the homepage
+  const schemaItems: BreadcrumbItem[] = allSegments.map((segment, index) => ({
     name: segment.label,
-    url: segment.href || '',
+    url: index === allSegments.length - 1 ? pathname : segment.href || pathname,
   }));
 
   return (
@@ -35,19 +42,12 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
         }}
       />
       <nav className={`breadcrumbs-wrapper ${className}`} aria-label="Breadcrumb">
-        <ol className="breadcrumbs-list" itemScope itemType="https://schema.org/BreadcrumbList">
+        <ol className="breadcrumbs-list">
           {allSegments.map((segment, index) => {
             const isLast = index === allSegments.length - 1;
-            const position = index + 1;
 
             return (
-              <li
-                key={`${segment.label}-${index}`}
-                className="breadcrumb-item"
-                itemProp="itemListElement"
-                itemScope
-                itemType="https://schema.org/ListItem"
-              >
+              <li key={`${segment.label}-${index}`} className="breadcrumb-item">
                 {index === 0 && (
                   <span className="breadcrumb-home-icon" aria-hidden="true">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -58,23 +58,14 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
                 )}
 
                 {segment.href && !isLast ? (
-                  <Link
-                    href={segment.href}
-                    className="breadcrumb-link"
-                    itemProp="item"
-                  >
-                    <span itemProp="name">{segment.label}</span>
+                  <Link href={segment.href} className="breadcrumb-link">
+                    {segment.label}
                   </Link>
                 ) : (
-                  <span
-                    className="breadcrumb-current"
-                    itemProp="name"
-                    aria-current="page"
-                  >
+                  <span className="breadcrumb-current" aria-current="page">
                     {segment.label}
                   </span>
                 )}
-                <meta itemProp="position" content={String(position)} />
 
                 {!isLast && (
                   <span className="breadcrumb-separator" aria-hidden="true">

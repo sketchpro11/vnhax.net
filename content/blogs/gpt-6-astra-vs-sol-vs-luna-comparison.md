@@ -2,15 +2,17 @@
 title: "GPT-6 Astra vs. GPT-6 Sol vs. GPT-6 Luna: Architecture & Benchmark Comparison"
 description: "Technical comparison of GPT-6 Astra, GPT-6 Sol, and GPT-6 Luna: architecture, pricing, coding benchmarks, and how to choose the right model tier."
 date: "2026-10-07"
-updatedAt: "2026-10-07"
+updatedAt: "2026-11-08"
 author: "Umar Hashmi"
 category: "OpenAI & Models"
 tags: ["openai", "gpt-6", "gpt-6-astra", "gpt-6-sol", "gpt-6-luna", "benchmarks", "coding-agents"]
 ---
 
-I'll be honest: the first time I saw three model names with a sun, a moon and a star in them, I assumed it was marketing fluff and I'd just pick the biggest one. That was a mistake. A few evenings of reading the launch posts, the pricing pages and the independent benchmark write-ups changed my mind completely.
+Three model names with a sun, a moon and a star in them look like marketing, and the easy reaction is to just pick the biggest one. That's usually the expensive mistake. The three GPT-6 models are priced very differently, and for many everyday jobs the cheapest one is good enough.
 
 One quick note before we start: I have not run my own lab benchmarks on these models. Everything below comes from OpenAI's announcements, the model documentation and third-party testing that I cross-checked. Where a number is OpenAI's own claim, I say so. If you want a number you can trust for *your* work, you'll need to test it on your own prompts. I'll show you how at the end.
+
+> **Update (8 November 2026):** OpenAI released **GPT-6.1 Sol** (`gpt-6.1-sol`) on 30 September 2026. It keeps Sol's $2 / $10 per-million-token price, halves cached input to $0.10, and OpenAI reports 75.2% on DeepSWE v1.1 versus GPT-6 Sol's 68.8%. For new projects, compare against GPT-6.1 Sol rather than the original Sol. See our [Claude Haiku 5.5 vs GPT-6.1 Sol guide](/blog/claude-haiku-5-5-vs-gpt-6-1-sol-token-cost-coding-agents).
 
 ## OpenAI's Tri-Model Strategy for the GPT-6 Generation
 
@@ -51,13 +53,13 @@ Who should actually use it?
 - Developers doing complex, multi-file engineering work
 - Anyone who tried Sol or Luna first and hit a ceiling
 
-If your task is simple, Astra is overkill. That's the mistake I see people make most often: they use the flagship for everything, then wonder why the bill looks scary.
+If your task is simple, Astra is overkill. A common mistake is using the flagship for everything and then wondering why the bill looks scary.
 
 ## GPT-6 Sol: The Balanced Model for Serious Daily Work
 
 Sol is the one I'd call the sweet spot for most people.
 
-OpenAI says Sol makes about half as many mistakes as the previous-generation Sol on its internal factuality evaluation, which is built from real conversations where users flagged errors. That's a vendor-reported figure, but it matches the direction of the independent write-ups I read.
+OpenAI says Sol makes about half as many mistakes as the previous-generation Sol on its internal factuality evaluation, which is built from real conversations where users flagged errors. That's a vendor-reported figure.
 
 Some benchmark numbers worth knowing, all from OpenAI's launch material unless noted:
 
@@ -162,6 +164,14 @@ No. In independent AutomationBench testing, Sol at max effort scored lower than 
 
 If I had to give one piece of advice, it would be this: stop thinking of GPT-6 as "pick the smartest model" and start thinking of it as "pick the cheapest model that passes my test."
 
-Build a small set of prompts from your own work, run them through Luna, Sol and Astra, and compare. It takes an afternoon and it will save you real money. Explore all our in-depth guides in the [OpenAI Ecosystem Hub](/openai), read our hands-on [Claude Sonnet 5.5 vs. Sonnet 5 comparison](/blog/claude-sonnet-5-5-vs-sonnet-5-differences), or check the full collection of technical teardowns in the [vnhax Blog](/blog).
+Build a small set of prompts from your own work, run them through Luna, Sol and Astra, and compare. It takes an afternoon and it will save you real money. Explore all our in-depth guides in the [OpenAI Ecosystem Hub](/openai), read our [Claude Sonnet 5.5 vs. Sonnet 5 comparison](/blog/claude-sonnet-5-5-vs-sonnet-5-differences), or check the full collection of technical teardowns in the [vnhax Blog](/blog).
 
-*Sources: [OpenAI: Introducing GPT-6 Sol and Luna](https://openai.com/index/introducing-gpt-6-sol-and-luna/), [OpenAI: GPT-6 Astra](https://openai.com/index/gpt-6-astra/), [ComputingForGeeks: GPT-6 Sol and Luna pricing, benchmarks and real tests](https://computingforgeeks.com). Figures reflect information available as of October 2026 and may change.*
+## Sources
+
+- OpenAI: [Introducing GPT-6 Sol and Luna](https://openai.com/index/introducing-gpt-6-sol-and-luna/)
+- OpenAI: [GPT-6 Astra](https://openai.com/index/gpt-6-astra/)
+- OpenAI API docs: [GPT-6 Luna model page](https://developers.openai.com/api/docs/models/gpt-6-luna) and [GPT-6.1 Sol model page](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
+- OpenAI Developer Community: [GPT-6.1 Sol in the API](https://community.openai.com/t/gpt-6-1-sol-in-the-api-a-meaningful-step-up-in-cost-performance/1402388)
+- ComputingForGeeks: independent GPT-6 Sol and Luna tests (third-party)
+
+Figures are those published as of the dates above and may change.

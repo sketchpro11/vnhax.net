@@ -11,42 +11,30 @@ import { getAllUIComponents } from '@/lib/components-data';
  * meaningfully edit that page. Blog posts use frontmatter `updatedAt` (or `date`).
  */
 const PAGE_UPDATED: Record<string, string> = {
-  '/about': '2026-10-12',
+  '/about': '2026-11-08',
   '/author/umar-hashmi': '2026-10-12',
   '/editorial-policy': '2026-10-12',
   '/contact': '2026-10-11',
-  '/privacy-policy': '2026-10-11',
+  '/privacy-policy': '2026-11-08',
   '/terms': '2026-10-11',
   '/disclaimer': '2026-10-11',
-  '/repos': '2026-11-02',
-  '/ai': '2026-10-11',
-  '/ai/ai-tools': '2026-10-11',
-  '/developer-resources': '2026-10-11',
-  '/developer-resources/github-repos': '2026-10-09',
-  '/technology': '2026-10-10',
-  '/technology/platforms': '2026-10-09',
-  '/ui-components': '2026-11-02',
+  '/repos': '2026-11-08',
+  '/ai': '2026-11-08',
+  '/developer-resources': '2026-11-08',
+  '/technology': '2026-11-08',
+  '/ui-components': '2026-11-08',
   '/openai': '2026-10-12',
   '/anthropic': '2026-10-12',
   '/google': '2026-10-12',
   '/github': '2026-10-12',
-  '/xai': '2026-10-12',
+  '/xai': '2026-11-08',
   '/meta': '2026-10-12',
 };
 
 /** Repository review pages were last rewritten on this date (live star counts are not a significant change). */
-const REPO_PAGES_UPDATED = '2026-10-11';
-const REPO_PAGES_ADDED: Record<string, string> = {
-  voicestudio: '2026-10-18',
-  'ai-job-search': '2026-10-18',
-  'claude-plugins-official': '2026-10-18',
-  t3code: '2026-11-02',
-  'claude-mem': '2026-11-02',
-  lightpanda: '2026-11-02',
-};
+const REPO_PAGES_UPDATED = '2026-11-08';
 /** UI component pages were last changed on this date. */
-const UI_COMPONENT_PAGES_UPDATED = '2026-10-09';
-const UI_COMPONENT_PAGES_ADDED: Record<string, string> = { marquee: '2026-11-02', 'number-ticker': '2026-11-02' };
+const UI_COMPONENT_PAGES_UPDATED = '2026-11-08';
 
 const latest = (...dates: string[]) => dates.reduce((a, b) => (a > b ? a : b));
 
@@ -74,12 +62,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const repoRoutes: MetadataRoute.Sitemap = getAllRepos().map((repo) => ({
     url: `${baseUrl}/repos/${repo.slug}`,
-    lastModified: REPO_PAGES_ADDED[repo.slug] ?? REPO_PAGES_UPDATED,
+    lastModified: REPO_PAGES_UPDATED,
   }));
 
   const componentRoutes: MetadataRoute.Sitemap = getAllUIComponents().map((comp) => ({
     url: `${baseUrl}/ui-components/${comp.slug}`,
-    lastModified: UI_COMPONENT_PAGES_ADDED[comp.slug] ?? UI_COMPONENT_PAGES_UPDATED,
+    lastModified: UI_COMPONENT_PAGES_UPDATED,
   }));
 
   return [...staticRoutes, ...blogRoutes, ...repoRoutes, ...componentRoutes];

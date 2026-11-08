@@ -6,6 +6,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ComponentPreviewSandbox from '@/components/ComponentPreviewSandbox';
 import { BRAND_CONFIG } from '@/lib/seo';
+import { getAuthorSchema } from '@/lib/author';
 import {
   getAllUIComponents,
   getUIComponentBySlug,
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = {
     absolute: `${comp.title} — React & CSS Component | ${BRAND_CONFIG.shortName}`,
   };
-  const description = `${comp.subtitle} Complete copy-paste TSX code, Tailwind styling, props reference, and WCAG AA accessibility guide.`;
+  const description = `${comp.subtitle} Copy-paste TSX code, Tailwind and CSS versions, props reference, accessibility notes and FAQs.`;
 
   return {
     title,
@@ -77,7 +78,8 @@ export default async function ComponentDetailPage({ params }: PageProps) {
   const techArticleSchema = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
-    headline: `${comp.title} — Accessible UI Component Specification`,
+    headline: `${comp.title} — React UI Component`,
+    image: `${BRAND_CONFIG.siteUrl}/og-image.png`,
     description: comp.description,
     url: `${BRAND_CONFIG.siteUrl}/ui-components/${slug}`,
     inLanguage: 'en-US',
@@ -86,13 +88,9 @@ export default async function ComponentDetailPage({ params }: PageProps) {
       name: BRAND_CONFIG.name,
       url: BRAND_CONFIG.siteUrl,
     },
-    author: {
-      '@type': 'Organization',
-      name: 'VNHAX Engineering Core',
-      url: BRAND_CONFIG.siteUrl,
-    },
-    datePublished: '2026-09-28T00:00:00Z',
-    dateModified: '2026-10-04T00:00:00Z',
+    author: getAuthorSchema(BRAND_CONFIG.siteUrl),
+    datePublished: ['marquee', 'number-ticker'].includes(slug) ? '2026-11-02' : '2026-10-09',
+    dateModified: '2026-11-08',
     about: {
       '@type': 'SoftwareSourceCode',
       programmingLanguage: 'TypeScript',
@@ -100,40 +98,12 @@ export default async function ComponentDetailPage({ params }: PageProps) {
     },
   };
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: BRAND_CONFIG.siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'UI Components',
-        item: `${BRAND_CONFIG.siteUrl}/ui-components`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: comp.title,
-        item: `${BRAND_CONFIG.siteUrl}/ui-components/${slug}`,
-      },
-    ],
-  };
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <SiteHeader activeNav="ui" variant="standard" />
@@ -172,7 +142,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
                 {comp.badge}
               </span>
               <span style={{ fontSize: '12px', color: '#94a3b8' }}>
-                WCAG 2.1 AA Compliant · Zero-Dependency
+                Copy-paste code · Accessibility notes
               </span>
             </div>
 
@@ -438,10 +408,10 @@ export default async function ComponentDetailPage({ params }: PageProps) {
             </div>
           </section>
 
-          {/* Accessibility & Performance Audit */}
+          {/* Accessibility & Performance Notes */}
           <section className="topic-section" aria-labelledby="a11y-heading" style={{ marginBottom: '48px' }}>
             <h2 id="a11y-heading" className="topic-section-title">
-              Accessibility &amp; Core Web Vitals Audit
+              Accessibility &amp; Performance Notes
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginTop: '16px' }}>
               {/* Accessibility Card */}
@@ -490,27 +460,12 @@ export default async function ComponentDetailPage({ params }: PageProps) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                   <span style={{ fontSize: '20px' }}>⚡</span>
                   <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a', margin: 0 }}>
-                    Core Web Vitals Impact
+                    Performance Tips
                   </h3>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', margin: '16px 0' }}>
-                  <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b' }}>Cumulative Layout Shift</div>
-                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#16a34a', marginTop: '4px' }}>
-                      {comp.coreWebVitals.clsScore}
-                    </div>
-                  </div>
-                  <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b' }}>Interaction to Next Paint</div>
-                    <div style={{ fontSize: '18px', fontWeight: 800, color: '#2563eb', marginTop: '4px' }}>
-                      {comp.coreWebVitals.inpScore}
-                    </div>
-                  </div>
-                </div>
-
                 <p style={{ fontSize: '13px', color: '#475569', lineHeight: 1.6, margin: 0 }}>
-                  <strong>Engineering Tip:</strong> {comp.coreWebVitals.performanceTips}
+                  {comp.coreWebVitals.performanceTips} These are design notes, not measurements: check your own page with Lighthouse or PageSpeed Insights.
                 </p>
               </div>
             </div>
@@ -556,7 +511,7 @@ export default async function ComponentDetailPage({ params }: PageProps) {
           <section className="hub-note">
             <h2>High-Quality Interface Engineering</h2>
             <p>
-              Every pattern in the VNHAX component directory is designed for longevity. By eliminating heavy JavaScript styling runtimes and adhering strictly to semantic HTML, your application maintains zero-shift Core Web Vitals and frictionless accessibility compliance.
+              These components are written as plain React and CSS so you can read, copy and change every line. Several are adapted from the open-source Magic UI and UI-Layouts libraries, which are credited on each page. Test them in your own layout, with your own content, before you ship.
             </p>
           </section>
         </div>

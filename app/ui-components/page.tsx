@@ -3,21 +3,21 @@ import Link from 'next/link';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { BRAND_CONFIG, getBreadcrumbSchema, getFAQSchema } from '@/lib/seo';
+import { BRAND_CONFIG, getFAQSchema } from '@/lib/seo';
 import { getAllUIComponents } from '@/lib/components-data';
 import { getBlogsBySilo } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: 'Free React UI Components Library',
   description:
-    'Free, accessible, production-ready UI components for modern web applications. Featuring Tweet Card, Bento Grid, Animated List, Dock, Sparkles Title, Image Accordions, Pricing Matrix, and Hero Sections. Zero npm bloat.',
+    'Free React UI components for modern web applications. Featuring Tweet Card, Bento Grid, Animated List, Dock, Sparkles Title, Image Accordions, Pricing Matrix, and Hero Sections. Zero npm bloat.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/ui-components`,
   },
   openGraph: {
     title: `Free React UI Components Library | ${BRAND_CONFIG.shortName}`,
     description:
-      'Explore accessible, high-performance UI components with live interactive previews, full React TSX source code, Tailwind utilities, and WCAG AA accessibility guides.',
+      'Free React UI components with live interactive previews, full TSX source code, Tailwind and CSS versions, props tables and accessibility notes.',
     url: `${BRAND_CONFIG.siteUrl}/ui-components`,
     siteName: BRAND_CONFIG.shortName,
     type: 'website',
@@ -31,14 +31,14 @@ const UI_FAQS = [
       'These components adopt the visual aesthetics and interaction patterns popularized by MagicUI and UI-Layouts, but are engineered to be zero-dependency. They do not require heavy CSS-in-JS runtimes and can be dropped directly into vanilla React 19, Next.js App Router, Vite, or Astro projects with full TypeScript typing.',
   },
   {
-    question: 'Are all components fully accessible according to WCAG 2.1 AA standards?',
+    question: 'Are these components accessible?',
     answer:
-      'Yes. Every component includes semantic HTML5 landmark tags (<article>, <nav>, <header>, <section>), explicit ARIA attributes (aria-label, role="toolbar", aria-live="polite", aria-expanded), visible focus rings for keyboard navigation, and contrast ratios exceeding 4.5:1.',
+      'Each component page lists the semantic elements, ARIA attributes and keyboard behaviour it uses. They have not been formally audited, so after you add your own content and colours, test them with a tool such as axe or Lighthouse and with a screen reader.',
   },
   {
     question: 'Can I copy and customize these components for commercial client work?',
     answer:
-      'Yes. All component source code, CSS tokens, and templates published on VNHAX are licensed under permissive terms for unrestricted private and commercial use with zero attribution requirements.',
+      'You can use the code examples on VNHAX in your own projects. Components marked as Magic UI or UI-Layouts patterns are adapted from those open-source libraries, so check the original project licence and keep any notice it requires.',
   },
   {
     question: 'How do I use these components with Tailwind CSS vs Vanilla CSS?',
@@ -46,9 +46,9 @@ const UI_FAQS = [
       'Each component detail page includes three production source tabs: React 19 / TypeScript, Vanilla CSS stylesheet tokens, and standard Tailwind CSS utility class equivalents. You can use whichever matches your frontend stack.',
   },
   {
-    question: 'Do these components impact Google Core Web Vitals (INP and CLS)?',
+    question: 'Do these components affect Core Web Vitals (INP and CLS)?',
     answer:
-      'No. By utilizing GPU-accelerated CSS properties (transform, opacity, backdrop-filter) and static aspect-ratio bounding containers, all components maintain 0.00 CLS (Cumulative Layout Shift) and sub-10ms INP (Interaction to Next Paint).',
+      'They are designed to avoid layout shift and heavy work, for example by animating transform and opacity and giving media fixed sizes. Real results depend on your page, so measure with Lighthouse or PageSpeed Insights after adding them.',
   },
 ];
 
@@ -61,7 +61,7 @@ export default async function UIComponentsPage() {
     '@type': 'CollectionPage',
     name: 'UI Components & Design System Library',
     description:
-      'Curated directory of production-ready UI components featuring Tweet Card, Bento Grid, Animated List, Dock, Sparkles, Image Accordions, Pricing Matrix, and Hero Sections.',
+      'Directory of React UI components featuring Tweet Card, Bento Grid, Animated List, Dock, Sparkles, Image Accordions, Pricing Matrix, and Hero Sections.',
     url: `${BRAND_CONFIG.siteUrl}/ui-components`,
     publisher: {
       '@type': 'Organization',
@@ -71,10 +71,6 @@ export default async function UIComponentsPage() {
   };
 
   const faqSchema = getFAQSchema(UI_FAQS);
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'UI Components', url: '/ui-components' },
-  ]);
 
   return (
     <>
@@ -85,10 +81,6 @@ export default async function UIComponentsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <SiteHeader activeNav="ui" variant="standard" />
@@ -102,7 +94,7 @@ export default async function UIComponentsPage() {
             <p className="section-kicker">Design system &amp; interface patterns</p>
             <h1 className="page-title">ui components &amp; interface design</h1>
             <p className="page-lede">
-              Zero-dependency, accessible, production-ready interface components engineered with semantic HTML, fluid CSS tokens, and React 19. Complete copy-paste source code, live previews, and installation guides.
+              React components built with semantic HTML and plain CSS, with accessibility notes for each one. Complete copy-paste source code, live previews, and installation guides.
             </p>
           </header>
 
@@ -117,23 +109,23 @@ export default async function UIComponentsPage() {
           >
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Components</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>9 Patterns</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>{components.length} Patterns</div>
               <div style={{ fontSize: '12px', color: '#94a3b8' }}>MagicUI &amp; UI-Layouts</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Bundle Overhead</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#16a34a', marginTop: '4px' }}>0 kB JS</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Zero runtime bloat</div>
+              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Code Formats</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#16a34a', marginTop: '4px' }}>TSX · CSS</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Plus Tailwind versions</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
               <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Accessibility</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#2563eb', marginTop: '4px' }}>WCAG 2.1 AA</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Keyboard &amp; ARIA ready</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#2563eb', marginTop: '4px' }}>ARIA notes</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Keyboard guidance per component</div>
             </div>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Core Web Vitals</div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#9333ea', marginTop: '4px' }}>0.00 CLS</div>
-              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Zero layout shifts</div>
+              <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Live Demos</div>
+              <div style={{ fontSize: '24px', fontWeight: 800, color: '#9333ea', marginTop: '4px' }}>Interactive</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Desktop, tablet &amp; mobile views</div>
             </div>
           </section>
 
@@ -264,7 +256,7 @@ export default async function UIComponentsPage() {
                     UI Design &amp; Canvas Architecture Guides
                   </h2>
                   <p style={{ fontSize: '14.5px', color: '#64748b', margin: '4px 0 0' }}>
-                    Hands-on teardowns on visual composition, canvas bounding boxes, layout manipulation, and generative UI controls.
+                    Explainers on AI image tools and visual design workflows.
                   </p>
                 </div>
                 <Link href="/blog" style={{ fontSize: '13.5px', fontWeight: 600, color: '#2563eb' }}>
@@ -306,9 +298,9 @@ export default async function UIComponentsPage() {
               </p>
               <div className="editorial-feature-columns">
                 <div className="editorial-column-item">
-                  <h4>⚡ Sub-Millisecond Paint Times</h4>
+                  <h4>⚡ Fast First Paint</h4>
                   <p>
-                    Native CSS custom properties load without JavaScript execution cost. The browser renders layout elements immediately on HTML receipt, eliminating FCP delays.
+                    Styles written as plain CSS and custom properties can be applied as soon as the HTML arrives, without waiting for a styling library to run in JavaScript.
                   </p>
                 </div>
                 <div className="editorial-column-item">
@@ -320,7 +312,7 @@ export default async function UIComponentsPage() {
                 <div className="editorial-column-item">
                   <h4>♿ WCAG AA Contrast</h4>
                   <p>
-                    All semantic surfaces and text tokens are pre-calculated to exceed WCAG 2.1 AA 4.5:1 contrast requirements, ensuring full legibility across light and dark modes.
+                    The default colours aim for at least the WCAG AA 4.5:1 contrast ratio for body text. Check again with a contrast checker after you change them.
                   </p>
                 </div>
               </div>

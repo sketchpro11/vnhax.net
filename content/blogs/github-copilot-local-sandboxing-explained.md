@@ -2,7 +2,7 @@
 title: "GitHub Copilot Local Sandboxing: Containerized Workspaces & Host Security"
 description: "Learn how GitHub Copilot local sandboxing restricts terminal commands, executes tests safely, and protects host credentials without system risk."
 date: "2026-10-07"
-updatedAt: "2026-10-07"
+updatedAt: "2026-11-08"
 author: "Umar Hashmi"
 category: "GitHub & Developer Tools"
 tags: ["github", "github-copilot", "sandboxing", "security", "developer-tools"]
@@ -50,9 +50,9 @@ Two details that matter:
 
 Platform support, per the [agent sandboxing docs](https://code.visualstudio.com/docs/agents/run/agent-sandboxing):
 
-- **macOS:** preview, no extra install
-- **Linux and WSL2:** preview, you install `bubblewrap` and `socat`
-- **Windows:** experimental, needs the September 8, 2026 Windows security update and its own setting
+- **macOS:** macOS 15 or later, using the built-in Seatbelt sandbox; no extra install
+- **Linux and WSL2:** glibc-based distributions; you install `bubblewrap` (0.5.0+), `slirp4netns`, util-linux (2.35+) and `iptables`. Alpine and other musl-based distributions, and WSL 1, aren't supported
+- **Windows:** experimental, Windows 11 with BaseContainer
 
 ## Containerized Execution: How OS Sandboxes Protect Host Systems
 
@@ -63,7 +63,7 @@ The idea of running untrusted code in a sealed box is old and comes in a few fla
 - **WebAssembly (Wasm) sandboxes** run code in a very restricted runtime that only gets the capabilities you hand it.
 - **OS-level sandboxes** use features already in your operating system to limit what a process can touch.
 
-So where does Copilot's local sandbox sit? Based on the documentation, VS Code's agent sandbox is the **OS-level** kind. That is why Linux needs `bubblewrap`, a lightweight Linux sandboxing tool, and `socat`, while macOS needs nothing extra. It is not a Docker container or a Wasm runtime that VS Code spins up for you.
+So where does Copilot's local sandbox sit? Based on the documentation, VS Code's agent sandbox is the **OS-level** kind. That is why Linux needs `bubblewrap`, a lightweight Linux sandboxing tool, while macOS uses its built-in Seatbelt sandbox. It is not a Docker container or a Wasm runtime that VS Code spins up for you.
 
 That is not a weakness. It is fast, it needs no image downloads, and your normal tools keep working. But it does mean the "micro-container" picture you sometimes see in blog posts is a simplification. If you specifically want Docker-level separation, you can run VS Code in a dev container, or use a community Docker setup. For example, the open-source [agent-sandbox project](https://github.com/telepathykat/agent-sandbox) runs agents like Copilot CLI inside a Docker Compose stack with a proxy in front of the network.
 
@@ -77,9 +77,9 @@ This is the part most people care about, so let's be precise about what to rely 
 
 A leak needs two things: the agent can **read** a secret, and something can **send** it out. The sandbox gives you a lever on both.
 
-**Lever 1: file access.** On Linux and WSL2 the file system setting accepts `allowRead`, `allowWrite`, `denyRead` and `denyWrite`, using literal paths. That means you list your sensitive folders explicitly.
+**Lever 1: file access.** The `chat.agent.sandbox.fileSystem.userConfiguredPaths` setting takes three lists, `readwritePaths`, `readonlyPaths` and `deniedPaths`, on every supported platform. That means you list your sensitive folders explicitly.
 
-**Lever 2: network access.** Set `chat.agent.sandbox.allowNetwork` to `false` to isolate the network, then allow only the domains a command truly needs with `chat.agent.allowedNetworkDomains`. Anything that should never be reachable can go in `chat.agent.deniedNetworkDomains`.
+**Lever 2: network access.** Outbound network is allowed by default (`chat.agent.sandbox.network.allowNetwork`). Restrict it to the hostnames a command truly needs with `chat.agent.sandbox.network.allowedDomains`, and block anything that should never be reachable with `chat.agent.sandbox.network.deniedDomains`.
 
 One more setting worth knowing: `chat.tools.edits.autoApprove` accepts glob patterns, and VS Code's own example is `"**/.env": false`, which forces a manual approval whenever the agent wants to edit a file like that.
 
@@ -87,7 +87,7 @@ Now the honest caveats:
 
 - **Not everything is "zero leak".** If you let a domain through, data can reach it. Keep the allowlist short.
 - **Network retries.** GitHub's May 2026 VS Code notes describe that commands needing network access can be retried with broader network permissions while file system protections stay in place. Read those prompts carefully.
-- **File tools are separate.** Because read and edit tools are governed by VS Code permissions rather than the sandbox, don't assume a `denyRead` rule covers every way the agent might see a file. Keep secrets out of your workspace folder anyway.
+- **File tools are separate.** Because read and edit tools are governed by VS Code permissions rather than the sandbox, don't assume a `deniedPaths` rule covers every way the agent might see a file. Keep secrets out of your workspace folder anyway.
 - **Best habit of all:** don't keep production secrets in your project folder. Use a secrets manager, and use short-lived, minimal-permission keys for development.
 
 ## Step-by-Step Configuration Guide for VS Code and JetBrains IDEs
@@ -99,34 +99,34 @@ Now the honest caveats:
 **Step 2. Linux or WSL2 only:** install the helpers.
 
 ```bash
-sudo apt install bubblewrap socat
+sudo apt install bubblewrap slirp4netns util-linux iptables
 ```
 
-(Use your distro's package manager if you're not on Debian or Ubuntu.)
+(Use your distro's package manager if you're not on Debian or Ubuntu. Alpine and other musl-based distributions aren't supported.)
 
-**Step 3. Turn it on.** Open Settings (`Ctrl+,` or `Cmd+,`), search for `chat.agent.sandbox.enabled`, and tick it. Windows users use `chat.agent.sandbox.enabledWindows` instead.
+**Step 3. Turn it on.** Open Settings (`Ctrl+,` or `Cmd+,`), search for `chat.agent.sandbox.enabled`, and set it to `on`. It's off by default. The same setting applies on Windows, where support is experimental.
 
-**Step 4. Lock down the file system (Linux/WSL2).** In `settings.json`, add your own literal paths:
+**Step 4. Lock down the file system.** In `settings.json`, list your own paths:
 
 ```json
-"chat.agent.sandbox.fileSystem.linux": {
-  "denyRead": ["/home/YOUR_USER/.ssh", "/home/YOUR_USER/.aws"],
-  "allowWrite": ["/home/YOUR_USER/projects/my-app"]
+"chat.agent.sandbox.fileSystem.userConfiguredPaths": {
+  "readwritePaths": ["/home/YOUR_USER/projects/my-app"],
+  "readonlyPaths": [],
+  "deniedPaths": ["/home/YOUR_USER/.ssh", "/home/YOUR_USER/.aws"]
 }
 ```
 
-Swap in your real username and project path.
+Swap in your real username and project path. The older per-OS settings (`chat.agent.sandbox.fileSystem.linux` and `.mac`) are deprecated and ignored.
 
 **Step 5. Restrict the network.**
 
 ```json
-"chat.agent.sandbox.allowNetwork": false,
-"chat.agent.allowedNetworkDomains": ["registry.npmjs.org"]
+"chat.agent.sandbox.network.allowedDomains": ["registry.npmjs.org"]
 ```
 
-Add only what your project needs. A Python project might need `pypi.org` instead.
+Add only what your project needs. A Python project might need `pypi.org` instead. To cut outbound access entirely, set `chat.agent.sandbox.network.allowNetwork` to `false`.
 
-**Step 6. Tighten the escape hatches.** If you want no "run it outside the sandbox" fallback, set `chat.agent.sandbox.allowUnsandboxedCommands` to `false`. To keep the normal approval flow even for sandboxed commands, set `chat.agent.sandbox.allowAutoApprove` to `false`.
+**Step 6. Tighten the escape hatch.** If you want no "run it outside the sandbox" fallback, set `chat.agent.sandbox.allowUnsandboxedCommands` to `false`. Requests to leave the sandbox then fail instead of prompting you.
 
 **Step 7. Test it with something harmless.** Ask the agent to run a command that reads a folder you denied, and confirm it fails. A guardrail you haven't tested is just a hope.
 
@@ -161,10 +161,10 @@ Start with the network setting, since that's the biggest win. Then test one deni
 It is a set of restrictions on the terminal commands a Copilot agent runs on your own computer. It limits which files those commands can read or write and which network domains they can reach, so a mistake or malicious script has less room to cause damage.
 
 ### Is Copilot local sandboxing a Docker container?
-Not according to VS Code's documentation. It uses operating-system-level sandboxing (for example, `bubblewrap` and `socat` on Linux and WSL2). If you want a Docker-based environment, you can run VS Code in a dev container, which is a separate option.
+Not according to VS Code's documentation. It uses operating-system-level sandboxing (Seatbelt on macOS, `bubblewrap` on Linux and WSL2). If you want a Docker-based environment, you can run VS Code in a dev container, which is a separate option.
 
 ### How do I enable sandboxing for Copilot in VS Code?
-Open Settings and enable `chat.agent.sandbox.enabled` on macOS, Linux or WSL2. On Linux and WSL2, install `bubblewrap` and `socat` first. On Windows, the experimental setting is `chat.agent.sandbox.enabledWindows`, and it needs the September 8, 2026 security update.
+Open Settings and set `chat.agent.sandbox.enabled` to `on`. On Linux and WSL2, install `bubblewrap`, `slirp4netns`, util-linux and `iptables` first. Windows support is experimental and needs Windows 11 with BaseContainer.
 
 ### Does the sandbox stop my API keys and SSH keys from leaking?
 It can reduce the risk when configured well: deny reads on sensitive folders and restrict network access to a short allowlist of domains. It isn't a guarantee, so keep production secrets out of your project folder and approve prompts carefully.

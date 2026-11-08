@@ -5,7 +5,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import PolicyTableOfContents from '@/components/PolicyTableOfContents';
-import { BRAND_CONFIG, CONTACT_EMAIL, PRIVACY_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, CONTACT_EMAIL, PRIVACY_EMAIL } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -44,17 +44,9 @@ export default function PrivacyPolicyPage() {
   const lastUpdated = 'October 11, 2026';
   const effectiveDate = 'October 4, 2026';
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Privacy Policy', url: '/privacy-policy' },
-  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <ReadingProgressBar />
       <SiteHeader variant="home" />
 
@@ -224,8 +216,9 @@ export default function PrivacyPolicyPage() {
                     <a href="https://www.youronlinechoices.eu/" {...ext}>youronlinechoices.eu</a>.
                   </li>
                   <li>
-                    Visitors in the European Economic Area, the UK and Switzerland will be asked for consent through a
-                    Google-certified consent message before personalised ads are shown.
+                    Before personalised ads are shown to visitors in the European Economic Area, the UK and Switzerland,
+                    we will ask for consent through a Google-certified consent management platform. Until then, ads
+                    shown there are limited to non-personalised ads.
                   </li>
                 </ul>
                 <p>

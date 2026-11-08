@@ -7,10 +7,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ArticleActions from '@/components/ArticleActions';
 import CodeBlockEnhancer from '@/components/CodeBlockEnhancer';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
-import SlideDeck from '@/components/SlideDeck';
 import StickyArticleBar from '@/components/StickyArticleBar';
 import { getBlogPost, getAllBlogSlugs, getAllBlogs, SITE_AUTHOR } from '@/lib/blog';
-import { BRAND_CONFIG, getBreadcrumbSchema, shortenSeoTitle } from '@/lib/seo';
+import { BRAND_CONFIG, shortenSeoTitle } from '@/lib/seo';
 import { AUTHOR, AUTHOR_PAGE_PATH, getAuthorSchema } from '@/lib/author';
 import AuthorAvatar from '@/components/AuthorAvatar';
 
@@ -87,14 +86,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const allPosts = await getAllBlogs();
-  const relatedPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 4);
-
-  const breadcrumbs = [
-    { name: 'Home', url: '/' },
-    { name: 'AI & Machine Learning', url: '/ai' },
-    { name: 'Blog', url: '/blog' },
-    { name: post.frontmatter.title, url: `/blog/${slug}` },
-  ];
+  // Related = most shared tags, then same category, then newest.
+  const ownTags = new Set((post.frontmatter.tags || []).map((t) => t.toLowerCase()));
+  const relatedPosts = allPosts
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      const shared = (p.frontmatter.tags || []).filter((t) => ownTags.has(t.toLowerCase())).length;
+      const sameCategory = p.frontmatter.category === post.frontmatter.category ? 1 : 0;
+      return { p, score: shared * 2 + sameCategory };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4)
+    .map((x) => x.p);
 
   const techArticleSchema = {
     '@context': 'https://schema.org',
@@ -103,6 +107,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     description: post.frontmatter.description,
     datePublished: post.frontmatter.date,
     dateModified: post.frontmatter.updatedAt || post.frontmatter.date,
+    image: `${BRAND_CONFIG.siteUrl}/og-image.png`,
     author: getAuthorSchema(BRAND_CONFIG.siteUrl),
     publisher: {
       '@type': 'Organization',
@@ -110,7 +115,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       url: BRAND_CONFIG.siteUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${BRAND_CONFIG.siteUrl}/og-image.png`,
+        url: `${BRAND_CONFIG.siteUrl}/logo.png`,
       },
     },
     mainEntityOfPage: `${BRAND_CONFIG.siteUrl}/blog/${slug}`,
@@ -175,24 +180,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </header>
 
-            {/* Render Markdown Content as Semantic HTML with interactive embeds */}
-            {post.html.includes('<!-- SLIDE_DECK_EMBED -->') ? (
-              (() => {
-                const [before, after] = post.html.split('<!-- SLIDE_DECK_EMBED -->');
-                return (
-                  <>
-                    <div className="prose post-body" dangerouslySetInnerHTML={{ __html: before }} />
-                    <SlideDeck />
-                    <div className="prose post-body" dangerouslySetInnerHTML={{ __html: after }} />
-                  </>
-                );
-              })()
-            ) : (
-              <div
-                className="prose post-body"
-                dangerouslySetInnerHTML={{ __html: post.html }}
-              />
-            )}
+            {/* Render Markdown Content as Semantic HTML */}
+            <div
+              className="prose post-body"
+              dangerouslySetInnerHTML={{ __html: post.html }}
+            />
 
             {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
               <div className="article-tags-wrap" style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid #e2e8f0' }}>
@@ -250,34 +242,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           <aside className="post-sidebar">
             <div className="sidebar-sticky">
-              {/* Animated Quick Cheat Sheet Card */}
-              <div className="quick-cheatsheet-card">
-                <div className="cheatsheet-header">
-                  <div className="cheatsheet-badge-icon" aria-hidden="true">⚡</div>
-                  <span className="cheatsheet-title">Quick Cheat Sheet</span>
-                </div>
-                <div className="cheatsheet-items">
-                  <div className="cheatsheet-item">
-                    <span className="cheatsheet-item-label">Compile Persistent Model:</span>
-                    <div className="cheatsheet-code-wrap">
-                      <code>ollama create -f Modelfile</code>
-                    </div>
-                  </div>
-                  <div className="cheatsheet-item">
-                    <span className="cheatsheet-item-label">Check VRAM &amp; Offloading:</span>
-                    <div className="cheatsheet-code-wrap">
-                      <code>ollama ps</code>
-                    </div>
-                  </div>
-                  <div className="cheatsheet-item">
-                    <span className="cheatsheet-item-label">4-bit KV Compression:</span>
-                    <div className="cheatsheet-code-wrap">
-                      <code>OLLAMA_KV_CACHE_TYPE=q4_0</code>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               {/* Animated Sticky Platform Navigation */}
               <div className="sidebar-platform-nav-widget">
                 <div className="platform-nav-header">
@@ -292,7 +256,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/ai/ai-tools" className="platform-nav-link">
+                    <Link href="/ai" className="platform-nav-link">
                       <span>AI Tools &amp; Local LLMs</span>
                       <span className="arrow-indicator">→</span>
                     </Link>

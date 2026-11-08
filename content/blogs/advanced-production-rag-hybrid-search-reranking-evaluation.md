@@ -129,7 +129,7 @@ A document that ranks 4th in BM25 and 5th in vector search will cleanly outrank 
 
 Bi-encoders encode the query and document independently so they can be indexed in advance. But because they never examine the query and candidate chunk together, subtle semantic relationships are missed.
 
-A **cross-encoder** feeds the query and candidate chunk into the transformer simultaneously with full cross-attention. It is too slow to evaluate against a million documents, but blazing fast when evaluating the **top 50 hybrid candidates**:
+A **cross-encoder** feeds the query and candidate chunk into the transformer simultaneously with full cross-attention. It is too slow to evaluate against a million documents, but fast enough when evaluating the **top 50 hybrid candidates**:
 
 ```python
 # rerank.py — Cross-Encoder Scoring with Open-Weights BGE

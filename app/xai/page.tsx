@@ -6,14 +6,14 @@ import { BRAND_CONFIG } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'xAI Grok & Frontier AI Hub',
   description:
-    "Guides to xAI (now SpaceXAI) and Grok: Grok 4.7 vs 4.6 and API pricing, what's confirmed about Grok 4.8, 4.9 and Grok 5, and the SpaceXAI and SpaceXSI name changes.",
+    "Guides to xAI (now SpaceXSI) and Grok: Grok 4.7 vs 4.6 and API pricing, what's confirmed about Grok 4.8, 4.9 and Grok 5, and the SpaceXAI and SpaceXSI name changes.",
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/xai`,
   },
   openGraph: {
     title: `xAI Grok & Frontier AI Hub | ${BRAND_CONFIG.shortName}`,
     description:
-      "Guides to xAI (now SpaceXAI) and Grok: Grok 4.7 vs 4.6 and API pricing, what's confirmed about Grok 4.8, 4.9 and Grok 5, and the SpaceXAI and SpaceXSI name changes.",
+      "Guides to xAI (now SpaceXSI) and Grok: Grok 4.7 vs 4.6 and API pricing, what's confirmed about Grok 4.8, 4.9 and Grok 5, and the SpaceXAI and SpaceXSI name changes.",
     url: `${BRAND_CONFIG.siteUrl}/xai`,
     siteName: BRAND_CONFIG.shortName,
     type: 'website',
@@ -34,11 +34,11 @@ const XAI_CONFIG: CompanyHubConfig = {
   ),
   focusTopics: ["Grok 4.7", "Grok API pricing", "Grok 4.8 & Grok 5 status", "SpaceXAI / SpaceXSI"],
   intro: {
-    heading: "xAI and Grok in October 2026: confirmed facts only",
+    heading: "xAI and Grok in November 2026: confirmed facts only",
     paragraphs: [
       "xAI's current model is Grok 4.7, released on 21 September 2026. It costs $2 per million input tokens and $6 per million output tokens, with a 500,000-token context window and cheaper cached input. Our comparison covers what changed from Grok 4.6 and what it really costs per request.",
-      "The company itself has changed names twice in a few months. SpaceX acquired xAI in February 2026 and rebranded it SpaceXAI in July; on 4 October, Elon Musk said it will become SpaceXSI. For developers, the API and model IDs haven't changed.",
-      "There is a lot of speculation about upcoming models. Grok 4.8 has been named by Musk as a 2.5-trillion-parameter model and is expected in October, but xAI hasn't announced a date or price. Grok 5 has no confirmed release date. Our roadmap tracker keeps confirmed facts and rumours clearly separate.",
+      "The company itself has changed names twice in a few months. SpaceX acquired xAI in February 2026 and rebranded it SpaceXAI in July; since October it has used the name SpaceXSI (SpaceX Super Intelligence). For developers, the API and model IDs haven't changed.",
+      "There is a lot of speculation about upcoming models. Grok 4.8 has been named by Musk as a 2.5-trillion-parameter model and was expected in October, but it hasn't shipped and xAI hasn't announced a date or price. Grok 5 has no confirmed release date. Our roadmap tracker keeps confirmed facts and rumours clearly separate.",
       "Articles below link to xAI's developer docs and to reporting on official statements.",
     ],
   },

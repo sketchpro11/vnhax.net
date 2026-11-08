@@ -176,24 +176,35 @@ export async function getAllBlogs(): Promise<BlogPost[]> {
   return posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 }
 
+// Product names that belong to each company hub, matched as whole words
+const COMPANY_TERMS: Record<string, string[]> = {
+  anthropic: ['anthropic', 'claude'],
+  openai: ['openai', 'chatgpt', 'gpt'],
+  google: ['google', 'gemini', 'googlebook'],
+  meta: ['meta', 'muse', 'llama'],
+  xai: ['xai', 'spacexai', 'grok'],
+  github: ['github', 'copilot'],
+};
+
 /**
  * Returns all blog posts matching a specific company/ecosystem (e.g. 'openai', 'anthropic', 'google', etc.)
+ * Matches whole words only, so "meta tags" or "Ollama" do not land in the Meta hub.
  */
 export async function getBlogsByCompany(companyKey: string): Promise<BlogPost[]> {
   const allBlogs = await getAllBlogs();
   const key = companyKey.toLowerCase().trim();
+  const terms = COMPANY_TERMS[key] || [key];
   return allBlogs.filter((post) => {
-    const cat = (post.frontmatter.category || '').toLowerCase();
     const tags = (post.frontmatter.tags || []).map((t) => t.toLowerCase());
-    const slug = post.slug.toLowerCase();
-    const title = post.frontmatter.title.toLowerCase();
-
-    return (
-      cat.includes(key) ||
-      tags.some((t) => t.includes(key)) ||
-      slug.includes(key) ||
-      title.includes(key)
+    const words = new Set(
+      [post.slug, post.frontmatter.title, post.frontmatter.category || '']
+        .join(' ')
+        .toLowerCase()
+        .replace(/meta[- ]tags?/g, '')
+        .split(/[^a-z0-9]+/)
     );
+
+    return terms.some((term) => words.has(term) || tags.includes(term));
   });
 }
 

@@ -4,7 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { AUTHOR, AUTHOR_PAGE_PATH } from '@/lib/author';
-import { BRAND_CONFIG, CONTACT_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, CONTACT_EMAIL } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Editorial Policy',
@@ -34,14 +34,9 @@ const SECTIONS = [
 ];
 
 export default function EditorialPolicyPage() {
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Editorial Policy', url: '/editorial-policy' },
-  ]);
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <SiteHeader variant="home" />
 

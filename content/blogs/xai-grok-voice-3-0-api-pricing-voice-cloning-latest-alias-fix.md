@@ -12,7 +12,7 @@ tags: ["xai", "spacexai", "grok-voice-3", "voice-agent-api", "speech-to-speech",
 
 Here's a situation many voice-agent builders ran into this week. Nothing in your code changed. No deploy went out. But callers say your agent pauses a little longer before it speaks, and your latency dashboard agrees.
 
-If your WebSocket URL ends in `?model=grok-voice-latest`, that's the explanation. On 14 October, xAI (now branded SpaceXAI) released Grok Voice 3.0 and pointed the alias at it. Its launch post says agents on the alias "have already been switched over automatically, with no changes needed".
+If your WebSocket URL ends in `?model=grok-voice-latest`, that's the explanation. On 14 October, xAI (now branded SpaceXSI) released Grok Voice 3.0 and pointed the alias at it. Its launch post says agents on the alias "have already been switched over automatically, with no changes needed".
 
 For most apps that's an upgrade: 3.0 scores higher on almost every benchmark xAI published. But it's a slightly slower and smarter model by default, and an alias that changes under you is a production risk. This guide covers what changed, what it costs, and how to take back control.
 
@@ -223,7 +223,7 @@ xAI says it's compatible with the OpenAI Realtime API specification, and its doc
 
 ## Sources
 
-- SpaceXAI (xAI): [Introducing Grok Voice 3.0](https://x.ai/news/grok-voice-3) (14 October 2026)
+- SpaceXSI (xAI): [Introducing Grok Voice 3.0](https://x.ai/news/grok-voice-3) (14 October 2026)
 - xAI Docs: [Speech to Speech / Voice Agent API](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech)
 - xAI Docs: [Custom Voices](https://docs.x.ai/developers/model-capabilities/audio/custom-voices)
 - xAI Docs: [Ephemeral tokens](https://docs.x.ai/developers/model-capabilities/audio/ephemeral-tokens)

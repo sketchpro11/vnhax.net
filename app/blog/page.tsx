@@ -6,19 +6,19 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getAllBlogs } from '@/lib/blog';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'AI Articles, Guides & Research',
   description:
-    'Deep technical analysis, architectural comparisons, and hands-on guides for open-source AI models, developer tools, and engineering workflows.',
+    'Explainers, comparisons and practical guides on AI models, developer tools and open-source projects, based on official sources.',
   alternates: {
     canonical: `${BRAND_CONFIG.siteUrl}/blog`,
   },
   openGraph: {
     title: `AI Articles, Guides & Research | ${BRAND_CONFIG.shortName}`,
     description:
-      'Deep technical analysis, architectural comparisons, and hands-on guides for open-source AI models and developer tools.',
+      'Explainers, comparisons and practical guides on AI models and developer tools, based on official sources.',
     url: `${BRAND_CONFIG.siteUrl}/blog`,
     siteName: BRAND_CONFIG.shortName,
     type: 'website',
@@ -38,7 +38,7 @@ export default async function BlogIndexPage() {
     '@type': 'CollectionPage',
     name: 'VNHAX Articles & Engineering Guides',
     description:
-      'Technical analysis and hands-on guides covering open-source AI models, developer infrastructure, and engineering workflows.',
+      'Explainers and practical guides on AI models, developer tools and open-source projects.',
     url: `${BRAND_CONFIG.siteUrl}/blog`,
     publisher: {
       '@type': 'Organization',

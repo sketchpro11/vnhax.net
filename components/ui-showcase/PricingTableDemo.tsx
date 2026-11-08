@@ -39,6 +39,9 @@ export default function PricingTableDemo() {
 
   return (
     <div style={{ width: '100%', padding: '20px 10px' }}>
+      <p style={{ textAlign: 'center', fontSize: '12px', color: '#64748b', margin: '0 0 16px' }}>
+        Demo with sample plans and prices. VNHAX does not sell these plans.
+      </p>
       {/* Billing Frequency Switch */}
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
         <div

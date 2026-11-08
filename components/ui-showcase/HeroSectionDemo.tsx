@@ -79,7 +79,7 @@ export default function HeroSectionDemo() {
             margin: '0 auto 28px',
           }}
         >
-          Accessible, production-ready React components and design systems. Copy standalone code directly into your Next.js application with zero bundle bloat.
+          Sample hero text: React components you can copy into your Next.js app and adapt to your own design.
         </p>
 
         {/* Dual Actions & Interactive CLI Trigger */}
@@ -152,18 +152,18 @@ export default function HeroSectionDemo() {
           }}
         >
           <div>
-            <div style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>100%</div>
-            <div style={{ fontSize: '11.5px', color: '#64748b' }}>WCAG 2.1 AA</div>
+            <div style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>24</div>
+            <div style={{ fontSize: '11.5px', color: '#64748b' }}>Sample components</div>
           </div>
           <div style={{ width: '1px', height: '24px', background: '#e2e8f0' }} />
           <div>
-            <div style={{ fontSize: '20px', fontWeight: 800, color: '#16a34a' }}>0 kB</div>
-            <div style={{ fontSize: '11.5px', color: '#64748b' }}>Runtime JS Overhead</div>
+            <div style={{ fontSize: '20px', fontWeight: 800, color: '#16a34a' }}>3</div>
+            <div style={{ fontSize: '11.5px', color: '#64748b' }}>Code formats</div>
           </div>
           <div style={{ width: '1px', height: '24px', background: '#e2e8f0' }} />
           <div>
-            <div style={{ fontSize: '20px', fontWeight: 800, color: '#2563eb' }}>&lt; 10ms</div>
-            <div style={{ fontSize: '11.5px', color: '#64748b' }}>Paint Latency</div>
+            <div style={{ fontSize: '20px', fontWeight: 800, color: '#2563eb' }}>Free</div>
+            <div style={{ fontSize: '11.5px', color: '#64748b' }}>To copy and adapt</div>
           </div>
         </div>
       </section>

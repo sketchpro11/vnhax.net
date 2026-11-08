@@ -80,7 +80,7 @@ const nextConfig = {
       },
       {
         source: '/blog/ai-video-tools-for-beginners',
-        destination: '/ai/ai-tools',
+        destination: '/ai',
         permanent: true,
       },
       {
@@ -90,7 +90,7 @@ const nextConfig = {
       },
       {
         source: '/blog/best-ai-voice-generators',
-        destination: '/ai/ai-tools',
+        destination: '/ai',
         permanent: true,
       },
       {
@@ -105,12 +105,12 @@ const nextConfig = {
       },
       {
         source: '/blog/ai-audio-tools',
-        destination: '/ai/ai-tools',
+        destination: '/ai',
         permanent: true,
       },
       {
         source: '/blog/ai-tools',
-        destination: '/ai/ai-tools',
+        destination: '/ai',
         permanent: true,
       },
       {
@@ -202,6 +202,28 @@ const nextConfig = {
       {
         source: '/blog/grok-5-release-date-architecture-expected-features',
         destination: '/blog/xai-roadmap-grok-4-8-grok-4-9-release-schedule',
+        permanent: true,
+      },
+      // Full-site audit (8 Nov 2026): duplicate hub pages merged into their parents
+      {
+        source: '/ai/ai-tools',
+        destination: '/ai',
+        permanent: true,
+      },
+      {
+        source: '/developer-resources/github-repos',
+        destination: '/repos',
+        permanent: true,
+      },
+      {
+        source: '/technology/platforms',
+        destination: '/technology',
+        permanent: true,
+      },
+      // Full-site audit (8 Nov 2026): video-based Argon article merged into the updated Argon pillar
+      {
+        source: '/blog/google-gemini-4-argon-1m-output-tokens-deep-swe',
+        destination: '/blog/gemini-4-argon-features-and-benchmarks',
         permanent: true,
       },
       {

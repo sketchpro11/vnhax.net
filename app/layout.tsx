@@ -139,13 +139,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google AdSense (loads after the Consent Mode defaults above) */}
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-          crossOrigin="anonymous"
-        />
-
         {/* Schema.org Root Schemas: Organization & WebSite */}
         <script
           type="application/ld+json"
@@ -157,6 +150,14 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
+        {/* Google AdSense: loaded with next/script so it doesn't alter <head> before hydration.
+            Consent Mode defaults are set in <head> first. */}
+        <Script
+          id="adsense"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
         {/* Google Analytics 4 (gtag.js) - Defer with lazyOnload for maximum LCP & FCP speed */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SW29Z5PQFR"

@@ -4,7 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import RepoReview from '@/components/RepoReview';
 import { getAllRepos, getRepoBySlug } from '@/lib/repos-data';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 interface RepoPageProps {
   params: Promise<{ slug: string }>;
@@ -113,12 +113,6 @@ export default async function RepoDetailPage({ params }: RepoPageProps) {
     })),
   };
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Developer Resources', url: '/developer-resources' },
-    { name: 'Repositories', url: '/repos' },
-    { name: repo.name, url: `/repos/${slug}` },
-  ]);
 
   return (
     <>
@@ -132,10 +126,6 @@ export default async function RepoDetailPage({ params }: RepoPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
 
       <SiteHeader variant="standard" />
 

@@ -155,7 +155,7 @@ If you like exploring AI image tools, these related guides can help:
 
 - [Black Forest Labs Flux 3 Image: Canvas Bounding Boxes](/blog/black-forest-labs-flux-3-image-canvas-bounding-boxes)
 - [NVIDIA PixelUMM: Pixel-Space Multimodal Model Guide](/blog/nvidia-pixelumm-pixel-space-multimodal-model)
-- [AI Tools & Frameworks Directory](/ai/ai-tools)
+- [AI & Machine Learning hub](/ai)
 
 ---
 

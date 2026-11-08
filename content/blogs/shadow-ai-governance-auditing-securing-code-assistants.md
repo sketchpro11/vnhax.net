@@ -159,7 +159,7 @@ Traditional shadow IT involves unapproved SaaS apps (like an unsanctioned Trello
 It helps, but it isn't the same as an enterprise agreement. Opting out of training typically stops your content being used to train models, but providers may still retain it for a period (for example for abuse monitoring) under their consumer terms, and it sits outside your company's contracts and audit trail. Use an approved enterprise or API account with data-retention terms your security team has reviewed.
 
 ### How can security teams provide developers with AI tools without compromising compliance?
-The gold standard is deploying a sanctioned, enterprise-backed API proxy with zero-data-retention agreements and unified SSO. Pair this with local inference (explore our [Local AI Tools & Open-Source LLMs Hub](/ai/ai-tools) and our guide on [Deploying SLMs on Edge Hardware](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization)) for completely offline development on confidential codebases. If reporting an errata or submitting security disclosures, contact our team via the [Editorial & Security Desk](/contact).
+The gold standard is deploying a sanctioned, enterprise-backed API proxy with zero-data-retention agreements and unified SSO. Pair this with local inference (explore our [Local AI Tools & Open-Source LLMs Hub](/ai) and our guide on [Deploying SLMs on Edge Hardware](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization)) for completely offline development on confidential codebases. If reporting an errata or submitting security disclosures, contact our team via the [Editorial & Security Desk](/contact).
 
 ## Sources
 

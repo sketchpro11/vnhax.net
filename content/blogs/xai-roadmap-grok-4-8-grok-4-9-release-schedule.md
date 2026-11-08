@@ -2,13 +2,13 @@
 title: "Grok 4.8, Grok 4.9 and Grok 5: What xAI Has Actually Confirmed"
 description: "A no-hype tracker of xAI's next Grok models: what is confirmed about Grok 4.8, what has only been hinted about Grok 4.9, why Grok 5 keeps slipping, and how to prepare your code."
 date: "2026-10-08"
-updatedAt: "2026-10-12"
+updatedAt: "2026-11-08"
 author: "Umar Hashmi"
 category: "xAI & Grok Models"
 tags: ["xai", "spacexai", "grok-4-8", "grok-4-9", "grok-5", "ai-roadmap"]
 ---
 
-> **Status as of 12 October 2026:** **Grok 4.7** is the current model (released 21 September 2026). **Grok 4.8** has been named by Elon Musk and is widely expected in October 2026, but xAI has not announced a date, price or API details. **Grok 4.9** has only been mentioned in passing. **Grok 5** has no confirmed release date after missing earlier targets. Anything more specific you read elsewhere is a prediction, not a roadmap.
+> **Status as of 8 November 2026:** **Grok 4.7** is still the current model (released 21 September 2026); xAI's model list shows nothing newer. **Grok 4.8** has been named by Elon Musk and was widely expected in October 2026, but it did not ship in October and xAI has still not announced a date, price or API details. **Grok 4.9** has only been mentioned in passing. **Grok 5** has no confirmed release date after missing earlier targets. Anything more specific you read elsewhere is a prediction, not a roadmap.
 
 There is a lot of confident-sounding content about upcoming Grok models: exact release days, context windows, "leaked" benchmarks. Almost none of it comes from xAI. This page sticks to what has actually been said publicly, labels everything else clearly, and I'll update it as xAI announces things.
 
@@ -22,11 +22,11 @@ Grok 4.7 is xAI's current flagship for coding, agents and general use. From xAI'
 
 For a full breakdown of what changed from Grok 4.6, see [Grok 4.7 vs Grok 4.6](/blog/grok-4-7-vs-grok-4-6-comparison-benchmarks).
 
-## Grok 4.8: named, expected in October, details unconfirmed
+## Grok 4.8: named, missed its expected October window, details unconfirmed
 
 **What is confirmed**
 - On 13 September 2026, Elon Musk posted on X that Grok 4.8 is a **2.5-trillion-parameter model** trained with xAI's **new C++ software stack**, and that it would finish training that week and then begin reinforcement learning (as reported by [CellCog](https://cellcog.ai/blog/grok-4-8-release-date/) and others).
-- After Grok 4.7, xAI (now SpaceXAI) moved to a roughly **monthly release cadence**, with Grok 4.8 slated for **October 2026**, according to [Wikipedia's Grok article](https://en.wikipedia.org/wiki/Grok_%28chatbot%29), which cites Heise.
+- After Grok 4.7, xAI (now branded SpaceXSI) moved to a roughly **monthly release cadence**, with Grok 4.8 slated for **October 2026**, according to [Wikipedia's Grok article](https://en.wikipedia.org/wiki/Grok_%28chatbot%29), which cites Heise. As of 8 November it has not been released: xAI's [model list](https://docs.x.ai/developers/models) still tops out at `grok-4.7`.
 
 **What is not confirmed**
 - A release date, pricing, context window or API model ID. Reports say "grok-4.8" has appeared by name in the model picker of xAI's public Grok Build code, but a name in code is not a launch.

@@ -4,7 +4,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import ContactForm from '@/components/ContactForm';
-import { BRAND_CONFIG, CONTACT_EMAIL, PRIVACY_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, CONTACT_EMAIL, PRIVACY_EMAIL } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -38,10 +38,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Contact Us', url: '/contact' },
-  ]);
 
   const contactPageSchema = {
     '@context': 'https://schema.org',
@@ -75,10 +71,6 @@ export default function ContactPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <ReadingProgressBar />

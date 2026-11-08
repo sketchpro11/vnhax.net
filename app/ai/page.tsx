@@ -6,7 +6,7 @@ import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogsBySilo } from '@/lib/blog';
 import { getAllRepos } from '@/lib/repos-data';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'AI & Machine Learning',
@@ -78,7 +78,7 @@ export default async function AIPage() {
               Explore AI topics
             </h2>
             <div className="topic-grid">
-              <Link className="topic-card" href="/ai/ai-tools">
+              <Link className="topic-card" href="/ai">
                 <span className="card-eyebrow">AI tools</span>
                 <h3>Local models, apps, and workflows</h3>
                 <p>
@@ -164,25 +164,25 @@ export default async function AIPage() {
               <span className="card-eyebrow">Architectural Blueprint</span>
               <h3 id="ai-architecture-guide">Local Model Serving vs. Hosted Cloud APIs in 2026</h3>
               <p>
-                The decision to self-host open-weight models (like DeepSeek-R1, Llama 3.3, and Qwen 2.5) versus consuming frontier APIs is fundamentally a tradeoff between deterministic hardware latency, compliance boundaries, and continuous engineering maintenance.
+                Running open-weight models yourself or paying for a hosted API is mostly a trade-off between control, cost and maintenance. These are the three questions worth answering first.
               </p>
               <div className="editorial-feature-columns">
                 <div className="editorial-column-item">
-                  <h4>⚡ Latency &amp; Memory Bounds</h4>
+                  <h4>⚡ Will it fit and be fast enough?</h4>
                   <p>
-                    On unified-memory hardware (Apple Silicon M-series or 24GB+ RTX workstations), quantized models (Q4_K_M) achieve 45–80 tokens per second with near-instant Time-To-First-Token, entirely bypassing public cloud queuing and rate limits.
+                    Memory decides what you can run: the model file plus the KV cache for your context length. Speed depends on your GPU, the quantization and the model, so measure with a tool like llama-bench on your own hardware. Our <a href="/blog/running-llama-4-locally-vram-requirements-quantization">Llama 4 VRAM guide</a> shows the maths.
                   </p>
                 </div>
                 <div className="editorial-column-item">
-                  <h4>🔒 Air-Gapped Privacy</h4>
+                  <h4>🔒 Where does your data go?</h4>
                   <p>
-                    Local runtimes like Ollama and llama.cpp run strictly offline on localhost (127.0.0.1:11434), guaranteeing zero telemetry or external prompt logging when indexing proprietary source code and sensitive internal documents.
+                    Local runtimes such as Ollama and llama.cpp process prompts on your own machine, which helps when code or documents must not leave it. Check each tool's settings for update checks or telemetry, and keep the server bound to localhost.
                   </p>
                 </div>
                 <div className="editorial-column-item">
-                  <h4>📦 KV Cache &amp; Context Economics</h4>
+                  <h4>📦 How much context do you need?</h4>
                   <p>
-                    Scaling context buffers from 4k to 32k+ tokens requires tuning <code>num_ctx</code> in custom Modelfiles. Dynamic context paging and flash-attention keep VRAM footprint manageable without paying exponential per-token cloud markup.
+                    Longer context costs memory. In Ollama you raise it with <code>num_ctx</code>, and a quantized KV cache can roughly halve its size. See <a href="/blog/how-to-increase-num-ctx-in-modelfile">how to increase num_ctx</a>.
                   </p>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default async function AIPage() {
                 Featured guides &amp; articles
               </h2>
               <div className="card-grid hub-card-grid">
-                {posts.map((post) => (
+                {posts.slice(0, 9).map((post) => (
                   <Link
                     key={post.slug}
                     className="card card--content"
@@ -231,7 +231,7 @@ export default async function AIPage() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </summary>
                 <div className="hub-faq-content">
-                  A 14B model quantized to Q4_K_M requires approximately 9GB of VRAM, running smoothly on an RTX 3060/4060 or a 16GB Mac. A 32B model needs roughly 20GB of VRAM (RTX 3090/4090 or 36GB Mac). Flagship 70B parameter models require at least 40GB–48GB of unified memory or dual-GPU setups.
+                  As a rough guide, a 4-bit (Q4_K_M) model needs a little over half a gigabyte per billion parameters for its weights, plus memory for the context: about 9 GB for a 14B model and about 40 GB for a 70B model. Check the exact file size on the model's download page and leave headroom for the KV cache.
                 </div>
               </details>
               <details className="hub-faq-item">
@@ -249,7 +249,7 @@ export default async function AIPage() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </summary>
                 <div className="hub-faq-content">
-                  Yes, provided you review the individual model weight licenses. DeepSeek-R1 and Qwen 2.5 are released under permissive MIT or Apache 2.0 licenses allowing commercial usage. Meta&apos;s Llama 3.3 is licensed under the Llama 3.3 Community License, which allows free commercial usage up to 700 million monthly active users.
+                  Yes, provided you review the individual model weight licenses. DeepSeek-R1 is released under the MIT license, and most Qwen 2.5 models use Apache 2.0, though a few sizes have their own license, so check each model card. Meta&apos;s Llama 3.3 is licensed under the Llama 3.3 Community License, which allows free commercial usage up to 700 million monthly active users.
                 </div>
               </details>
             </div>

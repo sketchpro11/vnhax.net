@@ -201,7 +201,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
 
             {/* CTA Action Button */}
             <Link
-              href="/developer-resources/github-repos"
+              href="/repos"
               className="atd-modern__cta"
               aria-label="Explore GitHub repositories"
             >
@@ -337,7 +337,7 @@ export default function SiteHeader({ activeNav, variant = 'standard' }: SiteHead
             {/* Drawer Footer CTA */}
             <div className="mobile-drawer-footer">
               <Link
-                href="/developer-resources/github-repos"
+                href="/repos"
                 className="mobile-cta-btn"
                 onClick={() => setMobileMenuOpen(false)}
               >

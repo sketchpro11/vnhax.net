@@ -28,8 +28,7 @@ export default function SiteFooter() {
             </Link>
             <p className="footer-acronym">{BRAND_CONFIG.acronymExplanation}</p>
             <p className="footer-bio">
-              Independent engineering field guides, deep technical architecture reviews,
-              and production-ready open-source AI tooling for developers and researchers.
+              Plain-English explainers and guides on AI models, developer tools and open-source projects, written from official sources.
             </p>
             <div className="footer-social-links" aria-label="Social Profiles">
               <a
@@ -76,13 +75,10 @@ export default function SiteFooter() {
                 <Link href="/ai">Innovation &amp; AI Hub</Link>
               </li>
               <li>
-                <Link href="/ai/ai-tools">AI Tools &amp; Models</Link>
-              </li>
-              <li>
                 <Link href="/developer-resources">Developer Resources</Link>
               </li>
               <li>
-                <Link href="/developer-resources/github-repos">GitHub Repositories</Link>
+                <Link href="/repos">GitHub Repositories</Link>
               </li>
               <li>
                 <Link href="/ui-components">UI Components Library</Link>
@@ -96,27 +92,27 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 3: Resources & Catalogs */}
+          {/* Column 3: Company Hubs */}
           <div className="footer-col">
-            <h3 className="footer-col-title">Resources &amp; Catalogs</h3>
+            <h3 className="footer-col-title">Company Hubs</h3>
             <ul className="footer-links-list">
               <li>
-                <Link href="/repos">Repositories Catalog</Link>
+                <Link href="/openai">OpenAI</Link>
               </li>
               <li>
-                <Link href="/blog">Articles &amp; Research</Link>
+                <Link href="/anthropic">Anthropic &amp; Claude</Link>
               </li>
               <li>
-                <Link href="/ai/ai-tools">AI Tools Directory</Link>
+                <Link href="/google">Google Gemini</Link>
               </li>
               <li>
-                <Link href="/developer-resources/github-repos">GitHub Repositories Hub</Link>
+                <Link href="/github">GitHub Copilot</Link>
               </li>
               <li>
-                <Link href="/ui-components">UI Components Library</Link>
+                <Link href="/xai">xAI &amp; Grok</Link>
               </li>
               <li>
-                <Link href="/technology/platforms">Platform Evaluation Matrix</Link>
+                <Link href="/meta">Meta AI</Link>
               </li>
             </ul>
           </div>
@@ -180,7 +176,7 @@ export default function SiteFooter() {
               </a>
             </p>
             <p className="footer-legal-notice">
-              Independent technical research, hardware benchmarks, and open-source documentation. All product names, logos, and brands belong to their respective owners.
+              Independent explainers based on official documentation and announcements. All product names, logos, and brands belong to their respective owners.
             </p>
           </div>
           <button

@@ -126,7 +126,7 @@ export default function LatestBlogsSection({ blogs }: LatestBlogsSectionProps) {
               <span className="silo-badge silo-badge--ui">UI Components</span>
               <span className="card-eyebrow">Design Systems</span>
             </div>
-            <h3>Production-ready UI component patterns &amp; interactive templates</h3>
+            <h3>React UI component patterns &amp; interactive demos</h3>
             <p>
               Modular interface patterns built with clean semantic HTML, modern CSS, and live interactive state previews.
             </p>

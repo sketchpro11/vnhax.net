@@ -4,7 +4,7 @@ description: "ByteDance's DMAD cuts video generation to just 4 steps, with a 1.4
 date: "2026-10-08"
 updatedAt: "2026-10-12"
 author: "Umar Hashmi"
-category: "Developer Tools & Repos"
+category: "AI & Models"
 tags: ["developer", "tools", "code-distillation", "bytedance", "dmad", "open-source-repos", "developer-workflows"]
 ---
 
@@ -129,7 +129,7 @@ The fast-generation race is going to get more crowded, and not every approach wi
 
 If you do try it, run your own side-by-side tests, note what works and what does not, and share it. Real user feedback is more useful than any headline number.
 
-<!-- EDITOR NOTE (delete before publishing): Add your own test results here if you run DMAD locally, such as your GPU, generation time, and a screenshot or short clip. Real first-hand results make this post stronger for readers and for Google. -->
+
 
 ## Frequently Asked Questions (FAQs)
 
@@ -171,3 +171,10 @@ The project page reports strong benchmark and human preference results, but qual
 Faster generation changes how people create. If DMAD keeps holding up as more people test it, waiting on a progress bar may feel a lot less normal a year from now.
 
 Start with the [official project page](https://yzmblog.github.io/projects/DMAD/), try a few prompts, and see how it feels on your own setup.
+
+## Sources
+
+- [DMAD project page](https://yzmblog.github.io/projects/DMAD/)
+- [DMAD paper (arXiv)](https://arxiv.org/pdf/2610.02188)
+- [DMAD code on GitHub](https://github.com/Yzmblog/DMAD)
+- [DMAD models on Hugging Face](https://huggingface.co/ZhengmingYu/DMAD)

@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import AuthorAvatar from '@/components/AuthorAvatar';
 import { getAllBlogs } from '@/lib/blog';
 import { AUTHOR, AUTHOR_PAGE_PATH, getAuthorSchema } from '@/lib/author';
-import { BRAND_CONFIG, CONTACT_EMAIL, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG, CONTACT_EMAIL } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: `${AUTHOR.name} — Author`,
@@ -33,16 +33,10 @@ export default async function AuthorPage() {
     mainEntity: getAuthorSchema(BRAND_CONFIG.siteUrl),
   };
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'About', url: '/about' },
-    { name: AUTHOR.name, url: AUTHOR_PAGE_PATH },
-  ]);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <SiteHeader variant="home" />
 

@@ -1,7 +1,6 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
+import CopyCommandButton from '@/components/CopyCommandButton';
 
 /**
  * Extended review layout for repositories added from GitHub Trending.
@@ -147,7 +146,7 @@ export const TRENDING_DOCS: Record<string, TrendingDocConfig> = {
     badges: ['🔥 1,397 STARS IN ONE DAY (18 OCT 2026)', 'BUILT ON CLAUDE CODE', 'DRAFTER + REVIEWER AGENTS', 'NEVER INVENTS EXPERIENCE', 'MIT LICENSE'],
     image: '/images/AI Job Search by vnhax.net.png',
     imageAlt: 'AI Job Search workflow: a job posting goes through parse, fit, draft and review steps to a tailored CV and cover letter',
-    kicker: 'MadsLorentzen / ai-job-search — the job search that runs on your machine',
+    kicker: 'ai-job-search-dev / ai-job-search — the job search that runs on your machine',
     title: 'AI Job Search: A Claude Code Framework for Tailored CVs, Cover Letters & Interview Prep',
     lead: (
       <>
@@ -216,7 +215,7 @@ export const TRENDING_DOCS: Record<string, TrendingDocConfig> = {
         </>
       ),
       extras: [
-        { label: 'Fork & clone (only to contribute):', cmd: 'gh repo fork MadsLorentzen/ai-job-search --clone && cd ai-job-search' },
+        { label: 'Fork & clone (only to contribute):', cmd: 'gh repo fork ai-job-search-dev/ai-job-search --clone && cd ai-job-search' },
         { label: 'Windows:', cmd: 'python tools\\install_portal_clis.py' },
         { label: 'Apply with pasted text (if a site blocks fetching):', cmd: '/apply <paste the full job description here>' },
         { label: 'Reconfigure only the job search:', cmd: '/setup --section search' },
@@ -647,19 +646,590 @@ export const TRENDING_DOCS: Record<string, TrendingDocConfig> = {
       { icon: '📘', title: 'Docs', body: 'lightpanda.io/docs: MCP server guide, agent mode and PandaScript reference.' },
     ],
   },
+
+  ponytail: {
+    accent: ACCENTS.violet,
+    badges: ['PONYTAIL 5', '-53% CODE (PROJECT BENCHMARK)', 'CLAUDE CODE · CODEX · AGENTS.MD', 'NEVER CUTS SECURITY OR TESTS', 'MIT LICENSE'],
+    image: '/images/ponytail By Vnhax.net.png',
+    imageAlt: 'Ponytail: a coding agent replaces a long, over-built implementation with a short one that reuses existing code',
+    kicker: 'DietrichGebert / ponytail — "He says nothing. He writes one line. It works."',
+    title: 'Ponytail: Stop AI Coding Agents From Writing More Code Than the Task Needs',
+    lead: (
+      <>
+        <strong>A skill that puts a strict senior developer inside your coding agent.</strong>
+        <br />
+        Before writing anything, Ponytail reads the code the change touches, reuses what exists and leans on what the platform already
+        provides. It never cuts validation, error handling, security or accessibility.
+      </>
+    ),
+    metrics: [
+      { value: '-53%', label: 'Code written', note: 'Ponytail 5 vs same agent without it (project benchmark)' },
+      { value: '-41%', label: 'Agent time', note: '39 tasks, Opus 5.5, 5 runs each (project benchmark)' },
+      { value: '98%', label: 'Risky logic shipped with a test', note: 'vs 68% without Ponytail (project benchmark)' },
+    ],
+    flow: {
+      title: 'How Ponytail Decides What to Write',
+      intro: 'From the README, the order of work for every task:',
+      steps: [
+        { name: '1. Understand', desc: 'Read the code the change touches and trace the real data flow. Lazy about the solution, never about reading.' },
+        { name: '2. Reuse', desc: 'Look for something that already exists in the repo, such as an existing Input component.' },
+        { name: '3. Use the platform', desc: 'Prefer what the browser or language already provides, like a native date picker.' },
+        { name: '4. Write the minimum', desc: 'Only then write new code, keeping validation, error handling, security and accessibility.' },
+        { name: '5. Report', desc: 'Leave a small test for risky logic and end with what was skipped or not checked.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Commands',
+        columns: ['Command', 'What It Does'],
+        rows: [
+          ['/ponytail [lite | full | ultra | off]', 'Set the intensity or turn it off. With no argument it reports or switches on the default level.'],
+          ['/ponytail-review', 'Reviews the current diff like the senior dev who gets paged: bugs, security, real load, missing tests, slow paths, and what to cut.'],
+          ['/ponytail-audit', 'The same checks for the whole repository, most important first.'],
+          ['/ponytail-debt', 'Collects the shortcut: comments you deferred into a ledger.'],
+          ['/ponytail-gain', 'Shows the measured impact scoreboard from the benchmark.'],
+          ['/ponytail band', 'Claude Code only: a band above the prompt with cost, tokens, agent time, reuse and test status.'],
+        ],
+      },
+      {
+        title: 'The Benchmark, Read Carefully',
+        intro: 'All figures are from the Ponytail 5 README, measured by the project in Claude Code with and without the skill.',
+        columns: ['Measure', 'Result'],
+        rows: [
+          ['Code written', '-53%'],
+          ['Agent time', '-41%'],
+          ['Cost', '-26%'],
+          ['Tokens', '-45%'],
+          ['Risky logic shipped with a test', '98% with Ponytail vs 68% without'],
+          ['Setup', '39 tasks including a real FastAPI + React repo, Opus 5.5, 5 runs each'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'Install in Claude Code',
+      primary: '/plugin marketplace add DietrichGebert/ponytail',
+      note: (
+        <>
+          Then, as a separate prompt, run {code('/plugin install ponytail@ponytail')}. Ponytail is active in every session afterwards.
+        </>
+      ),
+      extras: [
+        { label: 'Codex:', cmd: 'codex plugin marketplace add DietrichGebert/ponytail && codex plugin add ponytail@ponytail' },
+        { label: 'Then in Codex:', cmd: 'Open /hooks, trust the two lifecycle hooks, start a new thread' },
+        { label: 'Any other agent:', cmd: 'Copy AGENTS.md into your project (see INSTALL.md)' },
+        { label: 'Set a default level (optional):', cmd: 'PONYTAIL_DEFAULT_MODE=lite' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why Less Code Is Not the Same as Cutting Corners',
+        body: 'The README is explicit that the rule was never "fewest tokens". It is to write only what the task needs, and never cut validation, error handling, security or accessibility. Lower cost and faster runs are a side effect of not building what nobody asked for.',
+      },
+      {
+        title: 'One Prompt, Many Agents',
+        body: 'Ponytail is a single prompt (skills/ponytail/SKILL.md) plus a compact AGENTS.md for agents that read a rules file. Everything else in the repository just loads that prompt into different agents, which is why it works across Claude Code, Codex, Copilot, Cursor, OpenCode, Gemini and others.',
+      },
+    ],
+    honest: {
+      title: 'Before You Install',
+      intro: 'Points worth knowing, mostly from the README:',
+      items: [
+        ['Vendor benchmark', 'The -53% and -41% figures are the project\'s own measurements on its own task set. Check the effect on your codebase.'],
+        ['Official sources only', 'Install only from DietrichGebert/ponytail on GitHub or @dietrichgebert/ponytail on npm. It never ships .exe or .dll files.'],
+        ['Agent support varies', 'Commands need a skill-capable host; some features, like the band, are Claude Code only.'],
+      ],
+    },
+    cards: [
+      { icon: '🧩', title: 'Works With', body: 'Claude Code and Codex natively; Copilot, Cursor, OpenCode, Gemini and others via AGENTS.md.' },
+      { icon: '⚖️', title: 'License', body: <><strong>MIT License.</strong></> },
+      { icon: '📘', title: 'Docs', body: 'README and INSTALL.md in the repository, plus examples in examples/.' },
+    ],
+  },
+
+  impeccable: {
+    accent: ACCENTS.rose,
+    badges: ['24 DESIGN COMMANDS', '62 DETERMINISTIC RULES', 'NO LLM NEEDED FOR THE DETECTOR', 'WORKS IN CI & CHROME', 'APACHE-2.0 LICENSE'],
+    image: '/images/impeccable by vnhax.net.png',
+    imageAlt: 'Impeccable: a design vocabulary and slop detector that reviews AI-generated interfaces',
+    kicker: 'pbakaus / impeccable — the design vocabulary for your coding agent',
+    title: 'Impeccable: Design Commands and a Slop Detector for AI-Generated Interfaces',
+    lead: (
+      <>
+        <strong>Words for what you want, a reviewer, and a detector that catches AI design clichés.</strong>
+        <br />
+        Steer with commands like {code('bolder')} and {code('polish')}, review with {code('critique')} and {code('audit')}, and catch patterns such as
+        purple gradients and cards nested in cards before they ship.
+      </>
+    ),
+    metrics: [
+      { value: '24', label: 'Design commands', note: 'Steer, review, finish, iterate live, plan' },
+      { value: '62', label: 'Deterministic detector rules', note: 'No LLM, no API key (per README)' },
+      { value: '3 ways', label: 'To run the detector', note: 'In your agent, in CI/terminal, in Chrome' },
+    ],
+    flow: {
+      title: 'How a Typical Session Works',
+      intro: 'Based on the README:',
+      steps: [
+        { name: '/impeccable init', desc: 'Reads your code, asks only what it cannot infer, and writes PRODUCT.md for later commands.' },
+        { name: '/impeccable document', desc: 'Optionally captures your existing visual system in DESIGN.md.' },
+        { name: 'Command + target', desc: 'For example "/impeccable critique the onboarding flow". Narrow targets give better results.' },
+        { name: 'Detector hook', desc: 'Scans every UI file the agent edits and reports findings before the agent calls the work done.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'The 24 Commands',
+        columns: ['Group', 'Commands'],
+        rows: [
+          ['Steer', 'bolder, quieter, distill, colorize, typeset, layout, animate'],
+          ['Review', 'critique (scored UX review), audit (technical quality report, P0 to P3)'],
+          ['Finish', 'polish, harden, clarify, adapt, optimize, onboard'],
+          ['Iterate live', 'live (pick an element in the browser and cycle variants), generate'],
+          ['Plan and set up', 'shape, init, document, extract'],
+          ['Deprecated', 'craft (alias for a plain build request)'],
+        ],
+      },
+      {
+        title: 'Run the Detector Without an Agent',
+        columns: ['Command', 'What It Does'],
+        rows: [
+          ['npx impeccable detect src/', 'Scan a directory (pattern rules for JSX, TSX and other sources)'],
+          ['npx impeccable detect http://localhost:5173', 'Scan a rendered page, which enables rules like low contrast and tiny text'],
+          ['npx impeccable detect --json .', 'Machine-readable output'],
+          ['npx impeccable detect --github src/', 'GitHub Actions annotations'],
+          ['npx impeccable detect --list-rules', 'Every rule with its id and description'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'Install (From Your Project Root)',
+      primary: 'npx impeccable install',
+      note: (
+        <>
+          The installer detects your coding tools, asks whether to install for the project or globally, and offers the design hook. Reload
+          your tool, then run {code('/impeccable init')} ({code('$impeccable init')} on Codex).
+        </>
+      ),
+      extras: [
+        { label: 'Update an existing install:', cmd: 'npx impeccable update' },
+        { label: 'Claude Code plugin:', cmd: '/plugin marketplace add pbakaus/impeccable' },
+        { label: 'Grok Build:', cmd: 'grok plugin install pbakaus/impeccable#plugin --trust' },
+        { label: 'Allow your brand font:', cmd: 'npx impeccable ignores add-value overused-font Inter --reason "Brand font"' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why Agents Need a Design Vocabulary',
+        body: '"Make it pop" leaves the agent guessing. A command like "/impeccable bolder the pricing cards" loads a playbook written for that one move and points it at one target. The README says Impeccable is strongest on interfaces that already exist, iterating one component at a time.',
+      },
+      {
+        title: 'What the Detector Looks For',
+        body: 'The rules flag common tells of AI-generated interfaces, such as Inter used everywhere, purple-to-blue gradients, cards nested in cards, gray text on colored backgrounds and an icon tile above every heading, plus quality problems like cramped padding and skipped headings.',
+      },
+    ],
+    honest: {
+      title: 'Cautions From the README',
+      intro: 'Worth reading before you turn everything on:',
+      items: [
+        ['Live mode is local only', 'Do not inject it into a deployed site or weaken a production CSP to make it work.'],
+        ['Apply can run an agent with safeguards off', 'If no live session is polling, Apply runs the codex or claude CLI with approvals and sandboxing turned off. Review it before using it in an unfamiliar repository.'],
+        ['Some tools need an extra step', 'Codex needs the hook approved in /hooks, Grok Build needs /hooks-trust, and Hermes needs the hook plugin enabled.'],
+      ],
+    },
+    cards: [
+      { icon: '🧩', title: 'Works With', body: 'Claude Code, Cursor, Codex CLI, GitHub Copilot, Gemini CLI, Grok Build, OpenCode, Antigravity, Kiro, Trae, Qoder and more.' },
+      { icon: '⚖️', title: 'License', body: <><strong>Apache-2.0</strong> (per GitHub repository metadata).</> },
+      { icon: '📘', title: 'Docs', body: 'impeccable.style/docs, with a page for every command.' },
+    ],
+  },
+
+  ecc: {
+    accent: ACCENTS.sky,
+    badges: ['71 AGENTS · 314 SKILLS', 'AGENTSHIELD SECURITY SCANNING', 'CLAUDE CODE · CODEX · QODER', 'GUIDED SETUP (ECC 2.2)', 'MIT LICENSE'],
+    image: '/images/ECC by vnhax.net.png',
+    imageAlt: 'ECC: a coding agent connected to planning, testing, review, memory and security workflows',
+    kicker: 'affaan-m / ECC — "Optimize the context window. Persist everything else."',
+    title: 'ECC (Everything Claude Code): A Full Engineering Workflow for Your Coding Agent',
+    lead: (
+      <>
+        <strong>Your agent can write code. ECC gives it a process.</strong>
+        <br />
+        It plans before it builds, verifies changes with tests, reviews its own work from a fresh context, remembers what matters and turns
+        repeated wins into reusable skills: plan, test, implement, review, verify, remember, improve.
+      </>
+    ),
+    metrics: [
+      { value: '71 agents', label: 'Specialised agents', note: 'Per README, November 2026' },
+      { value: '314 skills', label: 'Skills', note: 'TDD, research, security, docs, frontend, data, ML, ops' },
+      { value: '98', label: 'Command shims', note: 'While ECC moves to a skills-first design' },
+    ],
+    flow: {
+      title: "What's Included",
+      intro: 'The README lists these building blocks:',
+      steps: [
+        { name: 'Agents', desc: 'Planning, review, build repair, security, architecture and domain work.' },
+        { name: 'Skills', desc: 'TDD, research, security, docs, frontend, data, ML, operations and more, loaded when needed.' },
+        { name: 'Hooks & memory', desc: 'Enforcement, session summaries, continuous learning, instincts and context controls.' },
+        { name: 'Rules', desc: 'Always-loaded standards you choose by language or project.' },
+        { name: 'AgentShield', desc: 'Scans prompts, hooks, MCP config, permissions, secrets and agent files.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Install Options (Pick One per Agent)',
+        intro: 'From the README. Installing ECC twice into the same agent duplicates skills, commands and hooks.',
+        columns: ['Method', 'Command'],
+        rows: [
+          ['Guided setup (recommended)', 'npx ecc-universal@2.2.3 setup'],
+          ['Several agents at once', 'npx ecc-universal@2.2.3 install --guided'],
+          ['Claude Code native plugin', '/plugin marketplace add https://github.com/affaan-m/ECC, then /plugin install ecc@ecc'],
+          ['Rule packs (optional)', 'Copy rules/common plus one language pack into ~/.claude/rules/ecc/'],
+        ],
+      },
+      {
+        title: 'Agent Support',
+        columns: ['Agent', 'Support level'],
+        rows: [
+          ['Claude Code', 'Best support; native ecc@ecc plugin'],
+          ['Codex, Qoder', 'Native plugin paths'],
+          ['Kimi Code', 'Managed project files via the guided installer'],
+          ['Cursor, OpenCode, Gemini, Zed, GitHub Copilot, Antigravity, Qwen and others', 'Capability-limited adapters'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'Guided Setup for Claude Code',
+      primary: 'npx ecc-universal@2.2.3 setup',
+      note: (
+        <>
+          Needs Node.js 18+, Git and Claude Code 2.1+ on your PATH. For a personal setup, choose <strong>Global user</strong> and{' '}
+          <strong>Standard</strong> hooks, then run {code('/plugin list')} in a new session to check that ecc@ecc is enabled.
+        </>
+      ),
+      extras: [
+        { label: 'Check the published version:', cmd: 'npm view ecc-universal version' },
+        { label: 'Native plugin (instead of setup):', cmd: '/plugin install ecc@ecc' },
+        { label: 'Preview without writing:', cmd: 'npx ecc-universal@2.2.3 install --guided --harness codex --dry-run' },
+        { label: 'Reconfigure after install:', cmd: '/ecc:configure-ecc' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why a Process Beats a Bigger Prompt',
+        body: 'Long instructions pasted into every prompt fill the context window and still get ignored. ECC installs the workflow once, as agents, skills, hooks and rules that load when needed, so each session starts with the same habits without carrying everything in context.',
+      },
+      {
+        title: 'Free Core, Paid Hosted Option',
+        body: 'The repository is MIT-licensed. The project also sells ECC Pro, a hosted GitHub App for private repositories, which together with sponsors funds a single maintainer shipping across several agent harnesses.',
+      },
+    ],
+    honest: {
+      title: 'Things to Watch',
+      intro: 'From the README and general experience with large agent toolkits:',
+      items: [
+        ['Official channels only', 'Install only from the affaan-m/ECC repository and its official npm packages.'],
+        ['Do not stack installs', 'Use one install method per agent, or skills and hooks get duplicated.'],
+        ['Counts change often', 'Agent, skill and command numbers grow with each release; check the README for current figures.'],
+        ['Start small', 'Add only the rule packs you actually use, starting with rules/common plus one language.'],
+      ],
+    },
+    cards: [
+      { icon: '🛡️', title: 'Security', body: 'AgentShield scans prompts, hooks, MCP config, permissions, secrets and agent files. ECC never uploads diagnostics automatically.' },
+      { icon: '⚖️', title: 'License', body: <><strong>MIT License.</strong> ECC Pro is a separate paid hosted app.</> },
+      { icon: '📘', title: 'Docs', body: 'README sections cover install, reset and uninstall, and each supported harness.' },
+    ],
+  },
+
+  effect: {
+    accent: ACCENTS.teal,
+    badges: ['EFFECT 4.x LTS', 'TYPED ERRORS', 'STRUCTURED CONCURRENCY', 'TYPESCRIPT 5.9+', 'MIT LICENSE'],
+    image: '/images/Effect by vnhax.net.png',
+    imageAlt: 'Effect: a TypeScript program with typed errors, services and concurrency managed by the Effect runtime',
+    kicker: 'Effect-TS / effect — robust, type-safe applications in TypeScript',
+    title: 'Effect: Typed Errors, Dependency Injection and Structured Concurrency for TypeScript',
+    lead: (
+      <>
+        <strong>Make the hard parts of production TypeScript visible to the compiler.</strong>
+        <br />
+        Effect tracks which errors a function can fail with and which services it needs, and gives you structured concurrency, scheduling and
+        tracing. Effect 4.x is a long-term support release.
+      </>
+    ),
+    metrics: [
+      { value: '3+ years', label: 'LTS support for 4.x', note: 'Bug and security fixes (per README)' },
+      { value: '5.9+', label: 'Minimum TypeScript', note: 'TypeScript 7 recommended' },
+      { value: '22.19+', label: 'Minimum Node.js', note: 'When running Effect on Node' },
+    ],
+    flow: {
+      title: 'What Effect Handles for You',
+      intro: 'The README describes Effect as helping with these problems at scale:',
+      steps: [
+        { name: 'Typed errors', desc: 'Failures are part of the type, so callers know what can go wrong and must handle it.' },
+        { name: 'Dependency injection', desc: 'Required services appear in the type and are provided once at the edge of the app.' },
+        { name: 'Structured concurrency', desc: 'Concurrent work is scoped, so it can be interrupted and cleaned up safely.' },
+        { name: 'Scheduling & tracing', desc: 'Retries, schedules and tracing are built in, with an OpenTelemetry integration.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Long-Term Support Guarantees (Effect 4.x)',
+        columns: ['Guarantee', 'Detail'],
+        rows: [
+          ['Support period', 'At least three years, including bug and security fixes'],
+          ['After the next major', 'Bug fixes for one year, security fixes for two years'],
+          ['Breaking changes', 'Stable APIs break only in major releases; unstable APIs may change in minors, experimental in patches'],
+          ['Effect v3', 'Lives on the v3 branch; a migration guide covers upgrading to 4.x'],
+        ],
+      },
+      {
+        title: 'Packages in the Monorepo',
+        intro: 'All released together with synchronised versions.',
+        columns: ['Group', 'Packages'],
+        rows: [
+          ['Core', 'effect'],
+          ['Platforms', '@effect/platform-browser, -bun, -deno, -node, -node-shared'],
+          ['SQL', 'PostgreSQL, MySQL, SQL Server, ClickHouse, libSQL, Cloudflare D1, PGlite and several SQLite drivers'],
+          ['AI', '@effect/ai-anthropic, -openai, -openrouter, -openai-compat, -cloudflare, -typesafe'],
+          ['UI & tooling', 'Atom bindings for React, Solid and Vue; OpenTelemetry; Vitest; docgen; OpenAPI and GraphQL generators'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'Add Effect to a Project',
+      primary: 'npm install effect',
+      note: <>Enable {code('"strict": true')} in your tsconfig.json. Effect requires TypeScript 5.9 or newer and Node.js 22.19 or newer on Node.</>,
+      extras: [
+        { label: 'Node platform services:', cmd: 'npm install @effect/platform-node' },
+        { label: 'PostgreSQL client:', cmd: 'npm install @effect/sql-pg' },
+        { label: 'Testing helpers:', cmd: 'npm install -D @effect/vitest' },
+        { label: 'Upgrading from v3:', cmd: 'See MIGRATION.md in the repository' },
+      ],
+    },
+    split: [
+      {
+        title: 'When Effect Is Worth the Learning Curve',
+        body: 'Effect changes how you write TypeScript, so it pays off most on long-running services with many failure modes, external dependencies and concurrent work. For a small script or a simple CRUD app, plain TypeScript may be enough.',
+      },
+      {
+        title: 'Getting Help',
+        body: 'The maintainers run a Discord, publish docs and guides at effect.website, list adoption partners for consulting and training, and invite teams to share production feedback.',
+      },
+    ],
+    honest: {
+      title: 'Know Before You Adopt',
+      intro: 'Practical points:',
+      items: [
+        ['New mental model', 'Effect code looks different from promise-based TypeScript. Plan time for the team to learn it.'],
+        ['Strict requirements', 'TypeScript 5.9+, strict mode and Node.js 22.19+ may require upgrades in older projects.'],
+        ['Major-version migration', 'Moving from v3 to v4 needs the migration guide; do it deliberately, not via a blind dependency bump.'],
+      ],
+    },
+    cards: [
+      { icon: '🌐', title: 'Website', body: 'effect.website: documentation, guides, API reference and news.' },
+      { icon: '⚖️', title: 'License', body: <><strong>MIT License.</strong></> },
+      { icon: '💬', title: 'Community', body: 'Discord, meetups and an adoption-partner programme for commercial support.' },
+    ],
+  },
+
+  caveman: {
+    accent: ACCENTS.amber,
+    badges: ['33.2% FEWER INPUT TOKENS (PROJECT)', 'CITED BY ADOBE RESEARCH', 'CAVEMAN 4.0: SIX PARTS', '30+ AGENTS', 'APACHE-2.0 LICENSE'],
+    image: '/images/Caveman AI by vnhax.net.png',
+    imageAlt: 'Caveman: an AI coding agent that answers tersely and reads compressed tool output',
+    kicker: 'JuliusBrussee / caveman — why many token when few do trick',
+    title: 'Caveman: Make Your AI Coding Agent Say Less and Read Less',
+    lead: (
+      <>
+        <strong>Shorter answers, smaller inputs, same code.</strong>
+        <br />
+        The caveman voice trims chatty answers while keeping code, commands, paths and error messages exact. Input compression shrinks logs,
+        JSON, CSV and test output before the model reads them, and keeps the originals on disk.
+      </>
+    ),
+    metrics: [
+      { value: '33.2%', label: 'Fewer input tokens per session', note: '54 Claude Code runs, 18/18 answers right (project)' },
+      { value: '63 → 20', label: 'Tokens for the same fix', note: 'Caveman voice example (project)' },
+      { value: '1.4–2.4×', label: 'Cheaper output', note: 'Adobe Research, eight models (cited by README)' },
+    ],
+    flow: {
+      title: 'The Six Parts of Caveman 4.0',
+      intro: 'All are on after install; each has its own switch:',
+      steps: [
+        { name: 'Say less', desc: 'The caveman voice: answer first, one idea per sentence, payload kept verbatim.' },
+        { name: 'Read less', desc: 'Compresses logs, JSON, CSV and test output before the model reads them.' },
+        { name: 'Auto', desc: 'Picks the model and effort for each request. Needs a free account.' },
+        { name: 'Blocks', desc: 'Reusable scripts for code mode, so agents stop retyping the same helper (pre-release).' },
+        { name: 'Waste fixes', desc: 'Finds where tokens go and keeps the prompt cache warm while you pause.' },
+        { name: 'Browse', desc: 'Returns web pages to the agent in compressed form.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Outside Results Cited in the README',
+        columns: ['Who', 'Result'],
+        rows: [
+          ['Adobe Research (CAVEWOMAN paper)', 'Caveman-style output cut cost 1.4× to 2.4× per model, up to 3×, across eight models and five datasets'],
+          ['Elastic (Elasticsearch Labs)', '63.6% fewer response tokens in eight live MCP scenarios'],
+          ['JetBrains', 'No measurable quality loss (p = 0.82) and 8.5% fewer output tokens on 86 coding tasks'],
+        ],
+      },
+      {
+        title: 'Input Compression by File Type (Project Measurements)',
+        columns: ['File type', 'Whole-session saving'],
+        rows: [
+          ['CSV', '55.1%'],
+          ['Logs', '50.2%'],
+          ['YAML', '46.2%'],
+          ['Test output', '27.8%'],
+          ['JSON', '26.4%'],
+          ['HTML', '9.9% worse (not compressed yet)'],
+          ['All six together', '33.2% fewer input tokens'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'One-Command Install',
+      primary: 'npx @caveman-ai/cli@latest',
+      note: (
+        <>
+          Mac, Linux and Windows; needs Node.js 22.13+. It finds your agents and logins, shows what it will change, and asks you to confirm.
+          Afterwards plain {code('claude')} runs with caveman on. {code('caveman status')} shows what is enabled.
+        </>
+      ),
+      extras: [
+        { label: 'Only the terse-answer skill:', cmd: 'npx skills add JuliusBrussee/caveman -g' },
+        { label: 'Claude Code plugin:', cmd: 'claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman' },
+        { label: 'Turn one part off:', cmd: 'caveman off browse' },
+        { label: 'Uninstall:', cmd: 'npx -y github:JuliusBrussee/caveman -- --uninstall' },
+      ],
+    },
+    split: [
+      {
+        title: 'Why Your Prompts Are Left Alone',
+        body: 'The README cites Adobe Research finding that compressing the user\'s own prompt makes answers worse. So caveman never rewrites what you type; it shortens what the agent says and what it reads from tools.',
+      },
+      {
+        title: 'When It Saves Less',
+        body: 'The project\'s own table shows HTML input getting slightly worse, and notes that "Be concise" is already a strong baseline on new models. Measure on your own sessions with caveman status and your provider\'s usage data.',
+      },
+    ],
+    honest: {
+      title: 'Honest Numbers',
+      intro: 'Caveats the README itself states:',
+      items: [
+        ['Interim result', 'The Auto "54% cheaper" figure comes from a half-finished run on 85 tasks.'],
+        ['Older measurements', 'The session compression run dates from August 2026 on an older engine.'],
+        ['Pre-release parts', 'Blocks is a release candidate, Python only, with no sandbox yet.'],
+        ['Account for Auto', 'Only Auto needs an account; without signing in, it is off and nothing is sent for it.'],
+      ],
+    },
+    cards: [
+      { icon: '🔒', title: 'Runs Locally', body: 'Uses your own keys or Claude Pro/Max login on your machine. Originals of compressed files stay on disk.' },
+      { icon: '⚖️', title: 'License', body: <><strong>Apache-2.0</strong> (per GitHub repository metadata).</> },
+      { icon: '📘', title: 'Docs', body: 'README and INSTALL.md cover 30+ agents, Windows, uninstall and the release notes.' },
+    ],
+  },
+
+  'agent-reach': {
+    accent: ACCENTS.emerald,
+    badges: ['READ-ONLY BY DESIGN', '14 PLATFORM CHANNELS', 'NO PASSWORDS REQUESTED', 'WORKS WITH ANY CLI AGENT', 'MIT LICENSE'],
+    image: '/images/Agent Reach by vnhax.net.png',
+    imageAlt: 'Agent-Reach: an AI agent reading YouTube, Reddit, X, Bilibili and GitHub through one command',
+    kicker: 'Panniantong / Agent-Reach — reach the parts of the internet your agent cannot',
+    title: 'Agent-Reach: Let Your AI Agent Read YouTube, Reddit, X, Bilibili and More',
+    lead: (
+      <>
+        <strong>One command for platforms your agent normally cannot reach.</strong>
+        <br />
+        Claude Code, Codex and similar agents can search the web, but struggle with content behind logins, video transcripts and Chinese
+        platforms. Agent-Reach installs and tests the tools behind each platform for you.
+      </>
+    ),
+    metrics: [
+      { value: '14', label: 'Channels', note: '5 default, 6 optional, 3 experimental' },
+      { value: 'Read-only', label: 'No posting or messaging', note: 'Search and read only (per README)' },
+      { value: '1 folder', label: 'Everything installed', note: '~/.agent-reach/' },
+    ],
+    flow: {
+      title: 'How It Works',
+      intro: 'From the README:',
+      steps: [
+        { name: 'Channels', desc: 'Each platform is a channel, such as youtube, reddit or bilibili.' },
+        { name: 'Ordered tools', desc: 'Every action tries a list of tools in order; if one fails, the next is used.' },
+        { name: 'One command', desc: 'The agent runs agent-reach with a channel and action, or agent-reach read with a URL.' },
+        { name: 'Plain-language management', desc: 'Ask your agent to add, remove, check, upgrade or uninstall channels.' },
+      ],
+    },
+    tables: [
+      {
+        title: 'Supported Channels',
+        intro: 'Translated from the README table (current version).',
+        columns: ['Channel', 'Level and what you need'],
+        rows: [
+          ['Bilibili', 'Default: search, video info, trending, subtitles (subtitles need a login)'],
+          ['V2EX, GitHub, web', 'Default: no login needed'],
+          ['YouTube', 'Default: video info, search, subtitles; speech-to-text needs a Groq or OpenAI key'],
+          ['Xiaohongshu, Reddit, Boss', 'Optional: login required'],
+          ['Xueqiu, LinkedIn', 'Optional: some features need a login'],
+          ['Xiaoyuzhou (podcasts)', 'Optional: speech-to-text with a Groq key'],
+          ['X, Facebook, Instagram', 'Experimental: login required; may break as platforms tighten anti-bot rules'],
+        ],
+      },
+    ],
+    install: {
+      label: 'Install',
+      title: 'Install by Asking Your Agent',
+      primary: 'Install Agent Reach: https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/install.md',
+      note: (
+        <>
+          Paste this sentence into your agent; the same line also upgrades it. The agent may ask to run commands and install {code('uv')}, a
+          small tool that needs no admin password.
+        </>
+      ),
+      extras: [
+        { label: 'List channels and capabilities:', cmd: 'agent-reach channels' },
+        { label: 'Read a link (channel picked automatically):', cmd: 'agent-reach read https://www.v2ex.com/t/123' },
+        { label: 'Add an API key in your own terminal:', cmd: 'agent-reach configure groq-key' },
+        { label: 'Do not use:', cmd: 'The PyPI package named agent-reach (not this project)' },
+      ],
+    },
+    split: [
+      {
+        title: 'How Logins Are Handled',
+        body: 'Agent-Reach never logs in for you and never asks for passwords. For a logged-in platform it can copy that one site\'s login from your Chrome into its own dedicated background browser, leaving the original untouched. That browser only accepts connections from your own computer.',
+      },
+      {
+        title: 'Why Fallbacks Matter',
+        body: 'Platforms change their pages and anti-bot rules often. Because each action tries a list of tools in order, a broken tool is replaced by updating the list, and the agent keeps using the same command.',
+      },
+    ],
+    honest: {
+      title: 'Use It Responsibly',
+      intro: 'Points from the README and common sense:',
+      items: [
+        ['Use a secondary account', 'Reused logins are usually your main account, and platforms may restrict accounts used for automated access.'],
+        ['Respect platform terms', 'Automated reading of logged-in platforms can conflict with their terms of service. Check before using it at scale.'],
+        ['Experimental channels', 'X, Facebook and Instagram may stop working at any time.'],
+        ['Scam warning', 'The author says Agent-Reach has no token, coin or investment product; anything claiming otherwise is unrelated.'],
+      ],
+    },
+    cards: [
+      { icon: '🔒', title: 'Safety', body: 'Read-only, no passwords, keys entered in your own terminal, and a dedicated browser reachable only from your machine.' },
+      { icon: '⚖️', title: 'License', body: <><strong>MIT License</strong> (per GitHub repository metadata).</> },
+      { icon: '🗑️', title: 'Uninstall', body: 'Ask your agent to uninstall; it lists what will be removed and deletes only what Agent-Reach installed.' },
+    ],
+  },
 };
 
 export default function TrendingRepoDoc({ slug }: { slug: string }) {
   const doc = TRENDING_DOCS[slug];
-  const [copied, setCopied] = useState<string | null>(null);
   if (!doc) return null;
   const a = doc.accent;
-
-  const copy = (text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(id);
-    setTimeout(() => setCopied(null), 2000);
-  };
 
   const badgeColors = [a.main, '#0f766e', '#2563eb', '#be185d'];
 
@@ -760,13 +1330,7 @@ export default function TrendingRepoDoc({ slug }: { slug: string }) {
             <span style={{ color: a.muted, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>{doc.install.label}</span>
             <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#f8fafc', margin: '4px 0 0 0' }}>{doc.install.title}</h2>
           </div>
-          <button
-            type="button"
-            onClick={() => copy(doc.install.primary, 'primary')}
-            style={{ background: copied === 'primary' ? '#16a34a' : a.main, color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '6px', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
-          >
-            {copied === 'primary' ? '✓ Copied' : 'Copy Primary Command'}
-          </button>
+          <CopyCommandButton text={doc.install.primary} color={a.main} />
         </div>
         <pre style={{ background: '#090d16', padding: '14px 18px', borderRadius: '8px', color: '#38bdf8', fontSize: '13px', fontFamily: 'monospace', margin: '0 0 16px 0', border: '1px solid #1e293b', overflowX: 'auto' }}>
           {doc.install.primary}

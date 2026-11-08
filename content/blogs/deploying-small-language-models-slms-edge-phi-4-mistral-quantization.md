@@ -76,7 +76,7 @@ An 8-bit KV cache uses about half the memory of f16; with Phi-4 at 4K that's rou
 
 ## EXL2 on NVIDIA GPUs
 
-[ExLlamaV2](https://github.com/turboderp/exllamav2)'s EXL2 format lets you choose an exact average bitrate (for example 4.25 bits per weight) and spends more bits on the layers where quantization error matters most. That makes it useful when you need to squeeze the best possible model into a fixed amount of VRAM on an NVIDIA card. It's a desktop and server option, not a mobile one.
+[ExLlamaV2](https://github.com/turboderp-org/exllamav2)'s EXL2 format lets you choose an exact average bitrate (for example 4.25 bits per weight) and spends more bits on the layers where quantization error matters most. That makes it useful when you need to squeeze the best possible model into a fixed amount of VRAM on an NVIDIA card. It's a desktop and server option, not a mobile one.
 
 ## Phones: ONNX Runtime and NPUs
 
@@ -122,6 +122,6 @@ Prefer `Q4_K_M`. K-quants use mixed precision and generally preserve quality bet
 - Mistral AI: [Ministral 3 3B model card](https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512)
 - Ollama: [phi4](https://ollama.com/library/phi4/tags) and [ministral-3](https://ollama.com/library/ministral-3/tags) model sizes
 - ONNX Runtime: [CoreML execution provider](https://onnxruntime.ai/docs/reference/execution-providers/CoreML-ExecutionProvider.html), [QNN execution provider](https://onnxruntime.ai/docs/execution-providers/QNN-ExecutionProvider.html)
-- [llama.cpp](https://github.com/ggml-org/llama.cpp) and [ExLlamaV2](https://github.com/turboderp/exllamav2)
+- [llama.cpp](https://github.com/ggml-org/llama.cpp) and [ExLlamaV2](https://github.com/turboderp-org/exllamav2)
 
-Related on VNHAX: [How to cut AI coding agent costs](/blog/how-to-cut-ai-coding-agent-api-costs-token-proxies) · [Open-source AI tools we reviewed](/ai/ai-tools)
+Related on VNHAX: [How to cut AI coding agent costs](/blog/how-to-cut-ai-coding-agent-api-costs-token-proxies) · [Open-source AI tools we reviewed](/ai)

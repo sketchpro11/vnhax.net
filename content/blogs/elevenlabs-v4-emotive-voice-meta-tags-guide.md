@@ -4,7 +4,7 @@ description: "ElevenLabs V4 is billed as the company's most emotive text-to-spee
 date: "2026-10-08"
 updatedAt: "2026-10-12"
 author: "Umar Hashmi"
-category: "Developer Tools & Repos"
+category: "AI & Models"
 tags: ["developer", "tools", "voice-api", "elevenlabs-v4", "xml-tags", "code-integration", "developer-workflows"]
 ---
 
@@ -238,9 +238,9 @@ If you only need a basic voice to read short notifications, you probably don't n
 
 - [Black Forest Labs Flux 3 Image: Canvas Bounding Boxes](/blog/black-forest-labs-flux-3-image-canvas-bounding-boxes)
 - [OpenAI Models & Developer Hub](/openai)
-- [AI Tools & Frameworks Directory](/ai/ai-tools)
+- [AI & Machine Learning hub](/ai)
 
-## Helpful External Resources
+## Sources
 
 - [ElevenLabs V4 official page](https://elevenlabs.io/v4)
 - [ElevenLabs official website](https://elevenlabs.io/)
@@ -293,44 +293,3 @@ Pick a scene with real emotion. Generate it plain. Then add one direction and li
 That one small experiment will tell you more than any review can.
 
 ---
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is ElevenLabs V4?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "ElevenLabs V4 is the latest text-to-speech model from ElevenLabs. The company describes it as its most expressive model so far, and it lets you shape the voice using meta-tags inside the transcript."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is ElevenLabs V4 free to use?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "V4 is available on the free plan, which includes 10,000 credits per month. Check the official pricing page for current details."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What are meta-tags in ElevenLabs V4?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Meta-tags are inline instructions inside your script that control the direction of the voice, tone, emotion, pacing, reactions and sound effects."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is ElevenLabs V4 the best text-to-speech model?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "At launch, Eleven v4 ranked first on Artificial Analysis' Provider Voice arena and second on its Controlled Voice arena. Rankings change, so testing it yourself is recommended."
-      }
-    }
-  ]
-}
-</script>

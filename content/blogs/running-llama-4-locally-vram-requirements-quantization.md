@@ -118,4 +118,4 @@ FlashAttention-3 targets Hopper GPUs such as the H100. On RTX cards, use the fla
 - llama.cpp: [server options](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
 - Dao-AILab: [FlashAttention repository](https://github.com/Dao-AILab/flash-attention)
 
-Related on VNHAX: [How to increase num_ctx in Ollama](/blog/how-to-increase-num-ctx-in-modelfile) · [Small language models on edge devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization) · [Open-source AI tools we reviewed](/ai/ai-tools)
+Related on VNHAX: [How to increase num_ctx in Ollama](/blog/how-to-increase-num-ctx-in-modelfile) · [Small language models on edge devices](/blog/deploying-small-language-models-slms-edge-phi-4-mistral-quantization) · [Open-source AI tools we reviewed](/ai)

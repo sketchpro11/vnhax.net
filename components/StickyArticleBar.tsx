@@ -57,13 +57,6 @@ export default function StickyArticleBar({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const scrollToSlides = () => {
-    const slideDeck = document.querySelector('.slidedeck-container');
-    if (slideDeck) {
-      slideDeck.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -72,6 +65,7 @@ export default function StickyArticleBar({
     <div
       className={`sticky-article-bar ${isVisible ? 'is-visible' : ''}`}
       aria-hidden={!isVisible}
+      inert={!isVisible}
     >
       {/* Top micro progress line */}
       <div
@@ -97,21 +91,11 @@ export default function StickyArticleBar({
           <span className="sticky-title-text">{title}</span>
         </div>
 
-        {/* Right: Progress, Slide shortcut, Copy Link */}
+        {/* Right: Progress and Copy Link */}
         <div className="sticky-bar-right">
           <div className="sticky-progress-badge">
             <span>{readProgress}% read</span>
           </div>
-
-          <button
-            type="button"
-            onClick={scrollToSlides}
-            className="sticky-action-btn slides-shortcut-btn"
-            title="Jump to Interactive Slide Deck"
-          >
-            <span className="shortcut-icon">⚡</span>
-            <span>Slides</span>
-          </button>
 
           <button
             type="button"

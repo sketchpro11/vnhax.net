@@ -4,7 +4,7 @@ import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
-import { BRAND_CONFIG, getBreadcrumbSchema } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: 'Disclaimer & Advertising Disclosure',
@@ -42,10 +42,6 @@ export default function DisclaimerPage() {
   const lastUpdated = 'October 11, 2026';
   const effectiveDate = 'October 4, 2026';
 
-  const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: '/' },
-    { name: 'Disclaimer', url: '/disclaimer' },
-  ]);
 
   return (
     <>

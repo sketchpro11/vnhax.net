@@ -41,7 +41,7 @@ Coverage of Antigravity notes that it supports models from other providers along
 
 **Watch out for:** running several agents in parallel is powerful, but it raises the question of what happens when two agents change related code. Review Artifacts carefully on big refactors.
 
-## Grok Build (xAI / SpaceXAI)
+## Grok Build (xAI / SpaceXSI)
 
 Grok Build is xAI's coding agent. From the [Grok Build docs](https://docs.x.ai/build/overview):
 

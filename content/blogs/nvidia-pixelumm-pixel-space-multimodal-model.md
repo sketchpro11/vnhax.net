@@ -2,19 +2,17 @@
 title: "NVIDIA PixelUMM Explained: Pixel-Space Image and Video AI Without a VAE"
 description: "NVIDIA's PixelUMM generates images and video directly in pixel space with no latent space or VAE decoder. Technical deep dive into this decoder-only Transformer."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-11-08"
 author: "Umar Hashmi"
 category: "Tech Platforms & Infrastructure"
 tags: ["technology", "platforms", "infrastructure", "nvidia", "pixel-space", "hardware-compute", "cloud-platforms"]
 ---
 
-Every few weeks a new AI model lands, and the first thing I do is look at the demo clips. Pretty, polished, shareable. Then I close the tab and forget about it.
+Almost every image and video generator you've used works the same way under the hood. It doesn't draw pixels directly. It works in a compressed "latent" space, and a separate decoder (a VAE) turns that into the picture you see. That decoder shapes what the model can and can't do.
 
-PixelUMM was different, and it wasn't because of the demos. Honestly, the output isn't going to make anyone cancel their favorite image or video generator. What made me stop scrolling was a single sentence in the announcement: it generates directly in pixel space.
+NVIDIA's PixelUMM, built with the University of Waterloo, skips that step. It reads and writes raw pixels directly, and the same model also understands images and video. Its output quality won't make you cancel your favourite generator today, but the design is worth understanding because it questions a habit the whole field shares.
 
-If you've ever wondered why almost every image and video generator works the same way under the hood, this one is worth ten minutes of your time. Let me walk you through it the way I'd explain it over chai.
-
-> **A quick note on how I wrote this:** everything below about NVIDIA's model comes from the [official PixelUMM project page](https://nv-tlabs.github.io/PixelUMM/), its public code and model listings, and a video walkthrough covering the release. I've kept the facts as they were published. Where I give practical advice, I tell you whether it comes from the source or from general experience with open-source AI projects.
+> **How this article was written:** everything about the model comes from the [official PixelUMM project page](https://nv-tlabs.github.io/PixelUMM/), the paper, and the public code and model listings, linked at the end. I haven't run the model myself. Where I give practical advice, I say it's general advice for open-source AI projects rather than something NVIDIA published.
 
 ---
 
@@ -139,7 +137,7 @@ It does well on some tasks, like counting, and trails the best specialized model
 
 NVIDIA has released the source code and weights publicly, with documentation to set it up locally.
 
-The majority of the source files are licensed under **Apache 2.0**, which allows developers and researchers to experiment freely with this architecture. You can read the [Apache License 2.0 text](https://www.apache.org/licenses/LICENSE-2.0) yourself, and as always with an open release, check the license notes inside the repository for any individual file that says otherwise.
+The majority of the source files are licensed under **Apache 2.0**, which allows developers and researchers to experiment freely with this architecture. You can read the [Apache License 2.0 text](https://www.apache.org/licenses/LICENSE-2.0) yourself, and as always with an open release, check the license notes inside the repository for any individual file that says otherwise. The model weights on Hugging Face are listed under a separate ("other") licence, so read that model card before using the weights in a product.
 
 Where to find things:
 
@@ -288,5 +286,10 @@ Will it replace your daily generator? No, and NVIDIA doesn't claim it will. Is i
 
 If you're curious, read the [project page](https://nv-tlabs.github.io/PixelUMM/) first, then decide whether to run it yourself. And if you do, test the weak spots on purpose. That's where you'll learn the most.
 
-*Sources: [PixelUMM project page](https://nv-tlabs.github.io/PixelUMM/), [GitHub repository](https://github.com/nv-tlabs/PixelUMM), [Hugging Face model](https://huggingface.co/nvidia/PixelUMM), [arXiv paper](https://arxiv.org/abs/2609.38597), [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).*
+## Sources
+
+- NVIDIA: [PixelUMM project page](https://nv-tlabs.github.io/PixelUMM/)
+- arXiv: [PixelUMM paper (2609.38597)](https://arxiv.org/abs/2609.38597)
+- GitHub: [nv-tlabs/PixelUMM](https://github.com/nv-tlabs/PixelUMM)
+- Hugging Face: [nvidia/PixelUMM](https://huggingface.co/nvidia/PixelUMM)
 

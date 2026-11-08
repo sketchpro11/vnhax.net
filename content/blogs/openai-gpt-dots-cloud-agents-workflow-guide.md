@@ -2,7 +2,7 @@
 title: "OpenAI GPT Dots: Practical Guide to Always-On Cloud Agents & Workflows"
 description: "GPT Dots is OpenAI's always-on AI agent with its own cloud computer and browser. Learn what it does, eligibility, Slack & Teams integrations, and workflows."
 date: "2026-10-08"
-updatedAt: "2026-10-08"
+updatedAt: "2026-11-08"
 author: "Umar Hashmi"
 category: "AI & Autonomous Agents"
 tags: ["ai", "models", "openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-agents", "productivity"]
@@ -10,9 +10,9 @@ tags: ["ai", "models", "openai", "gpt-dots", "chatgpt", "ai-agents", "always-on-
 
 Every developer and small-business owner knows the feeling. You close your laptop at night with a pile of unfinished things: customer feedback nobody has read, a bug you meant to look at, a pull request that still needs tests. The work doesn't stop just because you did.
 
-That is the exact gap OpenAI is aiming at with **GPT Dots**, announced during its annual DevDay event. I watched the announcement coverage closely, and this is the one that made me stop and rewind.
+That is the exact gap OpenAI is aiming at with **Dots**, announced at DevDay on 29 September 2026: always-on ChatGPT agents, powered by GPT-6 Astra, that keep working while you don't.
 
-*A quick honest note: this article is based on OpenAI's announcement and the details shared publicly about it. Dots is only just rolling out, so where I describe how I'd use it, those are practical scenarios, not a claim that I've run it for months. The official page is here: [OpenAI – Introducing Dots](https://openai.com/index/introducing-dots/).*
+*A note on sources: this article is based on OpenAI's announcement and launch coverage, linked at the end. I haven't used Dots myself; where I describe how to use it, those are suggested scenarios, not test results. The official page is [OpenAI – Introducing Dots](https://openai.com/index/introducing-dots/).*
 
 ## So what is GPT Dots, in plain words?
 
@@ -20,7 +20,7 @@ GPT Dots is a persistent AI agent that has its own computer. The most interestin
 
 Think about how a normal chatbot works. You type a prompt, then you wait for the response. The conversation is the work. When you leave, everything stops.
 
-Dots flips that. It has its own **cloud computer and browser**, and with the help of those it connects to **thousands of applications via plugins**. You give it a goal, and it keeps going, 24 hours a day, while you do something else.
+Dots flips that. It has its own **cloud computer and browser**, and with the help of those it connects to **more than 4,000 apps** through connectors. You give it a goal, and it keeps going, 24 hours a day, while you do something else.
 
 ## What can you actually ask it to do?
 
@@ -33,7 +33,7 @@ The example given in the announcement is a very practical one. You can instruct 
 
 Dots keeps doing all this work in the background, while you are working on another project.
 
-Here is the part I found most useful: while working on one project, Dots can also handle other projects simultaneously. For every new thing, you simply assign new tasks and projects, and it continues executing them.
+Another useful detail: while working on one project, Dots can also handle other projects simultaneously. For every new thing, you simply assign new tasks and projects, and it continues executing them.
 
 If you've ever tried to juggle three half-finished jobs and ended up finishing none, you can see why this is appealing.
 
@@ -47,15 +47,15 @@ That matters more than it sounds. Most of us don't want to open yet another app.
 
 This is where people will get frustrated, so read carefully:
 
-- Dots is rolling out for **ChatGPT Pro** and **Business Premium** users.
-- It is available in **eligible markets**, which currently **excludes the European Union**.
+- Dots is included with **ChatGPT Pro** (which now starts at $100 a month) and **ChatGPT Business Premium**. Enterprise, Edu and Healthcare workspaces can try a beta if an admin enables it.
+- At launch, the **Pro** rollout excluded the **European Economic Area, Switzerland and the UK**. According to OpenAI's statement to the press, **Business Premium** gets Dots in all supported ChatGPT regions.
 - If you are on an eligible plan, you'll find the **Dots** option in the **left-hand sidebar menu** of ChatGPT.
 
 If you don't see it yet, don't panic. Rollouts take time, and your plan and region both matter.
 
 ## Is this a new idea?
 
-Not entirely. Competitor systems like **Meta Muse** and **Grok's GrokBot** are working in similar directions. The difference, according to the announcement, is that OpenAI has packaged this entire experience into an easy-to-use consumer product.
+Not entirely. Competitor systems like **Meta Muse** and **xAI's Grok Bot** are working in similar directions. The difference, according to the announcement, is that OpenAI has packaged this entire experience into an easy-to-use consumer product.
 
 That "easy to use" bit is the real story. Always-on agents have been possible for people willing to wire together scripts, servers, and APIs. Putting one inside a sidebar button is a different level of access.
 
@@ -98,7 +98,7 @@ Autonomous doesn't mean infallible. Always read what it produces before it reach
 "Make my product better" isn't a task. "Review this week's feedback and list the top three recurring bugs" is.
 
 **Assuming it's available everywhere.**
-If you're in the European Union, it's not available right now. Don't pay for a plan upgrade expecting Dots if your market isn't eligible. Check first.
+If you're in the EEA, Switzerland or the UK, the Pro plan didn't include Dots at launch, while Business Premium did. Don't upgrade a plan expecting Dots until you've checked OpenAI's current availability for your region.
 
 **Treating it like a chatbot.**
 The whole shift is that you don't have to sit and wait. Assign, step away, and check back.
@@ -115,7 +115,7 @@ If you're on an eligible plan, open your ChatGPT sidebar and look for Dots. Star
 
 - [ChatGPT Pro $500 Plan: Pricing & Limit Breakdown](/blog/chatgpt-pro-plans-100-200-500-ultrafast)
 - [OpenAI Models & Developer Hub](/openai)
-- [AI Tools & Frameworks Directory](/ai/ai-tools)
+- [AI & Machine Learning hub](/ai)
 
 ## Frequently Asked Questions (FAQs)
 
@@ -135,13 +135,13 @@ Yes. While it works on one project, it can handle other projects simultaneously,
 You can use it across ChatGPT, Slack, and Microsoft Teams, which means you can interact with it from your phone or any other device.
 
 ### Who can use GPT Dots?
-It's rolling out to ChatGPT Pro and Business Premium users in eligible markets. It is currently not available in the European Union.
+It's included with ChatGPT Pro and Business Premium. At launch the Pro rollout excluded the EEA, Switzerland and the UK, while Business Premium covered all supported ChatGPT regions.
 
 ### Where do I find GPT Dots in ChatGPT?
 If you're on an eligible plan, look for the Dots option in the left-hand sidebar menu of ChatGPT.
 
 ### Is GPT Dots the only always-on AI agent?
-No. Competing systems such as Meta Muse and Grok's GrokBot are moving in similar directions. The difference highlighted is that OpenAI has packaged the experience into an easy-to-use consumer product.
+No. Competing systems such as Meta Muse and xAI's Grok Bot are moving in similar directions. The difference highlighted is that OpenAI has packaged the experience into an easy-to-use consumer product.
 
 ### Is it safe to give an always-on agent access to my apps?
 Treat it like any new team member: give access only to what's needed, start with low-risk tasks, and review its work before anything goes live.
@@ -149,36 +149,10 @@ Treat it like any new team member: give access only to what's needed, start with
 ### Where can I read the official announcement?
 On OpenAI's page: [Introducing Dots](https://openai.com/index/introducing-dots/).
 
-<!-- Optional: FAQPage schema for AEO/GEO. Paste into your page <head> if your CMS supports it. -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is GPT Dots?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "GPT Dots is a persistent AI agent from OpenAI with its own cloud computer and browser that keeps working on assigned goals in the background, even when you are not chatting with it."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Who can use GPT Dots?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It is rolling out to ChatGPT Pro and Business Premium users in eligible markets. It is currently not available in the European Union."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Where do I find GPT Dots in ChatGPT?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "On an eligible plan, look for the Dots option in the left-hand sidebar menu of ChatGPT."
-      }
-    }
-  ]
-}
-</script>
+## Sources
+
+- OpenAI: [Introducing Dots](https://openai.com/index/introducing-dots/) (29 September 2026)
+- The Next Web: [OpenAI launches dots, always-on AI agents with their own cloud computers](https://thenextweb.com/news/openai-dots-always-on-ai-agents-cloud-computers-devday)
+- BetaNews: [OpenAI Dots agents in ChatGPT](https://betanews.com/article/openai-dots-agents-chatgpt/)
+
+Related on VNHAX: [ChatGPT Pro plans compared](/blog/chatgpt-pro-plans-100-200-500-ultrafast) · [Meta Muse AI agent explained](/blog/meta-muse-ai-agent-guide-how-to-use) · [OpenAI hub](/openai)
